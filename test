@@ -1,0 +1,19 @@
+manager:
+
+- ubah order
+- buat merchant + buat tanggal jatuh tempo + % output merchant.
+- input product/deal
+- generate code
+
+admin:
+
+- penjualan total/per merchant
+- akuntansi: set tanggal kapan jatuh tempo, sudah hampir jatuh notif per merchant + email notif
+- pembelian telah kompilt * x% yang ditetapkan. % berbeda2 per merchant. Sisa % adalah punya merchant.
+
+- featured/verified/exclusive
+
+- cash di kantor
+- transfer
+- virtual wallet
+- kode unik

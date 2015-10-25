@@ -1,0 +1,82 @@
+$primary-color-dark:   #455A64;
+$primary-color:        #607D8B;
+$primary-color-light:  #CFD8DC;
+$primary-color-text:   #FFFFFF;
+$accent-color:         #4CAF50;
+$primary-text-color:   #212121;
+$secondary-text-color: #727272;
+$divider-color:        #B6B6B6;
+
+$break-small: 				 480px;
+$break-large: 				 1200px;
+
+$alert-red:						 #F44336;
+$alert-green: 				 #009688;
+$alert-yellow:				 #FF9800;
+$alert-blue:					 #3F51B5;
+
+@mixin respond-to($media) {
+	@if $media == handhelds {
+		@media only screen and (max-width: $break-small) { @content; }
+	}
+	@else if $media == medium-screens {
+		@media only screen and (min-width: $break-small + 1) and (max-width: $break-large - 1) { @content; }
+	}
+	@else if $media == wide-screens {
+		@media only screen and (min-width: $break-large) { @content; }
+	}
+	@else if $media == medium-wide {
+		@media only screen and (min-width: $break-small + 1) { @content; }
+	}
+}
+
+@mixin animate ($duration: 1s, $delay: .2s, $timing-function: ease) {
+	-webkit-animation-duration: $duration;
+	-webkit-animation-delay: $delay;
+	-webkit-animation-timing-function: $timing-function;
+	-webkit-animation-fill-mode: both;
+	-moz-animation-duration: $duration;
+	-moz-animation-delay: $delay;
+	-moz-animation-timing-function: $timing-function;
+	-moz-animation-fill-mode: both;
+	-ms-animation-duration: $duration;
+	-ms-animation-delay: $delay;
+	-ms-animation-timing-function: $timing-function;
+	-ms-animation-fill-mode: both;
+	-o-animation-duration: $duration;
+	-o-animation-delay: $delay;
+	-o-animation-timing-function: $timing-function;
+	-o-animation-fill-mode: both;
+	animation-duration: $duration;
+	animation-delay: $delay;
+	animation-timing-function: $timing-function;
+	animation-fill-mode: both;
+}
+
+@mixin transition ($transition-property, $transition-time, $method, $transition-time-2: 0s) {
+	-webkit-transition: $transition-property $transition-time $method, $transition-time-2;
+	-moz-transition: $transition-property $transition-time $method, $transition-time-2;
+	-ms-transition: $transition-property $transition-time $method, $transition-time-2;
+	-o-transition: $transition-property $transition-time $method, $transition-time-2;
+	transition: $transition-property $transition-time $method, $transition-time-2;
+}
+
+@mixin box-shadow ($x:0px,$y:3px,$blur:5px,$alpha: 0.5) {
+	-webkit-box-shadow: $x $y $blur rgba(0, 0, 0, $alpha);
+	-moz-box-shadow: $x $y $blur rgba(0, 0, 0, $alpha);
+	box-shadow: $x $y $blur rgba(0, 0, 0, $alpha);
+}
+
+@mixin transform ($rotate: 90deg, $scale: 1, $skew: 1deg, $translate: 10px) {
+	-webkit-transform: rotate($rotate) scale($scale) skew($skew) translate($translate);
+	-moz-transform: rotate($rotate) scale($scale) skew($skew) translate($translate);
+	-o-transform: rotate($rotate) scale($scale) skew($skew) translate($translate);
+	-ms-transform: rotate($rotate) scale($scale) skew($skew) translate($translate);
+	transform: rotate($rotate) scale($scale) skew($skew) translate($translate);
+}
+
+@mixin border-radius ($radius: 5px) {
+	-webkit-border-radius: $radius !important;
+	-moz-border-radius: $radius !important;
+	border-radius: $radius !important;
+}
