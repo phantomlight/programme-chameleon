@@ -518,8 +518,8 @@ article img {
 		line-height: 40px;
 		height: 40px;
 		font-size: 16px;
-		top: 34px;
-		color: #3498db;
+		top: 31px !important;
+		color: $accent-color;
 	}
 	&.experience {
 		padding-top: 13px;
