@@ -3,8 +3,10 @@ export class Plugins {
 		this.initBootstrap();
 		var slider = {"init":"1","home_init":"1"};
 
+		$('#home-services .home-services-widget .image-wrapper').imgLiquid();
+
 		// Job search: Advanced Search toggle
-		if ( $('#advance-search-option').length ) {
+		if ( $('#advance-search-option')[0] ) {
 			$('.advance-search-toggle').click(function (e) {
 				if ($('#advance-search-option:visible').length ) {
 					$('#advance-search-option').slideUp();
@@ -14,7 +16,7 @@ export class Plugins {
 				return false;
 			});
 		}
-
+		
 		$('#job-listing-tabs').tabs({ hide: { effect: "fade", duration: 'fast' }, show: { effect: "fade", duration: 'fast' } });
 
 		// Featured Job Carousel
@@ -57,7 +59,7 @@ export class Plugins {
 		$('#job-type-dropdown').minimalect({
 			placeholder : 'Select Job Type'
 		});
-
+		
 		var initSlider = slider.init;
 
 		if (initSlider) {

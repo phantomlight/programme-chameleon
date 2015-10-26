@@ -24,7 +24,7 @@
 		<div class="row">
 			<div class="col-md-3">
 				<div class="logo-wrapper">
-					<a href="#" class="header-logo" title="Programme Chameleon">
+					<a href="{{ url('/') }}" class="header-logo" title="Programme Chameleon">
 						<img src="{{ asset('assets/img/logo.png') }}" width="300" alt="Programme Chameleon">
 					</a>
 				</div><!-- /.logo-wrapper -->
@@ -42,12 +42,13 @@
 							<li class="menu-item menu-item-has-children">
 								<a href="#">Home</a>
 								<ul class="sub-menu">
-									<li class="menu-item"><a href="#">Sub Menu 1</a></li>
-									<li class="menu-item"><a href="#">Sub Menu 2</a></li>
-									<li class="menu-item"><a href="#">Sub Menu 3</a></li>
+									<li class="menu-item"><a href="{{ url('job-detail') }}">Sample Job Detail Page</a></li>
+									<li class="menu-item"><a href="{{ url('resume-detail') }}">Sample Resume Page</a></li>
+									<li class="menu-item"><a href="{{ url('company-detail') }}">Sample Company Page</a></li>
 								</ul>
 							</li>
-							<li class="menu-item"><a href="#">About Us</a></li>
+							<li class="menu-item"><a href="#">Register CV</a></li>
+							<li class="menu-item"><a href="#">Submit Vacancy</a></li>
 							<li class="menu-item menu-item-has-children">
 								<a href="#">Services</a>
 								<ul class="sub-menu">
@@ -56,9 +57,8 @@
 									<li class="menu-item"><a href="#">Sub Menu 3</a></li>
 								</ul>
 							</li>
+							<li class="menu-item"><a href="#">About Us</a></li>
 							<li class="menu-item"><a href="#">Contact Us</a></li>
-							<li class="menu-item"><a href="#">Register CV</a></li>
-							<li class="menu-item"><a href="#">Submit Vacancy</a></li>
 						</ul>
 					</nav><!-- /#main-menu -->
 				</div><!-- /#menu-wrapper -->

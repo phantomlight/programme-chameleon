@@ -1,0 +1,297 @@
+body {
+	color: $primary-text-color;
+	font-family: 'Nunito', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+#wrapper {
+	overflow: hidden;
+}
+
+.container {
+	padding: 0;
+}
+
+h1 {
+	font-size: 36px;
+}
+
+h2 {
+	font-size: 30px;
+}
+
+h3 {
+	font-size: 28px;
+}
+
+h4 {
+	font-size: 24px;
+}
+
+h5 {
+	font-size: 20px;
+}
+
+h6 {
+	font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 300;
+}
+
+@for $i from 1 through 10 {
+	$j: $i*10;
+
+	.divide#{$j} {
+		height: $j + 0px;
+		width: 100%;
+	}
+
+	.element-top-#{$j} {
+		margin-top: $j + 0px;
+	}
+
+	.element-bottom-#{$j} {
+		margin-bottom: $j + 0px;
+	}
+
+	.element-height-#{$j} {
+		height: $j + 0px;
+	}
+}
+
+.no-padding {
+	padding: 0 !important;
+}
+
+.no-margin {
+	margin: 0 !important;
+}
+
+/*----------------------------------------------------*/
+/*	Title Shortcode	*/
+/*----------------------------------------------------*/
+
+.sc-title {
+	text-transform: uppercase;
+	&.normal {
+		font-size: 18px;
+		margin: 15px 0;
+	}
+	&.large {
+		font-size: 30px;
+	}
+}
+
+/*----------------------------------------------------*/
+/*	Unordered List Shortcode	*/
+/*----------------------------------------------------*/
+
+.sc-ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	padding-top: 6px;
+	padding-bottom: 20px;
+	li {
+		position: relative;
+		margin-left: 18px;
+		line-height: 22px;
+		padding: 4px 0;
+	}
+	.fa {
+		position: absolute;
+		left: -20px;
+		line-height: 22px;
+	}
+}
+
+/*----------------------------------------------------*/
+/*	Drop Cap Shortcode	*/
+/*----------------------------------------------------*/
+
+.sc-dropcap {
+	font-size: 70px;
+	float: left;
+	line-height: 65px;
+	padding: 0 10px;
+	margin-right: 10px;
+	&.boxed {
+		color: #FFFFFF;
+		border-radius: 5px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+	}
+}
+
+/*----------------------------------------------------*/
+/*	Button Shortcode	*/
+/*----------------------------------------------------*/
+
+.sc-button {
+	text-transform: uppercase;
+	font-size: 16px;
+	text-decoration: none;
+	margin-right: 15px;
+	font-weight: 300;
+	background: #DDDDDD;
+	color: #FFFFFF;
+	margin-bottom: 15px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	transition: all .3s ease;
+	-webkit-transition: all .3s ease;
+	-moz-transition: all .3s ease;
+	&:hover {
+		color: #FFFFFF;
+	}
+	&.medium {
+		padding: 10px 29px;
+	}
+	&.large {
+		padding: 12px 34px;
+		font-size: 20px;
+	}
+	&.green {
+		background: #4ec6ab;
+	}
+	&.purple {
+		background: #2980b9;
+	}
+	&.red {
+		background: #ff8888;
+	}
+	&.grey {
+		background: #d1d1d1;
+		color: inherit;
+	}
+	&.darkgrey {
+		background: #0a6064;
+	}
+	&.purple:hover {
+		background: #236fa1;
+	}
+	&.red:hover {
+		background: #d66666;
+	}
+	&.grey:hover {
+		background: #b5afaf;
+	}
+	&.green:hover {
+		background: #44b098;
+	}
+	&.darkgrey:hover {
+		background: #085053;
+	}
+}
+
+/*----------------------------------------------------*/
+/*	Alert Shortcode	*/
+/*----------------------------------------------------*/
+
+.jb-alert {
+	background: #d1d1d1;
+	color: #FFFFFF;
+	font-size: 16px;
+	padding: 10px 20px 11px;
+	margin-top: 10px;
+	margin-bottom: 25px;
+	.close {
+		right: -2px;
+		color: #FFFFFF;
+		opacity: .8;
+		top: 1px;
+		&:hover {
+			opacity: 1;
+		}
+	}
+	&.danger {
+		background: #ff8888;
+	}
+	&.warning {
+		background: #ffd988;
+	}
+	&.info {
+		background: #9ac9e6;
+	}
+	&.success {
+		background: #c5e69a;
+	}
+	&.nopost {
+		background: #1abc9c;
+	}
+}
+
+/*----------------------------------------------------*/
+/*	Accordion Shortcode	*/
+/*----------------------------------------------------*/
+
+.jb-accordion-wrapper {
+	background: #FFFFFF;
+	border: 1px solid #dbdbdb;
+	margin-bottom: 25px;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+}
+
+.jb-accordion-title {
+	position: relative;
+	background: #d1d1d1;
+	color: #FFFFFF;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	padding: 11px 20px 11px;
+	font-size: 16px;
+	button {
+		position: absolute;
+		right: 15px;
+		border: none;
+		background: none;
+		color: #d1d1d1;
+		font-size: 12px;
+		padding: 0;
+		text-align: center;
+	}
+	.fa {
+		background: #7d7d7d;
+		text-align: center;
+		width: 22px;
+		height: 22px;
+		line-height: 22px;
+		border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		&:before {
+			content: "\f078";
+		}
+	}
+	.collapsed .fa:before {
+		content: "\f054";
+	}
+}
+
+.jb-accordion-content {
+	color: #4f4f4f;
+	padding: 20px;
+}
+
+/*----------------------------------------------------*/
+/*	Blockquote Shortcode	*/
+/*----------------------------------------------------*/
+
+.sc-blockqoute {
+	background: #d1d1d1;
+	border: none;
+	color: #7d7d7d;
+	font-size: 18px;
+	line-height: 26px;
+	padding: 37px 20px 36px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}

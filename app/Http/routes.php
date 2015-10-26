@@ -13,3 +13,8 @@
 
 Route::get('/', function() { return view('index'); });
 Route::get('home', function() { return view('index'); });
+Route::get('login', function() { return view('login'); });
+Route::get('register', function() { return view('register'); });
+Route::get('job-detail', function() { return view('jobDetail'); });
+Route::get('company-detail', function() { return view('companyDetail'); });
+Route::get('resume-detail', function() { return view('resumeDetail'); });

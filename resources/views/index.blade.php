@@ -205,6 +205,63 @@ Home | Programme Chameleon
 		];
 	?>
 
+	<div id="home-services">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 home-services-title">
+					<h2>
+						<i class="fa fa"></i>
+						Our Services
+					</h2>
+				</div>
+
+				<div class="col-md-3 col-sm-3 home-services-widget">
+					<div class="image-wrapper">
+						<img src="{{ asset('assets/img/sample/image1.jpg') }}" />
+					</div>
+
+					<div class="widget-content">
+						<h3 class="title"> Consulting </h3>
+						<p> Utilise our extensive experience in delivering complex IT and Change Programmes and Projects with reliable, experienced professionals. </p>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-sm-3 home-services-widget">
+					<div class="image-wrapper">
+						<img src="{{ asset('assets/img/sample/image2.jpg') }}" />
+					</div>
+					<div class="widget-content">
+						<h3 class="title"> Training </h3>
+						<p> We offer on-site, focused, and accredited Prince 2 and AGILE training. </p>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-sm-3 home-services-widget">
+					<div class="image-wrapper">
+						<img src="{{ asset('assets/img/sample/image3.jpg') }}" />
+					</div>
+					<div class="widget-content">
+						<h3 class="title"> Free Resources </h3>
+						<p> Access our free resources of project templates, plans, logs, and see meeting minutes easily. </p>
+					</div>
+				</div>
+
+				<div class="col-md-3 col-sm-3 home-services-widget">
+					<div class="image-wrapper">
+						<img src="{{ asset('assets/img/sample/image4.jpg') }}" />
+					</div>
+					<div class="widget-content">
+						<h4> Employers </h4>
+						<p> Submit your vancany <a href="#">here</a> </p>
+
+						<h4 class="element-top-20"> Contractors </h4>
+						<p> Submit your CV <a href="#">here</a> </p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div id="jobs-listing" class="related-job-listing featured-job">
 		<div class="container">
 			<div class="jobs-listing-title">
@@ -351,7 +408,6 @@ Home | Programme Chameleon
 					</div>
 				</div>
 			</div>
-		</div>
 		</div>
 	</div>
 
