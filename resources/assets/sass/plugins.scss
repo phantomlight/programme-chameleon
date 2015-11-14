@@ -1,7 +1,36 @@
 @import "variables";
 @import "animate";
+
+input.parsley-success, select.parsley-success, textarea.parsley-success {
+	color: #fff;
+	background-color: $form-validate-success;
+	border: thin solid darken($form-validate-success, 10%);
+}
+
+input.parsley-error, select.parsley-error, textarea.parsley-error {
+	color: #fff;
+	background-color: $form-validate-error;
+	border: thin solid darken($form-validate-error, 10%);
+}
+
+.parsley-errors-list {
+	margin: 2px 0 3px;
+	padding: 0;
+	list-style-type: none;
+	font-size: 0.9em;
+	line-height: 0.9em;
+	opacity: 0;
+	@include transition(all, .3s, ease-in);
+
+	&.filled {
+		opacity: 1;
+	}
+}
+
 @import "front/jquery-ui";
-@import "front/owl-carousel";
+// @import "front/owl-carousel";
 @import "front/minimalect";
 @import "import/bootstrap";
 @import "fa/font-awesome";
+@import "front/bootstrap_tagsinput";
+@import "front/bootstrap_datepicker";

@@ -137,9 +137,10 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        /*
+         * Third party Service Providers...
+         */
         Intervention\Image\ImageServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
-        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -152,10 +153,6 @@ return [
          * Custom Service Providers...
          */
         App\Models\User\UserServiceProvider::class,
-        App\Models\Merchant\MerchantServiceProvider::class,
-        App\Models\Customer\CustomerServiceProvider::class,
-        App\Models\Deal\DealServiceProvider::class,
-        App\Models\Order\OrderServiceProvider::class
 
     ],
 
@@ -181,9 +178,7 @@ return [
         'Config'    => Illuminate\Support\Facades\Config::class,
         'Cookie'    => Illuminate\Support\Facades\Cookie::class,
         'Crypt'     => Illuminate\Support\Facades\Crypt::class,
-        'Customer'  => App\Facades\Customer::class,
         'DB'        => Illuminate\Support\Facades\DB::class,
-        'Deal'      => App\Facades\Deal::class,
         'Eloquent'  => Illuminate\Database\Eloquent\Model::class,
         'Event'     => Illuminate\Support\Facades\Event::class,
         'File'      => Illuminate\Support\Facades\File::class,
@@ -194,11 +189,7 @@ return [
         'Lang'      => Illuminate\Support\Facades\Lang::class,
         'Log'       => Illuminate\Support\Facades\Log::class,
         'Mail'      => Illuminate\Support\Facades\Mail::class,
-        'Merchant'  => App\Facades\Merchant::class,
-        'Order'     => App\Facades\Order::class,
         'Password'  => Illuminate\Support\Facades\Password::class,
-        'PDF'       => Barryvdh\DomPDF\Facade::class,
-        'QrCode'    => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Queue'     => Illuminate\Support\Facades\Queue::class,
         'Redirect'  => Illuminate\Support\Facades\Redirect::class,
         'Redis'     => Illuminate\Support\Facades\Redis::class,

@@ -1,0 +1,87 @@
+.common-page-wrapper {
+	background-color: #ecf0f1;
+	color: inherit;
+	padding-bottom: 30px;
+}
+
+#login-form-wrapper, #register-form-wrapper {
+	background-color: darken($accent-color, 10%);
+	border-radius: 10px;
+	padding: 40px 30px;
+	width: 430px;
+
+	@include respond-to(handhelds) {
+		width: auto;
+	}
+}
+
+#login-form, #register-form {
+	a {
+		text-decoration: underline;
+		color: lighten($accent-color, 10%);
+	}
+
+	label {
+		font-weight: 300;
+		font-size: 12px;
+		color: #fff;
+	}
+
+	.form-group {
+		&:not(.no-border):after {
+			border-color: $accent-color $accent-color;
+			border-image: none;
+			border-style: none solid solid;
+			border-width: medium 1px 1px;
+			content: "";
+			display: block;
+			height: 9px;
+			position: relative;
+			top: -10px;
+		}
+	}
+
+	.form-control {
+		background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+		border: medium none;
+		box-shadow: none;
+		color: #fff;
+		font-weight: 300;
+	}
+
+	::-webkit-input-placeholder {
+		color: #eee;
+	}
+
+	:-moz-placeholder {
+		color: #eee;
+	}
+
+	::-moz-placeholder {
+		color: #eee;
+	}
+
+	:-ms-input-placeholder {
+		color: #eee;
+	}
+
+	.btn {
+		background-color: $accent-color;
+		color: #fff;
+
+		&:hover {
+			background-color: lighten($accent-color, 10%);
+		}
+	}
+}
+
+.forgetmenot {
+	label {
+		color: #fff;
+	}
+}
+
+.lost-password-link {
+	color: #fff;
+	margin-left: 15px;
+}

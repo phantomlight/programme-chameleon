@@ -1,0 +1,2501 @@
+input.parsley-success, select.parsley-success, textarea.parsley-success {
+  color: #FFFFFF;
+  background-color: #009688;
+  border: thin solid #00635a;
+}
+
+input.parsley-error, select.parsley-error, textarea.parsley-error {
+  color: #FFFFFF;
+  background-color: #F44336;
+  border: thin solid #ea1c0d;
+}
+
+.parsley-errors-list {
+  margin: 2px 0 3px;
+  padding: 0;
+  list-style-type: none;
+  font-size: 0.9em;
+  line-height: 0.9em;
+  opacity: 0;
+  @include transition(all, .3s, ease-in);
+
+  &.filled {
+    opacity: 1;
+  }
+}
+
+/* PACE */
+
+.pace {
+  -webkit-pointer-events: none;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.pace-inactive {
+  display: none;
+}
+
+.pace .pace-progress {
+  background: $accent-color;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  right: 100%;
+  width: 100%;
+  height: 2px;
+}
+
+.pace-inactive {
+  display: none;
+}
+
+.landing-page.pace .pace-progress {
+  background: #fff;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  height: 2px;
+  -webkit-transition: width 1s;
+  -moz-transition: width 1s;
+  -o-transition: width 1s;
+  transition: width 1s;
+}
+
+.pace-inactive {
+  display: none;
+}
+
+.md-skin .pace-done {
+  .nav-header {
+    transition: all 0.4s;
+  }
+  .navbar-static-side, .nav-header, li.active, #page-wrapper, .footer {
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    transition: all 0.4s;
+  }
+}
+
+.pace-done {
+  .nav-header {
+    transition: all 0.5s;
+  }
+  .navbar-static-side, .nav-header, li.active, #page-wrapper, .footer {
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+  }
+}
+
+.jqstooltip {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  visibility: hidden;
+  background: black transparent;
+  background-color: rgba(0, 0, 0, 0.6);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+  color: white;
+  font: 10px arial, san serif;
+  text-align: left;
+  white-space: nowrap;
+  padding: 5px;
+  border: 1px solid white;
+  z-index: 10000;
+}
+
+.jqsfield {
+  color: white;
+  font: 10px arial, san serif;
+  text-align: left;
+}
+
+/*
+ * metismenu - v2.0.2
+ * A jQuery menu plugin
+ * https://github.com/onokumus/metisMenu
+ *
+ * Made by Osman Nuri Okumus
+ * Under MIT License
+ */
+
+.metismenu {
+  .plus-minus, .plus-times {
+    float: right;
+  }
+  .arrow {
+    float: right;
+    line-height: 1.42857;
+  }
+  .glyphicon.arrow:before {
+    content: "\e079";
+  }
+  .active > a > .glyphicon.arrow:before {
+    content: "\e114";
+  }
+  .fa.arrow:before {
+    content: "\f104";
+  }
+  .active > a > .fa.arrow:before {
+    content: "\f107";
+  }
+  .ion.arrow:before {
+    content: "\f3d2";
+  }
+  .active > a > .ion.arrow:before {
+    content: "\f3d0";
+  }
+  .fa {
+    &.plus-minus:before, &.plus-times:before {
+      content: "\f067";
+    }
+  }
+  .active > a > .fa {
+    &.plus-times {
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+    &.plus-minus:before {
+      content: "\f068";
+    }
+  }
+  .collapse {
+    display: none;
+    &.in {
+      display: block;
+    }
+  }
+  .collapsing {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease;
+    -webkit-transition-duration: .35s;
+    transition-duration: .35s;
+    -webkit-transition-property: height, visibility;
+    transition-property: height, visibility;
+  }
+}
+
+/* WRAPPERS */
+
+#wrapper {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  padding: 0 20px;
+}
+
+.wrapper-content {
+  padding: 20px 10px 40px;
+}
+
+#page-wrapper {
+  padding: 0 15px;
+  min-height: 568px;
+  position: relative !important;
+
+  @include respond-to(medium-wide) {
+    position: inherit;
+    margin: 0 0 0 220px;
+    min-height: 1000px;
+  }
+}
+
+.title-action {
+  text-align: right;
+  padding-top: 30px;
+}
+
+.ibox-content {
+  h1, h2, h3, h4, h5 {
+    margin-top: 5px;
+  }
+}
+
+.ibox-title {
+  h1, h2, h3, h4, h5 {
+    margin-top: 5px;
+  }
+}
+
+ul.unstyled, ol.unstyled {
+  list-style: none outside none;
+  margin-left: 0;
+}
+
+.big-icon {
+  font-size: 160px !important;
+  color: #e5e6e7;
+}
+
+/* FOOTABLE */
+@font-face {
+  font-family: 'footable';
+  src: url("../fonts/footable.eot");
+  src: url("../fonts/footable.eot?#iefix") format("embedded-opentype"), url("../fonts/footable.woff") format("woff"), url("../fonts/footable.ttf") format("truetype"), url("../fonts/footable.svg#footable") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  @font-face {
+    font-family: 'footable';
+    src: url("../fonts/footable.svg#footable") format("svg");
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
+.footable {
+  width: 100%;
+  &.breakpoint {
+    > tbody > tr {
+      &.footable-detail-show > td {
+        border-bottom: none;
+        > span.footable-toggle:before {
+          content: "\e001";
+        }
+      }
+      &:hover:not(.footable-row-detail) {
+        cursor: pointer;
+      }
+      > td {
+        &.footable-cell-detail {
+          background: #eee;
+          border-top: none;
+        }
+        > span.footable-toggle {
+          display: inline-block;
+          font-family: 'footable';
+          speak: none;
+          font-style: normal;
+          font-weight: normal;
+          font-variant: normal;
+          text-transform: none;
+          -webkit-font-smoothing: antialiased;
+          padding-right: 5px;
+          font-size: 14px;
+          color: #888888;
+          &:before {
+            content: "\e000";
+          }
+        }
+      }
+    }
+    &.toggle-circle > tbody > tr {
+      &.footable-detail-show > td > span.footable-toggle:before {
+        content: "\e005";
+      }
+      > td > span.footable-toggle:before {
+        content: "\e004";
+      }
+    }
+    &.toggle-circle-filled > tbody > tr {
+      &.footable-detail-show > td > span.footable-toggle:before {
+        content: "\e003";
+      }
+      > td > span.footable-toggle:before {
+        content: "\e002";
+      }
+    }
+    &.toggle-square > tbody > tr {
+      &.footable-detail-show > td > span.footable-toggle:before {
+        content: "\e007";
+      }
+      > td > span.footable-toggle:before {
+        content: "\e006";
+      }
+    }
+    &.toggle-square-filled > tbody > tr {
+      &.footable-detail-show > td > span.footable-toggle:before {
+        content: "\e009";
+      }
+      > td > span.footable-toggle:before {
+        content: "\e008";
+      }
+    }
+    &.toggle-arrow > tbody > tr {
+      &.footable-detail-show > td > span.footable-toggle:before {
+        content: "\e00f";
+      }
+      > td > span.footable-toggle:before {
+        content: "\e011";
+      }
+    }
+    &.toggle-arrow-small > tbody > tr {
+      &.footable-detail-show > td > span.footable-toggle:before {
+        content: "\e013";
+      }
+      > td > span.footable-toggle:before {
+        content: "\e015";
+      }
+    }
+    &.toggle-arrow-circle > tbody > tr {
+      &.footable-detail-show > td > span.footable-toggle:before {
+        content: "\e01b";
+      }
+      > td > span.footable-toggle:before {
+        content: "\e01d";
+      }
+    }
+    &.toggle-arrow-circle-filled > tbody > tr {
+      &.footable-detail-show > td > span.footable-toggle:before {
+        content: "\e00b";
+      }
+      > td > span.footable-toggle:before {
+        content: "\e00d";
+      }
+    }
+    &.toggle-arrow-tiny > tbody > tr {
+      &.footable-detail-show > td > span.footable-toggle:before {
+        content: "\e01f";
+      }
+      > td > span.footable-toggle:before {
+        content: "\e021";
+      }
+    }
+    &.toggle-arrow-alt > tbody > tr {
+      &.footable-detail-show > td > span.footable-toggle:before {
+        content: "\e017";
+      }
+      > td > span.footable-toggle:before {
+        content: "\e019";
+      }
+    }
+    &.toggle-medium > tbody > tr > td > span.footable-toggle {
+      font-size: 18px;
+    }
+    &.toggle-large > tbody > tr > td > span.footable-toggle {
+      font-size: 24px;
+    }
+  }
+  > {
+    thead > tr > th {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: -moz-none;
+      -ms-user-select: none;
+      user-select: none;
+      &.footable-sortable:hover {
+        cursor: pointer;
+      }
+      &.footable-sorted > span.footable-sort-indicator:before {
+        content: "\e013";
+      }
+      &.footable-sorted-desc > span.footable-sort-indicator:before {
+        content: "\e012";
+      }
+      > span.footable-sort-indicator {
+        display: inline-block;
+        font-family: 'footable';
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        -webkit-font-smoothing: antialiased;
+        padding-left: 5px;
+        &:before {
+          content: "\e022";
+        }
+      }
+    }
+    tfoot .pagination {
+      margin: 0;
+    }
+  }
+  &.no-paging .hide-if-no-paging {
+    display: none;
+  }
+}
+
+.footable-row-detail-inner {
+  display: table;
+}
+
+.footable-row-detail-row {
+  display: table-row;
+  line-height: 1.5em;
+}
+
+.footable-row-detail-group {
+  display: block;
+  line-height: 2em;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.footable-row-detail-name {
+  display: table-cell;
+  font-weight: bold;
+  padding-right: 0.5em;
+}
+
+.footable-row-detail-value {
+  display: table-cell;
+}
+
+.footable-odd {
+  background-color: #f7f7f7;
+}
+
+/* END FOOTABLE */
+/* SUMMERNOTE */
+
+.note-editor {
+  height: 300px;
+  .note-dropzone {
+    position: absolute;
+    z-index: 1;
+    display: none;
+    color: #87cefa;
+    background-color: white;
+    border: 2px dashed #87cefa;
+    opacity: .95;
+    pointer-event: none;
+    .note-dropzone-message {
+      display: table-cell;
+      font-size: 28px;
+      font-weight: bold;
+      text-align: center;
+      vertical-align: middle;
+    }
+    &.hover {
+      color: #098ddf;
+      border: 2px dashed #098ddf;
+    }
+  }
+  &.dragover .note-dropzone {
+    display: table;
+  }
+  &.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    width: 100%;
+    .note-editable {
+      background-color: white;
+    }
+    .note-resizebar {
+      display: none;
+    }
+  }
+  &.codeview {
+    .note-editable {
+      display: none;
+    }
+    .note-codable {
+      display: block;
+    }
+  }
+  .note-toolbar {
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-top: 5px;
+    margin: 0;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #E7EAEC;
+    > .btn-group {
+      margin-top: 5px;
+      margin-right: 5px;
+      margin-left: 0;
+    }
+    .note-table .dropdown-menu {
+      min-width: 0;
+      padding: 5px;
+      .note-dimension-picker {
+        font-size: 18px;
+        .note-dimension-picker-mousecatcher {
+          position: absolute !important;
+          z-index: 3;
+          width: 10em;
+          height: 10em;
+          cursor: pointer;
+        }
+        .note-dimension-picker-unhighlighted {
+          position: relative !important;
+          z-index: 1;
+          width: 5em;
+          height: 5em;
+          background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASAgMAAAAroGbEAAAACVBMVEUAAIj4+Pjp6ekKlAqjAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfYAR0BKhmnaJzPAAAAG0lEQVQI12NgAAOtVatWMTCohoaGUY+EmIkEAEruEzK2J7tvAAAAAElFTkSuQmCC") repeat;
+        }
+        .note-dimension-picker-highlighted {
+          position: absolute !important;
+          z-index: 2;
+          width: 1em;
+          height: 1em;
+          background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASAgMAAAAroGbEAAAACVBMVEUAAIjd6vvD2f9LKLW+AAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfYAR0BKwNDEVT0AAAAG0lEQVQI12NgAAOtVatWMTCohoaGUY+EmIkEAEruEzK2J7tvAAAAAElFTkSuQmCC") repeat;
+        }
+      }
+    }
+    .note-style {
+      h1, h2, h3, h4, h5, h6, blockquote {
+        margin: 0;
+      }
+    }
+    .note-color {
+      .dropdown-toggle {
+        width: 20px;
+        padding-left: 5px;
+      }
+      .dropdown-menu {
+        min-width: 290px;
+        .btn-group {
+          margin: 0;
+          &:first-child {
+            margin: 0 5px;
+          }
+          .note-palette-title {
+            margin: 2px 7px;
+            font-size: 12px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+          }
+          .note-color-reset {
+            padding: 0 3px;
+            margin: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            &:hover {
+              background: #eee;
+            }
+          }
+        }
+      }
+    }
+    .note-para .dropdown-menu {
+      min-width: 216px;
+      padding: 5px;
+      > div:first-child {
+        margin-right: 5px;
+      }
+    }
+  }
+  .note-statusbar {
+    background-color: #f5f5f5;
+    .note-resizebar {
+      width: 100%;
+      height: 8px;
+      cursor: s-resize;
+      border-top: 1px solid #a9a9a9;
+      .note-icon-bar {
+        width: 20px;
+        margin: 1px auto;
+        border-top: 1px solid #a9a9a9;
+      }
+    }
+  }
+  .note-popover .popover {
+    max-width: none;
+    .popover-content {
+      padding: 5px;
+      a {
+        display: inline-block;
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        vertical-align: middle;
+      }
+      .btn-group + .btn-group {
+        margin-left: 5px;
+      }
+    }
+    .arrow {
+      left: 20px;
+    }
+  }
+  .note-handle .note-control-selection {
+    position: absolute;
+    display: none;
+    border: 1px solid black;
+    > div {
+      position: absolute;
+    }
+    .note-control-selection-bg {
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      -webkit-opacity: .3;
+      -khtml-opacity: .3;
+      -moz-opacity: .3;
+      opacity: .3;
+      -ms-filter: alpha(opacity = 30);
+      filter: alpha(opacity = 30);
+    }
+    .note-control-handle, .note-control-holder {
+      width: 7px;
+      height: 7px;
+      border: 1px solid black;
+    }
+    .note-control-sizing {
+      width: 7px;
+      height: 7px;
+      background-color: white;
+      border: 1px solid black;
+    }
+    .note-control-nw {
+      top: -5px;
+      left: -5px;
+      border-right: 0;
+      border-bottom: 0;
+    }
+    .note-control-ne {
+      top: -5px;
+      right: -5px;
+      border-bottom: 0;
+      border-left: none;
+    }
+    .note-control-sw {
+      bottom: -5px;
+      left: -5px;
+      border-top: 0;
+      border-right: 0;
+    }
+    .note-control-se {
+      right: -5px;
+      bottom: -5px;
+      cursor: se-resize;
+    }
+    .note-control-selection-info {
+      right: 0;
+      bottom: 0;
+      padding: 5px;
+      margin: 5px;
+      font-size: 12px;
+      color: white;
+      background-color: black;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      -webkit-opacity: .7;
+      -khtml-opacity: .7;
+      -moz-opacity: .7;
+      opacity: .7;
+      -ms-filter: alpha(opacity = 70);
+      filter: alpha(opacity = 70);
+    }
+  }
+  .note-dialog {
+    > div {
+      display: none;
+    }
+    .note-image-dialog .note-dropzone {
+      min-height: 100px;
+      margin-bottom: 10px;
+      font-size: 30px;
+      line-height: 4;
+      color: lightgray;
+      text-align: center;
+      border: 4px dashed lightgray;
+    }
+    .note-help-dialog {
+      font-size: 12px;
+      color: #ccc;
+      background: transparent;
+      background-color: #222 !important;
+      border: 0;
+      -webkit-opacity: .9;
+      -khtml-opacity: .9;
+      -moz-opacity: .9;
+      opacity: .9;
+      -ms-filter: alpha(opacity = 90);
+      filter: alpha(opacity = 90);
+      .modal-content {
+        background: transparent;
+        border: 1px solid white;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+      }
+      a {
+        font-size: 12px;
+        color: white;
+      }
+      .title {
+        padding-bottom: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+        border-bottom: white 1px solid;
+      }
+      .modal-close {
+        font-size: 14px;
+        color: #dd0;
+        cursor: pointer;
+      }
+      .note-shortcut-layout {
+        width: 100%;
+        td {
+          vertical-align: top;
+        }
+      }
+      .note-shortcut {
+        margin-top: 8px;
+        th {
+          font-size: 13px;
+          color: #dd0;
+          text-align: left;
+        }
+        td:first-child {
+          min-width: 110px;
+          padding-right: 10px;
+          font-family: "Courier New";
+          color: #dd0;
+          text-align: right;
+        }
+      }
+    }
+  }
+  .note-editable {
+    padding: 20px;
+    overflow: auto;
+    outline: 0;
+    &[contenteditable="false"] {
+      background-color: #e5e5e5;
+    }
+  }
+  .note-codable {
+    display: none;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 0;
+    font-family: Menlo, Monaco, monospace, sans-serif;
+    font-size: 14px;
+    color: #ccc;
+    background-color: #222;
+    border: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    resize: none;
+  }
+  .dropdown-menu {
+    min-width: 90px;
+    &.right {
+      right: 0;
+      left: auto;
+      &::before {
+        right: 9px;
+        left: auto !important;
+      }
+      &::after {
+        right: 10px;
+        left: auto !important;
+      }
+    }
+    li a {
+      i {
+        color: deepskyblue;
+        visibility: hidden;
+      }
+      &.checked i {
+        visibility: visible;
+      }
+    }
+  }
+  .note-fontsize-10 {
+    font-size: 10px;
+  }
+  .note-color-palette {
+    line-height: 1;
+    div .note-color-btn {
+      width: 17px;
+      height: 17px;
+      padding: 0;
+      margin: 0;
+      border: 1px solid #fff;
+      &:hover {
+        border: 1px solid #000;
+      }
+    }
+  }
+}
+
+/* END SUMMERNOTE */
+/* BOOTSTRAP DATEPICKER */
+/*!
+ * Datepicker for Bootstrap
+ *
+ * Copyright 2012 Stefan Petre
+ * Improvements by Andrew Rowls
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ */
+
+.datepicker {
+  padding: 4px;
+  border-radius: 4px;
+  direction: ltr;
+  /*.dow {
+		border-top: 1px solid #ddd !important;
+	}*/
+}
+
+.datepicker-inline {
+  width: 220px;
+}
+
+.datepicker.datepicker-rtl {
+  direction: rtl;
+  table tr td span {
+    float: right;
+  }
+}
+
+.datepicker-dropdown {
+  top: 0;
+  left: 0;
+  &:before {
+    content: '';
+    display: inline-block;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #ccc;
+    border-top: 0;
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+  }
+  &:after {
+    content: '';
+    display: inline-block;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #fff;
+    border-top: 0;
+    position: absolute;
+  }
+  &.datepicker-orient-left {
+    &:before {
+      left: 6px;
+    }
+    &:after {
+      left: 7px;
+    }
+  }
+  &.datepicker-orient-right {
+    &:before {
+      right: 6px;
+    }
+    &:after {
+      right: 7px;
+    }
+  }
+  &.datepicker-orient-top {
+    &:before {
+      top: -7px;
+    }
+    &:after {
+      top: -6px;
+    }
+  }
+  &.datepicker-orient-bottom {
+    &:before {
+      bottom: -7px;
+      border-bottom: 0;
+      border-top: 7px solid #999;
+    }
+    &:after {
+      bottom: -6px;
+      border-bottom: 0;
+      border-top: 6px solid #fff;
+    }
+  }
+}
+
+.datepicker {
+  > div {
+    display: none;
+  }
+  &.days div.datepicker-days, &.months div.datepicker-months, &.years div.datepicker-years {
+    display: block;
+  }
+  table {
+    margin: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    tr {
+      td, th {
+        text-align: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        border: none;
+      }
+    }
+  }
+}
+
+.table-striped .datepicker table tr {
+  td, th {
+    background-color: transparent;
+  }
+}
+
+.datepicker table tr td {
+  &.day {
+    &:hover, &.focused {
+      background: #eeeeee;
+      cursor: pointer;
+    }
+  }
+  &.old, &.new {
+    color: #999999;
+  }
+  &.disabled {
+    background: none;
+    color: #999999;
+    cursor: default;
+    &:hover {
+      background: none;
+      color: #999999;
+      cursor: default;
+    }
+  }
+  &.today {
+    color: #000000;
+    background-color: #ffdb99;
+    border-color: #ffb733;
+    &:hover {
+      color: #000000;
+      background-color: #ffdb99;
+      border-color: #ffb733;
+    }
+    &.disabled {
+      color: #000000;
+      background-color: #ffdb99;
+      border-color: #ffb733;
+      &:hover {
+        color: #000000;
+        background-color: #ffdb99;
+        border-color: #ffb733;
+      }
+    }
+    &:hover, &.disabled:hover, &:focus, &:hover:focus {
+      color: #000000;
+      background-color: #ffcd70;
+      border-color: #f59e00;
+    }
+    &.disabled {
+      &:focus, &:hover:focus {
+        color: #000000;
+        background-color: #ffcd70;
+        border-color: #f59e00;
+      }
+    }
+    &:active, &:hover:active {
+      color: #000000;
+      background-color: #ffcd70;
+      border-color: #f59e00;
+    }
+    &.disabled {
+      &:active, &:hover:active {
+        color: #000000;
+        background-color: #ffcd70;
+        border-color: #f59e00;
+      }
+    }
+    &.active, &:hover.active {
+      color: #000000;
+      background-color: #ffcd70;
+      border-color: #f59e00;
+    }
+    &.disabled {
+      &.active, &:hover.active {
+        color: #000000;
+        background-color: #ffcd70;
+        border-color: #f59e00;
+      }
+    }
+  }
+}
+
+.open .dropdown-toggle.datepicker table tr td.today {
+  color: #000000;
+  background-color: #ffcd70;
+  border-color: #f59e00;
+  &:hover {
+    color: #000000;
+    background-color: #ffcd70;
+    border-color: #f59e00;
+  }
+  &.disabled {
+    color: #000000;
+    background-color: #ffcd70;
+    border-color: #f59e00;
+    &:hover {
+      color: #000000;
+      background-color: #ffcd70;
+      border-color: #f59e00;
+    }
+  }
+}
+
+.datepicker table tr td.today {
+  &:active, &:hover:active {
+    background-image: none;
+  }
+  &.disabled {
+    &:active, &:hover:active {
+      background-image: none;
+    }
+  }
+  &.active, &:hover.active {
+    background-image: none;
+  }
+  &.disabled {
+    &.active, &:hover.active {
+      background-image: none;
+    }
+  }
+}
+
+.open .dropdown-toggle.datepicker table tr td.today {
+  background-image: none;
+  &:hover {
+    background-image: none;
+  }
+  &.disabled {
+    background-image: none;
+    &:hover {
+      background-image: none;
+    }
+  }
+}
+
+.datepicker table tr td.today {
+  &.disabled, &:hover.disabled {
+    background-color: #ffdb99;
+    border-color: #ffb733;
+  }
+  &.disabled {
+    &.disabled, &:hover.disabled {
+      background-color: #ffdb99;
+      border-color: #ffb733;
+    }
+  }
+  &[disabled], &:hover[disabled] {
+    background-color: #ffdb99;
+    border-color: #ffb733;
+  }
+  &.disabled {
+    &[disabled], &:hover[disabled] {
+      background-color: #ffdb99;
+      border-color: #ffb733;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.today {
+  background-color: #ffdb99;
+  border-color: #ffb733;
+  &:hover {
+    background-color: #ffdb99;
+    border-color: #ffb733;
+  }
+  &.disabled {
+    background-color: #ffdb99;
+    border-color: #ffb733;
+    &:hover {
+      background-color: #ffdb99;
+      border-color: #ffb733;
+    }
+  }
+}
+
+.datepicker table tr td.today {
+  &.disabled:hover, &[disabled]:hover, &.disabled[disabled]:hover {
+    background-color: #ffdb99;
+    border-color: #ffb733;
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.today {
+  &:hover, &.disabled:hover {
+    background-color: #ffdb99;
+    border-color: #ffb733;
+  }
+}
+
+.datepicker table tr td.today {
+  &.disabled:focus, &:hover.disabled:focus {
+    background-color: #ffdb99;
+    border-color: #ffb733;
+  }
+  &.disabled {
+    &.disabled:focus, &:hover.disabled:focus {
+      background-color: #ffdb99;
+      border-color: #ffb733;
+    }
+  }
+  &[disabled]:focus, &:hover[disabled]:focus {
+    background-color: #ffdb99;
+    border-color: #ffb733;
+  }
+  &.disabled {
+    &[disabled]:focus, &:hover[disabled]:focus {
+      background-color: #ffdb99;
+      border-color: #ffb733;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.today {
+  &:focus, &:hover:focus {
+    background-color: #ffdb99;
+    border-color: #ffb733;
+  }
+  &.disabled {
+    &:focus, &:hover:focus {
+      background-color: #ffdb99;
+      border-color: #ffb733;
+    }
+  }
+}
+
+.datepicker table tr td.today {
+  &.disabled:active, &:hover.disabled:active {
+    background-color: #ffdb99;
+    border-color: #ffb733;
+  }
+  &.disabled {
+    &.disabled:active, &:hover.disabled:active {
+      background-color: #ffdb99;
+      border-color: #ffb733;
+    }
+  }
+  &[disabled]:active, &:hover[disabled]:active {
+    background-color: #ffdb99;
+    border-color: #ffb733;
+  }
+  &.disabled {
+    &[disabled]:active, &:hover[disabled]:active {
+      background-color: #ffdb99;
+      border-color: #ffb733;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.today {
+  &:active, &:hover:active {
+    background-color: #ffdb99;
+    border-color: #ffb733;
+  }
+  &.disabled {
+    &:active, &:hover:active {
+      background-color: #ffdb99;
+      border-color: #ffb733;
+    }
+  }
+}
+
+.datepicker table tr td.today {
+  &.disabled.active, &:hover.disabled.active {
+    background-color: #ffdb99;
+    border-color: #ffb733;
+  }
+  &.disabled {
+    &.disabled.active, &:hover.disabled.active {
+      background-color: #ffdb99;
+      border-color: #ffb733;
+    }
+  }
+  &[disabled].active, &:hover[disabled].active {
+    background-color: #ffdb99;
+    border-color: #ffb733;
+  }
+  &.disabled {
+    &[disabled].active, &:hover[disabled].active {
+      background-color: #ffdb99;
+      border-color: #ffb733;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.today {
+  &.active, &:hover.active {
+    background-color: #ffdb99;
+    border-color: #ffb733;
+  }
+  &.disabled {
+    &.active, &:hover.active {
+      background-color: #ffdb99;
+      border-color: #ffb733;
+    }
+  }
+}
+
+.datepicker table tr td {
+  &.today {
+    &:hover:hover {
+      color: #000;
+    }
+    &.active:hover {
+      color: #fff;
+    }
+  }
+  &.range {
+    background: #eeeeee;
+    border-radius: 0;
+    &:hover {
+      background: #eeeeee;
+      border-radius: 0;
+    }
+    &.disabled {
+      background: #eeeeee;
+      border-radius: 0;
+      &:hover {
+        background: #eeeeee;
+        border-radius: 0;
+      }
+    }
+    &.today {
+      color: #000000;
+      background-color: #f7ca77;
+      border-color: #f1a417;
+      border-radius: 0;
+      &:hover {
+        color: #000000;
+        background-color: #f7ca77;
+        border-color: #f1a417;
+        border-radius: 0;
+      }
+      &.disabled {
+        color: #000000;
+        background-color: #f7ca77;
+        border-color: #f1a417;
+        border-radius: 0;
+        &:hover {
+          color: #000000;
+          background-color: #f7ca77;
+          border-color: #f1a417;
+          border-radius: 0;
+        }
+      }
+      &:hover, &.disabled:hover, &:focus, &:hover:focus {
+        color: #000000;
+        background-color: #f4bb51;
+        border-color: #bf800c;
+      }
+      &.disabled {
+        &:focus, &:hover:focus {
+          color: #000000;
+          background-color: #f4bb51;
+          border-color: #bf800c;
+        }
+      }
+      &:active, &:hover:active {
+        color: #000000;
+        background-color: #f4bb51;
+        border-color: #bf800c;
+      }
+      &.disabled {
+        &:active, &:hover:active {
+          color: #000000;
+          background-color: #f4bb51;
+          border-color: #bf800c;
+        }
+      }
+      &.active, &:hover.active {
+        color: #000000;
+        background-color: #f4bb51;
+        border-color: #bf800c;
+      }
+      &.disabled {
+        &.active, &:hover.active {
+          color: #000000;
+          background-color: #f4bb51;
+          border-color: #bf800c;
+        }
+      }
+    }
+  }
+}
+
+.open .dropdown-toggle.datepicker table tr td.range.today {
+  color: #000000;
+  background-color: #f4bb51;
+  border-color: #bf800c;
+  &:hover {
+    color: #000000;
+    background-color: #f4bb51;
+    border-color: #bf800c;
+  }
+  &.disabled {
+    color: #000000;
+    background-color: #f4bb51;
+    border-color: #bf800c;
+    &:hover {
+      color: #000000;
+      background-color: #f4bb51;
+      border-color: #bf800c;
+    }
+  }
+}
+
+.datepicker table tr td.range.today {
+  &:active, &:hover:active {
+    background-image: none;
+  }
+  &.disabled {
+    &:active, &:hover:active {
+      background-image: none;
+    }
+  }
+  &.active, &:hover.active {
+    background-image: none;
+  }
+  &.disabled {
+    &.active, &:hover.active {
+      background-image: none;
+    }
+  }
+}
+
+.open .dropdown-toggle.datepicker table tr td.range.today {
+  background-image: none;
+  &:hover {
+    background-image: none;
+  }
+  &.disabled {
+    background-image: none;
+    &:hover {
+      background-image: none;
+    }
+  }
+}
+
+.datepicker table tr td.range.today {
+  &.disabled, &:hover.disabled {
+    background-color: #f7ca77;
+    border-color: #f1a417;
+  }
+  &.disabled {
+    &.disabled, &:hover.disabled {
+      background-color: #f7ca77;
+      border-color: #f1a417;
+    }
+  }
+  &[disabled], &:hover[disabled] {
+    background-color: #f7ca77;
+    border-color: #f1a417;
+  }
+  &.disabled {
+    &[disabled], &:hover[disabled] {
+      background-color: #f7ca77;
+      border-color: #f1a417;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.range.today {
+  background-color: #f7ca77;
+  border-color: #f1a417;
+  &:hover {
+    background-color: #f7ca77;
+    border-color: #f1a417;
+  }
+  &.disabled {
+    background-color: #f7ca77;
+    border-color: #f1a417;
+    &:hover {
+      background-color: #f7ca77;
+      border-color: #f1a417;
+    }
+  }
+}
+
+.datepicker table tr td.range.today {
+  &.disabled:hover, &[disabled]:hover, &.disabled[disabled]:hover {
+    background-color: #f7ca77;
+    border-color: #f1a417;
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.range.today {
+  &:hover, &.disabled:hover {
+    background-color: #f7ca77;
+    border-color: #f1a417;
+  }
+}
+
+.datepicker table tr td.range.today {
+  &.disabled:focus, &:hover.disabled:focus {
+    background-color: #f7ca77;
+    border-color: #f1a417;
+  }
+  &.disabled {
+    &.disabled:focus, &:hover.disabled:focus {
+      background-color: #f7ca77;
+      border-color: #f1a417;
+    }
+  }
+  &[disabled]:focus, &:hover[disabled]:focus {
+    background-color: #f7ca77;
+    border-color: #f1a417;
+  }
+  &.disabled {
+    &[disabled]:focus, &:hover[disabled]:focus {
+      background-color: #f7ca77;
+      border-color: #f1a417;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.range.today {
+  &:focus, &:hover:focus {
+    background-color: #f7ca77;
+    border-color: #f1a417;
+  }
+  &.disabled {
+    &:focus, &:hover:focus {
+      background-color: #f7ca77;
+      border-color: #f1a417;
+    }
+  }
+}
+
+.datepicker table tr td.range.today {
+  &.disabled:active, &:hover.disabled:active {
+    background-color: #f7ca77;
+    border-color: #f1a417;
+  }
+  &.disabled {
+    &.disabled:active, &:hover.disabled:active {
+      background-color: #f7ca77;
+      border-color: #f1a417;
+    }
+  }
+  &[disabled]:active, &:hover[disabled]:active {
+    background-color: #f7ca77;
+    border-color: #f1a417;
+  }
+  &.disabled {
+    &[disabled]:active, &:hover[disabled]:active {
+      background-color: #f7ca77;
+      border-color: #f1a417;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.range.today {
+  &:active, &:hover:active {
+    background-color: #f7ca77;
+    border-color: #f1a417;
+  }
+  &.disabled {
+    &:active, &:hover:active {
+      background-color: #f7ca77;
+      border-color: #f1a417;
+    }
+  }
+}
+
+.datepicker table tr td.range.today {
+  &.disabled.active, &:hover.disabled.active {
+    background-color: #f7ca77;
+    border-color: #f1a417;
+  }
+  &.disabled {
+    &.disabled.active, &:hover.disabled.active {
+      background-color: #f7ca77;
+      border-color: #f1a417;
+    }
+  }
+  &[disabled].active, &:hover[disabled].active {
+    background-color: #f7ca77;
+    border-color: #f1a417;
+  }
+  &.disabled {
+    &[disabled].active, &:hover[disabled].active {
+      background-color: #f7ca77;
+      border-color: #f1a417;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.range.today {
+  &.active, &:hover.active {
+    background-color: #f7ca77;
+    border-color: #f1a417;
+  }
+  &.disabled {
+    &.active, &:hover.active {
+      background-color: #f7ca77;
+      border-color: #f1a417;
+    }
+  }
+}
+
+.datepicker table tr td.selected {
+  color: #ffffff;
+  background-color: #999999;
+  border-color: #555555;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  &:hover {
+    color: #ffffff;
+    background-color: #999999;
+    border-color: #555555;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  }
+  &.disabled {
+    color: #ffffff;
+    background-color: #999999;
+    border-color: #555555;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    &:hover {
+      color: #ffffff;
+      background-color: #999999;
+      border-color: #555555;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    }
+  }
+  &:hover, &.disabled:hover, &:focus, &:hover:focus {
+    color: #ffffff;
+    background-color: #858585;
+    border-color: #373737;
+  }
+  &.disabled {
+    &:focus, &:hover:focus {
+      color: #ffffff;
+      background-color: #858585;
+      border-color: #373737;
+    }
+  }
+  &:active, &:hover:active {
+    color: #ffffff;
+    background-color: #858585;
+    border-color: #373737;
+  }
+  &.disabled {
+    &:active, &:hover:active {
+      color: #ffffff;
+      background-color: #858585;
+      border-color: #373737;
+    }
+  }
+  &.active, &:hover.active {
+    color: #ffffff;
+    background-color: #858585;
+    border-color: #373737;
+  }
+  &.disabled {
+    &.active, &:hover.active {
+      color: #ffffff;
+      background-color: #858585;
+      border-color: #373737;
+    }
+  }
+}
+
+.open .dropdown-toggle.datepicker table tr td.selected {
+  color: #ffffff;
+  background-color: #858585;
+  border-color: #373737;
+  &:hover {
+    color: #ffffff;
+    background-color: #858585;
+    border-color: #373737;
+  }
+  &.disabled {
+    color: #ffffff;
+    background-color: #858585;
+    border-color: #373737;
+    &:hover {
+      color: #ffffff;
+      background-color: #858585;
+      border-color: #373737;
+    }
+  }
+}
+
+.datepicker table tr td.selected {
+  &:active, &:hover:active {
+    background-image: none;
+  }
+  &.disabled {
+    &:active, &:hover:active {
+      background-image: none;
+    }
+  }
+  &.active, &:hover.active {
+    background-image: none;
+  }
+  &.disabled {
+    &.active, &:hover.active {
+      background-image: none;
+    }
+  }
+}
+
+.open .dropdown-toggle.datepicker table tr td.selected {
+  background-image: none;
+  &:hover {
+    background-image: none;
+  }
+  &.disabled {
+    background-image: none;
+    &:hover {
+      background-image: none;
+    }
+  }
+}
+
+.datepicker table tr td.selected {
+  &.disabled, &:hover.disabled {
+    background-color: #999999;
+    border-color: #555555;
+  }
+  &.disabled {
+    &.disabled, &:hover.disabled {
+      background-color: #999999;
+      border-color: #555555;
+    }
+  }
+  &[disabled], &:hover[disabled] {
+    background-color: #999999;
+    border-color: #555555;
+  }
+  &.disabled {
+    &[disabled], &:hover[disabled] {
+      background-color: #999999;
+      border-color: #555555;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.selected {
+  background-color: #999999;
+  border-color: #555555;
+  &:hover {
+    background-color: #999999;
+    border-color: #555555;
+  }
+  &.disabled {
+    background-color: #999999;
+    border-color: #555555;
+    &:hover {
+      background-color: #999999;
+      border-color: #555555;
+    }
+  }
+}
+
+.datepicker table tr td.selected {
+  &.disabled:hover, &[disabled]:hover, &.disabled[disabled]:hover {
+    background-color: #999999;
+    border-color: #555555;
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.selected {
+  &:hover, &.disabled:hover {
+    background-color: #999999;
+    border-color: #555555;
+  }
+}
+
+.datepicker table tr td.selected {
+  &.disabled:focus, &:hover.disabled:focus {
+    background-color: #999999;
+    border-color: #555555;
+  }
+  &.disabled {
+    &.disabled:focus, &:hover.disabled:focus {
+      background-color: #999999;
+      border-color: #555555;
+    }
+  }
+  &[disabled]:focus, &:hover[disabled]:focus {
+    background-color: #999999;
+    border-color: #555555;
+  }
+  &.disabled {
+    &[disabled]:focus, &:hover[disabled]:focus {
+      background-color: #999999;
+      border-color: #555555;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.selected {
+  &:focus, &:hover:focus {
+    background-color: #999999;
+    border-color: #555555;
+  }
+  &.disabled {
+    &:focus, &:hover:focus {
+      background-color: #999999;
+      border-color: #555555;
+    }
+  }
+}
+
+.datepicker table tr td.selected {
+  &.disabled:active, &:hover.disabled:active {
+    background-color: #999999;
+    border-color: #555555;
+  }
+  &.disabled {
+    &.disabled:active, &:hover.disabled:active {
+      background-color: #999999;
+      border-color: #555555;
+    }
+  }
+  &[disabled]:active, &:hover[disabled]:active {
+    background-color: #999999;
+    border-color: #555555;
+  }
+  &.disabled {
+    &[disabled]:active, &:hover[disabled]:active {
+      background-color: #999999;
+      border-color: #555555;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.selected {
+  &:active, &:hover:active {
+    background-color: #999999;
+    border-color: #555555;
+  }
+  &.disabled {
+    &:active, &:hover:active {
+      background-color: #999999;
+      border-color: #555555;
+    }
+  }
+}
+
+.datepicker table tr td.selected {
+  &.disabled.active, &:hover.disabled.active {
+    background-color: #999999;
+    border-color: #555555;
+  }
+  &.disabled {
+    &.disabled.active, &:hover.disabled.active {
+      background-color: #999999;
+      border-color: #555555;
+    }
+  }
+  &[disabled].active, &:hover[disabled].active {
+    background-color: #999999;
+    border-color: #555555;
+  }
+  &.disabled {
+    &[disabled].active, &:hover[disabled].active {
+      background-color: #999999;
+      border-color: #555555;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.selected {
+  &.active, &:hover.active {
+    background-color: #999999;
+    border-color: #555555;
+  }
+  &.disabled {
+    &.active, &:hover.active {
+      background-color: #999999;
+      border-color: #555555;
+    }
+  }
+}
+
+.datepicker table tr td.active {
+  color: #ffffff;
+  background-color: #428bca;
+  border-color: #357ebd;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  &:hover {
+    color: #ffffff;
+    background-color: #428bca;
+    border-color: #357ebd;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  }
+  &.disabled {
+    color: #ffffff;
+    background-color: #428bca;
+    border-color: #357ebd;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    &:hover {
+      color: #ffffff;
+      background-color: #428bca;
+      border-color: #357ebd;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    }
+  }
+  &:hover, &.disabled:hover, &:focus, &:hover:focus {
+    color: #ffffff;
+    background-color: #3276b1;
+    border-color: #285e8e;
+  }
+  &.disabled {
+    &:focus, &:hover:focus {
+      color: #ffffff;
+      background-color: #3276b1;
+      border-color: #285e8e;
+    }
+  }
+  &:active, &:hover:active {
+    color: #ffffff;
+    background-color: #3276b1;
+    border-color: #285e8e;
+  }
+  &.disabled {
+    &:active, &:hover:active {
+      color: #ffffff;
+      background-color: #3276b1;
+      border-color: #285e8e;
+    }
+  }
+  &.active, &:hover.active {
+    color: #ffffff;
+    background-color: #3276b1;
+    border-color: #285e8e;
+  }
+  &.disabled {
+    &.active, &:hover.active {
+      color: #ffffff;
+      background-color: #3276b1;
+      border-color: #285e8e;
+    }
+  }
+}
+
+.open .dropdown-toggle.datepicker table tr td.active {
+  color: #ffffff;
+  background-color: #3276b1;
+  border-color: #285e8e;
+  &:hover {
+    color: #ffffff;
+    background-color: #3276b1;
+    border-color: #285e8e;
+  }
+  &.disabled {
+    color: #ffffff;
+    background-color: #3276b1;
+    border-color: #285e8e;
+    &:hover {
+      color: #ffffff;
+      background-color: #3276b1;
+      border-color: #285e8e;
+    }
+  }
+}
+
+.datepicker table tr td.active {
+  &:active, &:hover:active {
+    background-image: none;
+  }
+  &.disabled {
+    &:active, &:hover:active {
+      background-image: none;
+    }
+  }
+  &.active, &:hover.active {
+    background-image: none;
+  }
+  &.disabled {
+    &.active, &:hover.active {
+      background-image: none;
+    }
+  }
+}
+
+.open .dropdown-toggle.datepicker table tr td.active {
+  background-image: none;
+  &:hover {
+    background-image: none;
+  }
+  &.disabled {
+    background-image: none;
+    &:hover {
+      background-image: none;
+    }
+  }
+}
+
+.datepicker table tr td.active {
+  &.disabled, &:hover.disabled {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &.disabled, &:hover.disabled {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+  &[disabled], &:hover[disabled] {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &[disabled], &:hover[disabled] {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.active {
+  background-color: #428bca;
+  border-color: #357ebd;
+  &:hover {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    background-color: #428bca;
+    border-color: #357ebd;
+    &:hover {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+.datepicker table tr td.active {
+  &.disabled:hover, &[disabled]:hover, &.disabled[disabled]:hover {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.active {
+  &:hover, &.disabled:hover {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+}
+
+.datepicker table tr td.active {
+  &.disabled:focus, &:hover.disabled:focus {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &.disabled:focus, &:hover.disabled:focus {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+  &[disabled]:focus, &:hover[disabled]:focus {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &[disabled]:focus, &:hover[disabled]:focus {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.active {
+  &:focus, &:hover:focus {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &:focus, &:hover:focus {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+.datepicker table tr td.active {
+  &.disabled:active, &:hover.disabled:active {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &.disabled:active, &:hover.disabled:active {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+  &[disabled]:active, &:hover[disabled]:active {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &[disabled]:active, &:hover[disabled]:active {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.active {
+  &:active, &:hover:active {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &:active, &:hover:active {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+.datepicker table tr td.active {
+  &.disabled.active, &:hover.disabled.active {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &.disabled.active, &:hover.disabled.active {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+  &[disabled].active, &:hover[disabled].active {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &[disabled].active, &:hover[disabled].active {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td.active {
+  &.active, &:hover.active {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &.active, &:hover.active {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+.datepicker table tr td span {
+  display: block;
+  width: 23%;
+  height: 54px;
+  line-height: 54px;
+  float: left;
+  margin: 1%;
+  cursor: pointer;
+  border-radius: 4px;
+  &:hover {
+    background: #eeeeee;
+  }
+  &.disabled {
+    background: none;
+    color: #999999;
+    cursor: default;
+    &:hover {
+      background: none;
+      color: #999999;
+      cursor: default;
+    }
+  }
+  &.active {
+    color: #ffffff;
+    background-color: #428bca;
+    border-color: #357ebd;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    &:hover {
+      color: #ffffff;
+      background-color: #428bca;
+      border-color: #357ebd;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    }
+    &.disabled {
+      color: #ffffff;
+      background-color: #428bca;
+      border-color: #357ebd;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+      &:hover {
+        color: #ffffff;
+        background-color: #428bca;
+        border-color: #357ebd;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+      }
+    }
+    &:hover, &.disabled:hover, &:focus, &:hover:focus {
+      color: #ffffff;
+      background-color: #3276b1;
+      border-color: #285e8e;
+    }
+    &.disabled {
+      &:focus, &:hover:focus {
+        color: #ffffff;
+        background-color: #3276b1;
+        border-color: #285e8e;
+      }
+    }
+    &:active, &:hover:active {
+      color: #ffffff;
+      background-color: #3276b1;
+      border-color: #285e8e;
+    }
+    &.disabled {
+      &:active, &:hover:active {
+        color: #ffffff;
+        background-color: #3276b1;
+        border-color: #285e8e;
+      }
+    }
+    &.active, &:hover.active {
+      color: #ffffff;
+      background-color: #3276b1;
+      border-color: #285e8e;
+    }
+    &.disabled {
+      &.active, &:hover.active {
+        color: #ffffff;
+        background-color: #3276b1;
+        border-color: #285e8e;
+      }
+    }
+  }
+}
+
+.open .dropdown-toggle.datepicker table tr td span.active {
+  color: #ffffff;
+  background-color: #3276b1;
+  border-color: #285e8e;
+  &:hover {
+    color: #ffffff;
+    background-color: #3276b1;
+    border-color: #285e8e;
+  }
+  &.disabled {
+    color: #ffffff;
+    background-color: #3276b1;
+    border-color: #285e8e;
+    &:hover {
+      color: #ffffff;
+      background-color: #3276b1;
+      border-color: #285e8e;
+    }
+  }
+}
+
+.datepicker table tr td span.active {
+  &:active, &:hover:active {
+    background-image: none;
+  }
+  &.disabled {
+    &:active, &:hover:active {
+      background-image: none;
+    }
+  }
+  &.active, &:hover.active {
+    background-image: none;
+  }
+  &.disabled {
+    &.active, &:hover.active {
+      background-image: none;
+    }
+  }
+}
+
+.open .dropdown-toggle.datepicker table tr td span.active {
+  background-image: none;
+  &:hover {
+    background-image: none;
+  }
+  &.disabled {
+    background-image: none;
+    &:hover {
+      background-image: none;
+    }
+  }
+}
+
+.datepicker table tr td span.active {
+  &.disabled, &:hover.disabled {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &.disabled, &:hover.disabled {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+  &[disabled], &:hover[disabled] {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &[disabled], &:hover[disabled] {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td span.active {
+  background-color: #428bca;
+  border-color: #357ebd;
+  &:hover {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    background-color: #428bca;
+    border-color: #357ebd;
+    &:hover {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+.datepicker table tr td span.active {
+  &.disabled:hover, &[disabled]:hover, &.disabled[disabled]:hover {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+}
+
+fieldset[disabled] .datepicker table tr td span.active {
+  &:hover, &.disabled:hover {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+}
+
+.datepicker table tr td span.active {
+  &.disabled:focus, &:hover.disabled:focus {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &.disabled:focus, &:hover.disabled:focus {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+  &[disabled]:focus, &:hover[disabled]:focus {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &[disabled]:focus, &:hover[disabled]:focus {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td span.active {
+  &:focus, &:hover:focus {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &:focus, &:hover:focus {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+.datepicker table tr td span.active {
+  &.disabled:active, &:hover.disabled:active {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &.disabled:active, &:hover.disabled:active {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+  &[disabled]:active, &:hover[disabled]:active {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &[disabled]:active, &:hover[disabled]:active {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td span.active {
+  &:active, &:hover:active {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &:active, &:hover:active {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+.datepicker table tr td span.active {
+  &.disabled.active, &:hover.disabled.active {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &.disabled.active, &:hover.disabled.active {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+  &[disabled].active, &:hover[disabled].active {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &[disabled].active, &:hover[disabled].active {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+fieldset[disabled] .datepicker table tr td span.active {
+  &.active, &:hover.active {
+    background-color: #428bca;
+    border-color: #357ebd;
+  }
+  &.disabled {
+    &.active, &:hover.active {
+      background-color: #428bca;
+      border-color: #357ebd;
+    }
+  }
+}
+
+.datepicker {
+  table tr td span {
+    &.old, &.new {
+      color: #999999;
+    }
+  }
+  th.datepicker-switch {
+    width: 145px;
+  }
+  thead tr:first-child th, tfoot tr th {
+    cursor: pointer;
+  }
+  thead tr:first-child th:hover, tfoot tr th:hover {
+    background: #eeeeee;
+  }
+  .cw {
+    font-size: 10px;
+    width: 12px;
+    padding: 0 2px 0 5px;
+    vertical-align: middle;
+  }
+  thead tr:first-child th.cw {
+    cursor: default;
+    background-color: transparent;
+  }
+}
+
+.input-group.date .input-group-addon i {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+.input-daterange {
+  input {
+    text-align: center;
+    &:first-child {
+      border-radius: 3px 0 0 3px;
+    }
+    &:last-child {
+      border-radius: 0 3px 3px 0;
+    }
+  }
+  .input-group-addon {
+    width: auto;
+    min-width: 16px;
+    padding: 4px 5px;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    text-shadow: 0 1px 0 #fff;
+    vertical-align: middle;
+    background-color: #eeeeee;
+    border-width: 1px 0;
+    margin-left: -5px;
+    margin-right: -5px;
+  }
+}
+
+.datepicker.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  float: left;
+  display: none;
+  min-width: 160px;
+  list-style: none;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+  color: #333333;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.428571429;
+  th, td {
+    padding: 4px 5px;
+  }
+}
+
+/* END BOOTSTRAP DATEPICKER */

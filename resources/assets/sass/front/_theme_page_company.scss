@@ -1,0 +1,143 @@
+#company-home-tab {
+	.nav-tabs {
+		li {
+			@include respond-to(handhelds) {
+				width: 100%;
+				border: thin solid #d5d5d5;
+			}
+
+			&.active {
+				a {
+					background-color: $accent-color;
+					color: #fff;
+				}
+			}
+
+			a {
+				@include respond-to(handhelds) {
+					border: none !important;
+					border-radius: 0 !important;
+				}
+			}
+		}
+	}
+
+	.tab-pane {
+		border: thin solid #d5d5d5;
+		float: left;
+		width: 100%;
+	}
+}
+
+.company-job-list {
+	padding: 0;
+	margin: 0;
+
+	li {
+		border-bottom: thin solid #d5d5d5;
+		clear: both;
+		min-height: 105px;
+		padding: 15px 50px 15px 15px;
+
+		@include respond-to(handhelds) {
+			padding: 15px;
+
+			.btn {
+				margin-top: 10px;
+			}
+		}
+	}
+}
+
+#companyPostJobForm {
+	.radio-clearfix {
+		margin-bottom: 10px;
+	}
+}
+
+#cv-search {
+	background-color: darken($accent-color, 10%);
+	color: #fff;
+	padding: 22px 0 55px;
+
+	.form-control {
+		&.form-control-feedback {
+			color: $accent-color;
+			font-size: 16px;
+			height: 40px;
+			line-height: 40px;
+			top: 32px !important;
+		}
+	}
+}
+
+.cv-search-wrapper {
+	clear: both;
+}
+
+.cv-search-title {
+	font-size: 27px;
+	font-weight: 700;
+	margin-bottom: 26px;
+}
+
+.job-category-select-wrapper {
+	margin-bottom: 20px;
+	margin-top: 20px;
+
+	.minict_wrapper {
+		border-radius: 0;
+		box-shadow: none;
+		color: inherit;
+		background: #fff;
+		font-size: 14px;
+		height: 41px;
+
+		&:after {
+			color: $accent-color;
+		}
+
+		span {
+			color: #555;
+			height: 40px;
+			padding: 11px 12px;
+		}
+
+		& > input {
+			color: #555;
+			height: 40px;
+			padding: 11px 12px;
+			background: transparent;
+			border: medium none;
+		}
+
+		ul {
+			margin-top: 20px;
+
+			li {
+				border-bottom: thin solid #d5d5d5;
+				height: auto;
+				padding-bottom: 10px;
+				padding-left: 14px;
+				padding-top: 10px;
+				color: #777;
+			}
+		}
+	}
+}
+
+#cv-result-listing {
+	.list-result {
+		li {
+			border-bottom: thin solid #e3e3e3;
+			padding: 30px 0;
+
+			i.fa-map-marker {
+				color: #f44336;
+				font-size: 24px;
+				line-height: 30px;
+				margin-right: 10px;
+			}
+		}
+	}
+}

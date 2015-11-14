@@ -1,0 +1,33 @@
+.alert-widget {
+	.alert-widget-title {
+		background: $accent-color;
+		color: $primary-color-text;
+		padding: 10px 10px 10px 15px;
+
+		.badge {
+			padding: 5px;
+		}
+	}
+
+	.alert-widget-content {
+		ul.list-group {
+			li {
+				&.list-group-item{
+					&:before, &:after {
+						clear: both;
+					}
+
+					&:first-child {
+						border-top-left-radius: 0;
+    				border-top-right-radius: 0;
+					}
+
+					&:last-child {
+						border-bottom-left-radius: 0;
+    				border-bottom-right-radius: 0;
+					}
+				}
+			}
+		}
+	}
+}

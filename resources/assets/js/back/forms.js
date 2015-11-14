@@ -15,13 +15,7 @@ const adminRoutes = { // admin routes
 
 export class Forms {
 	constructor() {
-		if ($('#merchantLoginForm')[0]) {
-			$('body').addClass('gray-bg');
-			this.initMerchantLoginForm('#merchantLoginForm');
-		}
-
 		if ($('#adminLoginForm')[0]) {
-			$('body').addClass('gray-bg');
 			this.initAdminLoginForm('#adminLoginForm');
 		}
 
@@ -32,52 +26,6 @@ export class Forms {
 		if ($('.form-action-edit')[0]) {
 			this.initCommonEditForm();
 		}
-
-		if ($('#dealForm')[0]) {
-			this.initDealForm();
-		}
-
-		if ($('#voucherForm')[0]) {
-			this.initVoucherForm();
-		}
-	}
-	initMerchantLoginForm(form) {
-		var processing = false;
-		var $form = $(form);
-
-		$form.find('[type=submit]').on('click', function (f) {
-			f.preventDefault();
-			var aes;
-
-			if ($form.parsley().validate() && ! processing) {
-				processing = true;
-				aes = $.jCryption.encrypt(jKey.key1, jKey.key2);
-				$.jCryption.authenticate(aes, jKey.pub_key, jKey.handshake, (function () {
-					$form.find('[type=submit]').disable(true);
-					$.post(merchantRoutes.login, {
-						data: JSON.stringify($.jCryption.encrypt($form.serialize(), aes))
-					}).done(function(e) {
-						processing = false;
-						$form.showMessage(e.message, e.type);
-						if (e.type === 'success') {
-							window.location.replace(e.redirect);
-						}
-						else {
-							$form.find('[type=submit]').disable(false);
-						}
-					}).fail(function (xhr, status, e) {
-						processing = false;
-						$form.showMessage(xhr.responseText, 'danger');
-						$form.find('[type=submit]').disable(false);
-					});
-				}));
-			}
-			else {
-				$form.showMessage('Logging you in', 'info');
-				return;
-			}
-			return false;
-		});
 	}
 	initAdminLoginForm(form) {
 		var processing = false;
@@ -301,132 +249,6 @@ export class Forms {
 				return;
 			}
 			return false;
-		});
-	}
-	initDealForm() {
-		var processing = false;
-
-		if ($('input[name=merchant_id]').val() !== '') {
-			if ( ! processing) {
-				processing = true;
-				var $this = $('input[name=merchant_id]');
-				var $route = $this.attr('data-route');
-				$('.m-info').empty();
-				$this.addClass('disabled');
-				$.get($route, {i: $this.val(), imageHtml: true}).done(function (e) {
-					$this.removeClass('disabled');
-					processing = false;
-					if (e.type === 'success') {
-						$('.m-info').each(function (t) {
-							$(this).append(e.merchant[$(this).attr('data-id')]);
-						});
-					}
-					else{
-						alert(e.message);
-					}
-				}).fail(function (xhr, status, e) {
-					$this.removeClass('disabled');
-					processing = false;
-					alert(xhr.responseText);
-				});
-			}
-			else {
-				alert("Another process is running, please wait !");
-			}
-		}
-
-		$('input[name=merchant_id]').on('change', function (e) {
-			if ($(this).val() !== '') {
-				if ( ! processing) {
-					processing = true;
-					var $this = $(this);
-					var $route = $this.attr('data-route');
-					$('.m-info').empty();
-					$this.addClass('disabled');
-					$.get($route, {i: $this.val(), imageHtml: true}).done(function (e) {
-						$this.removeClass('disabled');
-						processing = false;
-						if (e.type === 'success') {
-							$('.m-info').each(function (t) {
-								$(this).append(e.merchant[$(this).attr('data-id')]);
-							});
-						}
-						else{
-							alert(e.message);
-						}
-					}).fail(function (xhr, status, e) {
-						$this.removeClass('disabled');
-						processing = false;
-						alert(xhr.responseText);
-					});
-				}
-				else {
-					alert("Another process is running, please wait !");
-				}
-			}
-		});
-	}
-	initVoucherForm() {
-		var processing = false;
-
-		if ($('input[name=deal_id]').val() !== '') {
-			if ( ! processing) {
-				processing = true;
-				var $this = $('input[name=deal_id]');
-				var $route = $this.attr('data-route');
-				$('.m-info').empty();
-				$this.addClass('disabled');
-				$.get($route, {i: $this.val(), imageHtml: true}).done(function (e) {
-					$this.removeClass('disabled');
-					processing = false;
-					if (e.type === 'success') {
-						$('.m-info').each(function (t) {
-							$(this).append(e.deal[$(this).attr('data-id')]);
-						});
-					}
-					else{
-						alert(e.message);
-					}
-				}).fail(function (xhr, status, e) {
-					$this.removeClass('disabled');
-					processing = false;
-					alert(xhr.responseText);
-				});
-			}
-			else {
-				alert("Another process is running, please wait !");
-			}
-		}
-
-		$('input[name=deal_id]').on('change', function (e) {
-			if ($(this).val() !== '') {
-				if ( ! processing) {
-					processing = true;
-					var $this = $(this);
-					var $route = $this.attr('data-route');
-					$('.m-info').empty();
-					$this.addClass('disabled');
-					$.get($route, {i: $this.val(), imageHtml: true}).done(function (e) {
-						$this.removeClass('disabled');
-						processing = false;
-						if (e.type === 'success') {
-							$('.m-info').each(function (t) {
-								$(this).append(e.deal[$(this).attr('data-id')]);
-							});
-						}
-						else{
-							alert(e.message);
-						}
-					}).fail(function (xhr, status, e) {
-						$this.removeClass('disabled');
-						processing = false;
-						alert(xhr.responseText);
-					});
-				}
-				else {
-					alert("Another process is running, please wait !");
-				}
-			}
 		});
 	}
 }

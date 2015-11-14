@@ -1,0 +1,257 @@
+#header {
+	background: $primary-dark;
+	border-bottom: thin solid $primary-dark-border;
+	border-top: 3px solid $accent-color;
+	line-height: 99px;
+	min-height: 99px;
+
+	.logo-wrapper {
+		img {
+			width: 300px;
+
+			@include respond-to(handhelds) {
+				width: 250px;
+			}
+		}
+	}
+}
+
+#header-bar {
+	border-bottom: thin solid $primary-dark-border;
+	height: 44px;
+	line-height: 1em;
+	text-align: right;
+
+	@include respond-to(handhelds) {
+		height: auto;
+	}
+}
+
+.header-social-media {
+	display: inline-block;
+	list-style: outside none none;
+	margin: 15px 20px 0 0;
+	padding: 0;
+
+	@include respond-to(handhelds) {
+		display: block;
+		float: left;
+		margin-bottom: 10px;
+		margin-top: 15px;
+		text-align: left;
+		vertical-align: middle;
+	}
+
+	li {
+		display: inline-block;
+		font-size: 16px;
+
+		a {
+			color: #fff;
+			padding: 0 10px;
+
+			&:hover {
+				color: $accent-color;
+			}
+		}
+	}
+}
+
+.header-login-register {
+	display: inline-block;
+	vertical-align: top;
+
+	@include respond-to(handhelds) {
+		display: block;
+		float: right;
+		margin-bottom: 5px;
+		margin-top: 5px;
+		margin-right: 5px;
+		text-align: center;
+	}
+
+	.btn-header-register {
+		background: darken($accent-color, 10%);
+	}
+
+	.btn-header-login {
+		background: $accent-color;
+	}
+
+	.btn {
+		color: #fff;
+		font-weight: 300;
+		margin-left: 3px;
+		margin-top: 4px;
+	}
+}
+
+#menu-wrapper {
+	position: relative;
+}
+
+.navbar-toggle {
+	position: absolute;
+	right: 0;
+	top: -70px;
+
+	.icon-bar {
+		background: $accent-color;
+	}
+}
+
+#main-menu {
+	position: relative;
+	text-align: right;
+	text-transform: uppercase;
+
+	@include respond-to(medium-screens) {
+		text-align: left;
+	}
+
+	.nav-menu {
+		list-style: outside none none;
+		margin: 0;
+		padding: 0;
+
+		& > li {
+			display: inline-block;
+			padding: 0 20px;
+
+			&.has-children {
+				@include respond-to(handhelds) {
+					a:after {
+						content: '\f107';
+						font-family: 'fontAwesome';
+						font-size: 20px;
+						position: absolute;
+						right: 10px;
+						text-align: center;
+						width: 35px;
+					}
+
+					li {
+						a:after {
+							content: '';
+						}
+					}
+				}
+
+				@include respond-to(medium-wide) {
+					&:hover {
+						.sub-menu {
+							display: block;
+						}
+					}
+				}
+			}
+		}
+
+		li {
+			a {
+				border-bottom: thin solid transparent;
+				color: #fff;
+				font-weight: 300;
+				padding: 14px 0;
+				@include transition(all, .3s, ease);
+
+				@include respond-to(medium-wide) {
+					&:hover {
+						text-decoration: none;
+						color: $accent-color;
+						border-bottom-color: $accent-color;
+					}
+				}
+			}
+
+			@include respond-to(handhelds) {
+				display: block;
+				line-height: 1em;
+				padding: 0;
+				text-align: left;
+				border-bottom: thin solid $accent-color;
+				font-size: 12px;
+
+				li {
+					a {
+						padding-left: 20px;
+
+						&:hover {
+							text-decoration: none;
+						}
+					}
+				}
+
+				a {
+					display: block;
+				}
+			}
+		}
+	}
+
+	.sub-menu {
+		background: #fff;
+		border-bottom: 3px solid darken($accent-color, 10%);
+		border-top: $accent-color;
+		display: none;
+		line-height: normal;
+		list-style: outside none none;
+		margin: 0;
+		min-width: 250px;
+		padding: 0;
+		position: absolute;
+		text-align: left;
+		z-index: 9;
+
+		@include respond-to(handhelds) {
+			position: static;
+			background: $primary-dark;
+			box-shadow: none;
+			border-bottom: none;
+		}
+
+		li {
+			a {
+				display: block;
+				padding-left: 15px;
+				padding-right: 15px;
+				color: $primary-text-color;
+			}
+
+			&:hover {
+				background: #f0f0f0;
+
+				a {
+					color: $accent-color;
+				}
+			}
+
+			@include respond-to(handhelds) {
+				display: block;
+				line-height: 1em;
+				padding: 0;
+				text-align: left;
+				border-bottom: none;
+
+				a {
+					color: #fff;
+
+					&:before {
+						content: '-';
+						margin-right: 5px;
+					}
+				}
+			}
+		}
+	}
+
+	ul ul {
+		box-shadow: 1px 1px 30px rgba(0, 0, 0, .6);
+		-moz-box-shadow: 1px 1px 30px rgba(0, 0, 0, .6);
+		-webkit-box-shadow: 1px 1px 30px rgba(0, 0, 0, .6);
+	}
+
+	.has-children {
+		position: relative;
+	}
+}

@@ -1,0 +1,40 @@
+.loginscreen {
+	&.middle-box {
+		width: 300px;
+	}
+
+	form {
+		.form-control {
+			background-color: #333;
+			color: #fff;
+		}
+	}
+}
+
+.middle-box {
+	margin: 0 auto;
+	max-width: 400px;
+	padding-top: 40px;
+	z-index: 100;
+
+	h1 {
+		font-size: 170px;
+	}
+}
+
+.logo-name {
+	color: #e6e6e6;
+	font-size: 180px;
+	font-weight: 800;
+	letter-spacing: -10px;
+	margin-bottom: 0;
+}
+
+.logo-element {
+	text-align: center;
+	font-size: 18px;
+	font-weight: 600;
+	color: white;
+	display: none;
+	padding: 18px 0;
+}

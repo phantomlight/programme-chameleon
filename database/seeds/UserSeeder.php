@@ -14,29 +14,28 @@ class UserSeeder extends Seeder {
 		'admin' => [
 			'name'		=>	'Admin',
 			'permissions'	=>	[
-				'admin'			=>	1,
-				'manager'		=>	1,
-				'merchant'	=>	1,
-				'user'			=>	1,
+				'admin'				=>	1,
+				'company'			=>	1,
+				'contractor'	=>	1,
+				'agency'			=>	1,
 			],
 		],
-		'manager' => [
-			'name'		=>	'Manager',
+		'company' => [
+			'name'		=>	'Company',
 			'permissions'	=>	[
-				'manager'		=>	1,
-				'merchant'	=>	1,
+				'company'			=>	1,
 			],
 		],
-		'merchant' => [
-			'name'		=>	'Merchant',
+		'contractor' => [
+			'name'		=>	'Contrator',
 			'permissions'	=>	[
-				'merchant'	=>	1,
+				'contrator'			=>	1,
 			],
 		],
-		'user' => [
-			'name'		=>	'User',
+		'agency'	=>	[
+			'name'		=>	'Agency',
 			'permissions'	=>	[
-				'user'	=>	1,
+				'agency'			=>	1,
 			],
 		],
 	];
@@ -49,7 +48,7 @@ class UserSeeder extends Seeder {
 
 			// Add super user
 			$super = [
-				'email'				=>	'forddyce92@gmail.com',
+				'email'				=>	'superadmin@email.com',
 				'password'		=>	'password',
 				'first_name'	=>	'Fordyce',
 				'last_name'		=>	'Gozali',

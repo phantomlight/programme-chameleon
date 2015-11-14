@@ -1,0 +1,178 @@
+#footer-query {
+	background-color: $accent-color;
+	color: #fff;
+	padding: 37px 0 61px;
+	text-align: center;
+
+	h2 {
+		font-size: 36px;
+		font-weight: 400;
+		margin-bottom: 31px;
+	}
+
+	p {
+		line-height: 24px;
+	}
+
+	.footer-query-contact {
+		color: #fff;
+	}
+}
+
+.footer-query-contact {
+	color: #343434;
+	font-size: 36px;
+	padding-top: 23px;
+}
+
+.footer-navigation {
+	background-color: #343434;
+	border-bottom: thin solid #3d3d3d;
+	text-align: center;
+}
+
+#footer-menu {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+
+	li {
+		display: inline-block;
+		margin: 0;
+		padding: 0;
+
+		a {
+			color: #777f7f;
+			display: block;
+			padding: 20px;
+			text-transform: uppercase;
+
+			&:hover {
+				text-decoration: none;
+				color: #fff;
+			}
+		}
+	}
+}
+
+#footer {
+	background: #343434;
+	color: #868686;
+	padding: 20px 0 30px;
+}
+
+#footer-widgets {
+	.widget {
+		padding-top: 15px;
+	}
+
+	.widgets-container {
+		border-right: thin solid #414141;
+		min-height: 262px;
+		padding: 0 10px 0 25px;
+	}
+
+	.textwidget {
+		font-size: 13px;
+		line-height: 22px;
+		padding-top: 3px;
+	}
+
+	ul {
+		list-style: outside none none;
+		margin: 0;
+		padding: 0 0 0 10px;
+
+		li {
+			padding: 5px 0 17px;
+
+			a {
+				color: #818181;
+				font-size: 13px;
+				text-decoration: none;
+				text-transform: uppercase;
+			}
+		}
+	}
+}
+
+.footer-widget-title {
+	color: #fff;
+	font-size: 18px;
+	font-weight: 400 !important;
+	margin-bottom: 20px;
+	margin-top: 5px;
+}
+
+.input-newsletter {
+	background: #656565;
+	border: medium none;
+	border-radius: 0;
+	color: #868686;
+	height: 40px;
+	padding: 10px;
+	width: 100%;
+}
+
+.btn-newsletter {
+	background: $accent-color;
+	border: medium none;
+	border-radius: 0;
+	color: #fff;
+	font-size: 16px;
+	margin: 0;
+	padding: 7px 30px;
+
+	&:hover {
+		background: lighten($accent-color, 10%);
+	}
+}
+
+.widget {
+	a {
+		text-decoration: none;
+	}
+}
+
+.media-footer {
+	background: url('../img/icon-media-footer.png');
+	display: inline-block;
+	height: 24px;
+	line-height: 25px;
+	margin-right: 5px;
+	margin-top: 28px;
+	width: 24px;
+}
+
+.footer-twitt {
+	background-position: 0 0;
+}
+
+.footer-fb {
+	background-position: -30px 0;
+}
+
+.footer-linkedin {
+	background-position: -58px 0;
+}
+
+.footer-yahoo {
+	background-position: -92px 0;
+	width: 27px;
+}
+
+.footer-blog {
+	background-position: -133px 0;
+}
+
+.footer-rss {
+	background-position: -167px 0;
+}
+
+#footer-text {
+	margin-top: 25px;
+
+	a {
+		color: #fff;
+	}
+}

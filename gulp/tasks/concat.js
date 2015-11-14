@@ -6,6 +6,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var front_main_libs = [
 	'./plugins/jcryption.min.js',
 	'./plugins/parsley.min.js',
+	'./plugins/holder.js',
 	'./plugins/jquery/ui/core.js',
 	'./plugins/jquery/ui/widget.js',
 	'./plugins/jquery/ui/mouse.js',
@@ -18,11 +19,22 @@ var front_main_libs = [
 	'./plugins/jquery/ui/effects.js',
 	'./plugins/jquery/ui/effects-fade.js',
 	'./plugins/jquery/jquery.form.js',
+	'./plugins/bootstrap/bootstrap-tagsinput.js',
+	'./plugins/bootstrap/bootstrap-datepicker.js',
 ];
 
 var back_libs = [
 	'./plugins/jcryption.min.js',
 	'./plugins/parsley.min.js',
+	'./plugins/holder.js',
+	'./plugins/jquery/jquery.metismenu.js',
+	'./plugins/jquery/jquery.slimscroll.js',
+	'./plugins/pace.min.js',
+	'./plugins/jquery/jquery.footable.js',
+	'./plugins/jquery/exportTable/jquery.base64.js',
+	'./plugins/jquery/exportTable/tableExport.js',
+	'./plugins/bootstrap/bootstrap-datepicker.js',
+	'./plugins/summernote.js',
 ];
 
 // Concat Frontend libs
