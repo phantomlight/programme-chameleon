@@ -1,8 +1,29 @@
 #agency-dashboard {
 	.agency-contractor-list {
+		max-height: 400px;
+		overflow-y: auto;
+		overflow-x: hidden;
+
+		@include respond-to(handhelds) {
+			max-height: 100%;
+			overflow: hidden;
+
+			li {
+				padding: 25px 15px;
+			}
+		}
+
+		* {
+			color: $primary-text-color;
+		}
+
 		li {
 			clear: both;
 			float: left;
+		}
+
+		label,.btn, button {
+			color: #fff;
 		}
 	}
 }
@@ -11,5 +32,24 @@
 	.alert {
 		padding-left: 15px;
 		font-size: 12px;
+	}
+}
+
+.list-group {
+	.list-group-item {
+		padding-left: 25px;
+		color: $primary-text-color;
+
+		* {
+			color: $primary-text-color;
+		}
+
+		label, .btn, button {
+			color: #fff;
+		}
+
+		&.active {
+			color: #fff;
+		}
 	}
 }

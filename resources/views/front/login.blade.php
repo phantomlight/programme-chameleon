@@ -7,42 +7,47 @@ Login | Programme Chameleon
 @section('content')
 <div id="wrapper">
 	@include('front.include.header')
-	<div id="page-title-wrapper" class="common-page-wrapper">
+	<div class="common-page-wrapper">
 		<div class="container">
-			<h1 class="page-title">
+			<h1 class="page-title lighten">
 				Login
 			</h1>
 			<div class="row">
 				<div class="col-md-5">
 					<div id="login-form-wrapper" class="element-bottom-30">
-						<form id="login-form" role="form" action="#" method="post">
+						<form id="login-form" role="form" onsubmit="return false;" data-parsley-validate data-route="{{ route('login.front') }}">
 							<div class="form-group">
 								<input class="form-control" name="email" placeholder="Email" required="required" type="email">
 							</div><!-- /.form-group -->
 							<div class="form-group">
-								<input class="form-control" name="the_user_password" id="user_password" placeholder="Password" type="password">
+								<input class="form-control" name="password" placeholder="Password" type="password">
 							</div><!-- /.form-group -->
 							<input name="action" value="" type="hidden">
 							<div class="clearfix"></div>
 							<p class="forgetmenot">
-								<label for="rememberme">
-								<input name="rememberme" id="rememberme" value="forever" type="checkbox">Remember Me</label>
+								<input name="rememberme" id="rememberme" value="forever" type="checkbox">
+								<label for="rememberme">Remember Me</label>
 							</p>
-							<button type="submit" name="user_submit" id="user_submit" value="1" class="btn btn-login">Log in</button>
+							<button type="submit" class="btn btn-login">
+								<span class="btn-preloader">
+									<i class="fa fa-spinner fa-spin"></i>
+								</span>
+								<span>Log in</span>
+							</button>
 							<a class="lost-password-link" href="#">Lost password?</a>
 						</form>
 					</div><!-- /.login-form-wrapper -->
 				</div><!-- /.col-md-5 -->
 				<div class="col-md-7">
-					<h3 class="sc-title normal"> Not A Member? Register Now </h3>
-					<p>Company that would like to register its vacancy?</p>
-					<p><a href="{{ route('company.register') }}" target="_self" class="btn sc-button medium btn-primary">COMPANY REGISTER</a></p>
+					<h3 class="sc-title normal lighten"> Not A Member? Register Now </h3>
+					<p class="lighten">Company that would like to register its vacancy?</p>
+					<p><a href="{{ route('company.register') }}" target="_self" class="btn sc-button medium btn-primary btn-width-fix">REGISTER</a></p>
 
-					<p>Contractors that would like to search for jobs/contracts?</p>
-					<p><a href="{{ route('contractor.register') }}" target="_self" class="btn sc-button medium btn-success">CONTRACTOR REGISTER</a></p>
+					<p class="lighten">Contractors that would like to search for jobs/contracts?</p>
+					<p class="lighten"><a href="{{ route('contractor.register') }}" target="_self" class="btn sc-button medium btn-success btn-width-fix">REGISTER</a></p>
 
-					<p>Agency that would like to help contractors and companies to meet?</p>
-					<p><a href="{{ route('agency.register') }}" target="_self" class="btn sc-button medium btn-danger">AGENCY REGISTER</a></p>
+					<p class="lighten">Agency that would like to help contractors and companies to meet?</p>
+					<p class="lighten"><a href="{{ route('agency.register') }}" target="_self" class="btn sc-button medium btn-danger btn-width-fix">REGISTER</a></p>
 				</div><!-- /.col-md-7 -->
 			</div><!-- /.row -->
 		</div><!-- /.container -->

@@ -11,11 +11,11 @@
 		<div id="agency-dashboard" class="element-top-30">
 			<div class="row">
 				<div class="col-sm-6">
-					<h4 class="page-header">Recent notifs <small><a href="{{ route('agency.notif.all') }}">[see all]</small></h4>
-					<ul class="list-unstyled sc-list list-notif">
-						<li class="alert alert-info"><a href="#">Company 1</a> need you to distribute <a href="#">job 1</a> to one of your contractor.</li>
-						<li class="alert alert-info">NOTICE: <a href="#">Company 1</a> has accepted your contractor for <a href="#">job 3</a>. <button class="btn btn-primary btn-xs">See Timesheet</button></li>
-						<li class="alert alert-danger">NOTICE: <a href="#">Contractor 1</a> has rejected your job offer.</li>
+					<h4 class="page-header">Notifications <small><a href="{{ route('agency.notif.all') }}">[see all]</small></h4>
+					<ul class="sc-list list-notif">
+						<li><a href="#">Company 1</a> need you to distribute <a href="#">job 1</a> to one of your contractor.</li>
+						<li>NOTICE: <a href="#">Company 1</a> has accepted your contractor for <a href="#">job 3</a>. <button class="btn btn-primary btn-xs">See Timesheet</button></li>
+						<li>NOTICE: <a href="#">Contractor 1</a> has rejected your job offer.</li>
 					</ul>
 				</div>
 
@@ -33,11 +33,15 @@
 									<div class="media-body">
 										<h4><a href="#">Contractor 1</a></h4>
 										<p>Status: <label class="label label-success">Available</label></p>
+										<p>Week: 16-11-2015 until 20-11-2015</p>
+										<p>Submitted Timesheet: <label class="label label-success">Yes</label></p>
+										<p>Company Authorised: <label class="label label-success">Yes</label></p>
+										<p>Agent Authorised: <label class="label label-success">Yes</label></p>
 									</div>
 								</div>
 
 								<div class="pull-right btn-group">
-									<button class="btn btn-danger btn-xs">Remove from list</button>
+									<button class="btn btn-warning btn-xs">Remove from list</button>
 									<button class="btn btn-success btn-xs">Offer a Job</button>
 								</div>
 							</li>
@@ -51,13 +55,16 @@
 									</div>
 									<div class="media-body">
 										<h4><a href="#">Contractor 2</a></h4>
-										<p>Status: <label class="label label-danger">Working</label></p>
+										<p>Status: <label class="label label-warning">Working</label></p>
+										<p>Week: 16-11-2015 until 20-11-2015</p>
+										<p>Submitted Timesheet: <label class="label label-warning">No</label></p>
+										<p>Company Authorised: <label class="label label-warning">No</label></p>
+										<p>Agent Authorised: <label class="label label-warning">No</label></p>
 									</div>
 								</div>
 
 								<div class="pull-right btn-group">
-									<button class="btn btn-danger btn-xs">Remove from list</button>
-									<button class="btn btn-success btn-xs">Offer a Job</button>
+									<button class="btn btn-warning btn-xs">Remove from list</button>
 								</div>
 							</li>
 
@@ -70,13 +77,16 @@
 									</div>
 									<div class="media-body">
 										<h4><a href="#">Contractor 3</a></h4>
-										<p>Status: <label class="label label-danger">Working</label></p>
+										<p>Status: <label class="label label-warning">Working</label></p>
+										<p>Week: 16-11-2015 until 20-11-2015</p>
+										<p>Submitted Timesheet: <label class="label label-success">Yes</label></p>
+										<p>Company Authorised: <label class="label label-success">Yes</label></p>
+										<p>Agent Authorised: <label class="label label-success">Yes</label></p>
 									</div>
 								</div>
 
 								<div class="pull-right btn-group">
-									<button class="btn btn-danger btn-xs">Remove from list</button>
-									<button class="btn btn-success btn-xs">Offer a Job</button>
+									<button class="btn btn-warning btn-xs">Remove from list</button>
 								</div>
 							</li>
 						</ul>
@@ -88,9 +98,9 @@
 		<div id="jobs-listing" class="element-bottom-30">
 			<div class="container">
 				<div class="jobs-listing-title">
-					<h3>
+					<h3 class="page-header">
 						<i class="fa fa-briefcase"></i>
-						LATEST JOB LISTINGS
+						Latest Job Listings
 					</h3>
 				</div>
 				<div class="jobs-listing-wrapper">

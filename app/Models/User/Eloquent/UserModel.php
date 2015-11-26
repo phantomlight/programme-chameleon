@@ -32,12 +32,23 @@ class UserModel extends Eloquent implements UserModelInterface {
 	protected static $hasher;
 	protected $allowedPermissionsValues = [-1, 0, 1];
 	protected static $groupModel = 'App\Models\User\Eloquent\UserGroup';
-	protected static $customerModel = 'App\Models\Customer\Eloquent\CustomerModel';
 	protected static $userGroupsPivot = 'tb_users_groups_pivot';
 	protected static $loginAttribute = 'email';
 
-	public function customer() {
-		return $this->hasOne(static::$customerModel, 'user_id');
+	protected static $contractorModel = 'App\Models\Contractor\Eloquent\ContractorModel';
+	protected static $companyModel = 'App\Models\Company\Eloquent\CompanyModel';
+	protected static $agencyModel = 'App\Models\Agency\Eloquent\AgencyModel';
+
+	public function contractor() {
+		return $this->hasOne(static::$contractorModel, 'user_id');
+	}
+
+	public function company() {
+		return $this->hasOne(static::$companyModel, 'user_id');
+	}
+
+	public function agency() {
+		return $this->hasOne(static::$agencyModel, 'user_id');
 	}
 
 	public function groups() {

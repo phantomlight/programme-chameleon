@@ -1,11 +1,10 @@
 <nav id="footer-navigation" class="footer-navigation" role="navigation">
 	<div>
 		<ul id="footer-menu" class="menu">
-			<li class="menu-item"><a href="#">Home</a></li>
-			<li class="menu-item"><a href="#">Post A Job</a></li>
-			<li class="menu-item"><a href="#">Post A Resume</a></li>
+			<li class="menu-item"><a href="{{ url('/') }}">Home</a></li>
+			<li class="menu-item"><a href="{{ url('company/job-post') }}">Post A Job</a></li>
+			<li class="menu-item"><a href="{{ url('contractor/account') }}">Upload CV</a></li>
 			<li class="menu-item"><a href="#">Blog</a></li>
-			<li class="menu-item"><a href="#">Contact Us</a></li>
 		</ul>
 	</div>		
 </nav>

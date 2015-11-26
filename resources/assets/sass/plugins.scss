@@ -2,15 +2,15 @@
 @import "animate";
 
 input.parsley-success, select.parsley-success, textarea.parsley-success {
-	color: #fff;
-	background-color: $form-validate-success;
-	border: thin solid darken($form-validate-success, 10%);
+	color: #fff !important;
+	background-color: $form-validate-success !important;
+	border: thin solid darken($form-validate-success, 10%) !important;
 }
 
 input.parsley-error, select.parsley-error, textarea.parsley-error {
-	color: #fff;
-	background-color: $form-validate-error;
-	border: thin solid darken($form-validate-error, 10%);
+	color: #fff !important;
+	background-color: $form-validate-error !important;
+	border: thin solid darken($form-validate-error, 10%) !important;
 }
 
 .parsley-errors-list {
@@ -28,7 +28,7 @@ input.parsley-error, select.parsley-error, textarea.parsley-error {
 }
 
 @import "front/jquery-ui";
-// @import "front/owl-carousel";
+@import "front/summernote";
 @import "front/minimalect";
 @import "import/bootstrap";
 @import "fa/font-awesome";

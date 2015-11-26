@@ -7,7 +7,7 @@ Post a Job | Programme Chameleon
 @section('content')
 <div id="wrapper">
 	@include('front.include.header')
-	<div id="page-title-wrapper" class="common-page-wrapper">
+	<div class="common-page-wrapper">
 		<div class="container">
 			<div class="row element-top-30 element-bottom-10">
 				<form class="col-sm-8 col-sm-offset-2 sc-form" id="companyPostJobForm" role="form" onsubmit="return false;">
@@ -130,7 +130,7 @@ Post a Job | Programme Chameleon
 						</div>
 
 						<div class="form-navigation">
-							<button type="button" class="previous btn btn-danger sc-button pull-left">
+							<button type="button" class="previous btn btn-danger pull-left">
 								<i class="fa fa-chevron-left"></i> Prev: Job Details
 							</button>
 

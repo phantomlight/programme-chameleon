@@ -1,0 +1,134 @@
+#job-detail {
+	background: #ecf0f1 none repeat scroll 0 0;
+	color: #565656;
+	padding: 20px 0 50px;
+}
+
+.job-detail-title {
+	font-family: "Raleway",sans-serif;
+	font-size: 27px;
+	font-weight: 700;
+}
+
+.company-job-detail {
+	font-family: "Raleway",sans-serif;
+	margin-top: 69px;
+}
+
+.company-logo {
+	float: left;
+	height: 60px;
+	line-height: 60px;
+	width: 160px;
+}
+
+.company-details {
+	float: left;
+	line-height: 60px;
+	min-height: 60px;
+	padding-left: 20px;
+
+	> span {
+		display: inline-block;
+		padding-right: 15px;
+	}
+
+	a {
+		color: inherit;
+	}
+}
+
+.the-job-title {
+	height: 54px;
+	padding-right: 15px;
+
+	h3 {
+		font-size: 22px;
+		line-height: normal;
+		margin-bottom: 4px;
+		margin-top: 2px;
+	}
+
+	> p {
+		font-size: 14px;
+		line-height: normal;
+	}
+}
+
+.the-job-details {
+	border-bottom: thin solid #dadedf;
+	border-top: thin solid #dadedf;
+	font-family: "Raleway",sans-serif;
+	margin: 28px 0;
+	min-height: 91px;
+
+	> div {
+		border-right: thin solid #dadedf;
+		float: left;
+		height: 55px;
+		line-height: 55px;
+		margin-top: 15px
+	}
+}
+
+.the-job-company {
+	font-size: 16px;
+	text-align: center;
+	text-transform: uppercase;
+	width: 220px;
+}
+
+.the-job-location {
+	font-size: 16px;
+	text-align: center;
+	width: 190px;
+
+	.fa {
+		color: $accent-color;
+	}
+}
+
+.the-job-type {
+	border-right: medium none !important;
+	text-align: center;
+	width: 160px;
+}
+
+.job-cat-links {
+	padding-right: 80px;
+
+	a {
+		color: #565656;
+	}
+}
+
+.the-job-aditional-title {
+	font-size: 16px;
+	font-weight: 100;
+
+	&:last-child {
+		margin-left: 80px;
+	}
+}
+
+#job-description {
+	article {
+		> h1 {
+			font-family: "Raleway",sans-serif;
+			font-size: 18px;
+			margin-bottom: 30px;
+			margin-top: 25px;
+			text-transform: uppercase;
+		}
+
+		> p {
+			font-weight: 300;
+			line-height: 22px;
+			padding-top: 3px;
+		}
+	}
+}
+
+.the-job-content {
+	padding: 30px 0;
+}

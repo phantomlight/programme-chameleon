@@ -1,0 +1,47 @@
+#free-resources-container {
+	p, h4 {
+		font-weight: 300;
+	}
+
+	p {
+		font-size: 14px;
+
+		@include respond-to(handhelds) {
+			font-size: 12px;
+		}
+	}
+
+	img {
+		width: 50px;
+		margin: 0 auto;
+		padding-bottom: 10px;
+	}
+
+	.file-list {
+		li {
+			padding: 10px 0;
+			//border-bottom: thin solid #d5d5d5;
+
+			&:last-child {
+				border-bottom: none;
+			}
+		}
+	}
+
+	.media-body {
+		padding-left: 50px;
+
+		@include respond-to(handhelds) {
+			padding-left: 15px;
+		}
+
+		h4 {
+			margin-bottom: 25px;
+			font-size: 24px;
+
+			@include respond-to(handhelds) {
+				font-size: 20px;
+			}
+		}
+	}
+}

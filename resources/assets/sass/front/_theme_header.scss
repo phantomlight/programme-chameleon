@@ -7,7 +7,7 @@
 
 	.logo-wrapper {
 		img {
-			width: 300px;
+			width: 100%;
 
 			@include respond-to(handhelds) {
 				width: 250px;
@@ -92,7 +92,7 @@
 
 .navbar-toggle {
 	position: absolute;
-	right: 0;
+	right: -20px;
 	top: -70px;
 
 	.icon-bar {
@@ -253,5 +253,40 @@
 
 	.has-children {
 		position: relative;
+	}
+}
+
+.btn-header-register {
+	a[data-toggle="dropdown"] {
+		&:focus, &:active {
+			text-decoration: none;
+			color: #fff;
+		}
+	}
+
+	.dropdown-menu {
+		border-radius: 0;
+		background: $primary-dark;
+		color: #fff;
+		left: -100px;
+
+		li {
+			border-bottom: thin solid #d5d5d5;
+
+			a {
+				color: #fff;
+				padding: 15px;
+			}
+
+			&:hover {
+				a {
+					color: $accent-color;
+				}
+			}
+
+			&:last-child {
+				border-bottom: none;
+			}
+		}
 	}
 }

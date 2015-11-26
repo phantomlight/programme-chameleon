@@ -12,7 +12,20 @@
 */
 
 Route::get('/', function() { return view('front.index'); });
-Route::get('login', function() { return view('front.login'); });
+
+Route::get('login', 'SiteController@getLogin');
+Route::get('logout', 'SiteController@getLogout');
+Route::get('api/country', 'SiteController@getCountryList');
+Route::get('api/city', 'SiteController@getCityList');
+Route::post('login', ['as' =>'login.front', 'uses' => 'SiteController@postLogin']);
+
+Route::get('free-resources', function() { return view('front.resources'); } );
+Route::get('contractor/contractor-sample', function() { return view('front.contractor.sample'); });
+Route::get('company/company-sample', function() { return view('front.company.sample'); });
+Route::get('job/job-sample', function() { return view('front.jobSample'); });
+
+Route::get('gen', 'SiteController@getPublicKey');
+Route::post('handshake', 'SiteController@getHandshakeKey');
 
 Route::controller('admin', 'AdminController', [
 	'getIndex'	=>	'admin.index',
@@ -28,24 +41,30 @@ Route::controller('admin', 'AdminController', [
 ]);
 
 Route::controller('company', 'CompanyController', [
-	'getRegister' =>	'company.register',
-	'getIndex'		=>	'company.index',
-	'getPostJob'	=>	'company.job.post',
+	'getRegister' 		=>	'company.register',
+	'postRegister'		=>	'company.postRegister',
+	'getIndex'				=>	'company.index',
+	'getPostJob'			=>	'company.job.post',
 	'getResumeSearch'	=>	'company.resume.search',
 ]);
 
 Route::controller('agency', 'AgencyController', [
-	'getRegister' =>	'agency.register',
-	'getIndex'		=>	'agency.index',
+	'getRegister'	 	=>	'agency.register',
+	'postRegister'	=>	'agency.postRegister',
+	'getIndex'			=>	'agency.index',
 	'getNotifList'	=>	'agency.notif.all',
-	'getOfferJob'	=> 'agency.offerJob',
+	'getOfferJob'		=>	'agency.offerJob',
 ]);
 
 Route::controller('contractor', 'ContractorController', [
 	'getRegister' 			=>	'contractor.register',
+	'postRegister'			=>	'contractor.postRegister',
 	'getIndex'					=>	'contractor.index',
 	'getAccount'				=>	'contractor.account',
 	'getCreateJobAlert'	=>	'contractor.jobAlert.create',
 	'getSearchJob'			=>	'contractor.job.search',
 	'getSubmitTimesheet'	=>	'contractor.timesheet.submit',
 ]);
+
+//Route::get('test-mail', 'SiteController@testSendEmail');
+Route::post('mail/receive', function () { return \Queue::marshal(); });

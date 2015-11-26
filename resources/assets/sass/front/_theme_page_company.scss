@@ -53,6 +53,23 @@
 	.radio-clearfix {
 		margin-bottom: 10px;
 	}
+
+	.next, .previous, .btn {
+		@include respond-to(handhelds) {
+			width: 100%;
+			float: none !important;
+			display: inline-block;
+			font-size: 12px;
+		}
+	}
+
+	.previous {
+		background: #AC2925 !important;
+
+		&:hover {
+			background: darken(#AC2925, 10%) !important;
+		}
+	}
 }
 
 #cv-search {
@@ -73,11 +90,15 @@
 
 .cv-search-wrapper {
 	clear: both;
+
+	label {
+		font-weight: 300;
+	}
 }
 
 .cv-search-title {
 	font-size: 27px;
-	font-weight: 700;
+	// font-weight: 700;
 	margin-bottom: 26px;
 }
 
@@ -127,6 +148,9 @@
 }
 
 #cv-result-listing {
+	background: #fff;
+	color: $primary-text-color;
+
 	.list-result {
 		li {
 			border-bottom: thin solid #e3e3e3;
@@ -137,6 +161,133 @@
 				font-size: 24px;
 				line-height: 30px;
 				margin-right: 10px;
+			}
+		}
+	}
+}
+
+#company-header {
+	text-align: center;
+}
+
+#company-main-logo {
+	margin-bottom: 40px;
+}
+
+#company-head-menu {
+	display: table;
+	margin-bottom: 80px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+
+	&:after {
+		display: table;
+		margin-bottom: 80px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+#company-head-menu {
+	a {
+		color: #565656;
+		padding-right: 18px;
+	}
+
+	ul {
+		display: inline-block;
+		float: left;
+		list-style: outside none none;
+		padding-left: 0;
+
+		&.first-menu {
+			display: inline-block;
+			float: left;
+			list-style: outside none none;
+			padding-left: 0;
+		}
+
+		&.second-menu, &.third-menu {
+			padding-left: 18px;
+			position: relative;
+
+			&:before {
+				content: "";
+				height: 10px;
+				left: 0;
+				position: absolute;
+				top: 5px;
+			}
+		}
+
+		li {
+			display: inline;
+			float: left;
+		}
+
+		i {
+			margin-right: 18px;
+		}
+	}
+}
+
+.about-company-content {
+	padding-bottom: 77px;
+}
+
+.sub-section-title {
+	font-size: 18px;
+}
+
+.company_page_odd_section {
+	background: #ecf0f1 none repeat scroll 0 0;
+}
+
+.company_page_section {
+	padding-bottom: 100px;
+	// padding-top: 80px;
+}
+
+#company_experience {
+	//padding-bottom: 105px;
+	padding-top: 80px;
+
+	.section-title {
+		color: #565656;
+		font-size: 38px;
+		margin-bottom: 19px;
+	}
+
+	.section-subtitle {
+		margin-bottom: 20px;
+	}
+
+	.company_experience_group {
+		display: table;
+		list-style: outside none none;
+		margin-left: auto;
+		margin-right: auto;
+		background: #fff;
+		padding: 50px;
+		width: 100%;
+
+		@include respond-to(handhelds) {
+			padding: 10px 50px 10px 0;
+		}
+
+		li {
+			background: darken($accent-color, 10%) none repeat scroll 0 0;
+			border-radius: 15px;
+			color: #fff;
+			display: inline-block;
+			float: left;
+			margin-right: 30px;
+			padding: 7px 20px;
+
+			@include respond-to(handhelds) {
+				margin: 15px;
+				width: 100%;
 			}
 		}
 	}

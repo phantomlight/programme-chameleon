@@ -6,10 +6,10 @@
 
 @section('content')
 <div id="wrapper">
-	@include('front.include.header')
-	<div class="common-page-wrapper element-bottom-30 element-top-30">
+	@include('front.contractor.header')
+	<div class="common-page-wrapper element-top-30">
 		<div class="container">
-			<h2 class="page-header">Submit a Timesheet</h2>
+			<h2 class="page-header lighten">Submit a Timesheet</h2>
 
 			<form class="sc-form col-md-8">
 				<div class="form-group">

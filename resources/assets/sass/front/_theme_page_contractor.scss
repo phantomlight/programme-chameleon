@@ -1,4 +1,8 @@
 .alert-widget {
+	a {
+		color: $primary-text-color;
+	}
+
 	.alert-widget-title {
 		background: $accent-color;
 		color: $primary-color-text;
@@ -19,15 +23,199 @@
 
 					&:first-child {
 						border-top-left-radius: 0;
-    				border-top-right-radius: 0;
+						border-top-right-radius: 0;
 					}
 
 					&:last-child {
 						border-bottom-left-radius: 0;
-    				border-bottom-right-radius: 0;
+						border-bottom-right-radius: 0;
 					}
 				}
 			}
 		}
 	}
+}
+
+#page-title-wrapper {
+	background-color: #ecf0f1;
+	color: $primary-text-color;
+	border-bottom: thin solid #f4f6f7;
+	min-height: 104px;
+}
+
+#contact-job-seeker {
+	.modal-title {
+		text-transform: uppercase;
+		color: $primary-text-color;
+	}
+
+	.modal-body {
+		padding-top: 35px;
+	}
+
+	.form-group {
+		margin-bottom: 30px;	
+	}
+
+	label {
+		font-size: 16px;
+		color: $primary-text-color;
+	}
+
+	input[type="text"], input[type="email"] {
+		height: 40px;
+	}
+
+	.modal-footer {
+		.btn {
+			background-color: $accent-color;
+			color: #fff;
+
+			&:hover {
+				background-color: lighten($accent-color, 10%);
+			}
+		}
+	}
+}
+
+.contact-form-status {
+	display: none;
+	font-size: 16px;
+	margin-top: 20px;
+}
+
+.frontend-title {
+	font-size: 27px;
+	font-weight: 700;
+	margin-top: 50px;
+}
+
+.candidate-button {
+	padding-top: 43px;
+	text-align: right;
+
+	@include respond-to(handhelds) {
+		text-align: center;
+
+		.btn {
+			margin-bottom: 10px;
+		}
+	}
+
+	.btn {
+		border-radius: 3px;
+		color: #ffffff;
+		margin-left: 20px;
+		padding: 7px 10px 6px;
+		text-transform: uppercase;
+		@include transition(all, .3s, ease, 0s);
+	}
+}
+
+.candidate-profile {
+	padding-bottom: 25px;
+	padding-top: 15px;
+	text-align: center;
+
+	img {
+		border-radius: 7px;
+	}
+
+	.candidate-name {
+		color: $accent-color;
+		font-size: 26px;
+		font-weight: 700;
+		margin-top: 17px;
+	}
+
+	.candidate-details {
+		color: #5b6363;
+		padding-top: 5px;
+
+		span {
+			border-right: thin solid #5b6363;
+			padding-left: 13px;
+			padding-right: 15px;
+		}
+
+		a {
+			color: inherit;
+		}
+	}
+}
+
+#content {
+	p {
+		line-height: 28px;
+		font-weight: 300;
+	}
+}
+
+.skills-container {
+	background: #ecf0f1 none repeat scroll 0 0;
+	border-radius: 5px;
+	padding: 23px 20px 21px;
+}
+
+.skills-title {
+	font-size: 18px;
+	font-weight: 400;
+	margin: 0 0 22px;
+	text-transform: uppercase;
+	color: $primary-text-color;
+}
+
+.the-skills {
+	.skill-item {
+		background: darken($accent-color, 10%) none repeat scroll 0 0;
+		border-radius: 20px;
+		color: #ffffff;
+		display: inline-block;
+		margin-bottom: 12px;
+		margin-right: 10px;
+		padding: 9px 20px;
+	}
+}
+
+.education-container {
+	margin-top: 85px;
+}
+
+.educations-title {
+	font-size: 18px;
+	font-weight: 400;
+	text-transform: uppercase;
+}
+
+.resume-lists {
+	list-style: outside none none;
+	padding: 12px 0 0;
+
+	li {
+		margin-bottom: 10px;
+		padding-left: 38px;
+		position: relative;
+
+		&:before {
+			color: lighten($accent-color, 10%);
+			content: "\f061";
+			font-family: fontAwesome;
+			font-size: 16px;
+			left: 0;
+			position: absolute;
+		}
+	}
+}
+
+.education-name {
+	font-size: 16px;
+	text-transform: uppercase;
+}
+
+.education-period .fa, .education-grade .fa, .education-qualification .fa {
+	color: #aeaeae;
+}
+
+.experience-container {
+	margin-top: 70px;
 }

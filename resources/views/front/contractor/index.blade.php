@@ -6,7 +6,7 @@
 
 @section('content')
 <div id="wrapper">
-	@include('front.include.header')
+	@include('front.contractor.header')
 	<div id="jobs-alerts" class="element-top-30">
 		<div class="container">
 			<div class="row">
@@ -65,23 +65,16 @@
 						</div>
 					</div>
 				</div>
-
-				<div class="col-md-4 text-center">
-					<br />
-					<h2 class="sc-title">Would you like to apply for a job?</h2>
-					<br />
-					<button class="btn btn-lg btn-primary">Submit Timesheet</button>
-				</div>
 			</div>
 		</div>
 	</div>
 
-	<div id="jobs-listing" class="related-job-listing featured-job">
+	<div id="jobs-listing" class="related-job-listing featured-job element-bottom-30">
 		<div class="container">
 			<div class="jobs-listing-title">
-				<h3>
+				<h3 class="page-header">
 					<i class="fa fa-briefcase"></i>
-					LATEST JOB LISTINGS
+					Latest Job Listings
 				</h3>
 			</div>
 			<div class="jobs-listing-wrapper">

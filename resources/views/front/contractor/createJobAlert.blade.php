@@ -6,10 +6,10 @@
 
 @section('content')
 <div id="wrapper">
-	@include('front.include.header')
-	<div class="common-page-wrapper element-bottom-30">
+	@include('front.contractor.header')
+	<div class="common-page-wrapper">
 		<div class="container">
-			<h2 class="page-header">Create Job Alert</h2>
+			<h2 class="page-header lighten">Create Job Alert</h2>
 			<form role="form" data-parsley-validate id="createJobAlertForm" class="col-md-6 sc-form">
 				<div class="form-group">
 					<label>Job Alert Title</label>
@@ -18,7 +18,7 @@
 
 				<div class="form-group">
 					<label>Keywords</label>
-					<input type="text" data-role="tagsinput" class="form-control" name="job_tags" required placeholder="Industries you like to get alert from">
+					<input type="text" data-role="tagsinput" class="form-control" name="job_tags" required placeholder="Eg Project Manager, London">
 				</div>
 
 				<div class="form-group">
@@ -68,8 +68,8 @@
 			</form>
 
 			<div class="col-md-6">
-				<h3>What is Job Alert?</h3>
-				<p>When a company posted a job that matches the description you provide here, the system will alert you that the job is available.</p>
+				<h3 class="lighten">What is Job Alert?</h3>
+				<p class="lighten">When a company posted a job that matches the description you provide here, the system will alert you that the job is available.</p>
 
 				<div class="alert alert-info">
 					Note that you can only create <strong>1</strong> job alert at a time. If you create another you previous alert will be removed.

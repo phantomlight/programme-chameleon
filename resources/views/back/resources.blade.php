@@ -103,7 +103,7 @@ Resources | Programme Chameleon
 															<i class="fa fa-download"></i> Download
 														</button>
 														<button class="btn btn-danger btn-xs">
-															<i class="fa fa-times"></i> Ban
+															<i class="fa fa-times"></i> Delete
 														</button>
 													</div>
 												</td>

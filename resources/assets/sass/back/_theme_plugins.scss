@@ -457,7 +457,9 @@ ul.unstyled, ol.unstyled {
 /* SUMMERNOTE */
 
 .note-editor {
-  height: 300px;
+  //height: 300px;
+  border: thin solid #d5d5d5;
+
   .note-dropzone {
     position: absolute;
     z-index: 1;

@@ -11,7 +11,9 @@
         "hashids/hashids": "1.0.0",
         "intervention/image": "dev-master",
         "illuminate/html": "5.0.*",
-        "cartalyst/tags": "~1.0"
+        "cartalyst/tags": "~1.0",
+        "iron-io/iron_mq": "~2.0|~4.0",
+        "guzzlehttp/guzzle": "~5.3|~6.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

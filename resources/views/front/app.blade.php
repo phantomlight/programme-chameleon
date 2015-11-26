@@ -2,7 +2,7 @@
 <html lang="en" prefix="og:http://ogp.me/ns#">
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="robots" content="follow">
 		<meta name="_t" content="{{ csrf_token() }}" />
@@ -22,7 +22,16 @@
 				</a>
 				{{ $msg['message'] }}
 			</div>
-			@endif
+		@endif
+		<!--[if IE]>
+			<div class="alert alert-fixed alert-danger">
+				<a href="#" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</a>
+				This web is best viewed with Firefox (<a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank">download</a>) or Chrome (<a href="https://www.google.com/chrome/browser/desktop/" target="_blank">download</a>).
+			</div>
+		<![endif]-->
+
 		@yield('content')
 		<!-- Scripts -->
 		<script type="text/javascript">
@@ -63,7 +72,7 @@
 			});
 		</script>
 		<!--googleon: index-->
-		<!--[if lt IE 9]>
+		<!--[if IE]>
 			<script type="text/javascript" src="{{ asset('lib/html5shiv.js') }}"></script>
 			<script type="text/javascript" src="{{ asset('lib/respond.js') }}"></script>
 		<![endif]-->

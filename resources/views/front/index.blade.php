@@ -10,22 +10,27 @@ Home | Programme Chameleon
 	<div id="job-search">
 		<div class="container">
 			<div class="job-search-wrapper">
-				<h2 class="job-search-title">Find a Job</h2>
 				<form id="job-search-form" role="form" action="" method="get">
 					<div id="search-text-input" class="row">
-						<div class="col-md-7">
+						<div class="col-md-5">
 							<div class="form-group has-feedback">
-								<label class="text-label" for="keyword">Search</label>
+								<label class="text-label" for="keyword">Search Vacancies</label>
 								<input class="form-control" name="keyword" id="keyword" placeholder="Keywords (IT Engineer, Shop Manager, Hr Manager...)" required="required" type="text">
 								<span class="fa fa-search form-control-feedback"></span>
 							</div>
 						</div>
-						<div class="col-md-5">
+						<div class="col-md-4">
 							<div class="form-group has-feedback">
 								<label class="text-label" for="location">Location</label>
 								<select class="form-control" name="location" id="location">
 									<option value="" selected="selected">Any</option><option value="denver">Denver</option><option value="melbourne">Melbourne</option><option value="new-york">New York</option><option value="remote">Remote</option><option value="san-fransisco">San Fransisco</option><option value="texas">Texas</option><option value="washington">Washington</option>
 								</select>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="search-btn-group">
+								<button class="advance-search-toggle" name="advance-search">Advanced Search</button>
+								<button class="btn btn-job-search " type="submit" name="submit" value="true">Search</button>
 							</div>
 						</div>
 					</div>
@@ -127,25 +132,74 @@ Home | Programme Chameleon
 							</select>
 						</div>
 					</div>
-					<div id="search-btn-wrap" class="row">
-						<div class="col-md-8">
-						</div>
-						<div class="col-md-4 search-btn-group">
-							<button class="btn btn-job-search " type="submit" name="submit" value="true">Search</button>
-							<button class="btn btn-default advance-search-toggle" name="advance-search">Advanced Search</button>
-						</div>
-					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 
-	<div id="jobs-listing">
+	<div id="home-menu-listing" class="element-top-30">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="widget-box">
+						<div class="widget-box-image img-responsive">
+							<img src="{{ asset('assets/img/sample/image1.jpg') }}" data-image-resize alt="Consulting" />
+						</div>
+						<div class="widget-box-info">
+							<h2>Consulting</h2>
+							<p>Utilise our extensive experience in delivering complex IT and Change Programmes and Projects with reliable, experienced consultants.</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-3">
+					<div class="widget-box">
+						<div class="widget-box-image img-responsive">
+							<img src="{{ asset('assets/img/sample/image2.jpg') }}" data-image-resize alt="Training" />
+						</div>
+						<div class="widget-box-info">
+							<h2>Training</h2>
+							<p>We offer on-site, focused, accredited Prince 2 and AGILE Ttraining.</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-3">
+					<div class="widget-box">
+						<div class="widget-box-image img-responsive">
+							<img src="{{ asset('assets/img/sample/image3.jpg') }}" data-image-resize alt="Free Resources" />
+						</div>
+						<div class="widget-box-info">
+							<h2>Free Resources</h2>
+							<p><a href="{{ url('free-resources') }}">Click here</a> to access our free resources, project templates, template plans, project logs, meeting minutes, and much more.</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-3">
+					<div class="widget-box">
+						<div class="widget-box-image img-responsive">
+							<img src="{{ asset('assets/img/sample/image4.jpg') }}" data-image-resize alt="Free Resources" />
+						</div>
+						<div class="widget-box-info">
+							<h2>Employers</h2>
+							<p>Submit your vancany <a href="{{ url('company/post-job') }}">here</a></p>
+
+							<h2>Contractors</h2>
+							<p>Submit your CV <a href="{{ url('contractor/account') }}">here</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="jobs-listing" class="element-bottom-30">
 		<div class="container">
 			<div class="jobs-listing-title">
-				<h3>
+				<h3 class="page-header">
 					<i class="fa fa-briefcase"></i>
-					LATEST JOB LISTINGS
+					Latest Job Listings
 				</h3>
 			</div>
 			<div class="jobs-listing-wrapper">

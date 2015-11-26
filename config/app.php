@@ -153,6 +153,10 @@ return [
          * Custom Service Providers...
          */
         App\Models\User\UserServiceProvider::class,
+        App\Models\Contractor\ContractorServiceProvider::class,
+        App\Models\Company\CompanyServiceProvider::class,
+        App\Models\Agency\AgencyServiceProvider::class,
+        App\Models\Job\JobServiceProvider::class,
 
     ],
 
@@ -168,7 +172,7 @@ return [
     */
 
     'aliases' => [
-
+        'Agency'    => App\Facades\Agency::class,
         'App'       => Illuminate\Support\Facades\App::class,
         'Artisan'   => Illuminate\Support\Facades\Artisan::class,
         'Auth'      => Illuminate\Support\Facades\Auth::class,
@@ -176,6 +180,8 @@ return [
         'Bus'       => Illuminate\Support\Facades\Bus::class,
         'Cache'     => Illuminate\Support\Facades\Cache::class,
         'Config'    => Illuminate\Support\Facades\Config::class,
+        'Contractor' => App\Facades\Contractor::class,
+        'Company'   => App\Facades\Company::class,
         'Cookie'    => Illuminate\Support\Facades\Cookie::class,
         'Crypt'     => Illuminate\Support\Facades\Crypt::class,
         'DB'        => Illuminate\Support\Facades\DB::class,
@@ -186,6 +192,7 @@ return [
         'Image'     => Intervention\Image\Facades\Image::class,
         'Input'     => Illuminate\Support\Facades\Input::class,
         'Inspiring' => Illuminate\Foundation\Inspiring::class,
+        'Job'       => App\Facades\Job::class,
         'Lang'      => Illuminate\Support\Facades\Lang::class,
         'Log'       => Illuminate\Support\Facades\Log::class,
         'Mail'      => Illuminate\Support\Facades\Mail::class,

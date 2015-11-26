@@ -76,7 +76,7 @@ CV Search | Programme Chameleon
 							</div>
 
 							<div class="col-sm-12 element-top-10">
-								<button type="submit" class="btn btn-info"> Search </button>
+								<button type="submit" class="btn btn-primary"> Search </button>
 							</div>
 						</div>
 					</div>
@@ -85,7 +85,7 @@ CV Search | Programme Chameleon
 		</div>
 	</div>
 
-	<div id="cv-result-listing" class="element-top-30 element-bottom-30">
+	<div id="cv-result-listing">
 		<div class="container">
 			<h2 class="page-header"> CV Listing </h2>
 			<div class="cv-list">
@@ -106,7 +106,7 @@ CV Search | Programme Chameleon
 								</div>
 
 								<div class="col-sm-4">
-									<a href="#" class="btn btn-primary element-top-10">View Resume</a>
+									<a href="#" class="btn btn-primary element-top-10">View CV</a>
 								</div>
 							</div>
 						</div>
@@ -128,7 +128,7 @@ CV Search | Programme Chameleon
 								</div>
 
 								<div class="col-sm-4">
-									<a href="#" class="btn btn-primary element-top-10">View Resume</a>
+									<a href="#" class="btn btn-primary element-top-10">View CV</a>
 								</div>
 							</div>
 						</div>
@@ -150,7 +150,7 @@ CV Search | Programme Chameleon
 								</div>
 
 								<div class="col-sm-4">
-									<a href="#" class="btn btn-primary element-top-10">View Resume</a>
+									<a href="#" class="btn btn-primary element-top-10">View CV</a>
 								</div>
 							</div>
 						</div>

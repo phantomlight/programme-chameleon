@@ -11,17 +11,17 @@ class JCryption {
 
 		$res = openssl_pkey_new($config);		
 		openssl_pkey_export($res, $privKey);		
-		\Session::put('j_privkey', $privKey);
+		session(['j_privkey' => $privKey]);
 		$pubKey = openssl_pkey_get_details($res);
 
 		return \Response::json([
-			'publickey'	=>	$pubKey['key'],
+			'publickey'	=> $pubKey['key'],
 		]);
 	}
 
 	public function handshake() {
-		openssl_private_decrypt( base64_decode(\Input::get('key')), $key, \Session::get('j_privkey'));
-		\Session::put('jkey', $key);
+		openssl_private_decrypt(base64_decode(\Input::get('key')), $key, session('j_privkey'));
+		session(['jkey' => $key]);
 		return \Response::json([
 			'challenge'	=>	$this->encrypt($key, $key),
 		]);

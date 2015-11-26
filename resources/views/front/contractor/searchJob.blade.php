@@ -1,32 +1,37 @@
 @extends('front.app')
 
 @section('title')
-	Job Search | Programme Chameleon
+Job Search | Programme Chameleon
 @stop
 
 @section('content')
 <div id="wrapper">
-	@include('front.include.header')
-	<div class="common-page-wrapper element-bottom-30">
+	@include('front.contractor.header')
+	<div class="common-page-wrapper">
 		<div id="job-search">
 			<div class="container">
 				<div class="job-search-wrapper">
-					<h2 class="job-search-title">Find a Job</h2>
 					<form id="job-search-form" role="form" action="" method="get">
 						<div id="search-text-input" class="row">
-							<div class="col-md-7">
+							<div class="col-md-5">
 								<div class="form-group has-feedback">
-									<label class="text-label" for="keyword">Search</label>
+									<label class="text-label" for="keyword">Search Vacancies</label>
 									<input class="form-control" name="keyword" id="keyword" placeholder="Keywords (IT Engineer, Shop Manager, Hr Manager...)" required="required" type="text">
 									<span class="fa fa-search form-control-feedback"></span>
 								</div>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-4">
 								<div class="form-group has-feedback">
 									<label class="text-label" for="location">Location</label>
 									<select class="form-control" name="location" id="location">
 										<option value="" selected="selected">Any</option><option value="denver">Denver</option><option value="melbourne">Melbourne</option><option value="new-york">New York</option><option value="remote">Remote</option><option value="san-fransisco">San Fransisco</option><option value="texas">Texas</option><option value="washington">Washington</option>
 									</select>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="search-btn-group">
+									<button class="advance-search-toggle" name="advance-search">Advanced Search</button>
+									<button class="btn btn-job-search " type="submit" name="submit" value="true">Search</button>
 								</div>
 							</div>
 						</div>
@@ -128,14 +133,6 @@
 								</select>
 							</div>
 						</div>
-						<div id="search-btn-wrap" class="row">
-							<div class="col-md-8">
-							</div>
-							<div class="col-md-4 search-btn-group">
-								<button class="btn btn-job-search " type="submit" name="submit" value="true">Search</button>
-								<button class="btn btn-default advance-search-toggle" name="advance-search">Advanced Search</button>
-							</div>
-						</div>
 					</form>
 				</div>
 			</div>
@@ -151,7 +148,7 @@
 		<div id="jobs-listing" class="no-padding">
 			<div class="container">
 				<div class="jobs-listing-title">
-					<h3>Search Result</h3>
+					<h3 class="lighten page-header no-margin">Search Result</h3>
 				</div>
 				<div class="jobs-listing-wrapper">
 					<div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="job-listing-tabs">
@@ -165,51 +162,51 @@
 							<div class="job-listing-list row">
 								<div class="col-sm-2 col-xs-12 the-list">
 									<ul class="list-unstyled hidden-xs" role="tablist">
-										@for ($i=1; $i<10;$i++)
-											<li>
-												<a href="#job-tab-{{ $i }}" aria-controls="home" role="tab" data-toggle="tab">Job {{ $i }}</a>
-											</li>
+										@for ($i=1; $i<20;$i++)
+										<li>
+											<a href="#job-tab-{{ $i }}" aria-controls="home" role="tab" data-toggle="tab">Job {{ $i }}</a>
+										</li>
 										@endfor
 									</ul>
 
 									<ul class="list-unstyled hidden-md hidden-lg hidden-sm">
-										@for ($i=1; $i<10;$i++)
-											<li>
-												<a href="#">Job {{ $i }}</a>
-											</li>
+										@for ($i=1; $i<20;$i++)
+										<li>
+											<a href="#">Job {{ $i }}</a>
+										</li>
 										@endfor
 									</ul>
 								</div>
 								<div class="tab-content job-info col-sm-8 hidden-xs">
-									@for ($i=1; $i<10;$i++)
-										<div role="tabpanel" class="tab-pane @if ($i === 1) {{ 'active' }} @endif" id="job-tab-{{ $i }}">
-											<div class="job-info-top">
-												<h2> Job {{ $i }} </h2>
-												<div>
-													<span class="job-type">
-														<i class="fa fa-fw fa-user"></i> Contract
-													</span>
-													<span class="job-city-name">
-														<i class="fa fa-fw fa-map-marker"></i> Jakarta
-													</span>
-													<span class="job-posted-time">
-														posted 1 day ago
-													</span>
-												</div>
-												<hr />
+									@for ($i=1; $i<20;$i++)
+									<div role="tabpanel" class="tab-pane @if ($i === 1) {{ 'active' }} @endif" id="job-tab-{{ $i }}">
+										<div class="job-info-top">
+											<h2> Job {{ $i }} </h2>
+											<div>
+												<span class="job-type">
+													<i class="fa fa-fw fa-user"></i> Contract
+												</span>
+												<span class="job-city-name">
+													<i class="fa fa-fw fa-map-marker"></i> Jakarta
+												</span>
+												<span class="job-posted-time">
+													posted 1 day ago
+												</span>
 											</div>
-											<div class="job-info-bottom">
-												<span>Location: Jakarta, Indonesia</span>
-												<span>Industry: IT</span>
-												<span>Start Date: Immediately</span>
-												<span>Employment Agency: Agency Name</span>
-												<span>Contact: Test</span>
-												<span>Email: Test</span>
-												<span>Reference: Test</span>
-												<span>Posted Date: Test</span>
-												<span>Permalink: Test</span>
-											</div>
+											<hr />
 										</div>
+										<div class="job-info-bottom">
+											<span>Location: Jakarta, Indonesia</span>
+											<span>Industry: IT</span>
+											<span>Start Date: Immediately</span>
+											<span>Employment Agency: Agency Name</span>
+											<span>Contact: Test</span>
+											<span>Email: Test</span>
+											<span>Reference: Test</span>
+											<span>Posted Date: Test</span>
+											<span>Permalink: Test</span>
+										</div>
+									</div>
 									@endfor
 								</div>
 							</div>
@@ -220,50 +217,50 @@
 								<div class="col-sm-2 col-xs-12 the-list">
 									<ul class="list-unstyled hidden-xs" role="tablist">
 										@for ($i=1; $i<10;$i++)
-											<li>
-												<a href="#job-tab-{{ $i }}" aria-controls="home" role="tab" data-toggle="tab">Job {{ $i }}</a>
-											</li>
+										<li>
+											<a href="#job-tab-{{ $i }}" aria-controls="home" role="tab" data-toggle="tab">Job {{ $i }}</a>
+										</li>
 										@endfor
 									</ul>
 
 									<ul class="list-unstyled hidden-md hidden-lg hidden-sm">
 										@for ($i=1; $i<10;$i++)
-											<li>
-												<a href="#">Job {{ $i }}</a>
-											</li>
+										<li>
+											<a href="#">Job {{ $i }}</a>
+										</li>
 										@endfor
 									</ul>
 								</div>
 								<div class="tab-content job-info col-sm-8 hidden-xs">
 									@for ($i=1; $i<10;$i++)
-										<div role="tabpanel" class="tab-pane @if ($i === 1) {{ 'active' }} @endif" id="job-tab-{{ $i }}">
-											<div class="job-info-top">
-												<h2> Job {{ $i }} </h2>
-												<div>
-													<span class="job-type">
-														<i class="fa fa-fw fa-user"></i> Contract
-													</span>
-													<span class="job-city-name">
-														<i class="fa fa-fw fa-map-marker"></i> Jakarta
-													</span>
-													<span class="job-posted-time">
-														posted 1 day ago
-													</span>
-												</div>
-												<hr />
+									<div role="tabpanel" class="tab-pane @if ($i === 1) {{ 'active' }} @endif" id="job-tab-{{ $i }}">
+										<div class="job-info-top">
+											<h2> Job {{ $i }} </h2>
+											<div>
+												<span class="job-type">
+													<i class="fa fa-fw fa-user"></i> Contract
+												</span>
+												<span class="job-city-name">
+													<i class="fa fa-fw fa-map-marker"></i> Jakarta
+												</span>
+												<span class="job-posted-time">
+													posted 1 day ago
+												</span>
 											</div>
-											<div class="job-info-bottom">
-												<span>Location: Jakarta, Indonesia</span>
-												<span>Industry: IT</span>
-												<span>Start Date: Immediately</span>
-												<span>Employment Agency: Agency Name</span>
-												<span>Contact: Test</span>
-												<span>Email: Test</span>
-												<span>Reference: Test</span>
-												<span>Posted Date: Test</span>
-												<span>Permalink: Test</span>
-											</div>
+											<hr />
 										</div>
+										<div class="job-info-bottom">
+											<span>Location: Jakarta, Indonesia</span>
+											<span>Industry: IT</span>
+											<span>Start Date: Immediately</span>
+											<span>Employment Agency: Agency Name</span>
+											<span>Contact: Test</span>
+											<span>Email: Test</span>
+											<span>Reference: Test</span>
+											<span>Posted Date: Test</span>
+											<span>Permalink: Test</span>
+										</div>
+									</div>
 									@endfor
 								</div>
 							</div>

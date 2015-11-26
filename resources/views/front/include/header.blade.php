@@ -14,7 +14,14 @@
 				<li><a href=""><i class="fa fa-tumblr"></i></a></li>
 			</ul><!-- /.social-media -->
 			<div class="header-login-register clearfix">
-				<a class="btn btn-header-register" href="{{ url('register') }}">REGISTER</a>
+				<div class="dropdown btn btn-header-register">
+					<a data-toggle="dropdown">REGISTER</a>
+					<ul class="dropdown-menu">
+						<li><a href="{{ route('company.register') }}">Register as Employer/Company</a></li>
+						<li><a href="{{ route('contractor.register') }}">Register as Job Seeker</a></li>
+						<li><a href="{{ route('agency.register') }}">Register as Agency</a></li>
+					</ul>
+				</div>
 				<a class="btn btn-header-login" href="{{ url('login') }}">LOG IN</a>
 			</div>
 		</div><!-- /.container -->
@@ -39,25 +46,20 @@
 					</button>
 					<nav id="main-menu" class="clearfix collapse navbar-collapse" role="navigation">
 						<ul class="nav-menu">
-							<li class="menu-item has-children">
-								<a href="#">Home</a>
-								<ul class="sub-menu">
-									<li class="menu-item"><a href="{{ url('job-detail') }}">Sample Job Detail Page</a></li>
-									<li class="menu-item"><a href="{{ url('resume-detail') }}">Sample Resume Page</a></li>
-									<li class="menu-item"><a href="{{ url('company-detail') }}">Sample Company Page</a></li>
-								</ul>
+							<li class="menu-item">
+								<a href="{{ url('contractor/search-job') }}">Job Search</a>
 							</li>
-							<li class="menu-item"><a href="#">Register CV</a></li>
-							<li class="menu-item"><a href="#">Submit Vacancy</a></li>
 							<li class="menu-item has-children">
 								<a href="#">Services</a>
 								<ul class="sub-menu">
-									<li class="menu-item"><a href="#">Sub Menu 1</a></li>
-									<li class="menu-item"><a href="#">Sub Menu 2</a></li>
-									<li class="menu-item"><a href="#">Sub Menu 3</a></li>
+									<li class="menu-item"><a href="{{ url('job/job-sample') }}">Sample Job Detail Page</a></li>
+									<li class="menu-item"><a href="{{ url('contractor/contractor-sample') }}">Sample CV Page</a></li>
+									<li class="menu-item"><a href="{{ url('company/company-sample') }}">Sample Company Page</a></li>
 								</ul>
 							</li>
-							<li class="menu-item"><a href="#">Host A Meeting</a></li>
+							<li class="menu-item"><a href="{{ url('free-resources') }}">Resources</a></li>
+							<li class="menu-item"><a href="{{ url('login') }}">Register CV</a></li>
+							<li class="menu-item"><a href="{{ url('login') }}">Submit Vacancy</a></li>
 						</ul>
 					</nav><!-- /#main-menu -->
 				</div><!-- /#menu-wrapper -->

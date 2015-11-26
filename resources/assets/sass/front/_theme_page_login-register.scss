@@ -1,6 +1,6 @@
 .common-page-wrapper {
-	background-color: #ecf0f1;
-	color: inherit;
+	//background-color: #ecf0f1;
+	color: #666;
 	padding-bottom: 30px;
 }
 
@@ -8,10 +8,16 @@
 	background-color: darken($accent-color, 10%);
 	border-radius: 10px;
 	padding: 40px 30px;
-	width: 430px;
+	// width: 430px;
 
 	@include respond-to(handhelds) {
 		width: auto;
+	}
+
+	.parsley-errors-list {
+		li {
+			color: #fff;
+		}
 	}
 }
 

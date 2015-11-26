@@ -59,10 +59,10 @@ return [
 
         'iron' => [
             'driver'  => 'iron',
-            'host'    => 'mq-aws-us-east-1.iron.io',
-            'token'   => 'a0IXBvVBu95ERobUTMSFqIJyLe8',
-            'project' => '562646c30664ae000a000007',
-            'queue'   => 'dealindo',
+            'host'    => 'mq-aws-eu-west-1-1.iron.io',
+            'token'   => 'DFz_F7C5TaNQMLpjvlA9_wAES-8',
+            'project' => '56558d4573d0cd00060001be',
+            'queue'   => 'test',
             'encrypt' => true,
         ],
 

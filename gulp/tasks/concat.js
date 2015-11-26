@@ -12,15 +12,14 @@ var front_main_libs = [
 	'./plugins/jquery/ui/mouse.js',
 	'./plugins/jquery/ui/slider.js',
 	'./plugins/jquery/jquery.select-to-ui-slider.js',
-	'./plugins/owl-carousel.js',
 	'./plugins/imageLiquid.js',
 	'./plugins/minimalect.js',
 	'./plugins/jquery/ui/tabs.js',
 	'./plugins/jquery/ui/effects.js',
 	'./plugins/jquery/ui/effects-fade.js',
-	'./plugins/jquery/jquery.form.js',
 	'./plugins/bootstrap/bootstrap-tagsinput.js',
 	'./plugins/bootstrap/bootstrap-datepicker.js',
+	'./plugins/summernote.js',
 ];
 
 var back_libs = [

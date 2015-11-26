@@ -5,12 +5,12 @@
 #job-search {
 	background-color: darken($accent-color, 10%);
 	color: #fff;
-	padding: 22px 0 55px;
+	padding: 22px 0 0;
 }
 
 .job-search-title {
 	font-size: 27px;
-	font-weight: 700;
+	// font-weight: 700;
 	margin-bottom: 26px;
 }
 
@@ -67,6 +67,15 @@
 		border-radius: 0;
 		box-shadow: none;
 		height: 40px;
+	}
+	@include respond-to(wide-screens) {
+		margin-bottom: 10px;
+	}
+	@include respond-to(medium-screens) {
+		margin-bottom: 25px;
+	}
+	@include respond-to(handhelds) {
+		margin-bottom: 25px;
 	}
 }
 
@@ -156,6 +165,7 @@
 		display: table;
 		float: right;
 		width: auto;
+		margin-top: 18px;
 	}
 }
 
@@ -164,7 +174,7 @@
 	border: medium none;
 	color: #fff;
 	font-weight: 700;
-	padding: 10px 50px;
+	padding: 10px 35px;
 	width: 100%;
 
 	&:hover, &:active {
@@ -177,10 +187,11 @@
 	background: transparent;
 	border: medium none;
 	display: block;
-	padding: 10px 0;
+	padding: 7px 0;
 	text-decoration: underline;
 	width: 100%;
 	color: #fff;
+	text-align: left;
 
 	&:hover, &:active {
 		background: transparent;
@@ -190,7 +201,6 @@
 
 #jobs-listing {
 	padding-bottom: 11px;
-	padding-top: 52px;
 
 	#job-listing-tabs {
 		background: #fff;
@@ -312,4 +322,46 @@
 
 .job-listing-wrapper {
 	clear: both;
+}
+
+#home-menu-listing {
+	a {
+		color: $accent-color;
+		text-decoration: underline;
+
+		&:hover {
+			color: lighten($accent-color, 10%);
+		}
+	}
+	
+	.widget-box {
+		background: #fff;
+		min-height: 430px;
+
+		@include respond-to(handhelds) {
+			min-height: auto;
+			margin-top: 20px;
+		}
+	}
+
+	.widget-box-image {
+		width: 100%;
+		min-height: 200px;
+		height: auto;
+	}
+
+	.widget-box-info {
+		border-top: thin solid #d5d5d5;
+		padding: 15px;
+
+		h2 {
+			color: $accent-color;
+			font-size: 20px;
+		}
+
+		p {
+			color: $primary-text-color;
+			font-size: 14px;
+		}
+	}
 }
