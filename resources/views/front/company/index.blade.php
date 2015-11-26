@@ -1,3 +1,5 @@
+<?php if(\User::check()) $user = \User::getUser(); ?>
+
 @extends('front.app')
 
 @section('title')

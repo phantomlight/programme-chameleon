@@ -1,3 +1,5 @@
+<?php if(\User::check()) $user = \User::getUser(); ?>
+
 @extends('front.app')
 
 @section('title')
@@ -6,11 +8,11 @@
 
 @section('content')
 <div id="wrapper">
-	@include('front.contractor.header')
+	@include('front.include.header')
 	<div class="common-page-wrapper">
 		<div class="container">
 			<h2 class="page-header lighten">Create Job Alert</h2>
-			<form role="form" data-parsley-validate id="createJobAlertForm" class="col-md-6 sc-form">
+			<form role="form" data-parsley-validate id="contractorJobAlertForm" class="col-md-6 sc-form" onsubmit="return false;">
 				<div class="form-group">
 					<label>Job Alert Title</label>
 					<input type="text" class="form-control" name="job_alert_title" required placeholder="Name your alert">
@@ -64,7 +66,12 @@
 					<input type="email" required class="form-control" placeholder="Email">
 				</div>
 
-				<button type="submit" class="btn"> CREATE </button>
+				<button type="submit" class="btn">
+					<span class="btn-preloader">
+						<i class="fa fa-spinner fa-spin"></i>
+					</span>
+					<span>CREATE</span>
+				</button>
 			</form>
 
 			<div class="col-md-6">

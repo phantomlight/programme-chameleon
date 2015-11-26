@@ -81,7 +81,130 @@ class ContractorController extends Controller {
 	}
 
 	public function postUpdateAccount() {
-		var_dump(\Input::get('data'));
+		try {
+			$data = \Input::get('data');
+			$user = \User::getUser();
+
+			if ( ! $user->hasAccess('contractor')) {
+				throw new \Exception("Only contractor can update their account information", 1);
+				return;
+			}
+
+			if ($data['password'] !== '') {
+				$code = $user->getResetPasswordCode();
+				$user->attemptResetPassword($code, $data['password']);
+			}
+
+			$socialData = [
+				'facebook'	=> $data['socials_facebook'],
+				'twitter'		=> $data['socials_twitter'],
+				'linkedin'	=> $data['socials_linkedin'],
+			];
+
+			$contractorData = [
+				'address'			=>	$data['address'],
+				'phone'				=>	$data['phone'],
+				'country'			=>	$data['account_country'],
+				'city'				=>	$data['account_city'],
+				'occupation'	=>	$data['occupation'],
+				'skills'			=>	$data['skills'],
+				'description'	=>	trim(\Input::get('description')),
+				'experiences'	=>	trim(\Input::get('expData')),
+				'educations'	=>	trim(\Input::get('eduData')),
+				'urls'				=>	trim(\Input::get('urlData')),
+				'socials'			=>	json_encode($socialData),
+			];
+
+			$contractor = \Contractor::getContractor();
+			\Contractor::updateData($contractor, $contractorData);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Your data has been updated successfully',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
+			]);
+		}
+	}
+
+	public function postUpdateResume() {
+		try {
+			$user = \User::getUser();
+			if ( ! $user->hasAccess('contractor')) {
+				throw new \Exception("Only contractor can update their account information", 1);
+				return;
+			}
+
+			$contractor = \Contractor::getContractor();
+			// TODO: change to symfony request file input
+			\Contractor::updateResume($contractor, $_FILES['file']);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Resume file has been updated.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
+			]);
+		}
+	}
+
+	public function postUpdateAvatar() {
+		try {
+			$user = \User::getUser();
+			if ( ! $user->hasAccess('contractor')) {
+				throw new \Exception("Only contractor can update their account information", 1);
+				return;
+			}
+			
+			$contractor = \Contractor::getContractor();
+			// TODO: change to symfony request file input
+			$image = \Contractor::updateAvatar($contractor, $_FILES['file']);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Avatar has been updated.',
+				'image'		=>	asset($image->image),
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
+			]);
+		}
+	}
+
+	public function postJobAlert() {
+		$data = \Input::get('data');
+
+		try {
+			$user = \User::getUser();
+			if ( ! $user->hasAccess('contractor')) {
+				throw new \Exception("Only contractor can update their account information", 1);
+				return;
+			}
+			$contractor = \Contractor::getContractor();
+			$model = \Contractor::makeJobAlert($contractor, $data);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Job alert has been created. If you ever need to change, you have to make a new one.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
+			]);
+		}
 	}
 
 }

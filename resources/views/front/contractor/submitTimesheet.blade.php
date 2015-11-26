@@ -1,3 +1,5 @@
+<?php if(\User::check()) $user = \User::getUser(); ?>
+	
 @extends('front.app')
 
 @section('title')
@@ -6,7 +8,7 @@
 
 @section('content')
 <div id="wrapper">
-	@include('front.contractor.header')
+	@include('front.include.header')
 	<div class="common-page-wrapper element-top-30">
 		<div class="container">
 			<h2 class="page-header lighten">Submit a Timesheet</h2>

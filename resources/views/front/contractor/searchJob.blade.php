@@ -1,3 +1,5 @@
+<?php if(\User::check()) $user = \User::getUser(); ?>
+	
 @extends('front.app')
 
 @section('title')
@@ -6,7 +8,7 @@ Job Search | Programme Chameleon
 
 @section('content')
 <div id="wrapper">
-	@include('front.contractor.header')
+	@include('front.include.header')
 	<div class="common-page-wrapper">
 		<div id="job-search">
 			<div class="container">

@@ -8,7 +8,7 @@
 
 @section('content')
 <div id="wrapper">
-	@include('front.contractor.header')
+	@include('front.include.header')
 	<div class="common-page-wrapper">
 		<div class="container">
 			<div class="row">
@@ -62,6 +62,23 @@
 								<label>Phone</label>
 								<input type="text" name="phone" class="form-control" placeholder="Phone" value="{{ $contractor->phone }}">
 							</div>
+
+							<?php $socials = json_decode($contractor->socials); ?>
+
+							<div class="form-group">
+								<label>Facebook</label>
+								<input type="text" name="socials_facebook" class="form-control" placeholder="Facebook Account" value="@if(isset($socials->facebook)){{$socials->facebook}}@endif">
+							</div>
+
+							<div class="form-group">
+								<label>Twitter</label>
+								<input type="text" name="socials_twitter" class="form-control" placeholder="Twitter Account" value="@if(isset($socials->twitter)){{ $socials->twitter}}@endif">
+							</div>
+
+							<div class="form-group">
+								<label>Linkedin</label>
+								<input type="text" name="socials_linkedin" class="form-control" placeholder="LinkedIn Account" value="@if(isset($socials->linkedin)){{$socials->linkedin}}@endif">
+							</div>
 						</div>
 
 						<div class="col-sm-8">
@@ -78,8 +95,8 @@
 							</div>
 
 							<div class="form-group">
-								<label>Description</label>
-								<textarea class="form-control summernote" name="description">{{ $contractor->description }}</textarea>
+								<label>Tell us a little about yourself</label>
+								<textarea class="form-control summernote" name="description" maxlength="5000">{!! $contractor->description !!}</textarea>
 							</div>
 
 							<div class="form-group" id="expContainer">
@@ -87,35 +104,40 @@
 								<button class="btn btn-xs btn-success" id="addExp">
 									<i class="fa fa-plus"></i> Add Exp.
 								</button>
-								<div class="row element-top-10">
-									<div class="col-md-3">
-										<input type="text" name="exp_company" class="form-control" placeholder="Company" />
-									</div>
+								<?php $experiences = json_decode($contractor->experiences); ?>
+								@if (count($experiences) > 0)
+									@foreach ($experiences as $experience)
+										<div class="row element-top-10">
+											<div class="col-md-3">
+												<input type="text" name="exp_company" class="form-control" placeholder="Company" value="{{ $experience->company }}" />
+											</div>
 
-									<div class="col-md-3">
-										<input type="text" name="exp_year" class="form-control" placeholder="Year" />
-									</div>
+											<div class="col-md-3">
+												<input type="text" name="exp_year" class="form-control" placeholder="Year" value="{{ $experience->company }}" />
+											</div>
 
-									<div class="col-md-3">
-										<input type="text" name="exp_salary" class="form-control" placeholder="Salary" />
-									</div>
+											<div class="col-md-3">
+												<input type="text" name="exp_salary" class="form-control" placeholder="Salary" value="{{ $experience->salary }}" />
+											</div>
 
-									<div class="col-md-3">
-										<input type="text" name="exp_position" class="form-control" placeholder="Position" />
-									</div>
+											<div class="col-md-3">
+												<input type="text" name="exp_position" class="form-control" placeholder="Position" value="{{ $experience->position }}" />
+											</div>
 
-									<div class="element-top-10">&nbsp;</div>
+											<div class="element-top-10">&nbsp;</div>
 
-									<div class="col-sm-10">
-										<textarea class="form-control" name="exp_desc">Explain a little about your job duties.</textarea>
-									</div>
+											<div class="col-sm-10">
+												<textarea class="form-control" name="exp_desc" maxlength="1000"></textarea>
+											</div>
 
-									<div class="col-sm-2">
-										<button class="btn btn-danger btn-xs">
-											Remove
-										</button>
-									</div>
-								</div>
+											<div class="col-sm-2">
+												<button class="btn btn-danger btn-xs">
+													Remove
+												</button>
+											</div>
+										</div>
+									@endforeach
+								@endif
 							</div>
 
 							<div class="form-group" id="eduContainer">
@@ -123,29 +145,59 @@
 								<button class="btn btn-xs btn-success" id="addEducation">
 									<i class="fa fa-plus"></i> Add Education
 								</button>
-								<div class="row element-top-10">
-									<div class="col-md-3">
-										<input type="text" name="edu_name" class="form-control" placeholder="Institution Name" />
-									</div>
+								<?php $educations = json_decode($contractor->educations); ?>
+								@if (count($educations) > 0)
+									@foreach ($educations as $education)
+										<div class="row element-top-10">
+											<div class="col-md-3">
+												<input type="text" name="edu_name" class="form-control" placeholder="Institution Name" value="{{ $education->name }}" />
+											</div>
 
-									<div class="col-md-3">
-										<input type="text" name="edu_type" class="form-control" placeholder="ex. Design/Engineering/Business" />
-									</div>
+											<div class="col-md-3">
+												<input type="text" name="edu_type" class="form-control" placeholder="ex. Design/Engineering/Business" value="{{ $education->type }}" />
+											</div>
 
-									<div class="col-md-3">
-										<input type="text" name="edu_gpa" class="form-control" placeholder="GPA/Score" />
-									</div>
+											<div class="col-md-3">
+												<input type="text" name="edu_gpa" class="form-control" placeholder="GPA/Score" value="{{ $education->gpa }}" />
+											</div>
 
-									<div class="col-md-3">
-										<input type="text" name="edu_qualification" class="form-control" placeholder="ex. Ph.D" />
-									</div>
+											<div class="col-md-3">
+												<input type="text" name="edu_qualification" class="form-control" placeholder="ex. Ph.D" value="{{ $education->qualification }}" />
+											</div>
 
-									<div class="col-sm-2 element-top-10">
-										<button class="btn btn-danger btn-xs">
-											Remove
-										</button>
-									</div>
-								</div>
+											<div class="col-sm-2 element-top-10">
+												<button class="btn btn-danger btn-xs">
+													Remove
+												</button>
+											</div>
+										</div>
+									@endforeach
+								@endif
+							</div>
+
+							<div class="form-group" id="urlContainer">
+								<label>Website</label>
+								<button class="btn btn-xs btn-success" id="addWebsite">
+									<i class="fa fa-plus"></i> Add Website
+								</button>
+								<?php $urls = json_decode($contractor->urls); ?>
+								@if (count($urls) > 0)
+									@foreach ($urls as $url)
+										<div class="row element-top-10">
+											<div class="col-md-5">
+												<input type="text" name="web_name" class="form-control" placeholder="Name of the web" value="{{ $url->name }}" />
+											</div>
+											<div class="col-md-5">
+												<input type="text" name="web_adress" class="form-control" placeholder="http://www.programmechameleon.com" value="{{ $url->address }}" />
+											</div>
+											<div class="col-sm-2 element-top-10">
+												<button class="btn btn-danger btn-xs">
+													Remove
+												</button>
+											</div>
+										</div>
+									@endforeach
+								@endif
 							</div>
 						</div>
 
@@ -168,6 +220,12 @@
 							<div class="form-group">
 								<label>Profile Image</label>
 								<input type="file" name="image">
+								<br>
+								@if (is_null($contractor->image))
+									<img data-src="holder.js/100x100?text:No-image" class="img-thumbnail tmp-img" />
+								@else
+									<img src="{{ asset($contractor->image) }}" width="100" class="img-thumbnail tmp-img" />
+								@endif
 							</div>
 						</div>
 					</div>

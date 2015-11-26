@@ -1,3 +1,5 @@
+<?php if(\User::check()) $user = \User::getUser(); ?>
+	
 @extends('front.app')
 
 @section('title')
@@ -6,7 +8,7 @@
 
 @section('content')
 <div id="wrapper">
-	@include('front.contractor.header')
+	@include('front.include.header')
 	<div id="jobs-alerts" class="element-top-30">
 		<div class="container">
 			<div class="row">

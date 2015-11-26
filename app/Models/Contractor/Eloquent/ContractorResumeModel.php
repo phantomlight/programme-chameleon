@@ -14,4 +14,8 @@ class ContractorResumeModel extends Eloquent implements ContractorResumeModelInt
 		return $this->belongsTo(static::$contractorModel, 'contractor_id');
 	}
 
+	public function findByContractorId($id) {
+		return self::where('contractor_id', $id)->first();
+	}
+
 }

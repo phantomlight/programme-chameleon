@@ -16,7 +16,7 @@ class CompanyController extends Controller {
 		return view('front.company.register');
 	}
 
-	public function getJobPost() {
+	public function getPostJob() {
 		return view('front.company.jobPost');
 	}
 

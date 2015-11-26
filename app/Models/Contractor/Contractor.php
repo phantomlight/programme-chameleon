@@ -63,5 +63,21 @@ class Contractor {
 			return $contractor['model'];
 		}
 	}
+
+	public function updateData($contractor, $data) {
+		return $this->contractorProvider->updateData($contractor, $data);
+	}
+
+	public function updateResume($contractor, $file) {
+		return $this->contractorResumeProvider->updateResumeData($contractor, $file);
+	}
+
+	public function updateAvatar($contractor, $file) {
+		return $this->contractorProvider->updateAvatar($contractor, $file);
+	}
+
+	public function makeJobAlert($contractor, $data) {
+		return $this->contractorProvider->makeJobAlert($contractor, $data);
+	}
 	
 }

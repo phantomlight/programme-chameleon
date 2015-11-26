@@ -38,17 +38,15 @@
 					</button>
 					<nav id="main-menu" class="clearfix collapse navbar-collapse" role="navigation">
 						<ul class="nav-menu">
-							<li class="menu-item"><a href="{{ route('contractor.index') }}">Home</a></li>
+							<li class="menu-item"><a href="{{ route('company.index') }}">Home</a></li>
 							<li class="menu-item has-children">
 								<a href="#">My Account</a>
 								<ul class="sub-menu">
-									<li class="menu-item"><a href="{{ url('contractor/account') }}">Settings / Update CV</a></li>
-									<li class="menu-item"><a href="{{ url('contractor/create-job-alert') }}">Create Job Alert</a></li>
-									<li class="menu-item"><a href="{{ url('contractor/submit-timesheet') }}">Submit Timesheet</a></li>
-									<li class="menu-item"><a href="#">Record Expenses</a></li>
+									<li class="menu-item"><a href="{{ url('company/account') }}">Settings</a></li>
 								</ul>
 							</li>
-							<li class="menu-item"><a href="{{ url('contractor/search-job') }}">Job Search</a></li>
+							<li class="menu-item"><a href="{{ route('company.job.post') }}">Post a Job</li>
+							<li class="menu-item"><a href="{{ route('company.resume.search') }}">Resume Search</a></li>
 						</ul>
 					</nav><!-- /#main-menu -->
 				</div><!-- /#menu-wrapper -->
