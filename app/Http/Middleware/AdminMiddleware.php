@@ -2,7 +2,7 @@
 
 use Closure;
 
-class UserMiddleware {
+class AdminMiddleware {
 
 	/**
 	 * Handle an incoming request.
@@ -13,14 +13,14 @@ class UserMiddleware {
 	 */
 	public function handle($request, Closure $next) {
 		if ( ! \User::check()) {
-			return redirect('login')->with('flashMessage', ['class' => 'danger', 'message' => 'You have to be logged in first.']);
+			return redirect('admin/login')->with('flashMessage', ['class' => 'danger', 'message' => 'You have to be logged in first.']);
 		}
 
 		$user = \User::getUser();
 
-		if ( ! $user->hasAccess('user')) {
+		if ( ! $user->hasAccess('admin')) {
 			\User::logout();
-			return redirect('login')->with('flashMessage', ['class' => 'danger', 'message' => 'You do not have access to this page.']);
+			return redirect('admin/login')->with('flashMessage', ['class' => 'danger', 'message' => 'You do not have access to this page.']);
 		}
 		
 		return $next($request);

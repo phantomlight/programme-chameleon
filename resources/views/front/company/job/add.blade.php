@@ -1,4 +1,4 @@
-<?php if(\User::check()) $user = \User::getUser(); ?>
+<?php if(\User::check()) $user = \User::getUser(); $company = \Company::getCompany(); ?>
 	
 @extends('front.app')
 
@@ -15,46 +15,45 @@ Post a Job | Programme Chameleon
 				<form class="col-sm-8 col-sm-offset-2 sc-form" id="companyPostJobForm" role="form" onsubmit="return false;">
 					<div class="form-section">
 						<div class="form-group">
-							<div class="alert alert-info">
-								Posting a job require 1 credit. You currently have <strong>10,000</strong>
-							</div>	
-						</div>
-
-						<div class="form-group">
 							<label>Job Title</label>
-							<input type="text" name="job_title" class="form-control" required placeholder="Job Title" />
+							<input type="text" name="title" class="form-control" required placeholder="Job Title" />
 							<span class="help-block">Make sure title stands out, as this plays huge role when contractors are searching for your jobs</span>
 						</div>
 
 						<div class="form-group">
 							<label>Job Description</label>
-							<textarea class="form-control" name="job_description" required>Some details of your job here.</textarea>
+							<textarea class="form-control" name="description" required>Some details of your job here.</textarea>
+						</div>
+
+						<div class="form-group">
+							<label>Min. Experience (in year)</label>
+							<input type="number" class="form-control" name="experience_year" required min="0" value="0">
 						</div>
 
 						<div class="form-group">
 							<label>Country</label>
-							<select class="form-control" name="job_country">
+							<select class="form-control" id="countrySelector" name="country">
 								<option>-- Country Selector --</option>
 							</select>
 						</div>
 
 						<div class="form-group">
 							<label>City</label>
-							<select class="form-control" name="job_country">
+							<select class="form-control" id="citySelector" name="city">
 								<option>-- City Selector --</option>
 							</select>
 						</div>
 
 						<div class="form-group">
 							<label class="radio">
-								<input type="checkbox" name="check_eligible"> Applicant must eligible to work in country specified?
+								<input type="checkbox" name="eligible_to_work_in_country"> Applicant must eligible to work in country specified?
 							</label>
 						</div>
 
 						<div class="form-group">
 							<label>Job Type</label>
-							<select class="form-control" name="job_type">
-								<option value="full-time">Permanent</option>
+							<select class="form-control" name="type">
+								<option value="permanent">Permanent</option>
 								<option value="contract">Contract</option>
 							</select>
 						</div>
@@ -62,39 +61,54 @@ Post a Job | Programme Chameleon
 						<div class="form-group">
 							<label>Job Post Duration</label>
 							<select class="form-control" name="job_post_duration">
-								<option value="1week">1 Week</option>
-								<option value="1month">1 Month</option>
+								<option value="1">1 Week (<strong>1</strong> credit)</option>
+								<option value="2">1 Month (<strong>3</strong> credits)</option>
+							</select>
+							<span class="help-block">You currently have: {{ $company->credit }} credit(s). <a href="#" target="_blank">Buy more?</a></span>
+						</div>
+
+						<div class="form-group">
+							<label>Salary (in GBP)</label>
+							<input type="number" class="form-control" min="0" required placeholder="
+							Rate/salary for the job" name="salary">
+						</div>
+
+						<div class="form-group">
+							<label>Salary Rate</label>
+							<select class="form-control" name="salary_type" required>
+								<option value="hourly">Hourly</option>
+								<option value="monthly">Monthly</option>
+								<option value="one-time">One Time</option>
 							</select>
 						</div>
 
 						<div class="form-group">
-							<label>Rate / Salary</label>
-							<input type="number" class="form-control" min="0" required placeholder="Rate/salary for the job">
-						</div>
-
-						<div class="form-group">
 							<label>Work Visa Requirement</label>
-							<select class="form-control" name="job_visa_requirement">
-								<option value="required">Required</option>
-								<option value="considered">Considered</option>
-								<option value="not-required">Not required</option>
+							<select class="form-control" name="visa">
+								<option value="1">Required</option>
+								<option value="0">Not required</option>
 							</select>
 						</div>
 
 						<div class="form-group">
 							<label class="radio">
-								<input type="checkbox" name="check_security"> Security clearance?
+								<input type="checkbox" name="security_clearance"> Security clearance?
 							</label>
 						</div>
 
 						<div class="form-group">
 							<label>Industries</label>
-							<select class="form-control" name="job_industry" multiple="multiple" required>
-								<option value="1">IT</option>
-								<option value="2">Engineering</option>
-								<option value="3">Marketing</option>
-								<option value="4">Other</option>
+							<?php $industries = \Job::getAllIndustries(); ?>
+							<select class="form-control" name="job_industry" multiple="multiple" data-parsley-mincheck="1" data-parsley-maxcheck="3" required>
+								@if ($industries->count() > 0)
+									@foreach ($industries as $industry)
+										<option value="{{ $industry->id }}">{{ $industry->title }}</option>
+									@endforeach
+								@else
+									<option value="0">No industry has been set yet</option>
+								@endif
 							</select>
+							<span class="help-block">You can select up to 3 industries, contractor with same industries will be alerted.</span>
 						</div>
 
 						<div class="form-navigation">
@@ -105,12 +119,12 @@ Post a Job | Programme Chameleon
 					<div class="form-section">
 						<div class="form-group">
 							<label>Contact Name</label>
-							<input type="text" class="form-control" required name="job_contact_name">
+							<input type="text" class="form-control" required name="contact_name">
 						</div>
 
 						<div class="form-group">
 							<label>Phone</label>
-							<input type="text" class="form-control" required name="job_contact_phone">
+							<input type="text" class="form-control" required name="contact_phone">
 						</div>
 
 						<h3>Provide a way of how contractors will apply</h3>
@@ -137,7 +151,10 @@ Post a Job | Programme Chameleon
 							</button>
 
 							<button type="submit" class="btn sc-button pull-right">
-								Submit Job
+								<span class="btn-preloader">
+									<i class="fa fa-spinner fa-spin"></i>
+								</span>
+								<span>Submit Job</span>
 							</button>
 						</div>
 					</div>

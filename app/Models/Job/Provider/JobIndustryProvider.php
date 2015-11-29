@@ -2,7 +2,7 @@
 
 use App\Models\Job\Interfaces\JobIndustryProviderInterface;
 
-class JobIndustryProvider extends JobProviderInterface {
+class JobIndustryProvider implements JobIndustryProviderInterface {
 
 	protected $model = 'App\Models\Job\Eloquent\JobIndustryModel';
 
@@ -23,6 +23,16 @@ class JobIndustryProvider extends JobProviderInterface {
 
 	public function getModel() {
 		return $this->createModel();
+	}
+
+	public function getAll() {
+		$model = $this->getModel();
+		return $model->orderBy('title', 'asc')->get();
+	}
+
+	public function findById($id) {
+		$model = $this->getModel();
+		return $model->where('id', $id)->first();
 	}
 
 }

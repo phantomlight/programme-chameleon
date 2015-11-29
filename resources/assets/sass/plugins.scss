@@ -25,6 +25,10 @@ input.parsley-error, select.parsley-error, textarea.parsley-error {
 	&.filled {
 		opacity: 1;
 	}
+
+	li {
+		color: #ff0000 !important;
+	}
 }
 
 @import "front/jquery-ui";

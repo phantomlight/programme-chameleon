@@ -24,6 +24,21 @@ module.exports = {
 			outputName: 'app.js'
 		},
 		{
+			entries: './resources/assets/js/front/contractor.js',
+			dest: './public/assets/js',
+			outputName: 'contractor.js'
+		},
+		{
+			entries: './resources/assets/js/front/company.js',
+			dest: './public/assets/js',
+			outputName: 'company.js'
+		},
+		{
+			entries: './resources/assets/js/front/agency.js',
+			dest: './public/assets/js',
+			outputName: 'agency.js'
+		},
+		{
 			entries: './resources/assets/js/back/app.js',
 			dest:  './public/assets/js',
 			outputName: '_app.js'

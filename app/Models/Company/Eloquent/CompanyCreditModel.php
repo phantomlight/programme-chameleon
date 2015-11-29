@@ -14,4 +14,17 @@ class CompanyCreditModel extends Eloquent implements CompanyCreditModelInterface
 		return $this->belongsTo(static::$companyModel, 'company_id');
 	}
 
+	public function save(array $options = array()) {
+		$this->validate();
+		return parent::save($options);
+	}
+
+	public function validate() {
+		if ( ! is_int($this->amount)) {
+			throw new \Exception("Amount is not a number.", 1);
+		}
+
+		return true;
+	}
+
 }

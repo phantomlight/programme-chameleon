@@ -16,11 +16,14 @@ class CreateCompanyTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('credit');
+            $table->boolean('is_vip')->default(0);
             $table->text('address')->nullable();
             $table->string('name', 255);
             $table->string('position', 255);
             $table->string('image', 255)->nullable();
             $table->string('phone', 255);
+            $table->dateTime('vip_start')->default('0000-00-00 00:00:00');
+            $table->dateTime('vip_end')->default('0000-00-00 00:00:00');
             $table->timestamps();
 
             $table->engine = 'InnoDB';

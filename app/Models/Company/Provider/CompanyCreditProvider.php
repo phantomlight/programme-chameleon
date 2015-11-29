@@ -25,5 +25,26 @@ class CompanyCreditProvider implements CompanyCreditProviderInterface {
 		return $this->createModel();
 	}
 
+	public function update($company, $value) {
+		$model = $this->getModel();
+		$model->fill([
+			'company_id'	=>	$company->id,
+			'amount'			=>	$value,
+		]);
+
+		if ($model->save()) {
+			if ($value < 0) $company->credit -= $value;
+			else $company->credit += $value;
+			$company->save();
+			session(['_sess_company' => ['model' => $company]]);
+			return $company;
+		}
+		else {
+			throw new \Exception("Error Processing Request.", 1);
+		}
+
+		return true;
+	}
+
 
 }

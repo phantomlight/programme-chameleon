@@ -29,7 +29,7 @@
 			</div>
 			<div class="col-sm-6">
 				<p> If you have any queries, please call us.</p>
-				<h3>Call: 1 800 000 000</h3>
+				<h3>Call: +44 20 7993 4071</h3>
 				<p>Or email us:</p>
 				<h4><a href="mailto:enquiries@programmechameleon.com" class="email-query">enquiries(at)programmechameleon.com</a></h4>
 			</div>

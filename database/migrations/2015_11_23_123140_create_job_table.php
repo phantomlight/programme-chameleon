@@ -30,7 +30,6 @@ class CreateJobTable extends Migration
             $table->enum('type', ['permanent', 'contract']);
             $table->enum('status', ['open', 'close']);
             $table->text('job_apply_details');
-            $table->text('industry');
             $table->text('description')->nullable();
             $table->timestamps();
 

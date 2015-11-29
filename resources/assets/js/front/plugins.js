@@ -102,8 +102,14 @@ export class Plugins {
 			success: function (data) {
 				for (var key in data) {
 					if (data.hasOwnProperty(key)) {
-						var selected = (data[key].Code === 'GBR') ? 'selected="selected"' : '';
-						$('#countrySelector').append('<option value="' + data[key].Code + '" ' + selected + '>' + data[key].Name +'</option>');
+						if ($('#countrySelector').data('value') !== '') {
+							var countryValue = $('#countrySelector').data('value');
+							var selected = (data[key].Name === countryValue) ? 'selected="selected"' : '';
+						}
+						else {
+							var selected = (data[key].Code === 'GBR') ? 'selected="selected"' : '';
+						}
+						$('#countrySelector').append('<option value="' + data[key].Name + '" data-code="' + data[key].Code + '" ' + selected + '>' + data[key].Name +'</option>');
 					}
 				}
 
@@ -116,7 +122,7 @@ export class Plugins {
 						$.ajax({
 							type: 'get',
 							data: {
-								value: $('#countrySelector').val()
+								value: $('#countrySelector :selected').data('code')
 							},
 							dataType: "json",
 							url: window.origin + '/api/city',
@@ -125,7 +131,14 @@ export class Plugins {
 								$('#citySelector').empty();
 								for (var key in cityData) {
 									if (cityData.hasOwnProperty(key)) {
-										$('#citySelector').append('<option value="' + cityData[key].Name + '">' + cityData[key].Name +'</option>');
+										var selected = '';
+
+										if ($('#citySelector').data('value') !== '') {
+											var cityValue = $('#citySelector').data('value');
+											selected = (cityData[key].Name === cityValue) ? 'selected="selected"' : '';
+										}
+
+										$('#citySelector').append('<option value="' + cityData[key].Name + '" ' + selected + '>' + cityData[key].Name +'</option>');
 									}
 								}
 							},

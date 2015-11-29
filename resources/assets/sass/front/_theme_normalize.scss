@@ -242,6 +242,10 @@ a {
 /*	Alert Shortcode	*/
 /*----------------------------------------------------*/
 
+.status-message {
+	clear: both;
+}
+
 .alert {
 	color: #FFFFFF;
 	border-radius: 0;
@@ -334,6 +338,14 @@ a {
 
 	label {
 		color: $primary-text-color;
+	}
+
+	a {
+		color: $accent-color;
+
+		&:hover {
+			color: lighten($accent-color, 10%);
+		}
 	}
 }
 
@@ -432,4 +444,17 @@ a {
 
 .ui-tabs {
 	padding: 0;
+}
+
+.panel {
+	border-radius: 0;
+	color: $primary-text-color;
+
+	a {
+		color: $accent-color;
+
+		&:hover {
+			color: lighten($accent-color, 10%);
+		}
+	}
 }

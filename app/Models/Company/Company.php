@@ -36,6 +36,10 @@ class Company {
 		return $this->company = $company;
 	}
 
+	public function updateCredit($company, $value) {
+		return $this->companyCreditProvider->update($company, $value);
+	}
+
 	public function getCompany() {
 		if (!\Session::has('_sess_company')) {
 			try {

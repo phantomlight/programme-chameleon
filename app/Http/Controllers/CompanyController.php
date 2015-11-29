@@ -8,6 +8,10 @@ use App\Utils\Hashing\JCryption;
 
 class CompanyController extends Controller {
 
+	public function __construct() {
+		$this->middleware('company', ['except' => 'getRegister']);
+	}
+
 	public function getIndex() {
 		return view('front.company.index');
 	}
@@ -17,7 +21,7 @@ class CompanyController extends Controller {
 	}
 
 	public function getPostJob() {
-		return view('front.company.jobPost');
+		return view('front.company.job.add');
 	}
 
 	public function getResumeSearch() {
@@ -70,6 +74,29 @@ class CompanyController extends Controller {
 				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
 			]);
 		}
+	}
+
+	public function getEditJob() {
+		$company = \Company::getCompany();
+		$job = \Job::findJobById(trim(\Input::get('i')));
+
+		if ( ! $job) {
+			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'Job does not exists.']);
+		}
+
+		if ($job->company_id !== $company->id) {
+			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'You cannot edit this job.']);
+		}
+
+		return view('front.company.job.edit')->with('job', $job);
+	}
+
+	public function getEditTimesheet() {
+
+	}
+
+	public function getJobTimesheet() {
+
 	}
 
 }

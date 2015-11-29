@@ -13,14 +13,14 @@
 	<div class="container">
 		<div id="footer-widgets">
 			<div class="row">
-				<div class="col-md-3 widget-container">
+				<div class="col-md-6 widget-container">
 					<div id="text-2" class="widget widget_text">
 						<h3 class="footer-widget-title">About Us</h3>
-						<div class="textwidget">Programme Chameleon company/team description here. The longer the better.</div>
+						<div class="textwidget">Programme Chameleon company is a place where people share and build their projects together.</div>
 					</div>
 				</div><!-- /.col-md-3 -->
 
-				<div class="col-md-3 widget-container">
+{{-- 				<div class="col-md-3 widget-container">
 					<div id="nav_menu-2" class="widget widget_nav_menu">
 						<h3 class="footer-widget-title">Useful Links</h3>
 						<div class="menu-useful-links-container">
@@ -33,7 +33,7 @@
 							</ul>
 						</div>
 					</div>
-				</div><!-- /.col-md-2 -->
+				</div><!-- /.col-md-3 --> --}}
 
 				<div class="col-md-6 widget-container">
 					<div id="text-3" class="widget widget_text">

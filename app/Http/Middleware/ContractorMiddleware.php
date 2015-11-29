@@ -2,7 +2,7 @@
 
 use Closure;
 
-class UserMiddleware {
+class ContractorMiddleware {
 
 	/**
 	 * Handle an incoming request.
@@ -18,7 +18,7 @@ class UserMiddleware {
 
 		$user = \User::getUser();
 
-		if ( ! $user->hasAccess('user')) {
+		if ( ! $user->hasAccess('contractor')) {
 			\User::logout();
 			return redirect('login')->with('flashMessage', ['class' => 'danger', 'message' => 'You do not have access to this page.']);
 		}

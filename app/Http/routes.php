@@ -45,6 +45,8 @@ Route::controller('company', 'CompanyController', [
 	'postRegister'		=>	'company.postRegister',
 	'getIndex'				=>	'company.index',
 	'getPostJob'			=>	'company.job.post',
+	'getEditJob'			=>	'company.job.edit',
+	'getJobTimesheet'	=>	'company.job.timesheet',
 	'getResumeSearch'	=>	'company.resume.search',
 ]);
 
@@ -65,6 +67,8 @@ Route::controller('contractor', 'ContractorController', [
 	'getSearchJob'			=>	'contractor.job.search',
 	'getSubmitTimesheet'	=>	'contractor.timesheet.submit',
 ]);
+
+Route::controller('job', 'JobController', []);
 
 //Route::get('test-mail', 'SiteController@testSendEmail');
 Route::post('mail/receive', function () { return \Queue::marshal(); });

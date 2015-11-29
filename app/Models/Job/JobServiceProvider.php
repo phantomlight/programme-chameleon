@@ -15,6 +15,7 @@ class JobServiceProvider extends ServiceProvider {
 
 	public function register() {
 		$this->registerJobProvider();
+		$this->registerJobIndustryProvider();
 		$this->registerJob();
 	}
 
@@ -33,7 +34,7 @@ class JobServiceProvider extends ServiceProvider {
 	}
 
 	public function registerJob() {
-		$this->app['Job'] = $this->app->share(function($app) {
+		$this->app['job'] = $this->app->share(function($app) {
 			return new Job(
 				$app['job.model'],
 				$app['job.industry']

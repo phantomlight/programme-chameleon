@@ -61,6 +61,14 @@
 				]
 			};
 
+			<?php if (\User::check()) { $user = \User::getUser(); if ($user->hasAccess('contrator')) { ?>
+				App.Scripts.bundle.push(window.origin + '/assets/js/contrator.js');
+			<?php } elseif ($user->hasAccess('company')) { ?>
+				App.Scripts.bundle.push(window.origin + '/assets/js/company.js');
+			<?php } elseif ($user->hasAccess('agency')) { ?>
+				App.Scripts.bundle.push(window.origin + '/assets/js/agency.js');
+			<?php }} ?>
+
 			$script(App.Scripts.core, "core");
 
 			$script.ready(["core"], function() {

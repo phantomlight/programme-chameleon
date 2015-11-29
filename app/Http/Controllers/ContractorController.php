@@ -8,6 +8,10 @@ use App\Utils\Hashing\JCryption;
 
 class ContractorController extends Controller {
 
+	public function __construct() {
+		$this->middleware('company', ['except' => 'getRegister']);
+	}
+
 	public function getRegister() {
 		return view('front.contractor.register');
 	}

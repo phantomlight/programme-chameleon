@@ -1,33 +1,20 @@
-#company-home-tab {
-	.nav-tabs {
-		border: none;
-		
-		li {
-			@include respond-to(handhelds) {
-				width: 100%;
-				border: thin solid #d5d5d5;
-			}
+.list-jobs {
+	li {
+		border-bottom: thin solid #d5d5d5;
+		padding: 5px 0;
 
-			&.active {
-				a {
-					background-color: $accent-color;
-					color: #fff;
-				}
-			}
+		.time {
+			font-size: 12px;
+			color: #B1AEAE;
+		}
 
-			a {
-				@include respond-to(handhelds) {
-					border: none !important;
-					border-radius: 0 !important;
-				}
-			}
+		&:last-child {
+			border-bottom: none;
 		}
 	}
 
-	.tab-pane {
-		border: thin solid #d5d5d5;
-		float: left;
-		width: 100%;
+	.btn, button {
+		color: white !important;
 	}
 }
 
