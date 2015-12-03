@@ -35,6 +35,11 @@ class ContractorProvider implements ContractorProviderInterface {
 		return $model;
 	}
 
+	public function findById($id) {
+		$model = $this->createModel();
+		return $model->where('id', $id)->first();
+	}
+
 	public function updateData($contractor, $data) {
 		try {
 			foreach ($data as $k=>$v) {
@@ -43,6 +48,7 @@ class ContractorProvider implements ContractorProviderInterface {
 
 			$contractor->updated_at = Carbon::now();
 			$contractor->save();
+			session(['_sess_contractor' => ['model'=> $contractor]]);
 			return $contractor;
 		}
 		catch (\Exception $e) {
@@ -65,6 +71,7 @@ class ContractorProvider implements ContractorProviderInterface {
 			$contractor->image = $uploadedFile;
 			$contractor->updated_at = Carbon::now();
 			$contractor->save();
+			session(['_sess_contractor' => ['model'=> $contractor]]);
 			return $contractor;
 		}
 		catch (\Exception $e) {
@@ -75,6 +82,34 @@ class ContractorProvider implements ContractorProviderInterface {
 
 	public function makeJobAlert($contractor, $data) {
 		return false;
+	}
+
+	public function search($data) {
+		$model = $this->getModel();
+
+		$model = $model->whereHas('user', function ($query) use ($data) {
+			$query->where('first_name', 'like', '%' . $data['query'] . '%');
+		});
+
+		if ($data['country'] !== 'any') {
+			$model
+				->where('city', $data['city'])
+				->where('country', $data['country']);
+		}
+
+		if ($data['industry'] !== '0') {
+			$model->where('occupation', $data['industry']);
+		}
+
+		if ($data['cv_search_salary'] === 'range') {
+			$model = $model->whereHas('resume', function ($query) use ($data) {
+				$query
+					->where('range_salary_min', '>=', $data['salary_min'])
+					->where('range_salary_max', '<=', $data['salary_max']);
+			});
+		}
+
+		return $model->orderBy('created_at', 'desc');
 	}
 
 }

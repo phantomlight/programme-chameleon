@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+
+use App\Http\Controllers\Controller;
 use App\Jobs\EmailJob;
 use App\Utils\Hashing\JCryption;
 use App\Utils\Location;
+use PayPal;
 
 class SiteController extends Controller {
 
@@ -25,7 +27,7 @@ class SiteController extends Controller {
 			return \Response::json([
 				'type'		=>	'danger',
 				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
-			]);
+				]);
 		}
 	}
 
@@ -38,7 +40,7 @@ class SiteController extends Controller {
 			return \Response::json([
 				'type'		=>	'danger',
 				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
-			]);
+				]);
 		}
 	}
 
@@ -64,13 +66,13 @@ class SiteController extends Controller {
 
 	public function testSendEmail(Request $req) {
 		$data = [
-			'layout'	=>	'emails.test',
-			'data'		=>	[
-				'text'	=>	'This is a test',
-			],
-			'subject'	=>	'Test Email Queue',
-			'from_email'	=>	'noreply@programmechameleon.com',
-			'to_email'	=>	'forddyce92@gmail.com',
+		'layout'	=>	'emails.test',
+		'data'		=>	[
+		'text'	=>	'This is a test',
+		],
+		'subject'	=>	'Test Email Queue',
+		'from_email'	=>	'noreply@programmechameleon.com',
+		'to_email'	=>	'forddyce92@gmail.com',
 		];
 
 		$job = (new EmailJob($data))->onQueue('email-queue');
@@ -83,7 +85,7 @@ class SiteController extends Controller {
 			return redirect()->back()->with('flashMessage', [
 				'class' 	=> 'info',
 				'message' => 'Already logged in. Please log out first to login again.',
-			]);
+				]);
 		}
 		return view('front.login'); 
 	}

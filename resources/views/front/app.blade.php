@@ -9,8 +9,8 @@
 		<link href="//fonts.googleapis.com" rel="dns-prefetch">
 		<title>@yield('title', 'Programme Chameleon')</title>
 		@yield('meta_tags')
-		<link rel="shortcut icon" href="{{ url('favicon.ico') }}" type="image/x-icon">
-		<link rel="icon" href="{{ url('favicon.ico') }}" type="image/x-icon">
+		<link rel="shortcut icon" href="{{ url('assets/img/ico/favicon.ico') }}" type="image/x-icon">
+		<link rel="icon" href="{{ url('assets/img/ico/favicon.ico') }}" type="image/x-icon">
 	</head>
 
 	<body>
@@ -61,8 +61,8 @@
 				]
 			};
 
-			<?php if (\User::check()) { $user = \User::getUser(); if ($user->hasAccess('contrator')) { ?>
-				App.Scripts.bundle.push(window.origin + '/assets/js/contrator.js');
+			<?php if (\User::check()) { $user = \User::getUser(); if ($user->hasAccess('contractor')) { ?>
+				App.Scripts.bundle.push(window.origin + '/assets/js/contractor.js');
 			<?php } elseif ($user->hasAccess('company')) { ?>
 				App.Scripts.bundle.push(window.origin + '/assets/js/company.js');
 			<?php } elseif ($user->hasAccess('agency')) { ?>

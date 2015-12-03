@@ -58,4 +58,12 @@ class Company {
 		}
 	}
 
+	public function updateVIP($company, $active=false) {
+		return $this->companyProvider->updateVIP($company, $active);
+	}
+
+	public function updateData($data) {
+		return $this->companyProvider->update($data);
+	}
+
 }

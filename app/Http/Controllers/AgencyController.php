@@ -9,7 +9,7 @@ use App\Utils\Hashing\JCryption;
 class AgencyController extends Controller {
 
 	public function __construct() {
-		$this->middleware('company', ['except' => 'getRegister']);
+		$this->middleware('agency', ['except' => ['getRegister', 'postRegister']]);
 	}
 	
 	public function getIndex() {

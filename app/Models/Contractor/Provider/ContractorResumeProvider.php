@@ -37,23 +37,47 @@ class ContractorResumeProvider implements ContractorResumeProviderInterface {
 			$model = $this->createModel();
 			$resume = $model->findByContractorId($contractor->id);
 
-			if (count($resume) > 0) {
+			if ( ! $resume) {
+				$model->fill([
+					'file'	=>	$uploadedFile,
+					'contractor_id'	=> $contractor->id,
+				]);
+				$model->save();
+				\Session::forget('_sess_contractor');
+				return $model;
+			}
+			else {
 				if (\File::exists(public_path() . '/' . $resume->file)) {
 					\File::delete(public_path() . '/' . $resume->file);
 				}
 				$resume->file = $uploadedFile;
 				$resume->updated_at = Carbon::now();
 				$resume->save();
+				\Session::forget('_sess_contractor');
 				return $resume;
 			}
-			else {
-				$model->fill([
-					'file'	=>	$uploadedFile,
-					'contractor_id'	=> $contractor->id,
-				]);
-				$model->save();
-				return $model;
+		}
+		catch (\Exception $e) {
+			throw new \Exception($e->getMessage(), 1);
+			return;
+		}
+	}
+
+	public function updateSalary($contractor, $data) {
+		$resume = $contractor->resume;
+		if ( ! $resume) {
+			throw new \Exception("Please upload a CV file first before updating salary data.", 1);
+			return;
+		}
+
+		try {
+			foreach ($data as $k=>$d) {
+				$resume->{$k} = $d;
 			}
+
+			$resume->save();
+			\Session::forget('_sess_contractor');
+			return $resume;
 		}
 		catch (\Exception $e) {
 			throw new \Exception($e->getMessage(), 1);

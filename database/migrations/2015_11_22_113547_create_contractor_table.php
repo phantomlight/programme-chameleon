@@ -77,6 +77,9 @@ class CreateContractorTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('contractor_id');
             $table->string('file', 255);
+            $table->enum('salary_rate', ['hourly', 'daily', 'weekly', 'monthly']);
+            $table->integer('range_salary_min')->default(0);
+            $table->integer('range_salary_max')->default(0);
             $table->timestamps();
 
             $table->engine = 'InnoDB';

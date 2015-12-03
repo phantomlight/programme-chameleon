@@ -23,6 +23,11 @@ return [
         'secret' => env('MANDRILL_SECRET'),
     ],
 
+    'paypal' => [
+        'client_id' =>  env('PAYPAL_CLIENT_ID'),
+        'secret' =>  env('PAYPAL_CLIENT_SECRET'),
+    ],
+
     'ses' => [
         'key'    => env('SES_KEY'),
         'secret' => env('SES_SECRET'),
@@ -36,3 +41,4 @@ return [
     ],
 
 ];
+

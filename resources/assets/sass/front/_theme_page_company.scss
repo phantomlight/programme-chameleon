@@ -144,6 +144,14 @@
 		li {
 			border-bottom: thin solid #e3e3e3;
 			padding: 30px 0;
+			
+			a {
+				color: $primary-text-color;
+			}
+
+			.btn {
+				color: #fff !important;
+			}
 
 			i.fa-map-marker {
 				color: #f44336;

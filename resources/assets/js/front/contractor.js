@@ -4,7 +4,7 @@ import { Plugins } from "./plugins";
 var $form;
 var processing = false;
 
-// Account settings, upload cv+avatar
+// Account settings, upload cv, avatar
 if ($('#contractorAccountForm')[0]) {
 	$form = $('#contractorAccountForm');
 	var expRowHtml = '<div class="row element-top-10"><div class="col-md-3"><input type="text" name="exp_company" class="form-control" placeholder="Company" /></div><div class="col-md-3"><input type="text" name="exp_year" class="form-control" placeholder="Year" /></div><div class="col-md-3"><input type="text" name="exp_salary" class="form-control" placeholder="Salary" /></div><div class="col-md-3"><input type="text" name="exp_position" class="form-control" placeholder="Position" /></div><div class="element-top-10">&nbsp;</div><div class="col-sm-10"><textarea class="form-control" name="exp_desc" maxlength="2000">Explain a little about your job duties.</textarea></div><div class="col-sm-2"><button class="btn btn-danger btn-xs">Remove</button></div></div>';
@@ -194,6 +194,34 @@ if ($('#contractorAccountForm')[0]) {
 		}
 		else {
 			alert('Another upload process is running, please wait.');
+		}
+	});
+}
+
+if ($('#contractorSalaryRangeForm')[0]) {
+	var $salaryForm = $('#contractorSalaryRangeForm');
+	$salaryForm.find('[type=button]').on('click', function (e) {
+		e.preventDefault();
+
+		if ( ! processing) {
+			processing = true;
+			$salaryForm.find('[type=button]').disable(true);
+
+			$.post(window.origin + '/contractor/update-salary', {
+				data: $salaryForm.serializeForm()
+			}).done(function (e) {
+				processing = false;
+				$salaryForm.showMessage(e.message, e.type);
+				$salaryForm.find('[type=button]').disable(false);
+			}).fail(function (xhr, status, e) {
+				processing = false;
+				alert(xhr.responseText);
+				$salaryForm.showMessage(xhr.responseText, 'danger');
+				$salaryForm.find('[type=button]').disable(false);
+			});
+		}
+		else {
+			alert('Another upload process is running, please wait');
 		}
 	});
 }

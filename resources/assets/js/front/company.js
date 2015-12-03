@@ -121,3 +121,26 @@ if ($('#companyEditJobForm')[0]) {
 		}
 	});
 }
+
+// Edit Account
+if ($('#companyEditAccountForm')[0]) {
+	$form = $('#companyEditAccountForm');
+
+	$form.find('[type=submit]').on('click', function (e) {
+		e.preventDefault();
+		if ($form.parsley().validate() && ! processing) {
+			$form.find('[type=submit]').disable(true);
+			$.post(window.origin + '/company/update-account', {
+				data: $form.serializeForm()
+			}).done(function (e) {
+				$form.showMessage(e.message, e.type);
+				$form.find('[type=submit]').disable(false);
+				processing = false;
+			}).fail(function (xhr, status, e) {
+				$form.showMessage(xhr.responseText, 'danger');
+				$form.find('[type=submit]').disable(false);
+				processing = false;
+			});
+		}
+	});
+}

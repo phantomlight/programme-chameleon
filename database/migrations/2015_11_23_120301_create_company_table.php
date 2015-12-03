@@ -24,6 +24,10 @@ class CreateCompanyTable extends Migration
             $table->string('phone', 255);
             $table->dateTime('vip_start')->default('0000-00-00 00:00:00');
             $table->dateTime('vip_end')->default('0000-00-00 00:00:00');
+            $table->text('overview')->nullable();
+            $table->text('description')->nullable();
+            $table->text('industry')->nullable();
+            $table->text('socials')->nullable();
             $table->timestamps();
 
             $table->engine = 'InnoDB';

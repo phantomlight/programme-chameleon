@@ -11,8 +11,8 @@
 		@yield('meta_tags')
 		<meta name="msvalidate.01" content="8038C9BE2D7847226E0DF010A66F6624" />
 		<meta name='yandex-verification' content='5589e01eaa194646' />
-		<link rel="shortcut icon" href="{{ url('favicon.ico') }}" type="image/x-icon">
-		<link rel="icon" href="{{ url('favicon.ico') }}" type="image/x-icon">
+		<link rel="shortcut icon" href="{{ url('assets/img/ico/favicon.ico') }}" type="image/x-icon">
+		<link rel="icon" href="{{ url('assets/img/ico/favicon.ico') }}" type="image/x-icon">
 	</head>
 
 	<body>

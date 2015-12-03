@@ -35,7 +35,7 @@ class Contractor {
 	}
 
 	public function __call($method, $parameters) {
-		if (isset($this->contrator)) {
+		if (isset($this->contractor)) {
 			return call_user_func_array(array($this->contractor, $method), $parameters);
 		}
 		throw new \BadMethodCallException("Method [$method] is not supported.");
@@ -47,7 +47,7 @@ class Contractor {
 	}
 
 	public function getContractor() {
-		if (!\Session::has('_sess_contractor')) {
+		if ( ! \Session::has('_sess_contractor')) {
 			try {
 				$user = \User::getUser();
 				$contractor = $user->contractor;
@@ -76,8 +76,25 @@ class Contractor {
 		return $this->contractorProvider->updateAvatar($contractor, $file);
 	}
 
+	public function updateSalary($contractor, $data) {
+		return $this->contractorResumeProvider->updateSalary($contractor, $data);
+	}
+
 	public function makeJobAlert($contractor, $data) {
 		return $this->contractorProvider->makeJobAlert($contractor, $data);
+	}
+
+	public function searchContractor($data) {
+		return $this->contractorProvider->search($data);
+	}
+
+	public function getAllContractors() {
+		$model = $this->contractorProvider->getModel();
+		return $model->orderBy('created_at', 'desc');
+	}
+
+	public function findContractorById($id) {
+		return $this->contractorProvider->findById($id);
 	}
 	
 }

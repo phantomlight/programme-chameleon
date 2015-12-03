@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use App\Utils\Hashing\JCryption;
+use App\Utils\Hash;
 
 class ContractorController extends Controller {
 
 	public function __construct() {
-		$this->middleware('company', ['except' => 'getRegister']);
+		$this->middleware('contractor', ['except' => [
+			'getRegister',
+			'postRegister',
+			'getPublicProfilePage',
+		]]);
 	}
 
 	public function getRegister() {
@@ -34,6 +39,19 @@ class ContractorController extends Controller {
 
 	public function getSubmitTimesheet() {
 		return view('front.contractor.submitTimesheet');
+	}
+
+	public function getPublicProfilePage($id, $slug) {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		$contractor = \Contractor::findContractorById($_hash->decode($id));
+
+		if ( ! $contractor) {
+			return abort(404);
+		}
+		
+		return view('front.contractor.publicProfile')->with('contractor', $contractor);
 	}
 
 	public function postRegister() {
@@ -182,6 +200,33 @@ class ContractorController extends Controller {
 			return \Response::json([
 				'type'		=>	'danger',
 				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
+			]);
+		}
+	}
+
+	public function postUpdateSalary() {
+		$data = \Input::get('data');
+
+		if ($data['range_salary_min'] >= $data['range_salary_max']) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Minimum value must be smaller or not equal than maximum value',
+			]);
+		}
+
+		try {
+			$contractor = \Contractor::getContractor();
+			\Contractor::updateSalary($contractor, $data);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Salary data has been updated',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster',
 			]);
 		}
 	}

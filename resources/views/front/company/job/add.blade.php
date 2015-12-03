@@ -32,14 +32,14 @@ Post a Job | Programme Chameleon
 
 						<div class="form-group">
 							<label>Country</label>
-							<select class="form-control" id="countrySelector" name="country">
+							<select class="form-control" id="countrySelector" name="country" data-value="">
 								<option>-- Country Selector --</option>
 							</select>
 						</div>
 
 						<div class="form-group">
 							<label>City</label>
-							<select class="form-control" id="citySelector" name="city">
+							<select class="form-control" id="citySelector" name="city" data-value="">
 								<option>-- City Selector --</option>
 							</select>
 						</div>

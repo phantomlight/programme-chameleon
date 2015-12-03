@@ -27,6 +27,8 @@ Route::get('job/job-sample', function() { return view('front.jobSample'); });
 Route::get('gen', 'SiteController@getPublicKey');
 Route::post('handshake', 'SiteController@getHandshakeKey');
 
+Route::controller('api/payment', 'PaymentController', []);
+
 Route::controller('admin', 'AdminController', [
 	'getIndex'	=>	'admin.index',
 	'getLogin'	=>	'admin.login',
@@ -48,6 +50,7 @@ Route::controller('company', 'CompanyController', [
 	'getEditJob'			=>	'company.job.edit',
 	'getJobTimesheet'	=>	'company.job.timesheet',
 	'getResumeSearch'	=>	'company.resume.search',
+	'getAccount'			=>	'company.account',
 ]);
 
 Route::controller('agency', 'AgencyController', [
@@ -56,6 +59,11 @@ Route::controller('agency', 'AgencyController', [
 	'getIndex'			=>	'agency.index',
 	'getNotifList'	=>	'agency.notif.all',
 	'getOfferJob'		=>	'agency.offerJob',
+]);
+
+Route::get('contractor/{id}/{slug}', [
+	'as' 		=>	'contractor.profile',
+	'uses'	=>	'ContractorController@getPublicProfilePage'
 ]);
 
 Route::controller('contractor', 'ContractorController', [

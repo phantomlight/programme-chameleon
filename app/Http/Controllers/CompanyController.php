@@ -9,11 +9,15 @@ use App\Utils\Hashing\JCryption;
 class CompanyController extends Controller {
 
 	public function __construct() {
-		$this->middleware('company', ['except' => 'getRegister']);
+		$this->middleware('company', ['except' => ['getRegister', 'postRegister']]);
 	}
 
 	public function getIndex() {
 		return view('front.company.index');
+	}
+
+	public function getAccount() {
+		return view('front.company.account');
 	}
 
 	public function getRegister() {
@@ -92,11 +96,27 @@ class CompanyController extends Controller {
 	}
 
 	public function getEditTimesheet() {
-
 	}
 
 	public function getJobTimesheet() {
+	}
 
+	public function postUpdateAccount() {
+		$data = \Input::get('data');
+
+		try {
+			$company = \Company::updateData($data);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Data updated successfully.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Something went wrong, please contact webmaster',
+			]);
+		}
 	}
 
 }

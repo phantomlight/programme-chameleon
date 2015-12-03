@@ -10,7 +10,7 @@ $company = \Company::getCompany();
 @extends('front.app')
 
 @section('title')
-Company 1 | Programme Chameleon
+Account Settings | Programme Chameleon
 @stop
 
 @section('content')
@@ -20,28 +20,74 @@ Company 1 | Programme Chameleon
 		<div class="element-top-30">&nbsp;</div>
 		<div class="col-sm-8">
 			<div class="panel panel-default">
-				<div class="panel-heading">Dashboard</div>
+				<div class="panel-heading">Account Info</div>
 				<div class="panel-body">
-					<?php $jobs = $company->jobs; ?>
-					@if ($jobs->count() <= 0)
-					<div class="alert alert-info">
-						You have no jobs posted. <a href="{{ route('company.job.post') }}">Set one up?</a>
-					</div>
-					@else
-					<ul class="list-unstyled list-jobs">
-						@foreach ($jobs as $job)
-						<li>
-							<p>{{ $job->title }}</p>
-							<p>Status: {!! $job->status === 'open' ? '<label class="label label-success">Open</label>' : '<label class="label label-warning">Taken</label>' !!}</p>
-							<p class="time"><i class="fa fa-clock-o"></i> {{ $job->created_at->toDayDatetimeString() }}</p>
-							<div class="btn-group">
-								<a href="{{ route('company.job.edit') . '?i=' . $job->id }}" class="btn btn-warning btn-xs">Edit</a>
-								<a href="{{ route('company.job.timesheet') . '?i=' . $job->id }}" class="btn btn-primary btn-xs">See Timesheet ({{ $job->timesheets->count() }})</a>
-							</div>
-						</li>
-						@endforeach
-					</ul>
-					@endif
+					<form id="companyEditAccountForm" role="form" data-parsley-validate onsubmit="return false;">
+						<div class="form-group">
+							<label>Email</label>
+							<input type="email" readonly="" class="form-control" value="{{ $user->email }}">
+						</div>
+
+						<div class="form-group">
+							<label>Password</label>
+							<input type="password" class="form-control" name="password">
+							<span class="help-block">Empty if you do not want to change password</span>
+						</div>
+
+						<div class="form-group">
+							<label>Short overview about your company</label>
+							<textarea class="form-control" maxlength="1000" name="overview"></textarea>
+						</div>
+
+						<div class="form-group">
+							<label>Short description of your company</label>
+							<textarea class="form-control" maxlength="1000" name="about"></textarea>
+						</div>
+
+						<?php $socials = json_decode($company->socials); ?>
+
+						<div class="form-group">
+							<label>Facebook</label>
+							<input type="text" name="socials_facebook" class="form-control" placeholder="Facebook Account" value="@if(isset($socials->facebook)){{$socials->facebook}}@endif">
+						</div>
+
+						<div class="form-group">
+							<label>Twitter</label>
+							<input type="text" name="socials_twitter" class="form-control" placeholder="Twitter Account" value="@if(isset($socials->twitter)){{ $socials->twitter}}@endif">
+						</div>
+
+						<div class="form-group">
+							<label>Google+</label>
+							<input type="text" name="socials_google" class="form-control" placeholder="Google+ Account" value="@if(isset($socials->google)){{$socials->google}}@endif">
+						</div>
+
+						<div class="form-group">
+							<label>Website</label>
+							<input type="url" name="socials_url" class="form-control" placeholder="Website" value="@if(isset($socials->google)){{$socials->google}}@endif">
+						</div>
+
+						<div class="form-group">
+							<label>Industries you focus on.</label>
+							<?php $industries = \Job::getAllIndustries(); ?>
+							<select class="form-control" name="industry" multiple="multiple" data-parsley-mincheck="1" data-parsley-maxcheck="5">
+								@if ($industries->count() > 0)
+									@foreach ($industries as $industry)
+										<option value="{{ $industry->title }}">{{ $industry->title }}</option>
+									@endforeach
+								@else
+									<option value="0">No industry has been set yet</option>
+								@endif
+							</select>
+							<span class="help-block">You can select up to 5 industries</span>
+						</div>
+
+						<button type="submit" class="btn btn-primary">
+							<span>Update</span>
+							<span class="btn-preloader">
+								<i class="fa fa-spinner fa-spin"></i>
+							</span>
+						</button>
+					</form>
 				</div>
 			</div>
 		</div>

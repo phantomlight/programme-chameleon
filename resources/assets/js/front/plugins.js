@@ -79,6 +79,51 @@ export class Plugins {
 		if ($('.summernote')[0]) {
 			$('.summernote').summernote({dialogsInBody: true});
 		}
+
+		if ($('[data-checkout-type]')[0]) {
+			var paymentProcessing = false;
+
+			$.each($('[data-checkout-type]'), function (e, i) {
+				$(this).on('click', function (e) {
+					if ( ! paymentProcessing) {
+						var $button = $(this);
+						e.preventDefault();
+						paymentProcessing = true;
+						$button.disable(true);
+						var checkout_type = $button.data('checkout-type');
+						var postData = {};
+
+						if (checkout_type == 1) {
+							postData = {
+								type: 'paypal',
+								value: checkout_type
+							};
+						}
+						else if (checkout_type == 2) {
+							postData = {
+								type: 'paypal',
+								value: checkout_type,
+								amount: $button.parent().find('input[name=_cred_amt]').val()
+							};
+						}
+
+						$.post(window.origin + '/api/payment/process-payment', postData).done(function (e) {
+							if (e.type === 'success') window.open(e.redirect);
+							else alert(e.message);
+							$button.disable(false);
+							paymentProcessing = false;
+						}).fail(function (xhr, status, e) {
+							paymentProcessing = false;
+							alert(e.message);
+							$button.disable(false);
+						});
+					}
+					else {
+						alert('Another payment is processing, please wait.');
+					}
+				});
+			});
+		}
 	}
 	initBootstrap() {
 		$('.panel-tooltip').tooltip();
@@ -102,12 +147,13 @@ export class Plugins {
 			success: function (data) {
 				for (var key in data) {
 					if (data.hasOwnProperty(key)) {
+						var selected = '';
 						if ($('#countrySelector').data('value') !== '') {
 							var countryValue = $('#countrySelector').data('value');
-							var selected = (data[key].Name === countryValue) ? 'selected="selected"' : '';
+							selected = (data[key].Name === countryValue) ? 'selected="selected"' : '';
 						}
 						else {
-							var selected = (data[key].Code === 'GBR') ? 'selected="selected"' : '';
+							selected = (data[key].Code === 'GBR') ? 'selected="selected"' : '';
 						}
 						$('#countrySelector').append('<option value="' + data[key].Name + '" data-code="' + data[key].Code + '" ' + selected + '>' + data[key].Name +'</option>');
 					}
