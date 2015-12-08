@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 26, 2015 at 08:45 PM
+-- Generation Time: Dec 08, 2015 at 09:00 PM
 -- Server version: 5.6.27-0ubuntu1
 -- PHP Version: 5.6.11-1+deb.sury.org~utopic+1
 
@@ -5443,7 +5443,7 @@ CREATE TABLE IF NOT EXISTS `tb_agency` (
 --
 
 INSERT INTO `tb_agency` (`id`, `user_id`, `name`, `owner_name`, `phone`, `address`, `country`, `city`, `image`, `description`, `industry`, `created_at`, `updated_at`) VALUES
-(1, 14, 'Agency1', 'Agency1 Owner', '12345678', 'Test address', 'GBR', 'Gillingham', NULL, NULL, NULL, '2015-11-26 01:54:28', '2015-11-26 01:54:28');
+(1, 14, 'Agency1', 'Agency1 Owner', '12345678', 'Test address', 'United Kingdom', 'Gillingham', NULL, NULL, NULL, '2015-11-26 01:54:28', '2015-11-26 01:54:28');
 
 -- --------------------------------------------------------
 
@@ -5483,22 +5483,30 @@ CREATE TABLE IF NOT EXISTS `tb_agency_notification` (
 CREATE TABLE IF NOT EXISTS `tb_company` (
   `id` int(10) unsigned NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
+  `is_vip` tinyint(1) NOT NULL DEFAULT '0',
   `credit` int(10) unsigned NOT NULL,
   `address` text COLLATE utf8_unicode_ci,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `position` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `vip_start` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `vip_end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `overview` text COLLATE utf8_unicode_ci,
+  `about` text COLLATE utf8_unicode_ci,
+  `industry` text COLLATE utf8_unicode_ci,
+  `socials` text COLLATE utf8_unicode_ci,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_company`
 --
 
-INSERT INTO `tb_company` (`id`, `user_id`, `credit`, `address`, `name`, `position`, `image`, `phone`, `created_at`, `updated_at`) VALUES
-(1, 12, 0, 'Test address', 'Company1', 'Test Position', NULL, '12345678', '2015-11-26 01:39:31', '2015-11-26 01:39:31');
+INSERT INTO `tb_company` (`id`, `user_id`, `is_vip`, `credit`, `address`, `name`, `position`, `image`, `phone`, `vip_start`, `vip_end`, `overview`, `about`, `industry`, `socials`, `created_at`, `updated_at`) VALUES
+(1, 12, 0, 8, 'Test address', 'Company1', 'Test Position', NULL, '12345678', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Cottage out enabled was entered greatly prevent message. No procured unlocked an likewise. Dear but what she been over gay felt body. Six principles advantages and use entreaties decisively. Eat met has dwelling unpacked see whatever followed. Court in of leave again as am. Greater sixteen to forming colonel no on be. So an advice hardly barton. He be turned sudden engage manner spirit. \n\nBlind would equal while oh mr do style. Lain led and fact none. One preferred sportsmen resolving the happiness continued. High at of in loud rich true. Oh conveying do immediate acuteness in he. Equally welcome her set nothing has gravity whether parties. Fertile suppose shyness mr up pointed in staying on respect. ', 'Allow miles wound place the leave had. To sitting subject no improve studied limited. Ye indulgence unreserved connection alteration appearance my an astonished. Up as seen sent make he they of. Her raising and himself pasture believe females. Fancy she stuff after aware merit small his. Charmed esteems luckily age out. \n\nHad repulsive dashwoods suspicion sincerity but advantage now him. Remark easily garret nor nay. Civil those mrs enjoy shy fat merry. You greatest jointure saw horrible. He private he on be imagine suppose. Fertile beloved evident through no service elderly is. Blind there if every no so at. Own neglected you preferred way sincerity delivered his attempted. To of message cottage windows do besides against uncivil. ', '["Engineering","Other"]', '{"facebook":"myfacebook","google":"mygoogle","twitter":"mytwitter","url":"test.com"}', '2015-11-26 01:39:31', '2015-12-08 02:43:06'),
+(2, 17, 1, 0, 'Test address', 'Company 2', 'Test Position', NULL, '12345678', '2016-06-04 03:20:05', '2016-06-04 03:20:05', NULL, NULL, NULL, NULL, '2015-11-29 05:04:11', '2015-12-04 03:20:05');
 
 -- --------------------------------------------------------
 
@@ -5513,7 +5521,21 @@ CREATE TABLE IF NOT EXISTS `tb_company_credit_history` (
   `status` enum('process','done') COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tb_company_credit_history`
+--
+
+INSERT INTO `tb_company_credit_history` (`id`, `company_id`, `amount`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, -1.00, 'process', '2015-11-27 05:29:10', '2015-11-27 05:29:10'),
+(2, 1, -1.00, 'process', '2015-11-27 05:30:48', '2015-11-27 05:30:48'),
+(3, 1, -1.00, 'process', '2015-11-27 05:31:50', '2015-11-27 05:31:50'),
+(4, 1, -1.00, 'process', '2015-12-04 03:34:38', '2015-12-04 03:34:38'),
+(5, 1, 3.00, 'process', '2015-12-08 02:33:35', '2015-12-08 02:33:35'),
+(6, 1, -3.00, 'process', '2015-12-08 02:33:41', '2015-12-08 02:33:41'),
+(7, 1, 1.00, 'process', '2015-12-08 02:36:07', '2015-12-08 02:36:07'),
+(9, 1, 1.00, 'done', '2015-12-08 02:43:06', '2015-12-08 02:43:06');
 
 -- --------------------------------------------------------
 
@@ -5554,14 +5576,16 @@ CREATE TABLE IF NOT EXISTS `tb_contractor` (
   `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_contractor`
 --
 
 INSERT INTO `tb_contractor` (`id`, `user_id`, `occupation`, `address`, `phone`, `city`, `country`, `educations`, `experiences`, `skills`, `urls`, `description`, `socials`, `image`, `created_at`, `updated_at`) VALUES
-(3, 9, 'Web Designer', 'Test address', '12345678', 'Aberdeen', 'GBR', '[{"name":"College 1","type":"Engineer","gpa":"2.9","qualification":"Ph.D"},{"name":"College 2","type":"Designer","gpa":"3.0","qualification":"So what?"}]', '[{"company":"Company 1","year":"Company 1","position":"Tester","salary":"30000","description":"This curious man has almond-shaped brown eyes that are like two acorns. His luxurious, curly, midnight black hair is very short and is worn in an exotic, handsome style. He is very tall and has a boyish build. His skin is light-colored. He has an upturned nose. His wardrobe is attractive and unusual, with a lot of orange."},{"company":"Company 2","year":"Company 2","position":"Another Tester","salary":"400","description":"So what?"}]', 'html,css,jquery,javascript', '[{"name":"MyWeb","address":"www.google.co.id"},{"name":"My Another Web","address":"www.facebook.com"}]', '<div class="GeneratorResultPrimeBGPara">This intelligent girl  has \nalmond-shaped orange eyes that are like two setting suns. Her silky, \nwavy, tangerine-colored hair is neck-length and is worn in a severe, \nuncomplicated style. She is tall and has a busty build. Her skin is \ndark. She has high cheekbones. Her wardrobe is revealing and \nunconventional, with a lot of yellow and green.<br><br></div><div class="GeneratorResultSecondaryBGPara">This\n man reminds you of a deep ocean. He has round white eyes that are like \ntwo lotus blossoms. His silky, wavy, jet black hair is shoulder-length \nand is worn in a severe style.   He is very short and has a narrow \nbuild. His skin is ruddy. He has a low forehead and a pointed chin. His \nwardrobe is businesslike, with a lot of orange and black.<br><br></div><div class="GeneratorResultPrimeBGPara">This\n noble man  has wide smoke-gray eyes. He is bald, but used to have \nthick, straight hair the color of  the sun   He  has a slender build. \nHis skin is china-white. He has a small mouth. His wardrobe is strange \nand impractacal, with a lot of orange.</div>', '{"facebook":" myfacebook     ","twitter":" mytwitter     ","linkedin":" mylinkedin "}', 'uploads/contractors/3/images/11/20151126-565704b75161b.jpg', '2015-11-25 07:07:50', '2015-11-26 06:10:15');
+(3, 9, 'Web Designer', 'Test address', '12345678', NULL, NULL, '[{"name":"College 1","type":"Engineer","gpa":"2.9","qualification":"Ph.D"},{"name":"College 2","type":"Designer","gpa":"3.0","qualification":"So what?"}]', '[{"company":"Company 1","year":"Company 1","position":"Tester","salary":"30000","description":""},{"company":"Company 2","year":"Company 2","position":"Another Tester","salary":"400","description":""}]', 'html,css,jquery,javascript', '[{"name":"MyWeb","address":"www.google.co.id"},{"name":"My Another Web","address":"www.facebook.com"}]', '<div class="GeneratorResultPrimeBGPara">This intelligent girl  has \nalmond-shaped orange eyes that are like two setting suns. Her silky, \nwavy, tangerine-colored hair is neck-length and is worn in a severe, \nuncomplicated style. She is tall and has a busty build. Her skin is \ndark. She has high cheekbones. Her wardrobe is revealing and \nunconventional, with a lot of yellow and green.<br><br></div><div class="GeneratorResultSecondaryBGPara">This\n man reminds you of a deep ocean. He has round white eyes that are like \ntwo lotus blossoms. His silky, wavy, jet black hair is shoulder-length \nand is worn in a severe style.   He is very short and has a narrow \nbuild. His skin is ruddy. He has a low forehead and a pointed chin. His \nwardrobe is businesslike, with a lot of orange and black.<br><br></div><div class="GeneratorResultPrimeBGPara">This\n noble man  has wide smoke-gray eyes. He is bald, but used to have \nthick, straight hair the color of  the sun   He  has a slender build. \nHis skin is china-white. He has a small mouth. His wardrobe is strange \nand impractacal, with a lot of orange.</div>', '{"facebook":" myfacebook     ","twitter":" mytwitter     ","linkedin":" mylinkedin "}', 'uploads/contractors/3/images/12/20151202-565ec46a641d7.jpg', '2015-11-25 07:07:50', '2015-12-02 03:14:02'),
+(4, 15, 'Web Designer', 'Test address', '12345678', 'The Valley', 'Anguilla', '[{"name":"Test 1","type":"Designer","gpa":"3.0","qualification":"Ph.D"}]', '[{"company":"Company 1","year":"Company 1","position":"Tester","salary":"30000","description":"Haha!"}]', 'marketing,microsoft offic', '[{"name":"Test","address":"www.google.co.id"}]', '<p><br></p>', '{"facebook":"myfacebook","twitter":"mytwitter","linkedin":"mylinkedin"}', NULL, '2015-11-29 04:39:40', '2015-12-02 03:31:15'),
+(5, 16, 'Has many skills', 'Test address', '12345678', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2015-11-29 04:48:51', '2015-11-29 04:48:51');
 
 -- --------------------------------------------------------
 
@@ -5573,16 +5597,20 @@ CREATE TABLE IF NOT EXISTS `tb_contractor_cv` (
   `id` int(10) unsigned NOT NULL,
   `contractor_id` int(10) unsigned NOT NULL,
   `file` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `salary_rate` enum('hourly','daily','weekly','monthly') COLLATE utf8_unicode_ci NOT NULL,
+  `range_salary_min` int(11) NOT NULL DEFAULT '0',
+  `range_salary_max` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_contractor_cv`
 --
 
-INSERT INTO `tb_contractor_cv` (`id`, `contractor_id`, `file`, `created_at`, `updated_at`) VALUES
-(5, 3, 'uploads/contractors/3/resume/11/20151126-56570257f0518.doc', '2015-11-26 06:00:03', '2015-11-26 06:00:07');
+INSERT INTO `tb_contractor_cv` (`id`, `contractor_id`, `file`, `salary_rate`, `range_salary_min`, `range_salary_max`, `created_at`, `updated_at`) VALUES
+(5, 3, 'uploads/contractors/3/resume/12/20151202-565ec4bebf680.doc', 'monthly', 100, 1000, '2015-11-26 06:00:03', '2015-12-02 03:30:11'),
+(8, 4, 'uploads/contractors/4/resume/12/20151202-565ecad11f62f.docx', 'hourly', 30, 500, '2015-12-02 03:41:21', '2015-12-02 03:41:23');
 
 -- --------------------------------------------------------
 
@@ -5659,13 +5687,21 @@ CREATE TABLE IF NOT EXISTS `tb_contractor_timesheet` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `type` enum('file','data') COLLATE utf8_unicode_ci NOT NULL,
   `file` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `report` enum('daily','weekly','monthly') COLLATE utf8_unicode_ci NOT NULL,
-  `hours` smallint(6) NOT NULL,
-  `start_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `end_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `report` enum('daily','weekly','monthly') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `hours` smallint(6) DEFAULT NULL,
+  `start_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `end_date` datetime DEFAULT '0000-00-00 00:00:00',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tb_contractor_timesheet`
+--
+
+INSERT INTO `tb_contractor_timesheet` (`id`, `contractor_id`, `job_id`, `name`, `type`, `file`, `report`, `hours`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES
+(1, 3, 9, 'Job application by Contractor ABC', 'data', NULL, 'daily', 8, '2015-12-09 12:11:35', '2015-12-31 12:11:35', '2015-12-08 05:11:35', '2015-12-08 05:11:35'),
+(2, 4, 9, 'Job application by Contractor 2', 'file', 'uploads/contractors/4/timesheet/12/20151208-5666c94860cd7.docx', NULL, NULL, NULL, NULL, '2015-12-08 05:12:56', '2015-12-08 05:12:56');
 
 -- --------------------------------------------------------
 
@@ -5678,7 +5714,17 @@ CREATE TABLE IF NOT EXISTS `tb_industry` (
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tb_industry`
+--
+
+INSERT INTO `tb_industry` (`id`, `title`, `created_at`, `updated_at`) VALUES
+(1, 'IT', '2015-11-27 03:19:25', '2015-11-27 03:19:25'),
+(2, 'Engineering', '2015-11-27 03:19:25', '2015-11-27 03:19:25'),
+(3, 'Marketing', '2015-11-27 03:19:25', '2015-11-27 03:19:25'),
+(4, 'Other', '2015-11-27 03:19:25', '2015-11-27 03:19:25');
 
 -- --------------------------------------------------------
 
@@ -5697,18 +5743,29 @@ CREATE TABLE IF NOT EXISTS `tb_job` (
   `contact_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `contact_phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `salary` decimal(16,4) NOT NULL,
-  `salary_type` enum('hourly','monthly','one-time') COLLATE utf8_unicode_ci NOT NULL,
+  `salary_type` enum('hourly','monthly','daily') COLLATE utf8_unicode_ci NOT NULL,
   `visa` tinyint(1) NOT NULL DEFAULT '1',
   `eligible_to_work_in_country` tinyint(1) NOT NULL DEFAULT '1',
   `security_clearance` tinyint(1) NOT NULL DEFAULT '1',
   `type` enum('permanent','contract') COLLATE utf8_unicode_ci NOT NULL,
-  `status` enum('open','close') COLLATE utf8_unicode_ci NOT NULL,
+  `status` enum('open','taken') COLLATE utf8_unicode_ci NOT NULL,
   `job_apply_details` text COLLATE utf8_unicode_ci NOT NULL,
-  `industry` text COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci,
+  `start_date` varchar(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'immediately',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tb_job`
+--
+
+INSERT INTO `tb_job` (`id`, `company_id`, `experience_year`, `title`, `city`, `country`, `duration`, `contact_name`, `contact_phone`, `salary`, `salary_type`, `visa`, `eligible_to_work_in_country`, `security_clearance`, `type`, `status`, `job_apply_details`, `description`, `start_date`, `created_at`, `updated_at`) VALUES
+(5, 1, 0, '1st Job', 'Aberdeen', 'United Kingdom', '1', 'Person 1', '1231231312', 100.0000, 'hourly', 1, 1, 1, 'permanent', 'open', '{"type":"email","application_email":"","direct_email":""}', 'Some details of your job here.', 'immediately', '2015-11-27 05:31:49', '2015-11-27 05:31:49'),
+(6, 2, 4, 'Superman Job', 'Aberdeen', 'United Kingdom', '0', 'Test Contact', '1231231213', 5000.0000, 'hourly', 1, 1, 1, 'contract', 'taken', '{"type":"url","url":"google.co.id"}', 'I’m blaming Ducky for this. She came up with an idea for a game thread, that involves writing scenes from the middle of book. A scene can be pages long, however. It seemed that something shorter might be just the thing.\n\nIn this exercise, the idea is to write a paragraph that would be a random passage from a story. An effective paragraph is one that has unity (it isn’t a hodgepodge of things), focus (everything in the paragraph stacks up to the whatever-it-is the paragraph is about), and coherence (the content follows smoothly). For this exercise, the paragraph should be quick to read--say, not be more than 100 words long.\n\nA paragraph needn’t be several sentences long, but might be only a sentence or two, or a single line of dialogue.\n\nOr it could be a snippet of dialogue with narration:\n\nShe made an attempt to straighten her tawny hair. Her voice quavered with emotion. “You must be a very lonely man, Judge Seagrave.” Then she turned a gaze on him that might have ignited a rain-sodden haystack. “And I’m a lonely woman.”\n\nIt might be merely descriptive:\n\nLines of weeds criss-crossed the cracked parking lot of the Seashell Motor Courts. The flaking paint on the buildings had chalked to a pastel pink on walls covered with graffiti. Many of the windows had been smashed out. Where the sign had been, atop rusting steel posts, only the metal outline of a seashell remained.\n\nIt might have action but no dialogue:\n\nIt was Ms. Fitzhugh. She was walking fast. A strange expression crossed the faces of the students as they glanced toward the door and saw the principal go straight into the boys’ restroom. The footsteps stopped. There was a deep, throaty sound difficult to describe. Then came an eruption of shrill screaming and a rapid sound of heels. Moments later, Ms. Fitzhugh emerged, her eyes wild. Screaming, she skidded in the hall and headed toward the office.', 'immediately', '2015-12-04 03:25:39', '2015-12-04 03:45:45'),
+(7, 1, 1, 'Batman Job', 'Lomé', 'Togo', '1', 'My Contact', '1299999', 40.0000, 'hourly', 0, 1, 0, 'permanent', 'open', '{"type":"email","application_email":"recruit@email.org","direct_email":""}', 'Lines of weeds criss-crossed the cracked parking lot of the Seashell Motor Courts. The flaking paint on the buildings had chalked to a pastel pink on walls covered with graffiti. Many of the windows had been smashed out. Where the sign had been, atop rusting steel posts, only the metal outline of a seashell remained.\n\nIt might have action but no dialogue:\n\nIt was Ms. Fitzhugh. She was walking fast. A strange expression crossed the faces of the students as they glanced toward the door and saw the principal go straight into the boys’ restroom. The footsteps stopped. There was a deep, throaty sound difficult to describe. Then came an eruption of shrill screaming and a rapid sound of heels. Moments later, Ms. Fitzhugh emerged, her eyes wild. Screaming, she skidded in the hall and headed toward the office.\n\nIt might be expository:\n\nAbove ground was the medieval settlement of Skaar’s Outpost, originally a fort to guard the cave entrance. Its inception as a town had been in the lodging and supply needs of explorers there to attempt the subterranean labyrinth when it had opened as a commercial venture. With the caverns’ flooding and subsequent closure, however, Skaar’s Outpost had declined into an agricultural community miles from any trade routes.\n\nThese are merely examples. Have fun! ', 'Next Month by job date', '2015-12-04 03:34:38', '2015-12-04 03:34:38'),
+(8, 2, 0, 'Marvelling Job', 'Dubai', 'United Arab Emirates', '999', 'Testerrererererer', '888-888-888', 8000.0000, 'daily', 1, 1, 1, 'permanent', 'open', '{"type":"email","application_email":"recruit@email.org","direct_email":"recruit@email.org"}', 'Some details of your job here.\n\nSome details of your job here. Which was suppose to be long.', 'Immediately', '2015-12-04 03:53:19', '2015-12-04 03:53:19'),
+(9, 1, 0, 'Personal Assistant', 'Aberdeen', 'United Kingdom', '2', 'Mr. Aberdeen', '1299999', 1000.0000, 'hourly', 1, 1, 1, 'permanent', 'open', '{"type":"email","application_email":"","direct_email":"recruit@email.org"}', 'Some details of your job here.', 'Immediately', '2015-12-08 02:33:40', '2015-12-08 02:33:40');
 
 -- --------------------------------------------------------
 
@@ -5722,6 +5779,23 @@ CREATE TABLE IF NOT EXISTS `tb_job_industry` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tb_job_industry`
+--
+
+INSERT INTO `tb_job_industry` (`job_id`, `industry_id`, `created_at`, `updated_at`) VALUES
+(4, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 3, '2015-11-27 05:31:49', '0000-00-00 00:00:00'),
+(4, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 1, '2015-12-04 03:25:40', '0000-00-00 00:00:00'),
+(6, 3, '2015-12-04 03:25:40', '0000-00-00 00:00:00'),
+(7, 2, '2015-12-04 03:34:38', '0000-00-00 00:00:00'),
+(7, 4, '2015-12-04 03:34:38', '0000-00-00 00:00:00'),
+(8, 2, '2015-12-04 03:53:19', '0000-00-00 00:00:00'),
+(8, 1, '2015-12-04 03:53:19', '0000-00-00 00:00:00'),
+(9, 3, '2015-12-08 02:33:41', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -5747,7 +5821,7 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
   `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_users`
@@ -5756,9 +5830,12 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
 INSERT INTO `tb_users` (`id`, `email`, `password`, `permissions`, `activated`, `activation_code`, `activated_at`, `last_login`, `persist_code`, `reset_password_code`, `first_name`, `last_name`, `image`, `slug`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'superadmin@email.com', '$2y$10$bWBrzPPH4.NjfzCJz6TgNO6KNkz57..TXn4duHh.s08gOR2ZZDnS.', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'Fordyce', 'Gozali', NULL, 'fordyce-gozali', NULL, '2015-11-09 02:12:10', '2015-11-09 02:12:10'),
 (2, 'admin@email.com', '$2y$10$dY9LJytIU.BR5mZi8rXI/eQSJkQBSM0zGGHTWZYnqHB0.wRtq0cFq', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'Admin', '', NULL, 'admin', NULL, '2015-11-09 02:12:12', '2015-11-09 02:12:12'),
-(9, 'contractor1@email.org', '$2y$10$yn96iKO/8X994xKhViA6NOgZS8hkKuRHsKcJstXFnHf/yYcG.CG9C', NULL, 1, NULL, NULL, '2015-11-26 06:33:09', '$2y$10$8ldnQyJPr/.apEGpTgjdreYoZg.XFkRzFDP/RmZUbpxUKRff2Urje', NULL, 'Contractor', 'ABC', NULL, '', NULL, '2015-11-25 07:07:49', '2015-11-26 06:33:09'),
-(12, 'company1@email.org', '$2y$10$8aVariXkqWmTMKXuxu/3vO4yg2VhXWU4xLSFVn839imTCRxgWzque', NULL, 1, NULL, NULL, '2015-11-26 06:38:07', '$2y$10$PVYjcX/fRrqVCF22FZoqqeoFNgkIVmzDsbHZ4yzUgCC5XLOm8XrQq', NULL, NULL, NULL, NULL, '', NULL, '2015-11-26 01:39:31', '2015-11-26 06:38:07'),
-(14, 'agency1@email.org', '$2y$10$RtqpJ1DSxqATJEIoo3XuleftlZl.UDH9BbZ0Lw40yzh6eogcJu0da', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, '2015-11-26 01:54:28', '2015-11-26 01:54:28');
+(9, 'contractor1@email.org', '$2y$10$yn96iKO/8X994xKhViA6NOgZS8hkKuRHsKcJstXFnHf/yYcG.CG9C', NULL, 1, NULL, NULL, '2015-12-08 05:05:21', '$2y$10$tuJLPNyGQVYvp511Z7Z9ke3YIhnnEmJL5GjcJVYbLSZuDB.HqJhI6', NULL, 'Contractor', 'ABC', NULL, '', NULL, '2015-11-25 07:07:49', '2015-12-08 05:05:21'),
+(12, 'company1@email.org', '$2y$10$unHXtpg/t1x8.JvuS1R0SeHYTc5KjkNRAqhzdkmcgNyCWQuW67pPi', NULL, 1, NULL, NULL, '2015-12-08 06:50:33', '$2y$10$wOcAbk7J.dVmzNGiX4KzAuve8pVx.EpWmKVLGSfZPNSFvziI1hvne', NULL, NULL, NULL, NULL, '', NULL, '2015-11-26 01:39:31', '2015-12-08 06:50:33'),
+(14, 'agency1@email.org', '$2y$10$RtqpJ1DSxqATJEIoo3XuleftlZl.UDH9BbZ0Lw40yzh6eogcJu0da', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, '2015-11-26 01:54:28', '2015-11-26 01:54:28'),
+(15, 'contractor2@email.org', '$2y$10$VC3CYwOu9/hUFrYLO4P9Te/sNFFI7/Vo9dZlVwzATUy70EIr7a6ku', NULL, 1, NULL, NULL, '2015-12-08 05:12:31', '$2y$10$1DMBUJ5mtQ07.2JbF8YCp.U0LCzmQGFMrFjijnS.wDk/RKY/.sBVa', NULL, 'Contractor', '2', NULL, '', NULL, '2015-11-29 04:39:39', '2015-12-08 05:12:31'),
+(16, 'contractor3@email.org', '$2y$10$27nMQGG0UmyoiWnG9EsL2eUc6qX.8YfkzTkXpx.n353OO7T5b/Dqi', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'Contractor', '3', NULL, '', NULL, '2015-11-29 04:48:51', '2015-11-29 04:48:51'),
+(17, 'company2@email.org', '$2y$10$JR.0D1XvAG47PwEN7Jh6Pugdaqy7xYlzFVSmtoK7mUUT5CamxSb8y', NULL, 1, NULL, NULL, '2015-12-08 05:31:27', '$2y$10$qQ8pxL3zy4OkVn4c6JQ1Vu3mkVK/3GQ8yqHNIq2k4uX/eW0ZnkQse', NULL, NULL, NULL, NULL, '', NULL, '2015-11-29 05:04:11', '2015-12-08 05:31:27');
 
 -- --------------------------------------------------------
 
@@ -5805,7 +5882,10 @@ INSERT INTO `tb_users_groups_pivot` (`user_id`, `group_id`) VALUES
 (2, 2),
 (9, 4),
 (12, 3),
-(14, 5);
+(14, 5),
+(15, 4),
+(16, 4),
+(17, 3);
 
 -- --------------------------------------------------------
 
@@ -5824,7 +5904,7 @@ CREATE TABLE IF NOT EXISTS `tb_users_throttle` (
   `last_attempt_at` timestamp NULL DEFAULT NULL,
   `suspended_at` timestamp NULL DEFAULT NULL,
   `banned_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_users_throttle`
@@ -5833,7 +5913,9 @@ CREATE TABLE IF NOT EXISTS `tb_users_throttle` (
 INSERT INTO `tb_users_throttle` (`id`, `user_id`, `ip_address`, `attempts`, `suspended`, `banned`, `banned_by`, `last_attempt_at`, `suspended_at`, `banned_at`) VALUES
 (1, 8, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
 (2, 9, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
-(3, 12, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL);
+(3, 12, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
+(4, 15, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
+(5, 17, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -6032,12 +6114,12 @@ ALTER TABLE `tb_agency_notification`
 -- AUTO_INCREMENT for table `tb_company`
 --
 ALTER TABLE `tb_company`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tb_company_credit_history`
 --
 ALTER TABLE `tb_company_credit_history`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `tb_company_notification`
 --
@@ -6047,12 +6129,12 @@ ALTER TABLE `tb_company_notification`
 -- AUTO_INCREMENT for table `tb_contractor`
 --
 ALTER TABLE `tb_contractor`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tb_contractor_cv`
 --
 ALTER TABLE `tb_contractor_cv`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `tb_contractor_expense`
 --
@@ -6067,22 +6149,22 @@ ALTER TABLE `tb_contractor_notification`
 -- AUTO_INCREMENT for table `tb_contractor_timesheet`
 --
 ALTER TABLE `tb_contractor_timesheet`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tb_industry`
 --
 ALTER TABLE `tb_industry`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tb_job`
 --
 ALTER TABLE `tb_job`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `tb_users_groups`
 --
@@ -6092,7 +6174,7 @@ ALTER TABLE `tb_users_groups`
 -- AUTO_INCREMENT for table `tb_users_throttle`
 --
 ALTER TABLE `tb_users_throttle`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- Constraints for dumped tables
 --

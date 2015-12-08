@@ -4,7 +4,7 @@ import { Plugins } from "./plugins";
 var $form;
 var processing = false;
 
-// Account settings, upload cv, avatar
+// Account settings - upload cv, avatar, change password and personal information
 if ($('#contractorAccountForm')[0]) {
 	$form = $('#contractorAccountForm');
 	var expRowHtml = '<div class="row element-top-10"><div class="col-md-3"><input type="text" name="exp_company" class="form-control" placeholder="Company" /></div><div class="col-md-3"><input type="text" name="exp_year" class="form-control" placeholder="Year" /></div><div class="col-md-3"><input type="text" name="exp_salary" class="form-control" placeholder="Salary" /></div><div class="col-md-3"><input type="text" name="exp_position" class="form-control" placeholder="Position" /></div><div class="element-top-10">&nbsp;</div><div class="col-sm-10"><textarea class="form-control" name="exp_desc" maxlength="2000">Explain a little about your job duties.</textarea></div><div class="col-sm-2"><button class="btn btn-danger btn-xs">Remove</button></div></div>';
@@ -33,6 +33,8 @@ if ($('#contractorAccountForm')[0]) {
 				processing = true;
 				var fd = new FormData();
 				fd.append('file', this.files[0]);
+				$('.page-preloader').show();
+
 				$.ajax({
 					method: 'post',
 					url: window.origin + '/contractor/update-resume',
@@ -47,10 +49,12 @@ if ($('#contractorAccountForm')[0]) {
 					},
 				}).done(function (e) {
 					processing = false;
+					$('.page-preloader').hide();
 					alert(e.message);
 					$form.showMessage(e.message, e.type);
 				}).fail(function (xhr, status, e) {
 					processing = false;
+					$('.page-preloader').hide();
 					alert(xhr.responseText);
 					$form.showMessage(xhr.responseText, 'danger');
 				});
@@ -69,8 +73,10 @@ if ($('#contractorAccountForm')[0]) {
 		} else {
 			if ( ! processing) {
 				processing = true;
+				$('.page-preloader').show();
 				var fd = new FormData();
 				fd.append('file', this.files[0]);
+
 				$.ajax({
 					method: 'post',
 					url: window.origin + '/contractor/update-avatar',
@@ -85,6 +91,7 @@ if ($('#contractorAccountForm')[0]) {
 					},
 				}).done(function (e) {
 					processing = false;
+					$('.page-preloader').hide();
 					alert(e.message);
 					if (e.type === 'success') {
 						$('img.tmp-img').attr('src', e.image);
@@ -92,6 +99,7 @@ if ($('#contractorAccountForm')[0]) {
 					$form.showMessage(e.message, e.type);
 				}).fail(function (xhr, status, e) {
 					processing = false;
+					$('.page-preloader').hide();
 					alert(xhr.responseText);
 					$form.showMessage(xhr.responseText, 'danger');
 				});
@@ -139,6 +147,7 @@ if ($('#contractorAccountForm')[0]) {
 		e.preventDefault();
 		if (! processing) {
 			processing = true;
+			$('.page-preloader').show();
 			$form.find('[type=submit]').disable(true);
 
 			var eduDataCollection = [];
@@ -182,11 +191,13 @@ if ($('#contractorAccountForm')[0]) {
 				urlData: JSON.stringify(urlDataCollection)
 			}).done(function (e) {
 				processing = false;
+				$('.page-preloader').hide();
 				$form.showMessage(e.message, e.type);
 				alert(e.message);
 				$form.find('[type=submit]').disable(false);
 			}).fail(function (xhr, status, e) {
 				processing = false;
+				$('.page-preloader').hide();
 				alert(xhr.responseText);
 				$form.showMessage(xhr.responseText, 'danger');
 				$form.find('[type=submit]').disable(false);
@@ -198,6 +209,7 @@ if ($('#contractorAccountForm')[0]) {
 	});
 }
 
+// Account settings - salary range
 if ($('#contractorSalaryRangeForm')[0]) {
 	var $salaryForm = $('#contractorSalaryRangeForm');
 	$salaryForm.find('[type=button]').on('click', function (e) {
@@ -205,16 +217,19 @@ if ($('#contractorSalaryRangeForm')[0]) {
 
 		if ( ! processing) {
 			processing = true;
+			$('.page-preloader').show();
 			$salaryForm.find('[type=button]').disable(true);
 
 			$.post(window.origin + '/contractor/update-salary', {
 				data: $salaryForm.serializeForm()
 			}).done(function (e) {
 				processing = false;
+				$('.page-preloader').hide();
 				$salaryForm.showMessage(e.message, e.type);
 				$salaryForm.find('[type=button]').disable(false);
 			}).fail(function (xhr, status, e) {
 				processing = false;
+				$('.page-preloader').hide();
 				alert(xhr.responseText);
 				$salaryForm.showMessage(xhr.responseText, 'danger');
 				$salaryForm.find('[type=button]').disable(false);
@@ -236,23 +251,95 @@ if ($('#contractorJobAlertForm')[0]) {
 		if ($form.parsley().validate() && ! processing) {
 			$form.find('[type=submit]').disable(true);
 			processing = true;
+			$('.page-preloader').show();
 
 			$.post(window.origin + '/contractor/job-alert', {
 				data: $form.serializeForm()
 			})
 			.done(function (e) {
 				processing = false;
+				$('.page-preloader').hide();
 				$form.showMessage(e.message, e.type);
 				$form.find('[type=submit]').disable(false);
 			})
 			.fail(function (xhr, status, e) {
 				processing = false;
+				$('.page-preloader').hide();
 				$form.showMessage(xhr.responseText, 'danger');
 				$form.find('[type=submit]').disable(false);
 			});
 		}
 		else {
 			$form.showMessage('Another process is running.', 'info');
+		}
+	});
+}
+
+// Submit timesheet
+if ($('#submitTimesheetForm')[0]) {
+	$form = $('#submitTimesheetForm');
+	var $job = $form.data('value');
+	var file = null;
+	var allowed_timesheet_mime = [
+		'application/msword',
+		'application/msexcel',
+		'application/vnd.ms-excel',
+		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+		'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+	];
+
+	$form.find('input[type=file]').on('change', function () {
+		if (this.files[0].size > 5000000) {
+			$(this).parent().showMessage('File cannot be more than 5Mb.', 'danger');
+			file = null;
+		} else if ($.inArray(this.files[0].type, allowed_timesheet_mime) === -1) {
+			$(this).parent().showMessage('Can only upload word or excel files.', 'danger');
+			file = null;
+		} else {
+			$(this).parent().showMessage('This file can be uploaded.', 'success');
+			file = this.files[0];
+		}
+	});
+
+	$form.find('[type=submit]').on('click', function (e) {
+		e.preventDefault();
+
+		if ($form.parsley().validate() && ! processing) {
+			processing = true;
+			$('.page-preloader').show();
+			$form.find('[type=submit]').disable(true);
+
+			var fd = new FormData();
+			fd.append('file', file);
+			fd.append('data', JSON.stringify($form.serializeForm()));
+			fd.append('job', $job);
+
+			$.ajax({
+				method: 'post',
+				url: window.origin + '/job/apply',
+				data: fd,
+				crossDomain: false,
+				dataType: 'json',
+				cache: true,
+				processData: false,
+				contentType: false,
+				headers: {
+					'X-CSRF-Token': $('meta[name="_t"]').attr('content')
+				},
+			}).done(function (e) {
+				processing = false;
+				$('.page-preloader').hide();
+				$form.showMessage(e.message, e.type);
+				$form.find('[type=submit]').disable(false);
+			}).fail(function (xhr, status, e) {
+				processing = false;
+				$('.page-preloader').hide();
+				$form.showMessage(xhr.responseText, 'danger');
+				$form.find('[type=submit]').disable(false);
+			});
+		}
+		else {
+			alert('A process is still on going, please wait');
 		}
 	});
 }

@@ -14,6 +14,10 @@
 	</head>
 
 	<body>
+		<div class="page-preloader">
+			<i class="fa fa-spinner fa-spin"></i>
+		</div>
+
 		@if (session()->has('flashMessage'))
 			<?php $msg = session('flashMessage'); ?>
 			<div class="alert alert-fixed alert-{{ $msg['class'] }}">

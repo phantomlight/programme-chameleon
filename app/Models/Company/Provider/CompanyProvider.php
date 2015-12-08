@@ -61,7 +61,7 @@ class CompanyProvider implements CompanyProviderInterface {
 
 		$data['socials'] = json_encode([
 			'facebook'	=>	$data['socials_facebook'],
-			'google+'		=>	$data['socials_google'],
+			'google'		=>	$data['socials_google'],
 			'twitter'		=>	$data['socials_twitter'],
 			'url'				=>	$data['socials_url'],
 		]);

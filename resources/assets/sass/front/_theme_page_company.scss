@@ -93,7 +93,6 @@
 
 .job-category-select-wrapper {
 	margin-bottom: 20px;
-	margin-top: 20px;
 
 	.minict_wrapper {
 		border-radius: 0;
@@ -286,6 +285,27 @@
 				margin: 15px;
 				width: 100%;
 			}
+		}
+	}
+}
+
+.timesheet-list {
+	li {
+		padding: 25px 0;
+		border-bottom: thin solid #d5d5d5;
+
+		img {
+			border-radius: 3px;
+			border: thin solid #ccc;
+		}
+
+		&:last-child {
+			border-bottom: none;
+		}
+
+		.btn-group {
+			margin-top: 20px;
+			border-top: thin solid #666;
 		}
 	}
 }

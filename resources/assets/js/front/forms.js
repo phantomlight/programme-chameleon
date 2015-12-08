@@ -24,6 +24,7 @@ export class Forms {
 		$form.find('[type=submit]').on('click', function (f) {
 			if ($form.parsley().validate() && ! processing) {
 				processing = true;
+				$('.page-preloader').show();
 				aes = $.jCryption.encrypt(jKey.key1, jKey.key2);
 				$form.find('[type=submit]').disable(true);
 
@@ -32,10 +33,12 @@ export class Forms {
 						data: JSON.stringify($.jCryption.encrypt($form.serialize(), aes))
 					}).done(function(e) {
 						processing = false;
+						$('.page-preloader').hide();
 						$form.showMessage(e.message, e.type);
 						$form.find('[type=submit]').disable(false);
 					}).fail(function (xhr, status, e) {
 						processing = false;
+						$('.page-preloader').hide();
 						$form.showMessage(xhr.responseText, 'danger');
 						$form.find('[type=submit]').disable(false);
 					});
@@ -52,6 +55,7 @@ export class Forms {
 		$form.find('[type=submit]').on('click', function (f) {
 			if ($form.parsley().validate() && ! processing) {
 				processing = true;
+				$('.page-preloader').show();
 				aes = $.jCryption.encrypt(jKey.key1, jKey.key2);
 				$form.find('[type=submit]').disable(true);
 
@@ -60,11 +64,13 @@ export class Forms {
 						data: JSON.stringify($.jCryption.encrypt($form.serialize(), aes))
 					}).done(function(e) {
 						processing = false;
+						$('.page-preloader').hide();
 						$form.showMessage(e.message, e.type);
 						$form.find('[type=submit]').disable(false);
 						if (e.type === 'success') location.replace(e.redirect);
 					}).fail(function (xhr, status, e) {
 						processing = false;
+						$('.page-preloader').hide();
 						$form.showMessage(xhr.responseText, 'danger');
 						$form.find('[type=submit]').disable(false);
 					});

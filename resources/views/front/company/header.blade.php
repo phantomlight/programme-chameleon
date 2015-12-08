@@ -14,7 +14,15 @@
 				<li><a href=""><i class="fa fa-tumblr"></i></a></li>
 			</ul><!-- /.social-media -->
 			<div class="header-login-register clearfix">
-				<a class="btn btn-header-login" href="{{ url('logout') }}">LOGOUT</a>
+				<div class="avatar">
+					@if ( ! is_null($company->image))
+						<img src="{{ asset($company->image) }}" width="25" height="25" />
+					@else
+						<img data-src="holder.js/25x25" />
+					@endif
+					<a href="{{ route('company.account') }}">Hi, {{ $company->name }} !</a>
+				</div>
+				<a class="btn btn-header-login btn-xs" href="{{ url('logout') }}">LOGOUT</a>
 			</div>
 		</div><!-- /.container -->
 	</div><!-- /#header-bar -->

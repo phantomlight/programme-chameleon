@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
+use App\Utils\Hash;
 use App\Utils\Hashing\JCryption;
 
 class CompanyController extends Controller {
@@ -82,7 +83,11 @@ class CompanyController extends Controller {
 
 	public function getEditJob() {
 		$company = \Company::getCompany();
-		$job = \Job::findJobById(trim(\Input::get('i')));
+
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		$job = \Job::findJobById($_hash->decode(\Input::get('i')));
 
 		if ( ! $job) {
 			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'Job does not exists.']);
@@ -95,10 +100,23 @@ class CompanyController extends Controller {
 		return view('front.company.job.edit')->with('job', $job);
 	}
 
-	public function getEditTimesheet() {
-	}
-
 	public function getJobTimesheet() {
+		$company = \Company::getCompany();
+		
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		$job = \Job::findJobById($_hash->decode(\Input::get('i')));
+
+		if ( ! $job) {
+			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'Job does not exists.']);
+		}
+
+		if ($job->company_id !== $company->id) {
+			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'You cannot edit this job.']);
+		}
+
+		return view('front.company.job.timesheet')->with('job', $job);
 	}
 
 	public function postUpdateAccount() {

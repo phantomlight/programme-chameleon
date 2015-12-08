@@ -26,10 +26,12 @@ class CompanyCreditProvider implements CompanyCreditProviderInterface {
 	}
 
 	public function update($company, $value) {
+		$value = (int) $value;
 		$model = $this->getModel();
 		$model->fill([
 			'company_id'	=>	$company->id,
 			'amount'			=>	$value,
+			'status'			=>	'done',
 		]);
 
 		if ($model->save()) {

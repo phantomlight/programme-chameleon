@@ -19,21 +19,27 @@ Company Register | Programme Chameleon
 					<div id="register-form-wrapper" class="element-bottom-30">
 						<form role="form" id="register-form" onsubmit="return false;" data-parsley-validate data-route="{{ route('company.postRegister') }}">
 							<div class="form-group">
+								<label>Company Name</label>
 								<input class="form-control" name="company_name" placeholder="Company Name" required="required" type="text">
 							</div>
 							<div class="form-group">
+								<label>Company Position</label>
 								<input class="form-control" name="company_position" placeholder="Company Position" required="required" type="text">
 							</div>
 							<div class="form-group">
+								<label>Address</label>
 								<input class="form-control" name="address" placeholder="Address" required="required" type="text">
 							</div>
 							<div class="form-group">
+								<label>Phone</label>
 								<input class="form-control" name="phone" placeholder="Phone" required="required" type="text">
 							</div>
 							<div class="form-group">
+								<label>Email</label>
 								<input class="form-control" name="email" placeholder="Email" required="required" type="email">
 							</div>
 							<div class="form-group">
+								<label>Password</label>
 								<input class="form-control" name="password" placeholder="Password" required="required" type="password">
 							</div>
 							<div class="form-group no-border">

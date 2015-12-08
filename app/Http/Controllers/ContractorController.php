@@ -37,8 +37,17 @@ class ContractorController extends Controller {
 		return view('front.contractor.searchJob');
 	}
 
-	public function getSubmitTimesheet() {
-		return view('front.contractor.submitTimesheet');
+	public function getSubmitTimesheet($id) {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		$job = \Job::findJobById($_hash->decode($id));
+
+		if ( ! $job) {
+			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'That job is no longer exists in our database.']);
+		}
+
+		return view('front.contractor.submitTimesheet')->with('job', $job);
 	}
 
 	public function getPublicProfilePage($id, $slug) {

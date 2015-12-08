@@ -1,4 +1,4 @@
-<?php if(\User::check()) $user = \User::getUser(); ?>
+<?php if(\User::check()) $user = \User::getUser(); $contractor = \Contractor::getContractor(); ?>
 	
 @extends('front.app')
 

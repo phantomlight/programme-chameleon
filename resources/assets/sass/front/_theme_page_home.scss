@@ -40,8 +40,16 @@
 	}
 
 	&.salary {
-		padding-top: 39px;
+		padding-top: 15px;
 		padding-bottom: 38px;
+
+		.slider-label {
+			margin-bottom: 7px;
+		}
+	}
+
+	&.salary-type {
+		padding-top: 39px;
 
 		.slider-label {
 			margin-bottom: 7px;
@@ -263,6 +271,10 @@
 			overflow-y: auto;
 			max-height: 500px;
 
+			@include respond-to(handhelds) {
+				padding-right: 15px;
+			}
+
 			li {
 				border-bottom: thin solid #e3e3e3;
 
@@ -316,7 +328,20 @@
 					font-style: italic;
 				}
 			}
+
+			.job-info-bottom {
+				border-top: thin solid #d5d5d5;
+				border-bottom: thin solid #d5d5d5;
+				padding: 15px 0;
+				margin: 15px 0;
+			}
 		}
+	}
+
+	.sc-pagination {
+		border-top: thin solid #e3e3e3;
+		width: 100%;
+		clear: left;
 	}
 }
 

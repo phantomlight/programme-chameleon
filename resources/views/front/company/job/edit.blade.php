@@ -31,6 +31,11 @@
 						</div>
 
 						<div class="form-group">
+							<label>Start</label>
+							<input type="text" class="form-control" required name="start_date" placeholder="Ex. Next week, 1st of June, etc" value="{{ $job->start_date }}" />
+						</div>
+
+						<div class="form-group">
 							<label>Country</label>
 							<select class="form-control" id="countrySelector" name="country" data-value="{{ $job->country }}">
 								<option>-- Country Selector --</option>
@@ -70,8 +75,7 @@
 
 						<div class="form-group">
 							<label>Salary (in GBP)</label>
-							<input type="number" class="form-control" min="0" required placeholder="
-							Rate/salary for the job" name="salary" value="{{ number_format($job->salary, 0) }}">
+							<input type="number" class="form-control" min="0" required placeholder="Rate/salary for the job" name="salary" value="{{ number_format($job->salary, 0, '.', '') }}">
 						</div>
 
 						<div class="form-group">

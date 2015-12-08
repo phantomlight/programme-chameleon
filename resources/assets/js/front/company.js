@@ -46,15 +46,19 @@ if ($('#companyPostJobForm')[0]) {
 
 		if ($form.parsley().validate() && ! processing) {
 			processing = true;
+			$('.page-preloader').show();
 			$form.find('[type=submit]').disable(true);
+
 			$.post(window.origin + '/job/submit-job', {
 				data: $form.serializeForm()
 			}).done(function (e) {
 				processing = false;
+				$('.page-preloader').hide();
 				$form.showMessage(e.message, e.type);
 				$form.find('[type=submit]').disable(false);
 			}).fail(function (xhr, status, e) {
 				processing = false;
+				$('.page-preloader').hide();
 				$form.showMessage(xhr.responseText, 'danger');
 				$form.find('[type=submit]').disable(false);
 			});
@@ -105,16 +109,20 @@ if ($('#companyEditJobForm')[0]) {
 
 		if ($form.parsley().validate() && ! processing) {
 			processing = true;
+			$('.page-preloader').show();
 			$form.find('[type=submit]').disable(true);
+
 			$.post(window.origin + '/job/edit-job', {
 				data: $form.serializeForm(),
 				job: jobId
 			}).done(function (e) {
 				processing = false;
+				$('.page-preloader').hide();
 				$form.showMessage(e.message, e.type);
 				$form.find('[type=submit]').disable(false);
 			}).fail(function (xhr, status, e) {
 				processing = false;
+				$('.page-preloader').hide();
 				$form.showMessage(xhr.responseText, 'danger');
 				$form.find('[type=submit]').disable(false);
 			});
@@ -129,17 +137,22 @@ if ($('#companyEditAccountForm')[0]) {
 	$form.find('[type=submit]').on('click', function (e) {
 		e.preventDefault();
 		if ($form.parsley().validate() && ! processing) {
+			processing = true;
+			$('.page-preloader').show();
 			$form.find('[type=submit]').disable(true);
+
 			$.post(window.origin + '/company/update-account', {
 				data: $form.serializeForm()
 			}).done(function (e) {
 				$form.showMessage(e.message, e.type);
 				$form.find('[type=submit]').disable(false);
 				processing = false;
+				$('.page-preloader').hide();
 			}).fail(function (xhr, status, e) {
 				$form.showMessage(xhr.responseText, 'danger');
 				$form.find('[type=submit]').disable(false);
 				processing = false;
+				$('.page-preloader').hide();
 			});
 		}
 	});

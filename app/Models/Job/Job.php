@@ -41,4 +41,16 @@ class Job {
 		return $this->jobProvider->findById($id);
 	}
 
+	public function findAllJob() {
+		return $this->jobProvider->findAll();
+	}
+
+	public function findJobByType($type='contract') {
+		return $this->jobProvider->findByType($type);
+	}
+
+	public function searchJob($data) {
+		return $this->jobProvider->search($data);
+	}
+
 }

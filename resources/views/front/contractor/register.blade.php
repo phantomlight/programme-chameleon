@@ -19,21 +19,27 @@ Contractor Register | Programme Chameleon
 					<div id="register-form-wrapper" class="element-bottom-30">
 						<form role="form" id="register-form" onsubmit="return false;" data-parsley-validate data-route="{{ route('contractor.postRegister') }}">
 							<div class="form-group">
+								<label>First Name</label>
 								<input class="form-control" name="first_name" placeholder="First Name" required="required" type="text">
 							</div>
 							<div class="form-group">
+								<label>Last Name</label>
 								<input class="form-control" name="last_name" placeholder="Last Name" type="text">
 							</div>
 							<div class="form-group">
+								<label>Address</label>
 								<input class="form-control" name="address" placeholder="Address" required="required" type="text">
 							</div>
 							<div class="form-group">
+								<label>Phone</label>
 								<input class="form-control" name="phone" placeholder="Phone" required="required" type="text">
 							</div>
 							<div class="form-group">
+								<label>Email</label>
 								<input class="form-control" name="email" placeholder="Email" required="required" type="email">
 							</div>
 							<div class="form-group">
+								<label>Password</label>
 								<input class="form-control" name="password" placeholder="Password" required="required" type="password">
 							</div>
 							<div class="form-group no-border">

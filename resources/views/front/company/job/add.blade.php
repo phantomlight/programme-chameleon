@@ -31,6 +31,11 @@ Post a Job | Programme Chameleon
 						</div>
 
 						<div class="form-group">
+							<label>Start</label>
+							<input type="text" class="form-control" required name="start_date" placeholder="Ex. Next week, 1st of June, etc" value="Immediately" />
+						</div>
+
+						<div class="form-group">
 							<label>Country</label>
 							<select class="form-control" id="countrySelector" name="country" data-value="">
 								<option>-- Country Selector --</option>
@@ -58,14 +63,16 @@ Post a Job | Programme Chameleon
 							</select>
 						</div>
 
-						<div class="form-group">
-							<label>Job Post Duration</label>
-							<select class="form-control" name="job_post_duration">
-								<option value="1">1 Week (<strong>1</strong> credit)</option>
-								<option value="2">1 Month (<strong>3</strong> credits)</option>
-							</select>
-							<span class="help-block">You currently have: {{ $company->credit }} credit(s). <a href="#" target="_blank">Buy more?</a></span>
-						</div>
+						@if ( ! $company->is_vip)
+							<div class="form-group">
+								<label>Job Post Duration</label>
+								<select class="form-control" name="job_post_duration">
+									<option value="1">1 Week (<strong>1</strong> credit)</option>
+									<option value="2">1 Month (<strong>3</strong> credits)</option>
+								</select>
+								<span class="help-block">You currently have: {{ $company->credit }} credit(s). <a href="#" target="_blank">Buy more?</a></span>
+							</div>
+						@endif
 
 						<div class="form-group">
 							<label>Salary (in GBP)</label>

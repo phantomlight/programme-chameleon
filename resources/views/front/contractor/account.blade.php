@@ -28,7 +28,7 @@
 							<input type="file" name="image">
 							<br>
 							@if (is_null($contractor->image))
-							<img data-src="holder.js/100x100?text:No-image" class="img-thumbnail tmp-img" />
+							<img data-src="holder.js/100x100?random=yes&text=no-image" class="img-thumbnail tmp-img" />
 							@else
 							<img src="{{ asset($contractor->image) }}" width="100" class="img-thumbnail tmp-img" />
 							@endif

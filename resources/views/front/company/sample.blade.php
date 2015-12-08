@@ -15,7 +15,7 @@ Company 1 | Programme Chameleon
 			<div id="company-header">
 				<div id="company-main-logo">
 					<a href="#">
-						<img data-src="holder.js/191x58?random=yes" alt="Company Logo" />
+						<img data-src="holder.js/191x58?random=yes&text=no-image" alt="Company Logo" />
 					</a>
 				</div>
 			</div>

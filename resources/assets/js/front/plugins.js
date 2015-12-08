@@ -52,8 +52,8 @@ export class Plugins {
 				});
 			}
 
-			if ($('select#sallary_min')[0] && $('select#sallary_max')[0]) {
-				$('select#sallary_min, select#sallary_max').selectToUISlider({
+			if ($('select#salary_min')[0] && $('select#salary_max')[0]) {
+				$('select#salary_min, select#salary_max').selectToUISlider({
 					labels:11,
 					labelSrc:'text',
 					tooltip:true,

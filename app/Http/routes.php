@@ -20,12 +20,31 @@ Route::get('api/city', 'SiteController@getCityList');
 Route::post('login', ['as' =>'login.front', 'uses' => 'SiteController@postLogin']);
 
 Route::get('free-resources', function() { return view('front.resources'); } );
-Route::get('contractor/contractor-sample', function() { return view('front.contractor.sample'); });
 Route::get('company/company-sample', function() { return view('front.company.sample'); });
 Route::get('job/job-sample', function() { return view('front.jobSample'); });
 
 Route::get('gen', 'SiteController@getPublicKey');
 Route::post('handshake', 'SiteController@getHandshakeKey');
+
+Route::get('contractor/{id}/{slug}', [
+	'as' 		=>	'contractor.profile',
+	'uses'	=>	'ContractorController@getPublicProfilePage',
+]);
+
+Route::get('submit-timesheet/{id}', [
+	'as'		=>	'contractor.apply',
+	'uses'	=>	'ContractorController@getSubmitTimesheet',
+]);
+
+Route::get('job-search', [
+	'as'		=>	'job.search',
+	'uses'	=>	'SiteController@jobSearch',
+]);
+
+Route::get('job/{id}/{slug}', [
+	'as'		=>	'job.public',
+	'uses'	=>	'JobController@getPublicJobPage',
+]);
 
 Route::controller('api/payment', 'PaymentController', []);
 
@@ -61,19 +80,12 @@ Route::controller('agency', 'AgencyController', [
 	'getOfferJob'		=>	'agency.offerJob',
 ]);
 
-Route::get('contractor/{id}/{slug}', [
-	'as' 		=>	'contractor.profile',
-	'uses'	=>	'ContractorController@getPublicProfilePage'
-]);
-
 Route::controller('contractor', 'ContractorController', [
 	'getRegister' 			=>	'contractor.register',
 	'postRegister'			=>	'contractor.postRegister',
 	'getIndex'					=>	'contractor.index',
 	'getAccount'				=>	'contractor.account',
 	'getCreateJobAlert'	=>	'contractor.jobAlert.create',
-	'getSearchJob'			=>	'contractor.job.search',
-	'getSubmitTimesheet'	=>	'contractor.timesheet.submit',
 ]);
 
 Route::controller('job', 'JobController', []);

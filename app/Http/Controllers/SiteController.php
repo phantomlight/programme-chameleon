@@ -152,4 +152,8 @@ class SiteController extends Controller {
 		]);
 	}
 
+	public function jobSearch() {
+		return view('front.jobSearch');
+	}
+
 }

@@ -2,7 +2,11 @@
 	use App\Utils\Hash;
 	use Illuminate\Support\Str;
 
-	if (\User::check()) $user = \User::getUser();
+	if (\User::check()) {
+		$user = \User::getUser();
+		$company = \Company::getCompany();
+	}
+
 	$_hash = new Hash();
 	$_hash = $_hash->getHasher();
 ?>
@@ -66,13 +70,13 @@ CV Search | Programme Chameleon
 									<div class="select-clearfix input-group element-top-10 element-bottom-10">
 										<input type="number" value="{{ \Input::has('salary_min') ? \Input::get('salary_min') : 0 }}" name="salary_min" min="0" class="form-control" />
 										<span class="input-group-addon">to</span>
-										<input type="number" value="{{ \Input::has('salary_max') ? \Input::get('salary_max') : 0 }}" min="1" name="salary_max" class="form-control" />
+										<input type="number" value="{{ \Input::has('salary_max') ? \Input::get('salary_max') : 1 }}" min="1" name="salary_max" class="form-control" />
 									</div>
 								</label>
 							</div>
 
 							<div class="col-sm-6 no-padding">
-								<input type="radio" name="cv_search_salary" @if (\Input::get('cv_search_salary') === 'any') {{ 'checked="checked"' }} @endif value="any" /> Any
+								<input type="radio" name="cv_search_salary" @if (\Input::get('cv_search_salary') === 'any' || ! \Input::has('search')) {{ 'checked="checked"' }} @endif value="any" /> Any
 							</div>
 
 							<div class="col-sm-12 element-top-10">
@@ -103,7 +107,7 @@ CV Search | Programme Chameleon
 									<li>
 										<div class="media">
 											<a href="#" class="media-left">
-												<img data-src="holder.js/100x100?random=yes">
+												<img data-src="holder.js/100x100?random=yes&text=no-image">
 											</a>
 											<div class="media-body">
 												<div class="col-sm-4">
@@ -154,7 +158,7 @@ CV Search | Programme Chameleon
 										<div class="media">
 											<a href="#" class="media-left">
 												@if (is_null($contractor->image))
-													<img data-src="holder.js/100x100?random=yes">
+													<img data-src="holder.js/100x100?random=yes&text=no-image">
 												@else
 													<img src="{{ asset($contractor->image) }}" width="100" />
 												@endif

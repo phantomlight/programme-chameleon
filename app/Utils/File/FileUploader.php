@@ -6,7 +6,7 @@ class FileUploader {
 
 	protected $allowedFileSize = 5000000;
 	protected $allowedFileImage = ['gif','png','jpg'];
-	protected $allowedFileResume = ['doc','docx'];
+	protected $allowedFileResume = ['doc','docx','xls','xlsx'];
 
 	public function upload($file, $location, $checkFor='image') {
 		if ( ! is_dir(public_path(). '/' . $location)) {

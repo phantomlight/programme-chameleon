@@ -14,4 +14,11 @@ class ContractorTimesheetModel extends Eloquent implements ContractorTimesheetMo
 		return $this->belongsTo(static::$contractorModel, 'contractor_id');
 	}
 
+	public function findByJob($contractor, $job) {
+		return $this
+			->where('contractor_id', $contractor->id)
+			->where('job_id', $job->id)
+			->first();
+	}
+
 }

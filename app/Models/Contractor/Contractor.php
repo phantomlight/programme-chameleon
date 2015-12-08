@@ -96,5 +96,13 @@ class Contractor {
 	public function findContractorById($id) {
 		return $this->contractorProvider->findById($id);
 	}
+
+	public function submitTimesheet($job, $data, $file=null) {
+		return $this->contractorTimesheetProvider->addNew($job, $data, $file);
+	}
+
+	public function findTimesheetByJob($contractor, $job) {
+		return $this->contractorTimesheetProvider->findByJob($contractor, $job);
+	}
 	
 }

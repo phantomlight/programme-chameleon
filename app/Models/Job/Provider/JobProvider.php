@@ -33,6 +33,7 @@ class JobProvider implements JobProviderInterface {
 		$model->fill([
 			'company_id'	=>	$data['company_id'],
 			'experience_year'	=>	$data['experience_year'],
+			'start_date'	=>	$data['start_date'],
 			'title'		=>	$data['title'],
 			'city'		=>	$data['city'],
 			'country'	=>	$data['country'],
@@ -70,6 +71,7 @@ class JobProvider implements JobProviderInterface {
 	public function update($job, $data) {
 		$jobData = [
 			'experience_year'	=>	$data['experience_year'],
+			'start_date'	=>	$data['start_date'],
 			'title'		=>	$data['title'],
 			'city'		=>	$data['city'],
 			'country'	=>	$data['country'],
@@ -87,6 +89,10 @@ class JobProvider implements JobProviderInterface {
 			'description'	=>	$data['description'],
 		];
 
+		foreach ($jobData as $k=>$d) {
+			$job->{$k} = $d;
+		}
+
 		if ($job->save()) {
 			$job->industries()->sync($data['job_industry']);
 		}
@@ -97,6 +103,56 @@ class JobProvider implements JobProviderInterface {
 	public function findById($id) {
 		$model = $this->getModel();
 		return $model->findById($id);
+	}
+
+	public function findAll() {
+		$model = $this->getModel();
+		return $model->orderBy('created_at', 'desc');
+	}
+
+	public function findByType($type) {
+		if ($type !== 'permanent' && $type !== 'contract') {
+			throw new \Exception("Error Processing Request", 1);
+			return;
+		}
+
+		$model = $this->getModel();
+		$model = $model->where('type', $type)->orderBy('created_at', 'desc');
+		return $model;
+	}
+
+	public function search($data) {
+		foreach ($data as $k=>$d) {
+			$data[$k] = trim($d);
+		}
+
+		$model = $this->getModel();
+		$model = $model->where('title', 'like', '%' . $data['query'] . '%');
+
+		if ($data['country'] !== 'any') {
+			$model->where('country', $data['country']);
+		}
+
+		if ($data['job_industry'] !== '' && $data['job_industry'] !== 'any') {
+			$model = $model->whereHas('industries', function ($query) use ($data) {
+				$query->where('industry_id', $data['job_industry']);
+			});
+		}
+
+		if ($data['job_type'] !== 'any') {
+			$model = $model->where('type', $data['job_type']);
+		}
+
+		if ($data['experience_min'] !== 'any' && $data['experience_max'] !== 'any') {
+			$model = $model->whereBetween('experience_year', [(int) $data['experience_min'], (int) $data['experience_max']]);
+		}
+
+		if ($data['salary_type'] !== 'any') {
+			$model->where('salary_type', $data['salary_type'])
+						->whereBetween('salary', [(int) $data['salary_min'], (int) $data['salary_max']]);
+		}
+
+		return $model->orderBy('created_at', 'desc');
 	}
 
 }

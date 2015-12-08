@@ -1,5 +1,18 @@
 <?php
-	if (\User::check()) $user = \User::getUser();
+	if (\User::check()) {
+		$user = \User::getUser();
+
+		if ($user->hasAccess('contractor')) {
+			$contractor = \Contractor::getContractor();
+		}
+		elseif ($user->hasAccess('company')) {
+			$company = \Company::getCompany();
+		}
+		elseif ($user->hasAccess('agency')) {
+			$agency = \Agency::getAgency();
+		}
+	}
+	
 	$cUser = $contractor->user;
 	$resume = $contractor->resume;
 ?>
@@ -33,7 +46,7 @@
 			<div class="candidate-profile">
 				<div class="img-responsive">
 					@if (is_null($contractor->image))
-						<img data-src="holder.js/52x52?random=yes" class="resume-img" />
+						<img data-src="holder.js/52x52?random=yes&text=no-image" class="resume-img" />
 					@else
 						<img src="{{ asset($contractor->image) }}" class="resume-img"  width="52" />
 					@endif

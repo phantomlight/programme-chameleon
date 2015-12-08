@@ -36,7 +36,7 @@ class PaymentController extends Controller {
 		$this->paypalApiContext->setConfig(array(
 			'mode' => 'sandbox',
 			'service.EndPoint' => 'https://api.sandbox.paypal.com',
-			'http.ConnectionTimeOut' => 30,
+			'http.ConnectionTimeOut' => 60,
 			'log.LogEnabled' => true,
 			'log.FileName' => storage_path('logs/paypal.log'),
 			'log.LogLevel' => 'FINE'
@@ -61,7 +61,7 @@ class PaymentController extends Controller {
 				return \Response::json([
 					'type'		=>	'danger',
 					'message'	=>	'Minimum of amount of credit to be bought is 1.',
-					]);
+				]);
 			}
 			$paymentData['name'] = $xAmount . ' company credit(s) on Programme Chameleon.';
 			$paymentData['xCreditAmount'] = $xAmount;
@@ -127,7 +127,7 @@ class PaymentController extends Controller {
 			return redirect(url('company'))->with('flashMessage', [
 				'class'		=>	'danger',
 				'message'	=>	'Your session has expired, please try again.',
-				]);
+			]);
 		}
 
 		$data = session('_temp_payment_sess');
@@ -165,8 +165,8 @@ class PaymentController extends Controller {
 
 			return redirect(url('company'))->with('flashMessage', [
 				'class'		=>	'danger',
-				'message'	=>	'Your payment is successful, yet your data failed to be updated. Please contact admin at inquiries@programmechameleon.com on this enquiry along with your payment invoice.',
-				]);
+				'message'	=>	$e->getMessage(),
+			]);
 		}
 
 		return redirect(url('company'))->with('flashMessage', [

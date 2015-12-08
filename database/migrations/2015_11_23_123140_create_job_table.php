@@ -23,12 +23,12 @@ class CreateJobTable extends Migration
             $table->string('contact_name', 255);
             $table->string('contact_phone', 255);
             $table->decimal('salary', 16, 4);
-            $table->enum('salary_type', ['hourly', 'monthly', 'one-time']);
+            $table->enum('salary_type', ['hourly', 'monthly', 'daily']);
             $table->boolean('visa')->default(1);
             $table->boolean('eligible_to_work_in_country')->default(1);
             $table->boolean('security_clearance')->default(1);
             $table->enum('type', ['permanent', 'contract']);
-            $table->enum('status', ['open', 'close']);
+            $table->enum('status', ['open', 'taken']);
             $table->text('job_apply_details');
             $table->text('description')->nullable();
             $table->timestamps();

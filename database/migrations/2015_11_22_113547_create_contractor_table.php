@@ -95,10 +95,10 @@ class CreateContractorTable extends Migration
             $table->string('name', 255);
             $table->enum('type', ['file', 'data']);
             $table->string('file', 255)->nullable();
-            $table->enum('report', ['daily', 'weekly', 'monthly']);
-            $table->smallInteger('hours');
-            $table->dateTime('start_date')->default('0000-00-00 00:00:00');
-            $table->dateTime('end_date')->default('0000-00-00 00:00:00');
+            $table->enum('report', ['daily', 'weekly', 'monthly'])->nullable();
+            $table->smallInteger('hours')->nullable();
+            $table->dateTime('start_date')->default('0000-00-00 00:00:00')->nullable();
+            $table->dateTime('end_date')->default('0000-00-00 00:00:00')->nullable();
             $table->timestamps();
 
             $table->engine = 'InnoDB';
