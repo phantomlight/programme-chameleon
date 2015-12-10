@@ -88,7 +88,7 @@
 				<div class="row">
 					<div class="col-sm-2 col-xs-12 the-list">
 					<?php $jobs = \Job::findJobByType('contract'); $jobs = $jobs->paginate(15); ?>
-						@if ($jobs)
+						@if ($jobs->count() > 0)
 						<ul class="list-unstyled hidden-xs" role="tablist">
 							@foreach ($jobs as $index => $job)
 							<li role="presentation" @if ($index === 0) {{ 'active' }} @endif><a href="#job-{{ $job->id }}" aria-controls="job-{{ $job->id }}" role="tab" data-toggle="tab">{{ $job->title }}</a></li>

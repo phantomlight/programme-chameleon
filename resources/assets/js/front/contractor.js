@@ -253,7 +253,7 @@ if ($('#contractorJobAlertForm')[0]) {
 			processing = true;
 			$('.page-preloader').show();
 
-			$.post(window.origin + '/contractor/job-alert', {
+			$.post(window.origin + '/contractor/create-job-alert', {
 				data: $form.serializeForm()
 			})
 			.done(function (e) {
@@ -261,6 +261,7 @@ if ($('#contractorJobAlertForm')[0]) {
 				$('.page-preloader').hide();
 				$form.showMessage(e.message, e.type);
 				$form.find('[type=submit]').disable(false);
+				if (e.type === 'success') location.reload();
 			})
 			.fail(function (xhr, status, e) {
 				processing = false;
@@ -271,6 +272,36 @@ if ($('#contractorJobAlertForm')[0]) {
 		}
 		else {
 			$form.showMessage('Another process is running.', 'info');
+		}
+	});
+}
+
+if ($('#removeAlertBtn')[0]) {
+	$('#removeAlertBtn').on('click', function (e) {
+		e.preventDefault();
+		var $button = $('#removeAlertBtn');
+		if (confirm('Remove this alert?')) {
+			if ( ! processing) {
+				processing = true;
+				$('.page-preloader').show();
+				$button.disable(true);
+
+				$.post(window.origin + '/contractor/remove-job-alert').done(function (e) {
+					processing = false;
+					$('.page-preloader').hide();
+					$button.disable(false);
+					alert(e.message);
+					if (e.type === 'success') location.reload();
+				}).fail(function (xhr, status, e) {
+					processing = false;
+					$('.page-preloader').hide();
+					alert(xhr.responseText);
+					$button.disable(false);
+				});
+			}
+			else {
+				alert('Another process is running, please wait');
+			}
 		}
 	});
 }

@@ -1,5 +1,23 @@
 <?php
-if (\User::check()) $user = \User::getUser();
+	use App\Utils\Hash;
+	use Illuminate\Support\Str;
+
+	if (\User::check()) {
+		$user = \User::getUser();
+
+		if ($user->hasAccess('contractor')) {
+			$contractor = \Contractor::getContractor();
+		}
+		elseif ($user->hasAccess('company')) {
+			$company = \Company::getCompany();
+		}
+		elseif ($user->hasAccess('agency')) {
+			$agency = \Agency::getAgency();
+		}
+	}
+
+	$_hash = new Hash();
+	$_hash = $_hash->getHasher();
 ?>
 
 @extends('front.app')
@@ -36,7 +54,7 @@ Job Search | Programme Chameleon
 								<div class="row">
 									<div class="col-sm-2 col-xs-12 the-list">
 										<?php $jobs = \Job::searchJob(\Input::all()); $jobs = $jobs->paginate(15); ?>
-										@if ($jobs)
+										@if ($jobs->count() > 0)
 										<ul class="list-unstyled hidden-xs" role="tablist">
 											@foreach ($jobs as $index => $job)
 											<li role="presentation" @if ($index === 0) {{ 'active' }} @endif><a href="#job-{{ $job->id }}" aria-controls="job-{{ $job->id }}" role="tab" data-toggle="tab">{{ $job->title }}</a></li>
@@ -83,6 +101,11 @@ Job Search | Programme Chameleon
 												@elseif ($details->type === 'url')
 												<span>Application Link: {{ $details->url }}</span>
 												@endif
+											</div>
+
+											<div class="btn-group">
+												<a href="{{ route('job.public', ['id' => $_hash->encode($job->id), 'slug' => Str::slug($job->title)]) }}" class="btn btn-warning">See Job Details</a>
+												<a href="{{ route('contractor.apply', ['id' => $_hash->encode($job->id)]) }}" class="btn btn-primary" target="_blank">Apply</a>
 											</div>
 										</div>
 										@endforeach

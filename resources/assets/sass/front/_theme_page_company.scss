@@ -309,3 +309,14 @@
 		}
 	}
 }
+
+#jobContractorList {
+	li {
+		padding: 10px 0;
+		border-bottom: thin solid #d5d5d5;
+
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+}

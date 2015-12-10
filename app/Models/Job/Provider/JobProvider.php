@@ -107,7 +107,7 @@ class JobProvider implements JobProviderInterface {
 
 	public function findAll() {
 		$model = $this->getModel();
-		return $model->orderBy('created_at', 'desc');
+		return $model->where('status', 'open')->orderBy('created_at', 'desc');
 	}
 
 	public function findByType($type) {
@@ -117,7 +117,7 @@ class JobProvider implements JobProviderInterface {
 		}
 
 		$model = $this->getModel();
-		$model = $model->where('type', $type)->orderBy('created_at', 'desc');
+		$model = $model->where('status', 'open')->where('type', $type)->orderBy('created_at', 'desc');
 		return $model;
 	}
 
@@ -152,7 +152,39 @@ class JobProvider implements JobProviderInterface {
 						->whereBetween('salary', [(int) $data['salary_min'], (int) $data['salary_max']]);
 		}
 
-		return $model->orderBy('created_at', 'desc');
+		return $model->where('status', 'open')->orderBy('created_at', 'desc');
+	}
+
+	public function applyToContractor($job, $contractor) {
+		try {
+			if ($job->contractors->contains($contractor->id)) {
+				throw new \Exception("This contractor has already applied to this job.", 1);
+				return;
+			}
+
+			$job->contractors()->attach($contractor->id, ['created_at' => Carbon::now()]);
+			return $job;
+		}
+		catch (\Exception $e) {
+			throw new \Exception($e->getMessage(), 1);
+			return;
+		}
+	}
+
+	public function removeContractorFromJob($job, $contractor) {
+		try {
+			if ( ! $job->contractors->contains($contractor->id)) {
+				throw new \Exception("This contractor has never applied to this job.", 1);
+				return;
+			}
+
+			$job->contractors()->detach($contractor->id);
+			return $job;
+		}
+		catch (\Exception $e) {
+			throw new \Exception($e->getMessage(), 1);
+			return;
+		}
 	}
 
 }

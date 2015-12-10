@@ -57,4 +57,11 @@ class JobModel extends Eloquent implements JobModelInterface {
 		return self::where('id', $id)->first();
 	}
 
+	public function delete() {
+		$this->contractors()->detach();
+		$this->industries()->detach();
+		$this->timesheets()->delete();
+		return parent::delete();
+	}
+
 }

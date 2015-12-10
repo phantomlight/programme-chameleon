@@ -77,11 +77,12 @@
 				<option value="any" @if (\Input::get('salary_type') === 'any') {{ 'selected="selected"' }} @endif>Any</option>
 				<option value="hourly" @if (\Input::get('salary_type') === 'hourly') {{ 'selected="selected"' }} @endif>Hourly</option>
 				<option value="monthly" @if (\Input::get('salary_type') === 'monthly') {{ 'selected="selected"' }} @endif>Monthly</option>
-				<option value="one-time" @if (\Input::get('salary_type') === 'one-time') {{ 'selected="selected"' }} @endif>One Time</option>
+				<option value="daily" @if (\Input::get('salary_type') === 'one-time') {{ 'selected="selected"' }} @endif>Daily</option>
 			</select>
 		</div>
 		<div class="form-group salary">
 			<label class="slider-label">Salary (<i class="fa fa-gbp"></i>)</label>
+			<p><small>If you want to select range of salary, please also select salary type above other than &quot;any&quot;</small></p>
 			<?php
 				$values = [
 					'50'	=> 	'50',

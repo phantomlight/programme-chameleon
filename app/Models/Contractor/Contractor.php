@@ -84,6 +84,10 @@ class Contractor {
 		return $this->contractorProvider->makeJobAlert($contractor, $data);
 	}
 
+	public function removeJobAlert($contractor) {
+		return $this->contractorProvider->removeJobAlert($contractor);
+	}
+
 	public function searchContractor($data) {
 		return $this->contractorProvider->search($data);
 	}

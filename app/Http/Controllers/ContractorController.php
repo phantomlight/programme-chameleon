@@ -240,27 +240,41 @@ class ContractorController extends Controller {
 		}
 	}
 
-	public function postJobAlert() {
+	public function postCreateJobAlert() {
 		$data = \Input::get('data');
+		$contractor = \Contractor::getContractor();
 
 		try {
-			$user = \User::getUser();
-			if ( ! $user->hasAccess('contractor')) {
-				throw new \Exception("Only contractor can update their account information", 1);
-				return;
-			}
-			$contractor = \Contractor::getContractor();
-			$model = \Contractor::makeJobAlert($contractor, $data);
+			$alert = \Contractor::makeJobAlert($contractor, $data);
 
 			return \Response::json([
 				'type'		=>	'success',
-				'message'	=>	'Job alert has been created. If you ever need to change, you have to make a new one.',
+				'message'	=>	'Job alert created successfully.',
 			]);
 		}
 		catch (\Exception $e) {
 			return \Response::json([
 				'type'		=>	'danger',
-				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postRemoveJobAlert() {
+		$contractor = \Contractor::getContractor();
+
+		try {
+			$alert = \Contractor::removeJobAlert($contractor);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Job alert removed.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
 			]);
 		}
 	}

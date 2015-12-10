@@ -81,7 +81,26 @@ class ContractorProvider implements ContractorProviderInterface {
 	}
 
 	public function makeJobAlert($contractor, $data) {
-		return false;
+		$contractor->jobAlerts()->detach();
+
+		foreach ($data['job_industry'] as $industry) {
+			if ( ! $contractor->jobAlerts->contains($industry)) {
+				$contractor->jobAlerts()->attach($industry, [
+					'email' 			=>	$data['email'],
+					'type' 				=>	$data['type'], 
+					'country' 		=>	$data['country'],
+					'city'				=>	$data['city'],
+					'created_at'	=>	Carbon::now(),
+				]);
+			}
+		}
+
+		return true;
+	}
+
+	public function removeJobAlert($contractor) {
+		$contractor->jobAlerts()->detach();
+		return true;
 	}
 
 	public function search($data) {

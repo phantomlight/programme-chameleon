@@ -236,4 +236,156 @@ class JobController extends Controller {
 		}
 	}
 
+	public function postGiveJob() {
+		$company = \Company::getCompany();
+
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		try {
+			$job = \Job::findJobById($_hash->decode(trim(\Input::get('job'))));
+
+			if ( ! $job) {
+				throw new \Exception("Job not found.", 1);
+				return;
+			}
+
+			$jobBelongsTo = $job->company;
+
+			if ($company->id !== $jobBelongsTo->id) {
+				throw new \Exception("Job does not belong to your company.", 1);
+				return;
+			}
+
+			$contractor = \Contractor::findContractorById($_hash->decode(trim(\Input::get('contractor'))));
+			if ( ! $contractor) {
+				throw new \Exception("Contractor not found.", 1);
+				return;
+			}
+
+			$jobApplication = \Job::applyToContractor($job, $contractor);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Job assignment success, reload page?',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postStatusChange() {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$job = \Job::findJobById($_hash->decode(trim(\Input::get('job'))));
+
+		if ( ! $job) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Job not found.',
+			]);
+		}
+
+		$value = \Input::get('value');
+		if ($value !== 'taken' && $value !== 'open') {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Status not recognized.',
+			]); 
+		}
+
+		$job->status = $value;
+
+		if ($job->save()) {
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Job status updated/',
+			]);
+		}
+		else {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Something wrong while saving job status.',
+			]);
+		}
+	}
+
+	public function postRemoveJob() {
+		$company = \Company::getCompany();
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$job = \Job::findJobById($_hash->decode(trim(\Input::get('job'))));
+
+		if ( ! $job) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Job not found.',
+			]);
+		}
+
+		$jobBelongsTo = $job->company;
+
+		if ($jobBelongsTo->id !== $company->id) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'You are not the owner of this job.',
+			]);
+		}
+
+		if ($job->delete()) {
+			return \Response::json([
+				'type'			=>	'success',
+				'message'		=>	'Job removed. You will be redirected to the main page.',
+				'redirect'	=>	route('company.index'),
+			]);
+		}
+		else {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Something wrong while removing job.',
+			]);
+		}
+	}
+
+	public function postCancelContractor() {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$job = \Job::findJobById($_hash->decode(trim(\Input::get('job'))));
+
+		if ( ! $job) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Job not found.',
+			]);
+		}
+
+		$contractor = \Contractor::findContractorById($_hash->decode(trim(\Input::get('contractor'))));
+
+		if ( ! $contractor) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Contractor not found.',
+			]);
+		}
+
+		try {
+			\Job::removeContractorFromJob($job, $contractor);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Contractor has been removed from the job.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
 }

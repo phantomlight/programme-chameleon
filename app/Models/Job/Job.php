@@ -29,6 +29,10 @@ class Job {
 		return $this->jobIndustryProvider->getAll();
 	}
 
+	public function findIndustryById($id) {
+		return $this->jobIndustryProvider->findById($id);
+	}
+
 	public function createJob($data) {
 		return $this->jobProvider->create($data);
 	}
@@ -51,6 +55,14 @@ class Job {
 
 	public function searchJob($data) {
 		return $this->jobProvider->search($data);
+	}
+
+	public function applyToContractor($job, $contractor) {
+		return $this->jobProvider->applyToContractor($job, $contractor);
+	}
+
+	public function removeContractorFromJob($job, $contractor) {
+		return $this->jobProvider->removeContractorFromJob($job, $contractor);
 	}
 
 }

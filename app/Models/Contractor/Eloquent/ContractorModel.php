@@ -41,7 +41,9 @@ class ContractorModel extends Eloquent implements ContractorModelInterface {
 	}
 
 	public function jobAlerts() {
-		return $this->belongsToMany(static::$industryModel, static::$alertTablePivot, 'contractor_id', 'industry_id');
+		return $this
+			->belongsToMany(static::$industryModel, static::$alertTablePivot, 'contractor_id', 'industry_id')
+			->withPivot('industry_id', 'type', 'email', 'country', 'city');
 	}
 
 	public function jobs() {

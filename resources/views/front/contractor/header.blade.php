@@ -52,7 +52,6 @@
 								<ul class="sub-menu">
 									<li class="menu-item"><a href="{{ url('contractor/account') }}">Settings / Update CV</a></li>
 									<li class="menu-item"><a href="{{ url('contractor/create-job-alert') }}">Create Job Alert</a></li>
-									<li class="menu-item"><a href="{{ url('contractor/submit-timesheet') }}">Submit Timesheet</a></li>
 									<li class="menu-item"><a href="#">Record Expenses</a></li>
 								</ul>
 							</li>

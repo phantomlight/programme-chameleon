@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 08, 2015 at 09:00 PM
+-- Generation Time: Dec 10, 2015 at 07:04 PM
 -- Server version: 5.6.27-0ubuntu1
 -- PHP Version: 5.6.11-1+deb.sury.org~utopic+1
 
@@ -5639,10 +5639,17 @@ CREATE TABLE IF NOT EXISTS `tb_contractor_expense` (
 CREATE TABLE IF NOT EXISTS `tb_contractor_job` (
   `contractor_id` int(10) unsigned NOT NULL,
   `job_id` int(10) unsigned NOT NULL,
-  `timesheet_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tb_contractor_job`
+--
+
+INSERT INTO `tb_contractor_job` (`contractor_id`, `job_id`, `created_at`, `updated_at`) VALUES
+(4, 9, '2015-12-10 03:48:23', '0000-00-00 00:00:00'),
+(3, 9, '2015-12-10 03:48:27', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -5653,6 +5660,10 @@ CREATE TABLE IF NOT EXISTS `tb_contractor_job` (
 CREATE TABLE IF NOT EXISTS `tb_contractor_job_alert` (
   `contractor_id` int(10) unsigned NOT NULL,
   `industry_id` int(10) unsigned NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` enum('any','permanent','contract','') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'any',
+  `country` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `city` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -5761,11 +5772,10 @@ CREATE TABLE IF NOT EXISTS `tb_job` (
 --
 
 INSERT INTO `tb_job` (`id`, `company_id`, `experience_year`, `title`, `city`, `country`, `duration`, `contact_name`, `contact_phone`, `salary`, `salary_type`, `visa`, `eligible_to_work_in_country`, `security_clearance`, `type`, `status`, `job_apply_details`, `description`, `start_date`, `created_at`, `updated_at`) VALUES
-(5, 1, 0, '1st Job', 'Aberdeen', 'United Kingdom', '1', 'Person 1', '1231231312', 100.0000, 'hourly', 1, 1, 1, 'permanent', 'open', '{"type":"email","application_email":"","direct_email":""}', 'Some details of your job here.', 'immediately', '2015-11-27 05:31:49', '2015-11-27 05:31:49'),
 (6, 2, 4, 'Superman Job', 'Aberdeen', 'United Kingdom', '0', 'Test Contact', '1231231213', 5000.0000, 'hourly', 1, 1, 1, 'contract', 'taken', '{"type":"url","url":"google.co.id"}', 'I’m blaming Ducky for this. She came up with an idea for a game thread, that involves writing scenes from the middle of book. A scene can be pages long, however. It seemed that something shorter might be just the thing.\n\nIn this exercise, the idea is to write a paragraph that would be a random passage from a story. An effective paragraph is one that has unity (it isn’t a hodgepodge of things), focus (everything in the paragraph stacks up to the whatever-it-is the paragraph is about), and coherence (the content follows smoothly). For this exercise, the paragraph should be quick to read--say, not be more than 100 words long.\n\nA paragraph needn’t be several sentences long, but might be only a sentence or two, or a single line of dialogue.\n\nOr it could be a snippet of dialogue with narration:\n\nShe made an attempt to straighten her tawny hair. Her voice quavered with emotion. “You must be a very lonely man, Judge Seagrave.” Then she turned a gaze on him that might have ignited a rain-sodden haystack. “And I’m a lonely woman.”\n\nIt might be merely descriptive:\n\nLines of weeds criss-crossed the cracked parking lot of the Seashell Motor Courts. The flaking paint on the buildings had chalked to a pastel pink on walls covered with graffiti. Many of the windows had been smashed out. Where the sign had been, atop rusting steel posts, only the metal outline of a seashell remained.\n\nIt might have action but no dialogue:\n\nIt was Ms. Fitzhugh. She was walking fast. A strange expression crossed the faces of the students as they glanced toward the door and saw the principal go straight into the boys’ restroom. The footsteps stopped. There was a deep, throaty sound difficult to describe. Then came an eruption of shrill screaming and a rapid sound of heels. Moments later, Ms. Fitzhugh emerged, her eyes wild. Screaming, she skidded in the hall and headed toward the office.', 'immediately', '2015-12-04 03:25:39', '2015-12-04 03:45:45'),
 (7, 1, 1, 'Batman Job', 'Lomé', 'Togo', '1', 'My Contact', '1299999', 40.0000, 'hourly', 0, 1, 0, 'permanent', 'open', '{"type":"email","application_email":"recruit@email.org","direct_email":""}', 'Lines of weeds criss-crossed the cracked parking lot of the Seashell Motor Courts. The flaking paint on the buildings had chalked to a pastel pink on walls covered with graffiti. Many of the windows had been smashed out. Where the sign had been, atop rusting steel posts, only the metal outline of a seashell remained.\n\nIt might have action but no dialogue:\n\nIt was Ms. Fitzhugh. She was walking fast. A strange expression crossed the faces of the students as they glanced toward the door and saw the principal go straight into the boys’ restroom. The footsteps stopped. There was a deep, throaty sound difficult to describe. Then came an eruption of shrill screaming and a rapid sound of heels. Moments later, Ms. Fitzhugh emerged, her eyes wild. Screaming, she skidded in the hall and headed toward the office.\n\nIt might be expository:\n\nAbove ground was the medieval settlement of Skaar’s Outpost, originally a fort to guard the cave entrance. Its inception as a town had been in the lodging and supply needs of explorers there to attempt the subterranean labyrinth when it had opened as a commercial venture. With the caverns’ flooding and subsequent closure, however, Skaar’s Outpost had declined into an agricultural community miles from any trade routes.\n\nThese are merely examples. Have fun! ', 'Next Month by job date', '2015-12-04 03:34:38', '2015-12-04 03:34:38'),
 (8, 2, 0, 'Marvelling Job', 'Dubai', 'United Arab Emirates', '999', 'Testerrererererer', '888-888-888', 8000.0000, 'daily', 1, 1, 1, 'permanent', 'open', '{"type":"email","application_email":"recruit@email.org","direct_email":"recruit@email.org"}', 'Some details of your job here.\n\nSome details of your job here. Which was suppose to be long.', 'Immediately', '2015-12-04 03:53:19', '2015-12-04 03:53:19'),
-(9, 1, 0, 'Personal Assistant', 'Aberdeen', 'United Kingdom', '2', 'Mr. Aberdeen', '1299999', 1000.0000, 'hourly', 1, 1, 1, 'permanent', 'open', '{"type":"email","application_email":"","direct_email":"recruit@email.org"}', 'Some details of your job here.', 'Immediately', '2015-12-08 02:33:40', '2015-12-08 02:33:40');
+(9, 1, 0, 'Personal Assistant', 'Aberdeen', 'United Kingdom', '2', 'Mr. Aberdeen', '1299999', 1000.0000, 'hourly', 1, 1, 1, 'permanent', 'taken', '{"type":"email","application_email":"","direct_email":"recruit@email.org"}', 'Some details of your job here.', 'Immediately', '2015-12-08 02:33:40', '2015-12-10 02:37:50');
 
 -- --------------------------------------------------------
 
@@ -5786,9 +5796,7 @@ CREATE TABLE IF NOT EXISTS `tb_job_industry` (
 
 INSERT INTO `tb_job_industry` (`job_id`, `industry_id`, `created_at`, `updated_at`) VALUES
 (4, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(5, 3, '2015-11-27 05:31:49', '0000-00-00 00:00:00'),
 (4, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(5, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (6, 1, '2015-12-04 03:25:40', '0000-00-00 00:00:00'),
 (6, 3, '2015-12-04 03:25:40', '0000-00-00 00:00:00'),
 (7, 2, '2015-12-04 03:34:38', '0000-00-00 00:00:00'),
@@ -5830,8 +5838,8 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
 INSERT INTO `tb_users` (`id`, `email`, `password`, `permissions`, `activated`, `activation_code`, `activated_at`, `last_login`, `persist_code`, `reset_password_code`, `first_name`, `last_name`, `image`, `slug`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'superadmin@email.com', '$2y$10$bWBrzPPH4.NjfzCJz6TgNO6KNkz57..TXn4duHh.s08gOR2ZZDnS.', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'Fordyce', 'Gozali', NULL, 'fordyce-gozali', NULL, '2015-11-09 02:12:10', '2015-11-09 02:12:10'),
 (2, 'admin@email.com', '$2y$10$dY9LJytIU.BR5mZi8rXI/eQSJkQBSM0zGGHTWZYnqHB0.wRtq0cFq', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'Admin', '', NULL, 'admin', NULL, '2015-11-09 02:12:12', '2015-11-09 02:12:12'),
-(9, 'contractor1@email.org', '$2y$10$yn96iKO/8X994xKhViA6NOgZS8hkKuRHsKcJstXFnHf/yYcG.CG9C', NULL, 1, NULL, NULL, '2015-12-08 05:05:21', '$2y$10$tuJLPNyGQVYvp511Z7Z9ke3YIhnnEmJL5GjcJVYbLSZuDB.HqJhI6', NULL, 'Contractor', 'ABC', NULL, '', NULL, '2015-11-25 07:07:49', '2015-12-08 05:05:21'),
-(12, 'company1@email.org', '$2y$10$unHXtpg/t1x8.JvuS1R0SeHYTc5KjkNRAqhzdkmcgNyCWQuW67pPi', NULL, 1, NULL, NULL, '2015-12-08 06:50:33', '$2y$10$wOcAbk7J.dVmzNGiX4KzAuve8pVx.EpWmKVLGSfZPNSFvziI1hvne', NULL, NULL, NULL, NULL, '', NULL, '2015-11-26 01:39:31', '2015-12-08 06:50:33'),
+(9, 'contractor1@email.org', '$2y$10$yn96iKO/8X994xKhViA6NOgZS8hkKuRHsKcJstXFnHf/yYcG.CG9C', NULL, 1, NULL, NULL, '2015-12-10 04:05:30', '$2y$10$vdbsyPKv51.MkDxsnFImVOz7JyMdDG0uwA84zNEPi3tYZz9Ajl6ay', NULL, 'Contractor', 'ABC', NULL, '', NULL, '2015-11-25 07:07:49', '2015-12-10 04:05:30'),
+(12, 'company1@email.org', '$2y$10$unHXtpg/t1x8.JvuS1R0SeHYTc5KjkNRAqhzdkmcgNyCWQuW67pPi', NULL, 1, NULL, NULL, '2015-12-10 03:58:25', '$2y$10$iah/cQNcqXwtd6Ix/D/i1Oq59s0kz93et5Q6JieR1IUb76aKR0Pa.', NULL, NULL, NULL, NULL, '', NULL, '2015-11-26 01:39:31', '2015-12-10 03:58:25'),
 (14, 'agency1@email.org', '$2y$10$RtqpJ1DSxqATJEIoo3XuleftlZl.UDH9BbZ0Lw40yzh6eogcJu0da', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, '2015-11-26 01:54:28', '2015-11-26 01:54:28'),
 (15, 'contractor2@email.org', '$2y$10$VC3CYwOu9/hUFrYLO4P9Te/sNFFI7/Vo9dZlVwzATUy70EIr7a6ku', NULL, 1, NULL, NULL, '2015-12-08 05:12:31', '$2y$10$1DMBUJ5mtQ07.2JbF8YCp.U0LCzmQGFMrFjijnS.wDk/RKY/.sBVa', NULL, 'Contractor', '2', NULL, '', NULL, '2015-11-29 04:39:39', '2015-12-08 05:12:31'),
 (16, 'contractor3@email.org', '$2y$10$27nMQGG0UmyoiWnG9EsL2eUc6qX.8YfkzTkXpx.n353OO7T5b/Dqi', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'Contractor', '3', NULL, '', NULL, '2015-11-29 04:48:51', '2015-11-29 04:48:51'),
@@ -6021,7 +6029,10 @@ ALTER TABLE `tb_contractor_job`
 --
 ALTER TABLE `tb_contractor_job_alert`
   ADD KEY `tb_contractor_job_alert_contractor_id_industry_id_index` (`contractor_id`,`industry_id`),
-  ADD KEY `tb_contractor_job_alert_created_at_index` (`created_at`);
+  ADD KEY `tb_contractor_job_alert_created_at_index` (`created_at`),
+  ADD KEY `index_alert_type` (`type`),
+  ADD KEY `index_country_alert` (`country`),
+  ADD KEY `index_city_alert` (`city`);
 
 --
 -- Indexes for table `tb_contractor_notification`

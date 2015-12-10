@@ -53,6 +53,10 @@ class CreateContractorTable extends Migration
         \Schema::create('tb_contractor_job_alert', function(Blueprint $table) {
             $table->unsignedInteger('contractor_id');
             $table->unsignedInteger('industry_id');
+            $table->string('email', 255);
+            $table->string('country', 100);
+            $table->string('city', 100);
+            $table->enum('type', ['any', 'permanent', 'contract']);
             $table->timestamps();
 
             $table->engine = 'InnoDB';
