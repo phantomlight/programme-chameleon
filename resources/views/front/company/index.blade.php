@@ -36,8 +36,9 @@ Company 1 | Programme Chameleon
 							<p>Status: {!! $job->status === 'open' ? '<label class="label label-success">Open</label>' : '<label class="label label-warning">Taken</label>' !!}</p>
 							<p class="time"><i class="fa fa-clock-o"></i> {{ $job->created_at->toDayDatetimeString() }}</p>
 							<div class="btn-group">
-								<a href="{{ route('company.job.edit') . '?i=' . $_hash->encode($job->id) }}" class="btn btn-warning btn-xs">Edit</a>
-								<a href="{{ route('company.job.timesheet') . '?i=' . $_hash->encode($job->id) }}" class="btn btn-primary btn-xs">See Timesheet ({{ $job->timesheets()->count() }})</a>
+								<a href="{{ route('company.job.edit') . '?i=' . $_hash->encode($job->id) }}" class="btn btn-warning">Edit</a>
+								<a href="{{ route('company.job.application') . '?i=' . $_hash->encode($job->id) }}" class="btn btn-success">Applications ({{ $job->contractors->count() }})</a>
+								<a href="{{ route('company.job.timesheet') . '?i=' . $_hash->encode($job->id) }}" class="btn btn-primary">Timesheet &amp; Expenses ({{ $job->timesheets()->count() }})</a>
 							</div>
 						</li>
 						@endforeach

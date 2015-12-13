@@ -28,39 +28,49 @@ class ContractorResumeProvider implements ContractorResumeProviderInterface {
 		return $this->createModel();
 	}
 
-	public function updateResumeData($contractor, $file) {
+	public function findById($id) {
+		$model = $this->getModel();
+		return $model->where('id', $id)->first();
+	}
+
+	public function makeResume($contractor, $file) {
 		try {
 			$uploader = new FileUploader;
 			$location = 'uploads/contractors/' . $contractor->id . '/resume/' . date('m') . '/';
 			$uploadedFile = $uploader->upload($file, $location, 'resume');
 
 			$model = $this->createModel();
-			$resume = $model->findByContractorId($contractor->id);
-
-			if ( ! $resume) {
-				$model->fill([
-					'file'	=>	$uploadedFile,
-					'contractor_id'	=> $contractor->id,
-				]);
-				$model->save();
-				\Session::forget('_sess_contractor');
-				return $model;
-			}
-			else {
-				if (\File::exists(public_path() . '/' . $resume->file)) {
-					\File::delete(public_path() . '/' . $resume->file);
-				}
-				$resume->file = $uploadedFile;
-				$resume->updated_at = Carbon::now();
-				$resume->save();
-				\Session::forget('_sess_contractor');
-				return $resume;
-			}
+			$model->fill([
+				'contractor_id'	=>	$contractor->id,
+				'file' => $uploadedFile
+			]);
+			$model->save();
+			\Session::forget('_sess_contractor');
+			return $model;
 		}
 		catch (\Exception $e) {
 			throw new \Exception($e->getMessage(), 1);
 			return;
 		}
+	}
+
+	public function remove($contractor, $id) {
+		if ( ! $model = $this->findById($id)) {
+			throw new \Exception("Not found", 1);
+			return;
+		}
+
+		if ($model->contractor_id !== $contractor->id) {
+			throw new \Exception("Permission error", 1);
+			return;
+		}
+
+		if (\File::exists(public_path() . '/' . $model->file)) {
+			\File::delete(public_path() . '/' . $model->file);
+		}
+
+		$model->delete();
+		return true;
 	}
 
 	public function updateSalary($contractor, $data) {

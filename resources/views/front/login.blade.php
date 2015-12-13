@@ -17,7 +17,7 @@ Login | Programme Chameleon
 			<div class="row">
 				<div class="col-md-5">
 					<div id="login-form-wrapper" class="element-bottom-30">
-						<form id="login-form" role="form" onsubmit="return false;" data-parsley-validate data-route="{{ route('login.front') }}">
+						<form id="login-form" role="form" onsubmit="return false;" data-parsley-validate data-route="{{ route('front.postLogin') }}">
 							<div class="form-group">
 								<label>Email</label>
 								<input class="form-control" name="email" placeholder="Email" required="required" type="email">

@@ -157,12 +157,13 @@ class JobProvider implements JobProviderInterface {
 
 	public function applyToContractor($job, $contractor) {
 		try {
-			if ($job->contractors->contains($contractor->id)) {
-				throw new \Exception("This contractor has already applied to this job.", 1);
+			if ( ! $job->contractors->contains($contractor->id)) {
+				throw new \Exception("This contractor has never applied to this job.", 1);
 				return;
 			}
 
-			$job->contractors()->attach($contractor->id, ['created_at' => Carbon::now()]);
+			$cid = $contractor->id;
+			$job->contractors()->sync([$cid => ['status' => 'accept']]);
 			return $job;
 		}
 		catch (\Exception $e) {

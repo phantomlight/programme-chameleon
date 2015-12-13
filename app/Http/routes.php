@@ -13,11 +13,11 @@
 
 Route::get('/', function() { return view('front.index'); });
 
-Route::get('login', 'SiteController@getLogin');
-Route::get('logout', 'SiteController@getLogout');
+Route::get('login', ['as'=>'front.login', 'uses' => 'SiteController@getLogin']);
+Route::get('logout', ['as'=>'front.logout', 'uses' => 'SiteController@getLogout']);
 Route::get('api/country', 'SiteController@getCountryList');
 Route::get('api/city', 'SiteController@getCityList');
-Route::post('login', ['as' =>'login.front', 'uses' => 'SiteController@postLogin']);
+Route::post('login', ['as' =>'front.postLogin', 'uses' => 'SiteController@postLogin']);
 
 Route::get('free-resources', function() { return view('front.resources'); } );
 Route::get('company/company-sample', function() { return view('front.company.sample'); });
@@ -52,12 +52,11 @@ Route::controller('admin', 'AdminController', [
 	'getIndex'	=>	'admin.index',
 	'getLogin'	=>	'admin.login',
 	'getCms'		=>	'admin.cms',
-	'getJob'		=>	'admin.job',
+	'getJob'		=>	'admin.job.index',
+	'getJobIndustry'	=>	'admin.job.industry',
 	'getContractor'		=>	'admin.contractor',
 	'getAgency'				=>	'admin.agency',
 	'getCompany'			=>	'admin.company',
-	'getTimesheet'		=>	'admin.timesheet',
-	'getPriceList'		=>	'admin.price',
 	'getResources'		=>	'admin.resources',
 ]);
 
@@ -67,6 +66,7 @@ Route::controller('company', 'CompanyController', [
 	'getIndex'				=>	'company.index',
 	'getPostJob'			=>	'company.job.post',
 	'getEditJob'			=>	'company.job.edit',
+	'getJobApplication'	=>	'company.job.application',
 	'getJobTimesheet'	=>	'company.job.timesheet',
 	'getResumeSearch'	=>	'company.resume.search',
 	'getAccount'			=>	'company.account',
@@ -88,7 +88,13 @@ Route::controller('contractor', 'ContractorController', [
 	'getCreateJobAlert'	=>	'contractor.jobAlert.create',
 ]);
 
-Route::controller('job', 'JobController', []);
+Route::controller('job', 'JobController', [
+	'getIndustryList'			=>	'admin.job.industry.list',
+	'getEditIndustry'			=>	'admin.job.industry.edit',
+	'postAddIndustry'			=>	'admin.job.industry.postAdd',
+	'postEditIndustry'		=>	'admin.job.industry.postEdit',
+	'postRemoveIndustry' 	=>	'admin.job.industry.remove',
+]);
 
 //Route::get('test-mail', 'SiteController@testSendEmail');
 Route::post('mail/receive', function () { return \Queue::marshal(); });

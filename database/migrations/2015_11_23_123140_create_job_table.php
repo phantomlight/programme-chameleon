@@ -17,6 +17,7 @@ class CreateJobTable extends Migration
             $table->unsignedInteger('company_id');
             $table->unsignedInteger('experience_year')->default(0);
             $table->string('title', 255);
+            $table->string('start_date', 255);
             $table->string('city', 50);
             $table->string('country', 50);
             $table->string('duration', 25);

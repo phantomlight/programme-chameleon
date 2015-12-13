@@ -25,8 +25,13 @@ class Job {
 		throw new \BadMethodCallException("Method [$method] is not supported.");
 	}
 
-	public function getAllIndustries() {
+	public function getAllIndustries($search=null) {
+		if ( ! is_null($search)) return $this->jobIndustryProvider->findByQuery($search);
 		return $this->jobIndustryProvider->getAll();
+	}
+
+	public function makeNewIndustry($data) {
+		return $this->jobIndustryProvider->makeNew($data);
 	}
 
 	public function findIndustryById($id) {

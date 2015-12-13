@@ -23,7 +23,7 @@
 			<li>
 				<a href="{{ route('admin.index') }}"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
 				<ul class="nav nav-second-level collapse">
-					<li><a href="{{ route('admin.index') }}">Dashboard v.1</a></li>
+					<li><a href="{{ route('admin.index') }}">Dashboard</a></li>
 					<li>
 						<a href="#">Second Level <span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level collapse">
@@ -45,7 +45,11 @@
 				<a href="{{ route('admin.cms') }}"><i class="fa fa-list"></i> <span class="nav-label">CMS</span></a>
 			</li>
 			<li>
-				<a href="{{ route('admin.job') }}"><i class="fa fa-suitcase"></i> <span class="nav-label">Jobs</span></a>
+				<a href="#"><i class="fa fa-suitcase"></i> <span class="nav-label">Jobs</span> <span class="fa arrow"></span></a>
+				<ul class="nav nav-second-level">
+					<li><a href="{{ route('admin.job.index') }}">Job List</a></li>
+					<li><a href="{{ route('admin.job.industry') }}">Job Industry</a></li>
+				</ul>
 			</li>
 			<li>
 				<a href="{{ route('admin.contractor') }}"><i class="fa fa-users"></i> <span class="nav-label">Contractor</span></a>
@@ -55,12 +59,6 @@
 			</li>
 			<li>
 				<a href="{{ route('admin.agency') }}"><i class="fa fa-user-md"></i> <span class="nav-label">Agency</span></a>
-			</li>
-			<li>
-				<a href="{{ route('admin.timesheet') }}"><i class="fa fa-file-text"></i> <span class="nav-label">Timesheets</span></a>
-			</li>
-			<li>
-				<a href="{{ route('admin.price') }}"><i class="fa fa-gbp"></i> <span class="nav-label">Price Listing</span></a>
 			</li>
 			<li>
 				<a href="{{ route('admin.resources') }}"><i class="fa fa-files-o"></i> <span class="nav-label">Free Resources</span></a>

@@ -84,8 +84,8 @@ Post a Job | Programme Chameleon
 							<label>Salary Rate</label>
 							<select class="form-control" name="salary_type" required>
 								<option value="hourly">Hourly</option>
+								<option value="daily">Daily</option>
 								<option value="monthly">Monthly</option>
-								<option value="one-time">One Time</option>
 							</select>
 						</div>
 

@@ -31,16 +31,16 @@ class PaymentController extends Controller {
 		$this->paypalApiContext = PayPal::ApiContext(
 			config('services.paypal.client_id'),
 			config('services.paypal.secret')
-			);
+		);
 
-		$this->paypalApiContext->setConfig(array(
+		$this->paypalApiContext->setConfig([
 			'mode' => 'sandbox',
 			'service.EndPoint' => 'https://api.sandbox.paypal.com',
-			'http.ConnectionTimeOut' => 60,
+			'http.ConnectionTimeOut' => 30,
 			'log.LogEnabled' => true,
 			'log.FileName' => storage_path('logs/paypal.log'),
-			'log.LogLevel' => 'FINE'
-			));
+			'log.LogLevel' => 'FINE',
+		]);	
 	}
 
 	public function postProcessPayment() {

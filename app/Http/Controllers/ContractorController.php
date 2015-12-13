@@ -106,7 +106,7 @@ class ContractorController extends Controller {
 			
 			return \Response::json([
 				'type'		=>	'danger',
-				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
+				'message'	=>	$e->getMessage(),
 			]);
 		}
 	}
@@ -157,7 +157,7 @@ class ContractorController extends Controller {
 		catch (\Exception $e) {
 			return \Response::json([
 				'type'		=>	'danger',
-				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
+				'message'	=>	$e->getMessage(),
 			]);
 		}
 	}
@@ -171,18 +171,34 @@ class ContractorController extends Controller {
 			}
 
 			$contractor = \Contractor::getContractor();
-			// TODO: change to symfony request file input
-			\Contractor::updateResume($contractor, $_FILES['file']);
+			\Contractor::makeResume($contractor, $_FILES['file']);
 
 			return \Response::json([
 				'type'		=>	'success',
-				'message'	=>	'Resume file has been updated.',
+				'message'	=>	'Resume file has been uploaded.',
 			]);
 		}
 		catch (\Exception $e) {
 			return \Response::json([
 				'type'		=>	'danger',
-				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postRemoveResume() {
+		try {
+			$contractor = \Contractor::getContractor();
+			\Contractor::removeResume($contractor, \Input::get('file'));
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Resume file removed',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
 			]);
 		}
 	}
@@ -208,7 +224,7 @@ class ContractorController extends Controller {
 		catch (\Exception $e) {
 			return \Response::json([
 				'type'		=>	'danger',
-				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
+				'message'	=>	$e->getMessage(),
 			]);
 		}
 	}
@@ -235,7 +251,7 @@ class ContractorController extends Controller {
 		catch (\Exception $e) {
 			return \Response::json([
 				'type'		=>	'danger',
-				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster',
+				'message'	=>	$e->getMessage(),
 			]);
 		}
 	}

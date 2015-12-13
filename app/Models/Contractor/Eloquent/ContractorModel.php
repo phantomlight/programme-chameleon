@@ -32,8 +32,8 @@ class ContractorModel extends Eloquent implements ContractorModelInterface {
 		return $this->hasMany(static::$notificationModel, 'contractor_id', 'id');
 	}
 
-	public function resume() {
-		return $this->hasOne(static::$resumeModel, 'contractor_id', 'id');
+	public function resumes() {
+		return $this->hasMany(static::$resumeModel, 'contractor_id', 'id');
 	}
 
 	public function timesheets() {
@@ -47,7 +47,10 @@ class ContractorModel extends Eloquent implements ContractorModelInterface {
 	}
 
 	public function jobs() {
-		return $this->belongsToMany(static::$jobModel, static::$jobTablePivot, 'contractor_id', 'job_id');
+		return $this
+			->belongsToMany(static::$jobModel, static::$jobTablePivot, 'contractor_id', 'job_id')
+			->withPivot('status')
+			->withTimestamps();
 	}
 
 	public function delete() {

@@ -19,6 +19,7 @@
 				<ul class="nav nav-tabs" role="tablist">
 					<li role="presentation" class="active"><a href="#tabs-account" aria-controls="tabs-account" role="tab" data-toggle="tab">Account Info</a></li>
 					<li role="presentation"><a href="#tabs-cv" aria-controls="tabs-cv" role="tab" data-toggle="tab">Upload CV</a></li>
+					<li role="presentation"><a href="#tabs-salary" aria-controls="tabs-salary" role="tab" data-toggle="tab">Salary Settings</a></li>
 				</ul>
 
 				<div class="tab-content bg-white">
@@ -238,51 +239,76 @@
 							<div class="col-sm-4">
 								<label>Upload CV</label>
 								<input type="file" name="file_cv">
-								<div class="element-top-10 element-bottom-10">
-									@if ($resume = $contractor->resume)
-									<a href="{{ $resume->file }}" class="lighten btn btn-primary btn-xs" target="_blank"><i class="fa fa-download"></i> Download resume</a>
-									@endif
+							</div>
 
-									<p>Please input some salary range below, for the purpose of the company to be able to search for you. <strong>Note 	all values here will be in GBP. And you need to upload a CV file first.</strong></p>
-
-									<form role="form" onsubmit="return false;" data-parsley-validate id="contractorSalaryRangeForm">
-										<div class="form-group">
-											<label>Salary range from</label>
-											<div class="input-group">
-												<input type="number" name="range_salary_min" class="form-control" value="{{ isset($resume) ? $resume->range_salary_min : 0 }}" min="0" required />
-												<span class="input-group-addon">
-													<i class="fa fa-gbp"></i>
-												</span>
-											</div>
-
-											<label>To</label>
-											<div class="input-group">
-												<input type="number" name="range_salary_max" class="form-control" value="{{ isset($resume) ? $resume->range_salary_max : 0 }}" min="0" required />
-												<span class="input-group-addon">
-													<i class="fa fa-gbp"></i>
-												</span>
-											</div>
+							<div class="col-sm-8">
+								<label>Your Resume List</label>
+								<?php $resumes = $contractor->resumes(); ?>
+								@if ($resumes->count() > 0)
+								<?php $resumes = $resumes->get(); ?>
+								<ul class="sc-list" id="resumeList">
+									@foreach ($resumes as $resume)
+									<li>
+										<h3>{{ basename($resume->file) }}</h3>
+										<p>Uploaded on: {{ $resume->created_at->toDayDateTimeString() }}</p>
+										<div class="btn-group">
+											<a href="{{ asset($resume->file) }}" class="btn btn-primary" download="" target="_blank"><i class="fa fa-download"></i> Download</a>
+											<button type="button" class="btn btn-danger btn-remove" data-resume="{{ $resume->id }}">
+												<i class="fa fa-times"></i> Remove
+											</button>
 										</div>
-
-										<div class="form-group">
-											<label>Rate</label>
-											<?php $selected = isset($resume) ? $resume->salary_rate : null; ?>
-											<select class="form-control" name="salary_rate">
-												<option value="hourly" @if ($selected === 'hourly') {{ 'selected="selected"' }} @endif> Hourly </option>
-												<option value="daily" @if ($selected === 'daily') {{ 'selected="selected"' }} @endif> Daily </option>
-												<option value="weekly" @if ($selected === 'weekly') {{ 'selected="selected"' }} @endif> Weekly </option>
-												<option value="monthly" @if ($selected === 'monthly') {{ 'selected="selected"' }} @endif> Monthly </option>
-											</select>
-										</div>
-
-										<button type="button" class="btn btn-primary">
-											<span>UPDATE SALARY</span>
-											<span class="btn-preloader">
-												<i class="fa fa-spinner fa-spin"></i> updating...
-											</span>
-										</button>
-									</form>
+									</li>
+									@endforeach
+								</ul>
+								@else
+								<div class="alert alert-danger">
+									You haven't upload any resume yet.
 								</div>
+								@endif
+							</div>
+						</div>
+					</div>
+
+					<div role="tabpanel" class="tab-pane all-padding" id="tabs-salary">
+						<div class="row">
+							<div class="col-sm-6">
+								<form role="form" onsubmit="return false;" data-parsley-validate id="contractorSalaryRangeForm">
+									<div class="form-group">
+										<label>Salary range from</label>
+										<div class="input-group">
+										<input type="number" name="range_salary_min" class="form-control" value="{{ $contractor->range_salary_min }}" min="0" required />
+											<span class="input-group-addon">
+												<i class="fa fa-gbp"></i>
+											</span>
+										</div>
+
+										<label>To</label>
+										<div class="input-group">
+											<input type="number" name="range_salary_max" class="form-control" value="{{ $contractor->range_salary_max }}" min="0" required />
+											<span class="input-group-addon">
+												<i class="fa fa-gbp"></i>
+											</span>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label>Rate</label>
+										<?php $selected = $contractor->salary_rate; ?>
+										<select class="form-control" name="salary_rate">
+											<option value="hourly" @if ($selected === 'hourly') {{ 'selected="selected"' }} @endif> Hourly </option>
+											<option value="daily" @if ($selected === 'daily') {{ 'selected="selected"' }} @endif> Daily </option>
+											<option value="weekly" @if ($selected === 'weekly') {{ 'selected="selected"' }} @endif> Weekly </option>
+											<option value="monthly" @if ($selected === 'monthly') {{ 'selected="selected"' }} @endif> Monthly </option>
+										</select>
+									</div>
+
+									<button type="button" class="btn btn-primary">
+										<span>UPDATE SALARY</span>
+										<span class="btn-preloader">
+											<i class="fa fa-spinner fa-spin"></i> updating...
+										</span>
+									</button>
+								</form>
 							</div>
 						</div>
 					</div>

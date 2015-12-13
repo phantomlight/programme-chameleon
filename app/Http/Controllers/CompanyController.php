@@ -100,6 +100,25 @@ class CompanyController extends Controller {
 		return view('front.company.job.edit')->with('job', $job);
 	}
 
+	public function getJobApplication() {
+		$company = \Company::getCompany();
+		
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		$job = \Job::findJobById($_hash->decode(\Input::get('i')));
+
+		if ( ! $job) {
+			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'Job does not exists.']);
+		}
+
+		if ($job->company_id !== $company->id) {
+			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'You cannot edit this job.']);
+		}
+
+		return view('front.company.job.application')->with('job', $job);
+	}
+
 	public function getJobTimesheet() {
 		$company = \Company::getCompany();
 		

@@ -35,4 +35,16 @@ class JobIndustryProvider implements JobIndustryProviderInterface {
 		return $model->where('id', $id)->first();
 	}
 
+	public function findByQuery($data) {
+		$model = $this->getModel();
+		return $model->findByQuery($data);
+	}
+
+	public function makeNew($data) {
+		$model = $this->getModel();
+		$model->fill(['title' => $data['title']]);
+		$model->save();
+		return $model;
+	}
+
 }

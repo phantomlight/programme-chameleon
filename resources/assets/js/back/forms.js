@@ -5,11 +5,7 @@ const jKey = { // jcryption aes key
 	handshake: window.origin + '/handshake'
 }
 
-const merchantRoutes = { // merchant routes
-	login: window.origin + '/merchant/login'
-}
-
-const adminRoutes = { // admin routes
+const adminRoutes = {
 	login: window.origin + '/admin/login'
 }
 
@@ -37,6 +33,7 @@ export class Forms {
 
 			if ($form.parsley().validate() && ! processing) {
 				processing = true;
+				$('.page-preloader').show();
 				aes = $.jCryption.encrypt(jKey.key1, jKey.key2);
 				$.jCryption.authenticate(aes, jKey.pub_key, jKey.handshake, (function () {
 					$form.find('[type=submit]').disable(true);
@@ -44,6 +41,7 @@ export class Forms {
 						data: JSON.stringify($.jCryption.encrypt($form.serialize(), aes))
 					}).done(function (e) {
 						processing = false;
+						$('.page-preloader').hide();
 						$form.showMessage(e.message, e.type);
 						if (e.type === 'success') {
 							window.location.replace(e.redirect);
@@ -53,6 +51,7 @@ export class Forms {
 						}
 					}).fail(function (xhr, status, e) {
 						processing = false;
+						$('.page-preloader').hide();
 						$form.showMessage(xhr.responseText, 'danger');
 						$form.find('[type=submit]').disable(false);
 					});
@@ -65,7 +64,7 @@ export class Forms {
 			return false;
 		});
 	}
-	initCommonAddForm() { // RESTful add form action
+	initCommonAddForm() {
 		var processing = false;
 		var data = {};
 		var allowed_mime = [
@@ -83,14 +82,14 @@ export class Forms {
 
 		if ($('input[type=file]')[0]) {
 			$('input[type=file]').on('change', function() {
-				if (this.files[0].size > 3000000) {
-					$(this).parent().showMessage('File tidak bisa lebih dari 3Mb !', 'danger');
+				if (this.files[0].size > 5000000) {
+					$(this).parent().showMessage('File cannot be larger than 5mb !', 'danger');
 					image = null;
 				} else if ($.inArray(this.files[0].type, allowed_mime) === -1) {
-					$(this).parent().showMessage('Tipe file ini tidak dapat dipuload !', 'danger');
+					$(this).parent().showMessage('File cannot be uploaded !', 'danger');
 					image = null;
 				} else {
-					$(this).parent().showMessage('<i class="fa fa-check"></i> File ini dapat diupload', 'success');
+					$(this).parent().showMessage('<i class="fa fa-check"></i> File can be uploaded', 'success');
 					image = this.files[0];
 				}
 			});
@@ -103,6 +102,7 @@ export class Forms {
 
 			if ($form.parsley().validate() && ! processing) {
 				processing = true;
+				$('.page-preloader').show();
 				var fd = new FormData();
 				fd.append('data', JSON.stringify($form.serializeForm()));
 
@@ -136,6 +136,7 @@ export class Forms {
 					},
 				}).done(function (e) {
 					processing = false;
+					$('.page-preloader').hide();
 					$form.showMessage(e.message, e.type);
 					$form.find('input, textarea, select, button').removeClass('disabled').removeAttr('disabled');
 					$form.find('[type=submit]').disable(false);
@@ -147,6 +148,7 @@ export class Forms {
 					}
 				}).fail(function (xhr, status, e) {
 					processing = false;
+					$('.page-preloader').hide();
 					$form.showMessage(xhr.responseText, 'danger');
 					$form.find('input, textarea, select, button').removeClass('disabled').removeAttr('disabled');
 					$form.find('[type=submit]').disable(false);
@@ -158,7 +160,7 @@ export class Forms {
 			return false;
 		});
 	}
-	initCommonEditForm() { // RESTful edit form action
+	initCommonEditForm() {
 		var processing = false;
 		var data = {};
 		var allowed_mime = [
@@ -176,14 +178,14 @@ export class Forms {
 
 		if ($('input[type=file]')[0]) {
 			$('input[type=file]').on('change', function() {
-				if (this.files[0].size > 3000000) {
-					$(this).parent().showMessage('File tidak bisa lebih dari 3Mb !', 'danger');
+				if (this.files[0].size > 5000000) {
+					$(this).parent().showMessage('File cannot be larger than 3Mb !', 'danger');
 					image = null;
 				} else if ($.inArray(this.files[0].type, allowed_mime) === -1) {
-					$(this).parent().showMessage('Tipe file ini tidak dapat dipuload !', 'danger');
+					$(this).parent().showMessage('File cannot be uplaoded !', 'danger');
 					image = null;
 				} else {
-					$(this).parent().showMessage('<i class="fa fa-check"></i> File ini dapat diupload', 'success');
+					$(this).parent().showMessage('<i class="fa fa-check"></i> File allowed', 'success');
 					image = this.files[0];
 				}
 			});
@@ -196,6 +198,7 @@ export class Forms {
 
 			if ($form.parsley().validate() && ! processing) {
 				processing = true;
+				$('.page-preloader').show();
 				var fd = new FormData();
 				fd.append('data', JSON.stringify($form.serializeForm()));
 
@@ -229,6 +232,7 @@ export class Forms {
 					},
 				}).done(function (e) {
 					processing = false;
+					$('.page-preloader').hide();
 					$form.showMessage(e.message, e.type);
 					$form.find('input, textarea, select, button').removeClass('disabled').removeAttr('disabled');
 					$form.find('[type=submit]').disable(false);
@@ -240,6 +244,7 @@ export class Forms {
 					}
 				}).fail(function (xhr, status, e) {
 					processing = false;
+					$('.page-preloader').hide();
 					$form.showMessage(xhr.responseText, 'danger');
 					$form.find('input, textarea, select, button').removeClass('disabled').removeAttr('disabled');
 					$form.find('[type=submit]').disable(false);

@@ -25,4 +25,23 @@ class JobIndustryModel extends Eloquent implements JobIndustryModelInterface {
 		return $this->belongsTo(static::$companyModel, 'company_id');
 	}
 
+	public function findByQuery($data) {
+		if (isset($data['search'])) {
+			$model = self::where('title', 'like', '%' . $data['search'] . '%');
+		}
+		else {
+			$model = new self;
+		}
+
+		if (isset($data['limit'])) {
+			$model->take($data['limit']);
+		}
+		else {
+			$model->take(100);
+		}
+
+		$model = $model->orderBy('created_at', 'desc');
+		return $model->get();
+	}
+
 }

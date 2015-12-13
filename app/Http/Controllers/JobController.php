@@ -191,6 +191,7 @@ class JobController extends Controller {
 
 	public function postApply() {
 		$user = \User::getUser();
+
 		if ( ! $user->hasAccess('contractor')) {
 			return \Response::json([
 				'type'		=>	'danger',
@@ -198,8 +199,6 @@ class JobController extends Controller {
 			]);
 		}
 
-		$data = json_decode(\Input::get('data'), true);
-		$file = null;
 		$_hash = new Hash();
 		$_hash = $_hash->getHasher();
 		$job = \Job::findJobById($_hash->decode(trim(\Input::get('job'))));
@@ -212,20 +211,12 @@ class JobController extends Controller {
 		}
 
 		try {
-			if ($data['timesheet_type'] === 'file') {
-				$file = $_FILES['file'];
-
-				if (is_null($file)) {
-					throw new \Exception("Please choose a file when applying with file option.", 1);
-					return;
-				}
-			}
-			
-			$timesheet = \Contractor::submitTimesheet($job, $data, $file);
+			$contractor = \Contractor::getContractor();
+			$application = \Contractor::applyForJob($contractor, $job);
 
 			return \Response::json([
 				'type'		=>	'success',
-				'message'	=>	'Your application has been submitted, you will be notified via email when you have been selected for the job',
+				'message'	=>	'Your application has been submitted, you will be notified via email when you have been selected for the job.',
 			]);
 		}
 		catch (\Exception $e) {
@@ -387,5 +378,61 @@ class JobController extends Controller {
 			]);
 		}
 	}
+
+	public function getIndustryList() {
+		$data = \Input::has('data') ? \Input::get('data') : [];
+		$jsonData = [];
+		$model = \Job::getAllIndustries($data);
+		try {
+			if ($model) {
+				foreach ($model as $mData) {
+					$mData->jobs_count = $mData->jobs->count();
+					$mData->editLink = route('admin.job.industry.edit') . '?i=' . $mData->id;
+					$mData->removeLink = route('admin.job.industry.remove') . '?i=' . $mData->id;
+					array_push($jsonData, $mData);
+				}
+			}
+			return \Response::json($jsonData);
+		}
+		catch (\Exception $e) {
+			return $e->getMessage();
+		}
+	}
+
+	public function getEditIndustry() {
+		$industry = \Job::findIndustryById(trim(\Input::get('i')));
+
+		if ($industry) {
+			return view('back.job.industryEdit')->with('model', $industry);
+		}
+		return redirect()->back()->with('flashMessage',[
+			'class' 	=> 'danger', 
+			'message' => 'Industry not found.'
+		]);
+	}
+
+	public function postAddIndustry() {
+		$data = json_decode(\Input::get('data'), true);
+
+		try {
+			$industry = \Job::makeNewIndustry($data);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Industry successfully created.',
+			]);
+		}
+		catch(\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postEditIndustry() {
+		return \Input::get('data');
+	}
+
+	public function postRemoveIndustry() {}
 
 }

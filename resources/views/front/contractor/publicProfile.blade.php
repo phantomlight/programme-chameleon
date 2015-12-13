@@ -14,7 +14,7 @@
 	}
 	
 	$cUser = $contractor->user;
-	$resume = $contractor->resume;
+	$resumes = $contractor->resumes()->get();
 ?>
 	
 @extends('front.app')
@@ -35,8 +35,15 @@
 				<div class="col-sm-8">
 					<div class="candidate-button">
 						<form role="form" onsubmit="return false;">
-							@if ($resume)
-							<a class="btn btn-primary" href="{{ $resume->file }}" target="_blank" download="">Download Resume</a>
+							@if ($resumes)
+							<div class="dropdown">
+								<button class="btn btn-primary" type="button" data-toggle="dropdown" aria-haspopup="true" id="resumeDropdownBtn" aria-expanded="false">Download Resume <span class="caret"></span></button>
+								<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="resumeDropdownBtn">
+								@foreach ($resumes as $resume)
+									<li><a href="{{ $resume->file }}" target="_blank" download="">{{ $resume->created_at->toDayDateTimeString() }}</a></li>
+								@endforeach
+								</ul>
+							</div>
 							@endif
 						</form>
 					</div>

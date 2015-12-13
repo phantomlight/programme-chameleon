@@ -31,13 +31,13 @@ class CreateAgencyTable extends Migration
             $table->index('name');
         });
 
-        \Schema::create('tb_agency_contractor', function(Blueprint $table) {
+        \Schema::create('tb_agency_company', function(Blueprint $table) {
             $table->unsignedInteger('agency_id');
-            $table->unsignedInteger('contractor_id');
+            $table->unsignedInteger('company_id');
             $table->timestamps();
 
             $table->engine = 'InnoDB';
-            $table->index(['agency_id', 'contractor_id']);
+            $table->index(['agency_id', 'company_id']);
             $table->index('created_at');
         });
 

@@ -27,9 +27,9 @@ class UserSeeder extends Seeder {
 			],
 		],
 		'contractor' => [
-			'name'		=>	'Contrator',
+			'name'		=>	'Contractor',
 			'permissions'	=>	[
-				'contrator'			=>	1,
+				'contractor'			=>	1,
 			],
 		],
 		'agency'	=>	[

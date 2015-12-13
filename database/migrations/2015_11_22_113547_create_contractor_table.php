@@ -23,6 +23,9 @@ class CreateContractorTable extends Migration
             $table->string('country', 255)->nullable();
             $table->text('educations')->nullable();
             $table->text('experiences')->nullable();
+            $table->enum('salary_rate', ['hourly', 'daily', 'monthly']);
+            $table->integer('range_salary_min')->default(0);
+            $table->integer('range_salary_max')->default(0);
             $table->text('skills')->nullable();
             $table->text('urls')->nullable();
             $table->text('description')->nullable();
@@ -81,9 +84,6 @@ class CreateContractorTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('contractor_id');
             $table->string('file', 255);
-            $table->enum('salary_rate', ['hourly', 'daily', 'weekly', 'monthly']);
-            $table->integer('range_salary_min')->default(0);
-            $table->integer('range_salary_max')->default(0);
             $table->timestamps();
 
             $table->engine = 'InnoDB';

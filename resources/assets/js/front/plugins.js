@@ -89,6 +89,7 @@ export class Plugins {
 						var $button = $(this);
 						e.preventDefault();
 						paymentProcessing = true;
+						$('.page-preloader').show();
 						$button.disable(true);
 						var checkout_type = $button.data('checkout-type');
 						var postData = {};
@@ -112,8 +113,10 @@ export class Plugins {
 							else alert(e.message);
 							$button.disable(false);
 							paymentProcessing = false;
+							$('.page-preloader').hide();
 						}).fail(function (xhr, status, e) {
 							paymentProcessing = false;
+							$('.page-preloader').hide();
 							alert(e.message);
 							$button.disable(false);
 						});

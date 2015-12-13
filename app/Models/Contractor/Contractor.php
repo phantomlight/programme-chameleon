@@ -68,8 +68,12 @@ class Contractor {
 		return $this->contractorProvider->updateData($contractor, $data);
 	}
 
-	public function updateResume($contractor, $file) {
-		return $this->contractorResumeProvider->updateResumeData($contractor, $file);
+	public function makeResume($contractor, $file) {
+		return $this->contractorResumeProvider->makeResume($contractor, $file);
+	}
+
+	public function removeResume($contractor, $id) {
+		return $this->contractorResumeProvider->remove($contractor, $id);
 	}
 
 	public function updateAvatar($contractor, $file) {
@@ -99,6 +103,10 @@ class Contractor {
 
 	public function findContractorById($id) {
 		return $this->contractorProvider->findById($id);
+	}
+
+	public function applyForJob($contractor, $job) {
+		return $this->contractorProvider->applyForJob($contractor, $job);
 	}
 
 	public function submitTimesheet($job, $data, $file=null) {

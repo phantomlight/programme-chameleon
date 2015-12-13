@@ -67,6 +67,12 @@ CV Search | Programme Chameleon
 								<label class="radio">
 									<input type="radio" @if (\Input::get('cv_search_salary') === 'range') {{ 'checked="checked"' }} @endif name="cv_search_salary" value="range" /> Range expected (in GBP)
 									<br>
+									<select name="salary_type" class="form-control">
+										<option value="daily">Daily</option>
+										<option value="hourly">Hourly</option>
+										<option value="monthly">Monthly</option>
+									</select>
+									<br>
 									<div class="select-clearfix input-group element-top-10 element-bottom-10">
 										<input type="number" value="{{ \Input::has('salary_min') ? \Input::get('salary_min') : 0 }}" name="salary_min" min="0" class="form-control" />
 										<span class="input-group-addon">to</span>

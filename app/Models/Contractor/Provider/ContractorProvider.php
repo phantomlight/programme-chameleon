@@ -121,14 +121,27 @@ class ContractorProvider implements ContractorProviderInterface {
 		}
 
 		if ($data['cv_search_salary'] === 'range') {
-			$model = $model->whereHas('resume', function ($query) use ($data) {
-				$query
+			$model = $model->where('salary_rate', $data['salary_type'])
 					->where('range_salary_min', '>=', $data['salary_min'])
 					->where('range_salary_max', '<=', $data['salary_max']);
-			});
 		}
 
 		return $model->orderBy('created_at', 'desc');
+	}
+
+	public function applyForJob($contractor, $job) {
+		if ( $contractor->jobs->contains($job->id) ) {
+			throw new \Exception("You have already applied for this job.", 1);
+			return;
+		}
+		
+		$contractor->jobs()->attach($job->id, [
+			'status' => 'request',
+			'created_at'	=>	Carbon::now(),
+			'updated_at'	=>	Carbon::now(),
+		]);
+		
+		return $contractor;
 	}
 
 }
