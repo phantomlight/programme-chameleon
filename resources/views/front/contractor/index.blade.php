@@ -17,7 +17,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4">
-					<div class="panel panel-default">
+					<div class="panel panel-success">
 						<div class="panel-heading">Current Job(s)</div>
 						<?php $jobs = $contractor->jobs(); ?>
 						<div class="panel-body">
@@ -25,7 +25,13 @@
 								<?php $jobs = $jobs->orderBy('created_at', 'desc')->paginate(15); ?>
 								<ul class="list-unstyled sc-list">		
 								@foreach ($jobs as $job)
-									<li><span>{{ $job->title }}</span> accepted on {{ $job->created_at->toDayDateTimeString() }}</li>
+									<li>
+										<p><span>{{ $job->title }}</span> accepted on {{ $job->created_at->toDayDateTimeString() }}</p>
+										<div class="btn-group">
+											<a class="btn btn-xs btn-primary" href="#">Add Timesheet</a>
+											<a class="btn btn-xs btn-info" href="#">Add Expense</a>
+										</div>
+									</li>
 								@endforeach
 								</ul>
 							@else

@@ -140,7 +140,7 @@
 
 							<div class="btn-group">
 								<a href="{{ route('job.public', ['id' => $_hash->encode($job->id), 'slug' => Str::slug($job->title)]) }}" class="btn btn-warning">See Job Details</a>
-								<a href="{{ route('contractor.apply', ['id' => $_hash->encode($job->id)]) }}" class="btn btn-primary" target="_blank">Apply</a>
+								<button type="button" class="btn btn-primary" data-init-apply data-job="{{ $_hash->encode($job->id) }}" @if (isset($contractor)) data-init-apply @else onclick="return location.replace('{{ route('front.login') }}');" @endif>Apply</button>
 							</div>
 						</div>
 						@endforeach
@@ -209,7 +209,7 @@
 
 							<div class="btn-group">
 								<a href="{{ route('job.public', ['id' => $_hash->encode($job->id), 'slug' => Str::slug($job->title)]) }}" class="btn btn-warning">See Job Details</a>
-								<a href="{{ route('contractor.apply', ['id' => $_hash->encode($job->id)]) }}" class="btn btn-primary" target="_blank">Apply</a>
+								<button type="button" class="btn btn-primary" data-init-apply data-job="{{ $_hash->encode($job->id) }}" @if (isset($contractor)) data-init-apply @else onclick="return location.replace('{{ route('front.login') }}');" @endif>Apply</button>
 							</div>
 						</div>
 						@endforeach

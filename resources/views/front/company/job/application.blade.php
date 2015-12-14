@@ -1,16 +1,16 @@
 <?php
-	use App\Utils\Hash;
-	use Illuminate\Support\Str;
+use App\Utils\Hash;
+use Illuminate\Support\Str;
 
-	if (\User::check()) {
-		$user = \User::getUser();
-		$company = \Company::getCompany();
-	}
+if (\User::check()) {
+	$user = \User::getUser();
+	$company = \Company::getCompany();
+}
 
-	$_hash = new Hash();
-	$_hash = $_hash->getHasher();
+$_hash = new Hash();
+$_hash = $_hash->getHasher();
 ?>
-	
+
 @extends('front.app')
 
 @section('title')
@@ -34,9 +34,9 @@
 						<ul class="timesheet-list list-unstyled" id="timesheetList">
 							@foreach ($contractors as $contractor)
 							<?php
-								$cUser = $contractor->user;
-								$slug = Str::slug($cUser->first_name . ' ' . $cUser->last_name);
-								$status = $contractor->pivot->status;
+							$cUser = $contractor->user;
+							$slug = Str::slug($cUser->first_name . ' ' . $cUser->last_name);
+							$status = $contractor->pivot->status;
 							?>
 							<li>
 								<div class="media">
@@ -50,9 +50,9 @@
 											{{ $cUser->first_name . ' ' . $cUser->last_name . ' (' . $cUser->email . ')' }}
 										</section>
 										@if ($status === 'accept')
-											<label class="label label-success">
-												<i class="fa fa-check"></i> Applied to Job
-											</label>
+										<label class="label label-success">
+											<i class="fa fa-check"></i> Applied to Job
+										</label>
 										@endif
 									</div>
 
@@ -60,7 +60,7 @@
 										<div class="btn-group">
 											<a href="{{ route('contractor.profile', ['id'=>$_hash->encode($contractor->id), 'slug'=>$slug]) }}" class="btn btn-primary" target="_blank">See contractor details</a>
 											@if ($status !== 'accept')
-												<button type="button" data-value="{{ $_hash->encode($contractor->id) }}" data-job="{{ $_hash->encode($job->id) }}" class="btn btn-success btn-give-job" onclick="return false;"><i class="fa fa-check"></i>Give Job</button>
+											<button type="button" data-value="{{ $_hash->encode($contractor->id) }}" data-job="{{ $_hash->encode($job->id) }}" class="btn btn-success btn-give-job" onclick="return false;"><i class="fa fa-check"></i>Give Job</button>
 											@endif
 										</div>
 									</div>
@@ -73,9 +73,9 @@
 							{!! $contractors->render() !!}
 						</div>
 						@else
-							<div class="alert alert-danger">
-								There are no contractors applied for this job yet.
-							</div>
+						<div class="alert alert-danger">
+							There are no contractors applied for this job yet.
+						</div>
 						@endif
 					</div>
 				</div>
@@ -101,10 +101,51 @@
 						<button class="btn btn-danger" id="removeJobBtn" data-job="{{ $_hash->encode($job->id) }}">Remove this job</button>
 					</div>
 				</div>
+
+				<div class="panel panel-default">
+					<?php $contractors = $job->contractors(); ?>
+					<div class="panel-heading">Contractors In This Job ({{ $contractors->count() }})</div>
+					<div class="panel-body">
+						@if ($contractors->count() > 0)
+						<?php $contractors = $contractors->get(); ?>
+						<ul class="list-unstyled" id="jobContractorList" data-job="{{ $_hash->encode($job->id) }}">
+							@foreach($contractors as $contractor)
+							@if ($cUser = $contractor->user)
+							<li>
+								<div class="media">
+									<div class="media-left">
+										@if ( ! is_null($contractor->image))
+										<img src="{{ asset($contractor->image) }}" width="52" />
+										@else
+										<img data-src="holder.js/52x52?random=yes&text=no-image" />
+										@endif
+										<section class="element-top-10">
+											{{ $cUser->first_name . ' ' . $cUser->last_name . ' (' . $cUser->email . ')' }}
+										</section>
+									</div>
+									<div class="media-body">
+										<div class="btn-group">
+											<a href="{{ route('contractor.profile', ['id'=>$_hash->encode($contractor->id), 'slug'=>$slug]) }}" class="btn btn-primary btn-xs" target="_blank">See contractor details</a>
+											<button class="btn btn-xs btn-danger btn-remove-contract" type="button" onclick="return false;" data-value="{{ $_hash->encode($contractor->id) }}">
+												<i class="fa fa-times"></i> Cancel contract
+											</button>
+										</div>
+									</div>
+								</div>
+							</li>
+							@endif
+							@endforeach
+						</ul>
+						@else
+						<div class="alert alert-danger">
+							There's no contractors being set for this job yet.
+						</div>
+						@endif
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
 @include('front.include.footer-query')
 @include('front.include.footer')
