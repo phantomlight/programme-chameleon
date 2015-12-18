@@ -68,16 +68,16 @@ select {
 
 .page-preloader {
 	position: fixed;
-	top: 5px;
-	left: 15px;
-	background: rgba(0,0,0,.25);
+	top: 10px;
+	left: 25px;
+	background: rgba(0,0,0,.85);
 	z-index: 9999;
 	border-radius: 3px;
 	display: none;
 
 	i {
-		padding: 15px;
-		font-size: 24px;
+		padding: 20px;
+		font-size: 14px;
 	}
 }
 
@@ -428,7 +428,12 @@ a {
 
 .sc-list {
 	li {
-		padding: 15px 0;
+		padding: 10px 0;
+		border-bottom: thin solid #d5d5d5;
+
+		&:last-child {
+			border-bottom: none;
+		}
 	}
 }
 

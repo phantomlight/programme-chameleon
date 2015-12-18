@@ -65,148 +65,148 @@ if ($('#contractorAccountForm')[0]) {
 		}
 	});
 
-$('input[name=image]').on('change', function () {
-	if (this.files[0].size > 5000000) {
-		$(this).parent().showMessage('File cannot be more than 5Mb.', 'danger');
-	} else if ($.inArray(this.files[0].type, allowed_avatar_mime) === -1) {
-		$(this).parent().showMessage('Can only upload .jpg, .gif, or .png files.', 'danger');
-	} else {
-		if ( ! processing) {
+	$('input[name=image]').on('change', function () {
+		if (this.files[0].size > 5000000) {
+			$(this).parent().showMessage('File cannot be more than 5Mb.', 'danger');
+		} else if ($.inArray(this.files[0].type, allowed_avatar_mime) === -1) {
+			$(this).parent().showMessage('Can only upload .jpg, .gif, or .png files.', 'danger');
+		} else {
+			if ( ! processing) {
+				processing = true;
+				$('.page-preloader').show();
+				var fd = new FormData();
+				fd.append('file', this.files[0]);
+
+				$.ajax({
+					method: 'post',
+					url: window.origin + '/contractor/update-avatar',
+					data: fd,
+					crossDomain: false,
+					dataType: 'json',
+					cache: true,
+					processData: false,
+					contentType: false,
+					headers: {
+						'X-CSRF-Token': $('meta[name="_t"]').attr('content')
+					},
+				}).done(function (e) {
+					processing = false;
+					$('.page-preloader').hide();
+					alert(e.message);
+					if (e.type === 'success') {
+						$('img.tmp-img').attr('src', e.image);
+					}
+					$form.showMessage(e.message, e.type);
+				}).fail(function (xhr, status, e) {
+					processing = false;
+					$('.page-preloader').hide();
+					alert(xhr.responseText);
+					$form.showMessage(xhr.responseText, 'danger');
+				});
+			}
+			else {
+				alert('Another upload process is running, please wait.');
+			}
+		}
+	});
+
+	$('#expContainer').find('button#addExp').on('click', function (e) {
+		e.preventDefault();
+		$('#expContainer').append(expRowHtml);
+	});
+
+	$('#eduContainer').find('button#addEducation').on('click', function (e) {
+		e.preventDefault();
+		$('#eduContainer').append(eduRowHtml);
+	});
+
+	$('#urlContainer').find('button#addWebsite').on('click', function (e) {
+		e.preventDefault();
+		$('#urlContainer').append(urlRowHtml);
+	});
+
+	$('#expContainer').on('click', 'button.btn-danger', function (e) {
+		if (confirm('Remove this experience data? Cannot be undo.')) {
+			$(this).parent().parent().remove();
+		}
+	});
+
+	$('#eduContainer').on('click', 'button.btn-danger', function (e) {
+		if (confirm('Remove this education data? Cannot be undo.')) {
+			$(this).parent().parent().remove();
+		}
+	});
+
+	$('#urlContainer').on('click', 'button.btn-danger', function (e) {
+		if (confirm('Remove this website data? Cannot be undo.')) {
+			$(this).parent().parent().remove();
+		}
+	});
+
+	$form.find('[type=submit]').on('click', function (e) {
+		e.preventDefault();
+		if (! processing) {
 			processing = true;
 			$('.page-preloader').show();
-			var fd = new FormData();
-			fd.append('file', this.files[0]);
+			$form.find('[type=submit]').disable(true);
 
-			$.ajax({
-				method: 'post',
-				url: window.origin + '/contractor/update-avatar',
-				data: fd,
-				crossDomain: false,
-				dataType: 'json',
-				cache: true,
-				processData: false,
-				contentType: false,
-				headers: {
-					'X-CSRF-Token': $('meta[name="_t"]').attr('content')
-				},
+			var eduDataCollection = [];
+			var expDataCollection = [];
+			var urlDataCollection = [];
+
+			$('#eduContainer .row').each(function (i) {
+				var eduData = {
+					'name':	$(this).find('input[name=edu_name]').val(),
+					'type':	$(this).find('input[name=edu_type]').val(),
+					'gpa':	$(this).find('input[name=edu_gpa]').val(),
+					'qualification':	$(this).find('input[name=edu_qualification]').val()
+				}
+				eduDataCollection.push(eduData);
+			});
+
+			$('#expContainer .row').each(function (i) {
+				var expData = {
+					'company':	$(this).find('input[name=exp_company]').val(),
+					'year':	$(this).find('input[name=exp_year]').val(),
+					'position':	$(this).find('input[name=exp_position]').val(),
+					'salary':	$(this).find('input[name=exp_salary]').val(),
+					'description':	$(this).find('textarea[name=exp_desc]').val()
+				}
+				expDataCollection.push(expData);
+			});
+
+			$('#urlContainer .row').each(function (i) {
+				var urlData = {
+					'name':	$(this).find('input[name=web_name]').val(),
+					'address':	$(this).find('input[name=web_adress]').val()
+				}
+				urlDataCollection.push(urlData);
+			});
+
+			$.post(window.origin + '/contractor/update-account', {
+				data: $form.serializeForm(),
+				description: $('.summernote').code(),
+				eduData: JSON.stringify(eduDataCollection),
+				expData: JSON.stringify(expDataCollection),
+				urlData: JSON.stringify(urlDataCollection)
 			}).done(function (e) {
 				processing = false;
 				$('.page-preloader').hide();
-				alert(e.message);
-				if (e.type === 'success') {
-					$('img.tmp-img').attr('src', e.image);
-				}
 				$form.showMessage(e.message, e.type);
+				alert(e.message);
+				$form.find('[type=submit]').disable(false);
 			}).fail(function (xhr, status, e) {
 				processing = false;
 				$('.page-preloader').hide();
 				alert(xhr.responseText);
 				$form.showMessage(xhr.responseText, 'danger');
+				$form.find('[type=submit]').disable(false);
 			});
 		}
 		else {
 			alert('Another upload process is running, please wait.');
 		}
-	}
-});
-
-$('#expContainer').find('button#addExp').on('click', function (e) {
-	e.preventDefault();
-	$('#expContainer').append(expRowHtml);
-});
-
-$('#eduContainer').find('button#addEducation').on('click', function (e) {
-	e.preventDefault();
-	$('#eduContainer').append(eduRowHtml);
-});
-
-$('#urlContainer').find('button#addWebsite').on('click', function (e) {
-	e.preventDefault();
-	$('#urlContainer').append(urlRowHtml);
-});
-
-$('#expContainer').on('click', 'button.btn-danger', function (e) {
-	if (confirm('Remove this experience data? Cannot be undo.')) {
-		$(this).parent().parent().remove();
-	}
-});
-
-$('#eduContainer').on('click', 'button.btn-danger', function (e) {
-	if (confirm('Remove this education data? Cannot be undo.')) {
-		$(this).parent().parent().remove();
-	}
-});
-
-$('#urlContainer').on('click', 'button.btn-danger', function (e) {
-	if (confirm('Remove this website data? Cannot be undo.')) {
-		$(this).parent().parent().remove();
-	}
-});
-
-$form.find('[type=submit]').on('click', function (e) {
-	e.preventDefault();
-	if (! processing) {
-		processing = true;
-		$('.page-preloader').show();
-		$form.find('[type=submit]').disable(true);
-
-		var eduDataCollection = [];
-		var expDataCollection = [];
-		var urlDataCollection = [];
-
-		$('#eduContainer .row').each(function (i) {
-			var eduData = {
-				'name':	$(this).find('input[name=edu_name]').val(),
-				'type':	$(this).find('input[name=edu_type]').val(),
-				'gpa':	$(this).find('input[name=edu_gpa]').val(),
-				'qualification':	$(this).find('input[name=edu_qualification]').val()
-			}
-			eduDataCollection.push(eduData);
-		});
-
-		$('#expContainer .row').each(function (i) {
-			var expData = {
-				'company':	$(this).find('input[name=exp_company]').val(),
-				'year':	$(this).find('input[name=exp_year]').val(),
-				'position':	$(this).find('input[name=exp_position]').val(),
-				'salary':	$(this).find('input[name=exp_salary]').val(),
-				'description':	$(this).find('textarea[name=exp_desc]').val()
-			}
-			expDataCollection.push(expData);
-		});
-
-		$('#urlContainer .row').each(function (i) {
-			var urlData = {
-				'name':	$(this).find('input[name=web_name]').val(),
-				'address':	$(this).find('input[name=web_adress]').val()
-			}
-			urlDataCollection.push(urlData);
-		});
-
-		$.post(window.origin + '/contractor/update-account', {
-			data: $form.serializeForm(),
-			description: $('.summernote').code(),
-			eduData: JSON.stringify(eduDataCollection),
-			expData: JSON.stringify(expDataCollection),
-			urlData: JSON.stringify(urlDataCollection)
-		}).done(function (e) {
-			processing = false;
-			$('.page-preloader').hide();
-			$form.showMessage(e.message, e.type);
-			alert(e.message);
-			$form.find('[type=submit]').disable(false);
-		}).fail(function (xhr, status, e) {
-			processing = false;
-			$('.page-preloader').hide();
-			alert(xhr.responseText);
-			$form.showMessage(xhr.responseText, 'danger');
-			$form.find('[type=submit]').disable(false);
-		});
-	}
-	else {
-		alert('Another upload process is running, please wait.');
-	}
-});
+	});
 }
 
 // Account settings - salary range
@@ -363,17 +363,51 @@ if ($('#resumeList')[0]) {
 	});
 }
 
+if ($('#dataFileList')[0]) {
+	var $list = $('#dataFileList');
+
+	$list.on('click', '[data-remove]', function (e) {
+		e.preventDefault();
+		if (confirm('Remove data?')) {
+			if ( ! processing) {
+				var $button = $(this);
+				var $route = $button.data('remove');
+				var $id = $button.data('id');
+
+				processing = true;
+				$('.page-preloader').show();
+				$('[btn-remove]').disable(true);
+
+				$.post($route, {i: $id}).done(function (e) {
+					processing = false;
+					$('.page-preloader').hide();
+					$('[btn-remove]').disable(false);
+					alert(e.message);
+					if (e.type === 'success') {
+						$list.find('li[data-id=' + $id + ']').remove();
+					}
+				}).fail(function (xhr, status, e) {
+					processing = false;
+					$('.page-preloader').hide();
+					$('[btn-remove]').disable(false);
+					alert(xhr.responseText);
+				});
+			}
+		}
+	});
+}
+
 // Submit timesheet
 if ($('#submitTimesheetForm')[0]) {
 	$form = $('#submitTimesheetForm');
 	var $job = $form.data('value');
 	var file = null;
 	var allowed_timesheet_mime = [
-	'application/msword',
-	'application/msexcel',
-	'application/vnd.ms-excel',
-	'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-	'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		'application/msword',
+		'application/msexcel',
+		'application/vnd.ms-excel',
+		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+		'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 	];
 
 	$form.find('input[type=file]').on('change', function () {
@@ -404,7 +438,76 @@ if ($('#submitTimesheetForm')[0]) {
 
 			$.ajax({
 				method: 'post',
-				url: window.origin + '/job/apply',
+				url: window.origin + '/job/submit-timesheet',
+				data: fd,
+				crossDomain: false,
+				dataType: 'json',
+				cache: true,
+				processData: false,
+				contentType: false,
+				headers: {
+					'X-CSRF-Token': $('meta[name="_t"]').attr('content')
+				},
+			}).done(function (e) {
+				processing = false;
+				$('.page-preloader').hide();
+				$form.showMessage(e.message, e.type);
+				$form.find('[type=submit]').disable(false);
+			}).fail(function (xhr, status, e) {
+				processing = false;
+				$('.page-preloader').hide();
+				$form.showMessage(xhr.responseText, 'danger');
+				$form.find('[type=submit]').disable(false);
+			});
+		}
+		else {
+			alert('A process is still on going, please wait');
+		}
+	});
+}
+
+// Submit expense
+if ($('#submitExpenseForm')[0]) {
+	$form = $('#submitExpenseForm');
+	var $job = $form.data('value');
+	var file = null;
+	var allowed_expense_mime = [
+		'application/msword',
+		'application/msexcel',
+		'application/vnd.ms-excel',
+		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+		'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+	];
+
+	$form.find('input[type=file]').on('change', function () {
+		if (this.files[0].size > 5000000) {
+			$(this).parent().showMessage('File cannot be more than 5Mb.', 'danger');
+			file = null;
+		} else if ($.inArray(this.files[0].type, allowed_expense_mime) === -1) {
+			$(this).parent().showMessage('Can only upload word or excel files.', 'danger');
+			file = null;
+		} else {
+			$(this).parent().showMessage('This file can be uploaded.', 'success');
+			file = this.files[0];
+		}
+	});
+
+	$form.find('[type=submit]').on('click', function (e) {
+		e.preventDefault();
+
+		if ($form.parsley().validate() && ! processing) {
+			processing = true;
+			$('.page-preloader').show();
+			$form.find('[type=submit]').disable(true);
+
+			var fd = new FormData();
+			fd.append('file', file);
+			fd.append('data', JSON.stringify($form.serializeForm()));
+			fd.append('job', $job);
+
+			$.ajax({
+				method: 'post',
+				url: window.origin + '/job/submit-expense',
 				data: fd,
 				crossDomain: false,
 				dataType: 'json',

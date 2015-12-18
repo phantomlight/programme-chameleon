@@ -162,8 +162,7 @@ class JobProvider implements JobProviderInterface {
 				return;
 			}
 
-			$cid = $contractor->id;
-			$job->contractors()->sync([$cid => ['status' => 'accept']]);
+			$job->contractors()->sync([$contractor->id => ['status' => 'accept']], false);
 			return $job;
 		}
 		catch (\Exception $e) {

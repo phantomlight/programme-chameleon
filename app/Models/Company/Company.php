@@ -58,12 +58,32 @@ class Company {
 		}
 	}
 
+	public function findCompanyById($id) {
+		return $this->companyProvider->findById($id);
+	}
+
+	public function getAll($paginate=false, $ipp=15) {
+		return $this->companyProvider->getAll($paginate, $ipp);
+	}
+
+	public function getByQuery($query, $paginate=false, $ipp=15) {
+		return $this->companyProvider->getByQuery($query, $paginate, $ipp);
+	}
+
 	public function updateVIP($company, $active=false) {
 		return $this->companyProvider->updateVIP($company, $active);
 	}
 
 	public function updateData($data) {
 		return $this->companyProvider->update($data);
+	}
+
+	public function addAffiliate($agency) {
+		return $this->companyProvider->addAffiliate($agency);
+	}
+
+	public function removeAffiliate($agency) {
+		return $this->companyProvider->removeAffiliate($agency);
 	}
 
 }

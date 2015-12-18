@@ -26,6 +26,11 @@ Route::get('job/job-sample', function() { return view('front.jobSample'); });
 Route::get('gen', 'SiteController@getPublicKey');
 Route::post('handshake', 'SiteController@getHandshakeKey');
 
+Route::get('resume-search', [
+	'as'		=>	'resume.search',
+	'uses'	=>	'SiteController@getResumeSearch',
+]);
+
 Route::get('contractor/{id}/{slug}', [
 	'as' 		=>	'contractor.profile',
 	'uses'	=>	'ContractorController@getPublicProfilePage',
@@ -67,8 +72,7 @@ Route::controller('company', 'CompanyController', [
 	'getPostJob'			=>	'company.job.post',
 	'getEditJob'			=>	'company.job.edit',
 	'getJobApplication'	=>	'company.job.application',
-	'getJobTimesheet'	=>	'company.job.timesheet',
-	'getResumeSearch'	=>	'company.resume.search',
+	'getJobDetails'		=>	'company.job.detail',
 	'getAccount'			=>	'company.account',
 ]);
 
@@ -76,8 +80,11 @@ Route::controller('agency', 'AgencyController', [
 	'getRegister'	 	=>	'agency.register',
 	'postRegister'	=>	'agency.postRegister',
 	'getIndex'			=>	'agency.index',
-	'getNotifList'	=>	'agency.notif.all',
-	'getOfferJob'		=>	'agency.offerJob',
+	'getAccount'		=>	'agency.account',
+	'getJobAdd'			=>	'agency.job.add',
+	'getJobEdit'		=>	'agency.job.edit',
+	'getJobList'		=>	'agency.job.list',
+	'getCompanyList'	=>	'agency.company.list',
 ]);
 
 Route::controller('contractor', 'ContractorController', [
@@ -86,6 +93,8 @@ Route::controller('contractor', 'ContractorController', [
 	'getIndex'					=>	'contractor.index',
 	'getAccount'				=>	'contractor.account',
 	'getCreateJobAlert'	=>	'contractor.jobAlert.create',
+	'getAddTimesheet'		=>	'contractor.job.timesheet',
+	'getAddExpense'			=>	'contractor.job.expense',
 ]);
 
 Route::controller('job', 'JobController', [
@@ -94,6 +103,8 @@ Route::controller('job', 'JobController', [
 	'postAddIndustry'			=>	'admin.job.industry.postAdd',
 	'postEditIndustry'		=>	'admin.job.industry.postEdit',
 	'postRemoveIndustry' 	=>	'admin.job.industry.remove',
+	'postRemoveTimesheet'	=>	'contractor.job.timesheet.remove',
+	'postRemoveExpense'		=>	'contractor.job.expense.remove',
 ]);
 
 //Route::get('test-mail', 'SiteController@testSendEmail');

@@ -156,4 +156,8 @@ class SiteController extends Controller {
 		return view('front.jobSearch');
 	}
 
+	public function getResumeSearch() {
+		return view('front.resumeSearch');
+	}
+
 }

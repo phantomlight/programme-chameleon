@@ -27,6 +27,11 @@ class ContractorTimesheetProvider implements ContractorTimesheetProviderInterfac
 		return $this->createModel();
 	}
 
+	public function findById($id) {
+		$model = $this->getModel();
+		return $model->where('id', $id)->first();
+	}
+
 	public function findByJob($contractor, $job) {
 		$model = $this->getModel();
 		$model = $model->findByJob($contractor, $job);
@@ -36,13 +41,6 @@ class ContractorTimesheetProvider implements ContractorTimesheetProviderInterfac
 	public function addNew($job, $data, $file) {
 		if ( ! $contractor = \Contractor::getContractor()) {
 			throw new \Exception("Current user is not a contractor.", 1);
-			return;
-		}
-
-		$timesheet = $this->findByJob($contractor, $job);
-
-		if ($timesheet) {
-			throw new \Exception("You have already submit a timesheet to this job " . $timesheet->created_at->diffForHumans(), 1);
 			return;
 		}
 
@@ -84,4 +82,26 @@ class ContractorTimesheetProvider implements ContractorTimesheetProviderInterfac
 			return;
 		}
 	}
+
+	public function remove($contractor, $id) {
+		if ( ! $model = $this->findById($id)) {
+			throw new \Exception("Timesheet not found.", 1);
+			return;
+		}
+
+		if ($model->contractor_id !== $contractor->id) {
+			throw new \Exception("Timesheet does not belong to you.", 1);
+			return;
+		}
+
+		if ( ! is_null($model->file)) {
+			if (\File::exists(public_path() . '/' . $model->file)) {
+				\File::delete(public_path() . '/' . $model->file);
+			}
+		}
+
+		$model->delete();
+		return;
+	}
+
 }

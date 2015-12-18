@@ -14,7 +14,15 @@
 				<li><a href=""><i class="fa fa-tumblr"></i></a></li>
 			</ul><!-- /.social-media -->
 			<div class="header-login-register clearfix">
-				<a class="btn btn-header-login" href="{{ url('logout') }}">LOGOUT</a>
+				<div class="avatar">
+					@if ( ! is_null($agency->image))
+						<img src="{{ asset($agency->image) }}" width="25" height="25" />
+					@else
+						<img data-src="holder.js/25x25" />
+					@endif
+					<a href="{{ route('agency.account') }}">Hi, {{ $agency->owner_name }} !</a>
+				</div>
+				<a class="btn btn-header-login btn-xs" href="{{ url('logout') }}">LOGOUT</a>
 			</div>
 		</div><!-- /.container -->
 	</div><!-- /#header-bar -->
@@ -38,14 +46,21 @@
 					</button>
 					<nav id="main-menu" class="clearfix collapse navbar-collapse" role="navigation">
 						<ul class="nav-menu">
-							<li class="menu-item"><a href="{{ route('company.index') }}">Home</a></li>
+							<li class="menu-item"><a href="{{ route('agency.index') }}">Home</a></li>
 							<li class="menu-item has-children">
 								<a href="#">My Account</a>
 								<ul class="sub-menu">
-									<li class="menu-item"><a href="{{ url('company/account') }}">Settings</a></li>
+									<li class="menu-item"><a href="{{ route('agency.account') }}">Settings</a></li>
 								</ul>
 							</li>
-							<li class="menu-item"><a href="{{ route('company.resume.search') }}">Resume Search</a></li>
+							<li class="menu-item has-children">
+								<a href="#">My Affiliates</a>
+								<ul class="sub-menu">
+									<li class="menu-item"><a href="{{ route('agency.company.list') }}">Company List/Add</a></li>
+									<li class="menu-item"><a href="{{ route('agency.job.list') }}">Job List</a></li>
+								</ul>
+							</li>
+							<li class="menu-item"><a href="{{ route('resume.search') }}">Resume Search</a></li>
 						</ul>
 					</nav><!-- /#main-menu -->
 				</div><!-- /#menu-wrapper -->

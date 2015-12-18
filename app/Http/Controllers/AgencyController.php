@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
+use App\Utils\Hash;
 use App\Utils\Hashing\JCryption;
 
 class AgencyController extends Controller {
@@ -20,12 +21,24 @@ class AgencyController extends Controller {
 		return view('front.agency.register');
 	}
 
-	public function getNotifList() {
-		return view('front.agency.notifList');
+	public function getAccount() {
+		return view('front.agency.account');
 	}
 
-	public function getOfferJob() {
-		return view('front.agency.offerJob');
+	public function getJobAdd() {
+		return view('front.agency.job.add');
+	}
+
+	public function getJobEdit() {
+		return view('front.agency.job.edit');
+	}
+
+	public function getJobList() {
+		return view('front.agency.job.list');
+	}
+
+	public function getCompanyList() {
+		return view('front.agency.company.list');
 	}
 
 	public function postRegister() {
@@ -68,6 +81,120 @@ class AgencyController extends Controller {
 			return \Response::json([
 				'type'		=>	'danger',
 				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
+			]);
+		}
+	}
+
+	public function postUpdateAccount() {
+		$data = \Input::get('data');
+
+		try {
+			$user = \User::getUser();
+
+			if ( ! $user->hasAccess('agency')) {
+				throw new \Exception("Only agency can update their account information", 1);
+				return;
+			}
+
+			if ($data['password'] !== '') {
+				$code = $user->getResetPasswordCode();
+				$user->attemptResetPassword($code, $data['password']);
+			}
+
+			$agencyData = [
+				'address'			=>	$data['address'],
+				'phone'				=>	$data['phone'],
+				'country'			=>	$data['country'],
+				'city'				=>	$data['city'],
+			];
+
+			$agency = \Agency::updateData($agencyData);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Your data has been updated successfully',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postUpdateAvatar() {
+		try {
+			$user = \User::getUser();
+			if ( ! $user->hasAccess('agency')) {
+				throw new \Exception("Only agency can update their account information", 1);
+				return;
+			}
+
+			$image = \Agency::updateAvatar($_FILES['file']);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Avatar has been updated.',
+				'image'		=>	asset($image->image),
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postAddAffiliate() {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$id = $_hash->decode(trim(\Input::get('id')));
+		if ( ! $company = \Company::findCompanyById($id) ) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Company not found'
+			]);
+		}
+
+		try {
+			$affiliate = \Agency::addAffiliate($company);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Affiliate added, please wait for the company to accept',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postRemoveAffiliate() {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$id = trim($_hash->decode(\Input::get('id')));
+		if ( ! $company = \Company::findCompanyById($id) ) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Company not found'
+			]);
+		}
+
+		try {
+			$affiliate = \Agency::removeAffiliate($company);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Affiliate removed.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
 			]);
 		}
 	}

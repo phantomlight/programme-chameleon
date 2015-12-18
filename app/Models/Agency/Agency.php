@@ -48,4 +48,25 @@ class Agency {
 			return $agency['model'];
 		}
 	}
+
+	public function updateData(array $data) {
+		return $this->agencyProvider->update($data);
+	}
+
+	public function updateAvatar($file) {
+		return $this->agencyProvider->updateAvatar($file);
+	}
+
+	public function findAgencyById($id) {
+		return $this->agencyProvider->findById($id);
+	}
+
+	public function addAffiliate($company) {
+		return $this->agencyProvider->addAffiliate($company);
+	}
+
+	public function removeAffiliate($company) {
+		return $this->agencyProvider->removeAffiliate($company);
+	}
+
 }

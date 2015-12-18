@@ -34,6 +34,7 @@ class CreateAgencyTable extends Migration
         \Schema::create('tb_agency_company', function(Blueprint $table) {
             $table->unsignedInteger('agency_id');
             $table->unsignedInteger('company_id');
+            $table->enum('status', ['request', 'accept']);
             $table->timestamps();
 
             $table->engine = 'InnoDB';

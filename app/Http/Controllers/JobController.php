@@ -379,6 +379,128 @@ class JobController extends Controller {
 		}
 	}
 
+	public function postSubmitTimesheet() {
+		$user = \User::getUser();
+
+		if ( ! $user->hasAccess('contractor')) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Only contractors can submit a timesheet',
+			]);
+		}
+
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$job = \Job::findJobById($_hash->decode(trim(\Input::get('job'))));
+
+		if ( ! $job) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Sorry, that job does not longer exists in our database.',
+			]);
+		}
+
+		$data = json_decode(\Input::get('data'), true);
+		$file = ($data['timesheet_type'] === 'file') ? $_FILES['file'] : null;
+
+		try {
+			$timesheet = \Contractor::submitTimesheet($job, $data, $file);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Your application has been submitted.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
+			]);
+		}
+	}
+
+	public function postRemoveTimesheet() {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		try {
+			$contractor = \Contractor::getContractor();
+			$id = $_hash->decode(\Input::get('i'));
+			\Contractor::removeTimesheet($contractor, $id);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Expense data removed from this job.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postSubmitExpense() {
+		$user = \User::getUser();
+
+		if ( ! $user->hasAccess('contractor')) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Only contractors can submit a timesheet',
+			]);
+		}
+
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$job = \Job::findJobById($_hash->decode(trim(\Input::get('job'))));
+
+		if ( ! $job) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Sorry, that job does not longer exists in our database.',
+			]);
+		}
+
+		$data = json_decode(\Input::get('data'), true);
+		$file = isset($_FILES['file']) ? $_FILES['file'] : null;
+
+		try {
+			$timesheet = \Contractor::submitExpense($job, $data, $file);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Your expense data has been submitted.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
+			]);
+		}
+	}
+
+	public function postRemoveExpense() {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		try {
+			$contractor = \Contractor::getContractor();
+			$id = $_hash->decode(\Input::get('i'));
+			\Contractor::removeExpense($contractor, $id);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Expense data removed from this job.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
 	public function getIndustryList() {
 		$data = \Input::has('data') ? \Input::get('data') : [];
 		$jsonData = [];
@@ -429,9 +551,7 @@ class JobController extends Controller {
 		}
 	}
 
-	public function postEditIndustry() {
-		return \Input::get('data');
-	}
+	public function postEditIndustry() {}
 
 	public function postRemoveIndustry() {}
 

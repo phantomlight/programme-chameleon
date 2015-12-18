@@ -8,12 +8,15 @@ class AgencyModel extends Eloquent implements AgencyModelInterface {
 	protected $table = 'tb_agency';
 	protected static $companyModel = 'App\Models\Company\Eloquent\CompanyModel';
 	protected static $notificationModel = 'App\Models\Agency\Eloquent\AgencyNotificationModel';
-	protected static $contractorPivotTable = 'tb_agency_contractor';
+	protected static $companyPivotTable = 'tb_agency_company';
 	protected $guarded = [];
 	protected $hidden = [];
 
 	public function companies() {
-		return $this->belongsToMany(static::$companyModel, static::$companyPivotTable, 'agency_id', 'company_id');
+		return $this
+			->belongsToMany(static::$companyModel, static::$companyPivotTable, 'agency_id', 'company_id')
+			->withPivot('status')
+			->withTimestamps();
 	}
 
 	public function notifications() {

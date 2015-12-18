@@ -113,6 +113,18 @@ class Contractor {
 		return $this->contractorTimesheetProvider->addNew($job, $data, $file);
 	}
 
+	public function removeTimesheet($contractor, $id) {
+		return $this->contractorTimesheetProvider->remove($contractor, $id);
+	}
+
+	public function submitExpense($job, $data, $file=null) {
+		return $this->contractorExpenseProvider->addNew($job, $data, $file);
+	}
+
+	public function removeExpense($contractor, $id) {
+		return $this->contractorExpenseProvider->remove($contractor, $id);
+	}
+
 	public function findTimesheetByJob($contractor, $job) {
 		return $this->contractorTimesheetProvider->findByJob($contractor, $job);
 	}

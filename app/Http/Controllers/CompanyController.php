@@ -29,10 +29,6 @@ class CompanyController extends Controller {
 		return view('front.company.job.add');
 	}
 
-	public function getResumeSearch() {
-		return view('front.company.resumeSearch');
-	}
-
 	public function postRegister() {
 		try {
 			$jCryption = new JCryption();
@@ -119,7 +115,7 @@ class CompanyController extends Controller {
 		return view('front.company.job.application')->with('job', $job);
 	}
 
-	public function getJobTimesheet() {
+	public function getJobDetails() {
 		$company = \Company::getCompany();
 		
 		$_hash = new Hash();
@@ -135,7 +131,7 @@ class CompanyController extends Controller {
 			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'You cannot edit this job.']);
 		}
 
-		return view('front.company.job.timesheet')->with('job', $job);
+		return view('front.company.job.detail')->with('job', $job);
 	}
 
 	public function postUpdateAccount() {
@@ -152,6 +148,58 @@ class CompanyController extends Controller {
 			return \Response::json([
 				'type'		=>	'danger',
 				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Something went wrong, please contact webmaster',
+			]);
+		}
+	}
+
+	public function postAddAffiliate() {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$id = $_hash->decode(trim(\Input::get('id')));
+		if ( ! $agency = \Agency::findAgencyById($id)) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Agency not found.'
+			]);
+		}
+
+		try {
+			$affiliate = \Company::addAffiliate($agency);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Affiliate "' . $agency->name . '" added.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postRemoveAffiliate() {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$id = $_hash->decode(trim(\Input::get('id')));
+		if ( ! $agency = \Agency::findAgencyById($id)) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Agency not found.'
+			]);
+		}
+
+		try {
+			$affiliate = \Company::removeAffiliate($agency);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Affiliate "' . $agency->name . '" removed.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
 			]);
 		}
 	}

@@ -23,7 +23,6 @@
 	<div class="common-page-wrapper element-top-30">
 		<div class="container">
 			<h2 class="page-header lighten">Submit a Timesheet</h2>
-			<p class="lighten">Timesheet also acts as job application proposal.</p>
 
 			<div class="row">
 				<div class="col-md-4">
@@ -37,13 +36,37 @@
 							<a href="{{ route('job.public', ['id' => $_hash->encode($job->id), 'slug' => Str::slug($job->title)]) }}" target="_blank" class="btn btn-xs btn-primary">See Details</a>
 						</div>
 					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Your timesheet on this job</div>
+						<div class="panel-body">
+							<?php $timesheets = $contractor->timesheets()->orderBy('created_at', 'desc')->get(); ?>
+							@if (count($timesheets) > 0)
+								<ul class="list-unstyled sc-list" id="dataFileList">
+									@foreach ($timesheets as $timesheet)
+										<li data-id="{{ $_hash->encode($timesheet->id) }}">
+											<p>{{ $timesheet->name }}</p>
+											<p class="text-muted"><small><i class="fa fa-clock-o"></i> Submitted {{ $timesheet->created_at->diffForHumans() }}</small></p>
+											<div class="btn-group">
+												<button class="btn btn-danger btn-xs" data-remove="{{ route('contractor.job.timesheet.remove') }}" data-id="{{ $_hash->encode($timesheet->id) }}">Remove</button>
+											</div>
+										</li>
+									@endforeach
+								</ul>
+							@else
+								<div class="alert alert-danger">
+									No timesheet submitted yet.
+								</div>
+							@endif
+						</div>
+					</div>
 				</div>
 
 				<div class="col-md-8">
-					<form class="sc-form" role="form" onsubmit="return false;" id="submitTimesheetForm" data-value="{{ $_hash->encode($job->id) }}">
+					<form class="sc-form" role="form" onsubmit="return false;" id="submitTimesheetForm" data-value="{{ $_hash->encode($job->id) }}" data-parsley-validate>
 						<div class="form-group">
 							<label>Name/Title</label>
-							<input type="text" name="timesheet_name" class="form-control" required value="Job application by {{ $user->first_name . ' ' . $user->last_name }}" />
+							<input type="text" name="timesheet_name" class="form-control" required value="Timesheet by {{ $user->first_name . ' ' . $user->last_name }}" />
 						</div>
 
 						<div class="form-group">

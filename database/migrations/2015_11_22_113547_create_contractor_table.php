@@ -41,6 +41,7 @@ class CreateContractorTable extends Migration
         \Schema::create('tb_contractor_expense', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('contractor_id');
+            $table->unsignedInteger('job_id');
             $table->string('title', 255);
             $table->string('file', 255)->nullable();
             $table->enum('type', ['food', 'transport', 'business_operation', 'other']);

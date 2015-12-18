@@ -54,7 +54,7 @@
 								</ul>
 							</li>
 							<li class="menu-item"><a href="{{ route('company.job.post') }}">Post a Job</li>
-							<li class="menu-item"><a href="{{ route('company.resume.search') }}">Resume Search</a></li>
+							<li class="menu-item"><a href="{{ route('resume.search') }}">Resume Search</a></li>
 						</ul>
 					</nav><!-- /#main-menu -->
 				</div><!-- /#menu-wrapper -->

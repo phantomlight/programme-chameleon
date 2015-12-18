@@ -33,6 +33,11 @@ class CompanyProvider implements CompanyProviderInterface {
 		return $model;
 	}
 
+	public function findById($id) {
+		$model = $this->getModel();
+		return $model->where('id', $id)->first();
+	}
+
 	public function updateVIP($company, $active) {
 		if ($active) {
 			$company->is_vip = true;
@@ -86,6 +91,54 @@ class CompanyProvider implements CompanyProviderInterface {
 		}
 
 		$company->save();
+		return $company;
+	}
+
+	public function getAll($paginate, $ipp) {
+		$model = $this->getModel();
+		if ($paginate) {
+			return $model->orderBy('created_at', 'desc')->paginate($ipp);
+		}
+		return $model->orderBy('created_at', 'desc')->get();
+	}
+
+	public function getByQuery($query, $paginate, $ipp) {
+		$model = $this->getModel();
+
+		if ($paginate) {
+			return $model->where('name', 'like', '%' . $query . '%')->orderBy('created_at', 'desc')->paginate($ipp);
+		}
+
+		return $model->where('name', 'like', '%' . $query . '%')->orderBy('created_at', 'desc')->get();
+	}
+
+	public function addAffiliate($agency) {
+		if ( ! $company = \Company::getCompany()) {
+			throw new \Exception("You are not currently in a company account.", 1);
+			return;
+		}
+
+		if ( ! $company->agencies->contains($agency->id)) {
+			throw new \Exception("This agency has never made a request to you.", 1);
+			return;
+		}
+
+		$company->agencies()->sync([$agency->id => ['status' => 'accept']], false);
+		return $company;
+	}
+
+	public function removeAffiliate($agency) {
+		if ( ! $company = \Company::getCompany()) {
+			throw new \Exception("You are not currently in a company account.", 1);
+			return;
+		}
+
+		if ( ! $company->agencies->contains($agency->id)) {
+			throw new \Exception("This agency has never made a request to you.", 1);
+			return;
+		}
+
+		$company->agencies()->detach($agency->id);
 		return $company;
 	}
 

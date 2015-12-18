@@ -306,3 +306,56 @@ if ($('#removeJobBtn')[0]) {
 		}
 	});
 }
+
+if ($('#agencyAffiliateList')[0]) {
+	var $list = $('#agencyAffiliateList');
+
+	$list.on('click', '.btn-success', function (e) {
+		var $button = $(this);
+		if (confirm('Accept this agency as your affiliate?')) {
+			if ( ! processing) {
+				var id = $button.data('id');
+				processing = true;
+				$list.find('.btn').disable(true);
+				$('.page-preloader').show();
+				$.post(window.origin + '/company/add-affiliate', {id: id}).done(function (e) {
+					processing = false;
+					$list.find('.btn').disable(false);
+					$('.page-preloader').hide();
+					alert(e.message);
+				}).fail(function (xhr, status, e) {
+					processing = false;
+					$list.find('.btn').disable(false);
+					$('.page-preloader').hide();
+					alert(xhr.responseText);
+				});
+			}
+		}
+	});
+
+	$list.on('click', '.btn-danger', function (e) {
+		var $button = $(this);
+		if (confirm('Remove this agency from your affiliate list?')) {
+			if ( ! processing) {
+				var id = $button.data('id');
+				processing = true;
+				$list.find('.btn').disable(true);
+				$('.page-preloader').show();
+				$.post(window.origin + '/company/remove-affiliate', {id: id}).done(function (e) {
+					processing = false;
+					$list.find('.btn').disable(false);
+					$('.page-preloader').hide();
+					alert(e.message);
+					if (e.type === 'success') {
+						$list.find('li[data-id=" ' + id + '"]').remove();
+					}
+				}).fail(function (xhr, status, e) {
+					processing = false;
+					$list.find('.btn').disable(false);
+					$('.page-preloader').hide();
+					alert(xhr.responseText);
+				});
+			}
+		}
+	});
+}

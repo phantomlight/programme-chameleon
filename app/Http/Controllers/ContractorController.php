@@ -37,19 +37,6 @@ class ContractorController extends Controller {
 		return view('front.contractor.searchJob');
 	}
 
-	public function getSubmitTimesheet($id) {
-		$_hash = new Hash();
-		$_hash = $_hash->getHasher();
-
-		$job = \Job::findJobById($_hash->decode($id));
-
-		if ( ! $job) {
-			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'That job is no longer exists in our database.']);
-		}
-
-		return view('front.contractor.submitTimesheet')->with('job', $job);
-	}
-
 	public function getPublicProfilePage($id, $slug) {
 		$_hash = new Hash();
 		$_hash = $_hash->getHasher();
@@ -112,8 +99,9 @@ class ContractorController extends Controller {
 	}
 
 	public function postUpdateAccount() {
+		$data = \Input::get('data');
+		
 		try {
-			$data = \Input::get('data');
 			$user = \User::getUser();
 
 			if ( ! $user->hasAccess('contractor')) {
@@ -293,6 +281,32 @@ class ContractorController extends Controller {
 				'message'	=>	$e->getMessage(),
 			]);
 		}
+	}
+
+	public function getAddExpense() {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		$job = \Job::findJobById($_hash->decode(\Input::get('i')));
+
+		if ( ! $job) {
+			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'That job is no longer exists in our database.']);
+		}
+
+		return view('front.contractor.job.expense')->with('job', $job);
+	}
+
+	public function getAddTimesheet() {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		$job = \Job::findJobById($_hash->decode(\Input::get('i')));
+
+		if ( ! $job) {
+			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'That job is no longer exists in our database.']);
+		}
+
+		return view('front.contractor.job.timesheet')->with('job', $job);
 	}
 
 }

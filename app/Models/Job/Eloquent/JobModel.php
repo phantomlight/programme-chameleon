@@ -9,6 +9,7 @@ class JobModel extends Eloquent implements JobModelInterface {
 	protected static $contractorModel = 'App\Models\Contractor\Eloquent\ContractorModel';
 	protected static $companyModel = 'App\Models\Company\Eloquent\CompanyModel';
 	protected static $jobIndustryModel = 'App\Models\Job\Eloquent\JobIndustryModel';
+	protected static $contractorExpenseModel = 'App\Models\Contractor\Eloquent\ContractorExpenseModel';
 	protected static $contractorTimesheetModel = 'App\Models\Contractor\Eloquent\ContractorTimesheetModel';
 
 	protected static $contractorTablePivot = 'tb_contractor_job';
@@ -24,6 +25,10 @@ class JobModel extends Eloquent implements JobModelInterface {
 		return $this->belongsToMany(static::$jobIndustryModel, static::$jobIndustryPivotTable, 'job_id', 'industry_id');
 	}
 
+	public function scopeStatus($query, $status) {
+		return $query->where('status', $status);
+	}
+
 	public function contractors() {
 		return $this
 			->belongsToMany(static::$contractorModel, static::$contractorTablePivot, 'job_id', 'contractor_id')
@@ -37,6 +42,10 @@ class JobModel extends Eloquent implements JobModelInterface {
 
 	public function timesheets() {
 		return $this->hasMany(static::$contractorTimesheetModel, 'job_id');
+	}
+
+	public function expenses() {
+		return $this->hasMany(static::$contractorExpenseModel, 'job_id');
 	}
 
 	public function save(array $options = array()) {

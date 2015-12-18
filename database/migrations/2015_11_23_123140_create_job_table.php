@@ -15,6 +15,7 @@ class CreateJobTable extends Migration
         \Schema::create('tb_job', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('company_id');
+            $table->unsignedInteger('agency_id')->nullable();
             $table->unsignedInteger('experience_year')->default(0);
             $table->string('title', 255);
             $table->string('start_date', 255);

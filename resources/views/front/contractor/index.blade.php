@@ -1,9 +1,16 @@
 <?php
+	use App\Utils\Hash;
+	use Illuminate\Support\Str;
+
 	if (\User::check()) {
 		$user = \User::getUser();
 		$contractor = \Contractor::getContractor();
 	}
+
+	$_hash = new Hash();
+	$_hash = $_hash->getHasher();
 ?>
+
 @extends('front.app')
 
 @section('title')
@@ -16,7 +23,7 @@
 	<div id="jobs-alerts" class="element-top-30 element-bottom-30">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-8">
 					<div class="panel panel-success">
 						<div class="panel-heading">Current Job(s)</div>
 						<?php $jobs = $contractor->jobs(); ?>
@@ -28,8 +35,8 @@
 									<li>
 										<p><span>{{ $job->title }}</span> accepted on {{ $job->created_at->toDayDateTimeString() }}</p>
 										<div class="btn-group">
-											<a class="btn btn-xs btn-primary" href="#">Add Timesheet</a>
-											<a class="btn btn-xs btn-info" href="#">Add Expense</a>
+											<a class="btn btn-xs btn-primary" href="{{ route('contractor.job.timesheet') . '?i=' . $_hash->encode($job->id) }}">Timesheets</a>
+											<a class="btn btn-xs btn-info" href="{{ route('contractor.job.expense') . '?i=' . $_hash->encode($job->id) }}">Expenses</a>
 										</div>
 									</li>
 								@endforeach
@@ -39,34 +46,6 @@
 									You haven't been accepted to any job yet.
 								</div>
 							@endif
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-4">
-					<div class="alert-widget">
-						<div class="alert-widget-title"><i class="fa fa-bell"></i> Jobs available <label class="label label-danger pull-right"> 3 </label></div>
-						<div class="alert-widget-content">
-							<ul class="list-unstyled list-group">
-								<li class="list-group-item">
-									<p><a href="#">Job Title</a></p>
-									<a href="#" class="btn btn-primary btn-xs">View</a>
-									<button class="btn btn-success btn-xs">Apply</button>
-									<button class="btn btn-danger btn-xs">Marked as read</button>
-								</li>
-								<li class="list-group-item">
-									<p><a href="#">Job Title</a></p>
-									<a href="#" class="btn btn-primary btn-xs">View</a>
-									<button class="btn btn-success btn-xs">Apply</button>
-									<button class="btn btn-danger btn-xs">Marked as read</button>
-								</li>
-								<li class="list-group-item">
-									<p><a href="#">Job Title</a></p>
-									<a href="#" class="btn btn-primary btn-xs">View</a>
-									<button class="btn btn-success btn-xs">Apply</button>
-									<button class="btn btn-danger btn-xs">Marked as read</button>
-								</li>
-							</ul>
 						</div>
 					</div>
 				</div>

@@ -103,43 +103,42 @@ $_hash = $_hash->getHasher();
 				</div>
 
 				<div class="panel panel-default">
-					<?php $contractors = $job->contractors(); ?>
-					<div class="panel-heading">Contractors In This Job ({{ $contractors->count() }})</div>
+					<?php $contractors = $job->contractors()->wherePivot('status', '=', 'accept')->get(); ?>
+					<div class="panel-heading">Contractors In This Job ({{ count($contractors) }})</div>
 					<div class="panel-body">
-						@if ($contractors->count() > 0)
-						<?php $contractors = $contractors->get(); ?>
-						<ul class="list-unstyled" id="jobContractorList" data-job="{{ $_hash->encode($job->id) }}">
-							@foreach($contractors as $contractor)
-							@if ($cUser = $contractor->user)
-							<li>
-								<div class="media">
-									<div class="media-left">
-										@if ( ! is_null($contractor->image))
-										<img src="{{ asset($contractor->image) }}" width="52" />
-										@else
-										<img data-src="holder.js/52x52?random=yes&text=no-image" />
-										@endif
-										<section class="element-top-10">
-											{{ $cUser->first_name . ' ' . $cUser->last_name . ' (' . $cUser->email . ')' }}
-										</section>
-									</div>
-									<div class="media-body">
-										<div class="btn-group">
-											<a href="{{ route('contractor.profile', ['id'=>$_hash->encode($contractor->id), 'slug'=>$slug]) }}" class="btn btn-primary btn-xs" target="_blank">See contractor details</a>
-											<button class="btn btn-xs btn-danger btn-remove-contract" type="button" onclick="return false;" data-value="{{ $_hash->encode($contractor->id) }}">
-												<i class="fa fa-times"></i> Cancel contract
-											</button>
-										</div>
-									</div>
-								</div>
-							</li>
-							@endif
-							@endforeach
-						</ul>
+						@if (count($contractors) > 0)
+							<ul class="list-unstyled" id="jobContractorList" data-job="{{ $_hash->encode($job->id) }}">
+								@foreach($contractors as $contractor)
+									@if ($cUser = $contractor->user)
+										<li>
+											<div class="media">
+												<div class="media-left">
+													@if ( ! is_null($contractor->image))
+													<img src="{{ asset($contractor->image) }}" width="52" />
+													@else
+													<img data-src="holder.js/52x52?random=yes&text=no-image" />
+													@endif
+													<section class="element-top-10">
+														{{ $cUser->first_name . ' ' . $cUser->last_name . ' (' . $cUser->email . ')' }}
+													</section>
+												</div>
+												<div class="media-body">
+													<div class="btn-group">
+														<a href="{{ route('contractor.profile', ['id'=>$_hash->encode($contractor->id), 'slug'=>$slug]) }}" class="btn btn-primary btn-xs" target="_blank">See contractor details</a>
+														<button class="btn btn-xs btn-danger btn-remove-contract" type="button" onclick="return false;" data-value="{{ $_hash->encode($contractor->id) }}">
+															<i class="fa fa-times"></i> Cancel contract
+														</button>
+													</div>
+												</div>
+											</div>
+										</li>
+									@endif
+								@endforeach
+							</ul>
 						@else
-						<div class="alert alert-danger">
-							There's no contractors being set for this job yet.
-						</div>
+							<div class="alert alert-danger">
+								There's no contractors being set for this job yet.
+							</div>
 						@endif
 					</div>
 				</div>
