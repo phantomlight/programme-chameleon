@@ -199,4 +199,169 @@ class AgencyController extends Controller {
 		}
 	}
 
+	public function postSubmitJob() {
+		$data = \Input::get('data');
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		if ( ! $company = \Company::findCompanyById($_hash->decode($data['company']))) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Company not found.',
+			]);
+		}
+
+		if ( ! $agency = \Agency::getAgency()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not an agency account.',
+			]);
+		}
+
+		$status = $company->agencies()
+			->wherePivot('company_id', $company->id)
+			->wherePivot('status', 'accept')
+			->first();
+
+		if ( ! $status ) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'You do not have permission from this company to post a job',
+			]);
+		}
+
+		$data['agency_id'] = $agency->id;
+		$data['company_id'] = $company->id;
+
+		if ($data['job_apply_type'] === 'job_apply_by_email') {
+			if ($data['job_apply_application_email'] === '' && $data['job_apply_direct_email'] === '') {
+				return \Response::json([
+					'type'		=>	'warning',
+					'message'	=>	'Job application by email is chosen, please input at least one email.',
+				]);
+			}
+
+			$data['job_apply_details'] = json_encode([
+				'type'	=>	'email',
+				'application_email'	=>	$data['job_apply_application_email'],
+				'direct_email'	=>	$data['job_apply_direct_email'],
+			]);
+		}
+		elseif ($data['job_apply_type'] === 'job_apply_by_url') {
+			if ($data['job_apply_url'] === '') {
+				return \Response::json([
+					'type'		=>	'warning',
+					'message'	=>	'Job application by url is chosen, please input the application url.',
+				]);
+			}
+
+			$data['job_apply_details'] = json_encode([
+				'type'	=>	'url',
+				'url'		=>	$data['job_apply_url'],
+			]);
+		}
+
+		try {
+			$job = \Job::createJob($data);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Job posted successfully',
+			]);
+		}
+		catch (\Exception $e) {
+			if (isset($job)) $job->delete();
+
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
+			]);
+		}
+	}
+
+	public function postEditJob() {
+		$data = \Input::get('data');
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		if ( ! $job = \Job::findJobById(trim(\Input::get('job')))) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Job not found.',
+			]);
+		}
+
+		if ( ! $company = \Company::findCompanyById($_hash->decode($data['company']))) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Company not found.',
+			]);
+		}
+
+		if ( ! $agency = \Agency::getAgency()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not an agency account.',
+			]);
+		}
+
+		$status = $company->agency()
+			->wherePivot('company_id', $company->id)
+			->wherePivot('status', 'accept')
+			->first();
+
+		if ( ! $status ) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'You do not have permission from this company to post a job',
+			]);
+		}
+
+		$data['agency_id'] = $agency->id;
+		$data['company_id'] = $company->id;
+
+		if ($data['job_apply_type'] === 'job_apply_by_email') {
+			if ($data['job_apply_application_email'] === '' && $data['job_apply_direct_email'] === '') {
+				return \Response::json([
+					'type'		=>	'warning',
+					'message'	=>	'Job application by email is chosen, please input at least one email.',
+				]);
+			}
+
+			$data['job_apply_details'] = json_encode([
+				'type'	=>	'email',
+				'application_email'	=>	$data['job_apply_application_email'],
+				'direct_email'	=>	$data['job_apply_direct_email'],
+			]);
+		}
+		elseif ($data['job_apply_type'] === 'job_apply_by_url') {
+			if ($data['job_apply_url'] === '') {
+				return \Response::json([
+					'type'		=>	'warning',
+					'message'	=>	'Job application by url is chosen, please input the application url.',
+				]);
+			}
+
+			$data['job_apply_details'] = json_encode([
+				'type'	=>	'url',
+				'url'		=>	$data['job_apply_url'],
+			]);
+		}
+
+		try {
+			$job = \Job::updateJob($job, $data);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Job posted successfully',
+			]);
+		}
+		catch (\Exception $e) {
+			if (isset($job)) $job->delete();
+
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
+			]);
+		}
+	}
+
 }

@@ -32,12 +32,13 @@ class JobProvider implements JobProviderInterface {
 
 		$model->fill([
 			'company_id'	=>	$data['company_id'],
+			'agency_id'		=>	isset($data['agency_id']) ? $data['agency_id'] : null,
 			'experience_year'	=>	$data['experience_year'],
 			'start_date'	=>	$data['start_date'],
 			'title'		=>	$data['title'],
 			'city'		=>	$data['city'],
 			'country'	=>	$data['country'],
-			'duration'	=>	$data['job_post_duration'],
+			'duration'	=>	isset($data['job_post_duration']) ? $data['job_post_duration'] : 999,
 			'contact_name'	=>	$data['contact_name'],
 			'contact_phone'	=>	$data['contact_phone'],
 			'salary'	=>	$data['salary'],
@@ -70,6 +71,7 @@ class JobProvider implements JobProviderInterface {
 
 	public function update($job, $data) {
 		$jobData = [
+			'company_id'	=>	isset($data['company_id']) ? $data['company_id'] : $job->company_id,
 			'experience_year'	=>	$data['experience_year'],
 			'start_date'	=>	$data['start_date'],
 			'title'		=>	$data['title'],

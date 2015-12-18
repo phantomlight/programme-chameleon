@@ -1,4 +1,9 @@
-<?php if(\User::check()) $user = \User::getUser(); $company = \Company::getCompany(); ?>
+<?php
+	if (\User::check()) {
+		$user = \User::getUser();
+		$company = \Company::getCompany();
+	}
+?>
 	
 @extends('front.app')
 
