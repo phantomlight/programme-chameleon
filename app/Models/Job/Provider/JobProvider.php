@@ -1,6 +1,8 @@
 <?php namespace App\Models\Job\Provider;
 
 use Carbon\Carbon;
+use App\Utils\Hash;
+use Illuminate\Support\Str;
 use App\Models\Job\Interfaces\JobProviderInterface;
 use App\Models\Job\Provider\JobIndustryProvider;
 
@@ -60,6 +62,27 @@ class JobProvider implements JobProviderInterface {
 				if ($industry) $model->industries()->attach($industry->id, ['created_at' => Carbon::now()]);
 			}
 
+			$contractors = \Contractor::findAllByJobAlerts($model, $data['job_industry']);
+
+			if (count($contractors) > 0) {
+				$_hash = new Hash();
+				$_hash = $_hash->getHasher();
+
+				foreach ($contractors as $contractor) {
+					if ($contractor->pivot->type === 'any' || $contractor->pivot->type === $model->type) {
+						$notificationData = [
+							'contractor_id'	=>	$contractor->id,
+							'alert_from'	=>	'System: Programme Chameleon',
+							'has_read'	=>	false,
+							'title'	=>	'A new job matching your job alert found.',
+							'url'		=>	url('job/' . $_hash->encode($model->id) . '/' . Str::slug($model->title)),
+						];
+
+						$notification = \Contractor::addNotification($contractor, $notificationData);
+					}
+				}
+			}
+
 			return $model;
 		}
 		else {
@@ -77,7 +100,7 @@ class JobProvider implements JobProviderInterface {
 			'title'		=>	$data['title'],
 			'city'		=>	$data['city'],
 			'country'	=>	$data['country'],
-			'duration'	=>	$data['job_post_duration'],
+			'duration'	=>	isset($data['job_post_duration']) ? $data['job_post_duration'] : 999,
 			'contact_name'	=>	$data['contact_name'],
 			'contact_phone'	=>	$data['contact_phone'],
 			'salary'	=>	$data['salary'],
@@ -96,7 +119,7 @@ class JobProvider implements JobProviderInterface {
 		}
 
 		if ($job->save()) {
-			$job->industries()->sync($data['job_industry']);
+			$job->industries()->sync($data['job_industry'], false);
 		}
 
 		return $job;
@@ -110,6 +133,20 @@ class JobProvider implements JobProviderInterface {
 	public function findAll() {
 		$model = $this->getModel();
 		return $model->where('status', 'open')->orderBy('created_at', 'desc');
+	}
+
+	public function findByCompany($company, $type) {
+		if ( ! is_null($type)) {
+			return $company->jobs()->where('type', $type)->orderBy('created_at', 'desc');
+		}
+		return $company->jobs()->orderBy('created_at', 'desc');
+	}
+
+	public function findByAgency($agency) {
+		if ( ! is_null($type)) {
+			return $agency->jobs()->where('type', $type)->orderBy('created_at', 'desc');
+		}
+		return $agency->jobs()->orderBy('created_at', 'desc');
 	}
 
 	public function findByType($type) {
@@ -165,6 +202,22 @@ class JobProvider implements JobProviderInterface {
 			}
 
 			$job->contractors()->sync([$contractor->id => ['status' => 'accept']], false);
+
+			if (count($contractors) > 0) {
+				$_hash = new Hash();
+				$_hash = $_hash->getHasher();
+
+				$notificationData = [
+					'contractor_id'	=>	$contractor->id,
+					'alert_from'	=>	'System: Programme Chameleon',
+					'has_read'	=>	false,
+					'title'	=>	'Added to ' . $job->title,
+					'description'	=>	'You have been accepted to ' . $job->title,
+					'url'		=>	url('job/' . $_hash->encode($job->id) . '/' . Str::slug($job->title)),
+				];
+
+				$notification = \Contractor::addNotification($contractor, $notificationData);
+			}
 			return $job;
 		}
 		catch (\Exception $e) {
@@ -181,6 +234,18 @@ class JobProvider implements JobProviderInterface {
 			}
 
 			$job->contractors()->detach($contractor->id);
+
+			$notificationData = [
+				'contractor_id'	=>	$contractor->id,
+				'alert_from'	=>	'System: Programme Chameleon',
+				'has_read'	=>	false,
+				'title'	=>	'Removed from ' . $job->title,
+				'description'	=>	'You have been removed from ' . $job->title,
+				'url'		=>	null,
+			];
+
+			$notification = \Contractor::addNotification($contractor, $notificationData);
+
 			return $job;
 		}
 		catch (\Exception $e) {

@@ -47,7 +47,7 @@ class ContractorController extends Controller {
 			return abort(404);
 		}
 		
-		return view('front.contractor.publicProfile')->with('contractor', $contractor);
+		return view('front.contractor.publicProfile')->with('model', $contractor);
 	}
 
 	public function postRegister() {
@@ -307,6 +307,46 @@ class ContractorController extends Controller {
 		}
 
 		return view('front.contractor.job.timesheet')->with('job', $job);
+	}
+
+	public function postUpdateNotif() {
+		if ( ! $contractor = \Contractor::getContractor()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not a contractor account',
+			]);
+		}
+
+		try {
+			$notification = \Contractor::updateNotification(trim(\Input::get('id')), $contractor, ['has_read' => 1]);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Notification updated',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postRemoveNotif() {
+		if ( ! $contractor = \Contractor::getContractor()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not a contractor account',
+			]);
+		}
+
+		$contractor->notifications()->where('has_read', 1)->delete();
+
+		return \Response::json([
+			'type'		=>	'success',
+			'message'	=>	'Notification marked "read" removed successfully',
+		]);
 	}
 
 }

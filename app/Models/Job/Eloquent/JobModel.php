@@ -6,8 +6,10 @@ use App\Models\Job\Interfaces\JobModelInterface;
 class JobModel extends Eloquent implements JobModelInterface {
 
 	protected $table = 'tb_job';
+
 	protected static $contractorModel = 'App\Models\Contractor\Eloquent\ContractorModel';
 	protected static $companyModel = 'App\Models\Company\Eloquent\CompanyModel';
+	protected static $agencyModel = 'App\Models\Agency\Eloquent\AgencyModel';
 	protected static $jobIndustryModel = 'App\Models\Job\Eloquent\JobIndustryModel';
 	protected static $contractorExpenseModel = 'App\Models\Contractor\Eloquent\ContractorExpenseModel';
 	protected static $contractorTimesheetModel = 'App\Models\Contractor\Eloquent\ContractorTimesheetModel';
@@ -38,6 +40,10 @@ class JobModel extends Eloquent implements JobModelInterface {
 
 	public function company() {
 		return $this->belongsTo(static::$companyModel, 'company_id');
+	}
+
+	public function agency() {
+		return $this->belongsTo(static::$agencyModel, 'agency_id');
 	}
 
 	public function timesheets() {

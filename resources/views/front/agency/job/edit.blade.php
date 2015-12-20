@@ -3,7 +3,7 @@
 
 	if (\User::check()) {
 		$user = \User::getUser();
-		$company = \Company::getCompany();
+		$agency = \Agency::getAgency();
 	}
 
 	$_hash = new Hash();

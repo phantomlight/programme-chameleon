@@ -22,6 +22,7 @@ class CreateJobTable extends Migration
             $table->string('city', 50);
             $table->string('country', 50);
             $table->string('duration', 25);
+            $table->boolean('is_active')->default(true);
             $table->string('contact_name', 255);
             $table->string('contact_phone', 255);
             $table->decimal('salary', 16, 4);

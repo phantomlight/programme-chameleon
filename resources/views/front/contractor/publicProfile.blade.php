@@ -1,4 +1,7 @@
 <?php
+	$cUser = $model->user;
+	$resumes = $model->resumes()->get();
+	
 	if (\User::check()) {
 		$user = \User::getUser();
 
@@ -12,9 +15,6 @@
 			$agency = \Agency::getAgency();
 		}
 	}
-	
-	$cUser = $contractor->user;
-	$resumes = $contractor->resumes()->get();
 ?>
 	
 @extends('front.app')
@@ -52,21 +52,21 @@
 
 			<div class="candidate-profile">
 				<div class="img-responsive">
-					@if (is_null($contractor->image))
+					@if (is_null($model->image))
 						<img data-src="holder.js/52x52?random=yes&text=no-image" class="resume-img" />
 					@else
-						<img src="{{ asset($contractor->image) }}" class="resume-img"  width="52" />
+						<img src="{{ asset($model->image) }}" class="resume-img"  width="52" />
 					@endif
 				</div>
 				<h2 class="resume-name">{{ $cUser->first_name . ' ' . $cUser->last_name }}</h2>
 				<div class="candidate-details">
-					<span>{{ $contractor->occupation }}</span>
+					<span>{{ $model->occupation }}</span>
 					<span>
 						<i class="fa fa-map-marker"></i>
-						{{ (is_null($contractor->city) ? '--no specified city-' : $contractor->city) . ', ' . (is_null($contractor->country) ? '--no specified country--' : $contractor->country) }}
+						{{ (is_null($model->city) ? '--no specified city-' : $model->city) . ', ' . (is_null($model->country) ? '--no specified country--' : $model->country) }}
 					</span>
-					<span> Member from {{ $contractor->created_at->diffForHumans() }} </span>
-					<?php $socials = json_decode($contractor->socials); ?>
+					<span> Member from {{ $model->created_at->diffForHumans() }} </span>
+					<?php $socials = json_decode($model->socials); ?>
 					@if (isset($socials->twitter))
 						<span>
 							<i class="fa fa-twitter"></i>  {{ $socials->twitter }}
@@ -91,8 +91,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6">
-					@if (!is_null($contractor->description))
-						{!! $contractor->description !!}
+					@if (!is_null($model->description))
+						{!! $model->description !!}
 					@else
 						<p>Hi there, I am a new member of Programme Chameleon. I hope we can work together.</p>
 					@endif
@@ -100,7 +100,7 @@
 				<div class="col-md-6">
 					<div class="skills-container">
 						<h3 class="skills-title">Skills</h3>
-						<?php $skills = explode(',', $contractor->skills); ?>
+						<?php $skills = explode(',', $model->skills); ?>
 						<div class="the-skills">
 							@if (count($skills) > 1)
 								@foreach ($skills as $skill)
@@ -113,7 +113,7 @@
 					</div>
 					<div class="education-container">
 						<h3 class="educations-title">Education</h3>
-						<?php $educations = json_decode($contractor->educations); ?>
+						<?php $educations = json_decode($model->educations); ?>
 						<ul class="resume-lists">
 							@if ($educations)
 								@foreach ($educations as $education)
@@ -133,7 +133,7 @@
 					<div class="experience-container">
 						<h3 class="educations-title">Experience</h3>
 						<ul class="resume-lists">
-							<?php $experiences = json_decode($contractor->experiences); ?>
+							<?php $experiences = json_decode($model->experiences); ?>
 							@if ($experiences)
 								@foreach ($experiences as $experience)
 									<li>
@@ -156,7 +156,7 @@
 					<div class="experience-container">
 						<h3 class="educations-title">URL(s)</h3>
 						<ul class="resume-lists">
-							<?php $urls = json_decode($contractor->urls); ?>
+							<?php $urls = json_decode($model->urls); ?>
 							@if ($urls)
 								@foreach ($urls as $url)
 									<li>

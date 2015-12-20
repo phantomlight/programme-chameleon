@@ -31,7 +31,7 @@ class CompanyModel extends Eloquent implements CompanyModelInterface {
 	}
 
 	public function notifications() {
-		return $this->hasMany(static::$CompanyNotificationModel, 'company_id', 'id');
+		return $this->hasMany(static::$notificationModel, 'company_id', 'id');
 	}
 
 	public function delete() {

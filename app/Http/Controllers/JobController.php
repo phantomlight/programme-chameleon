@@ -71,13 +71,14 @@ class JobController extends Controller {
 		try {
 			$job = \Job::createJob($data);
 			// if company not subscribed to 6 month contract, substract the credit
+
 			if ( ! $company->is_vip) {
 				\Company::updateCredit($company, $value[$data['job_post_duration']]);
 			}
 
 			return \Response::json([
 				'type'		=>	'success',
-				'message'	=>	'Job posted successfully',
+				'message'	=>	'Job posted successfully.',
 			]);
 		}
 		catch (\Exception $e) {
@@ -158,6 +159,7 @@ class JobController extends Controller {
 
 		try {
 			$job = \Job::updateJob($job, $data);
+
 			// if company not subscribed to 6 month contract, substract the credit
 			if ( ! $company->is_vip && $data['job_post_duration'] !== '0') {
 				\Company::updateCredit($company, $value[$data['job_post_duration']]);
@@ -210,13 +212,20 @@ class JobController extends Controller {
 			]);
 		}
 
+		if ( ! $job->is_active || $job->status !== 'open') {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'The job is not available for applying.',
+			]);
+		}
+
 		try {
 			$contractor = \Contractor::getContractor();
 			$application = \Contractor::applyForJob($contractor, $job);
 
 			return \Response::json([
 				'type'		=>	'success',
-				'message'	=>	'Your application has been submitted, you will be notified via email when you have been selected for the job.',
+				'message'	=>	'Your application has been submitted, you will be notified when you have been selected for the job.',
 			]);
 		}
 		catch (\Exception $e) {

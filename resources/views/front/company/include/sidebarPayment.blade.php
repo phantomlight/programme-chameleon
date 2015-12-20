@@ -24,12 +24,12 @@
 	<div class="panel-body">
 		<p>You are subscribed to 6 month contract</p>
 		<?php
-		$vip_since = Carbon::createFromFormat('Y-m-d H:i:s', $company->vip_start);
-		$vip_until = Carbon::createFromFormat('Y-m-d H:i:s', $company->vip_end);
+			$vip_since = Carbon::createFromFormat('Y-m-d H:i:s', $company->vip_start);
+			$vip_until = Carbon::createFromFormat('Y-m-d H:i:s', $company->vip_end);
 		?>
 		<p>Since: {{ $vip_since->diffForHumans() }}</p>
 		<p>Until: {{ $vip_until->toDayDateTimeString() }}</p>
-		<a href="#" class="btn btn-danger" onclick="alert('TODO: Alert confirm cancel VIP on click');">Cancel VIP</a>
+		<button class="btn btn-danger" id="removeVipBtn">Remove VIP</button>
 	</div>
 </div>
 @endif

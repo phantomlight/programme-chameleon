@@ -17,6 +17,19 @@ class AgencyController extends Controller {
 		return view('front.agency.index');
 	}
 
+	public function getPublicProfilePage($id, $slug) {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		$agency = \Agency::findAgencyById($_hash->decode($id));
+
+		if ( ! $agency) {
+			return abort(404);
+		}
+		
+		return view('front.agency.publicProfile')->with('model', $agency);
+	}
+
 	public function getRegister() {
 		return view('front.agency.register');
 	}
@@ -29,8 +42,42 @@ class AgencyController extends Controller {
 		return view('front.agency.job.add');
 	}
 
+	public function getJobApplication() {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		$job = \Job::findJobById($_hash->decode(\Input::get('i')));
+
+		if ( ! $job) {
+			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'Job does not exists.']);
+		}
+
+		$agency = \Agency::getAgency();
+
+		if ($job->agency_id !== $agency->id) {
+			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'You cannot edit this job.']);
+		}
+
+		return view('front.agency.job.application')->with('job', $job);
+	}
+
 	public function getJobEdit() {
-		return view('front.agency.job.edit');
+		$agency = \Agency::getAgency();
+
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		$job = \Job::findJobById($_hash->decode(\Input::get('i')));
+
+		if ( ! $job) {
+			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'Job does not exists.']);
+		}
+
+		if ($job->agency_id !== $agency->id) {
+			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'You cannot edit this job.']);
+		}
+
+		return view('front.agency.job.edit')->with('job', $job);
 	}
 
 	public function getJobList() {
@@ -304,7 +351,7 @@ class AgencyController extends Controller {
 			]);
 		}
 
-		$status = $company->agency()
+		$status = $company->agencies()
 			->wherePivot('company_id', $company->id)
 			->wherePivot('status', 'accept')
 			->first();
@@ -355,13 +402,51 @@ class AgencyController extends Controller {
 			]);
 		}
 		catch (\Exception $e) {
-			if (isset($job)) $job->delete();
-
 			return \Response::json([
 				'type'		=>	'danger',
 				'message'	=>	env('APP_DEBUG') ? $e->getMessage() : 'Error, please contact webmaster.',
 			]);
 		}
+	}
+
+	public function postUpdateNotif() {
+		if ( ! $agency = \Agency::getAgency()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not an agency account',
+			]);
+		}
+
+		try {
+			$notification = \Agency::updateNotification(trim(\Input::get('id')), $agency, ['has_read' => 1]);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Notification updated',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postRemoveNotif() {
+		if ( ! $agency = \Agency::getAgency()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not an agency account',
+			]);
+		}
+
+		$agency->notifications()->where('has_read', 1)->delete();
+
+		return \Response::json([
+			'type'		=>	'success',
+			'message'	=>	'Notification marked "read" removed successfully',
+		]);
 	}
 
 }

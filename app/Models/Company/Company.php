@@ -86,4 +86,20 @@ class Company {
 		return $this->companyProvider->removeAffiliate($agency);
 	}
 
+	public function removeVip($company) {
+		return $this->companyProvider->removeVip($company);
+	}
+
+	public function addNotification($company, array $data) {
+		return $this->companyNotificationProvider->add($company, $data);
+	}
+
+	public function updateNotification($notification, $company, array $data) {
+		return $this->companyNotificationProvider->update($notification, $company, $data);
+	}
+
+	public function removeNotification($notification, $company) {
+		return $this->companyNotificationProvider->remove($notification, $company);
+	}
+
 }

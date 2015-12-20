@@ -22,13 +22,13 @@
 						@if ($jobs)
 						<ul class="list-unstyled hidden-xs" role="tablist">
 							@foreach ($jobs as $index => $job)
-							<li role="presentation" @if ($index === 0) {{ 'active' }} @endif><a href="#job-{{ $job->id }}" aria-controls="job-{{ $job->id }}" role="tab" data-toggle="tab">{{ $job->title }}</a></li>
+							<li role="presentation" @if ($index === 0) {{ 'active' }} @endif><a href="#a-{{ $job->id }}" aria-controls="a-{{ $job->id }}" role="tab" data-toggle="tab">{{ $job->title }}</a></li>
 							@endforeach
 						</ul>
 
 						<ul class="list-unstyled hidden-md hidden-lg hidden-sm" role="tablist">
 							@foreach ($jobs as $job)
-							<li><a href="#job-{{ $_hash->encode($job->id) }}" aria-controls="job-{{ $_hash->encode($job->id) }}" role="tab" data-toggle="tab">{{ $job->title }}</a></li>
+							<li role="presentation" @if ($index === 0) {{ 'active' }} @endif><a href="#a-{{ $job->id }}" aria-controls="a-{{ $job->id }}" role="tab" data-toggle="tab">{{ $job->title }}</a></li>
 							@endforeach
 						</ul>
 						@else
@@ -38,7 +38,7 @@
 
 					<div class="tab-content job-info col-sm-8 col-xs-12">
 						@foreach ($jobs as $index=>$job)
-						<div role="tabpanel" class="tab-pane @if ($index === 0) {{ 'active' }} @endif" id="job-{{ $job->id }}">
+						<div role="tabpanel" class="tab-pane @if ($index === 0) {{ 'active' }} @endif" id="a-{{ $job->id }}">
 							<div class="job-info-top">
 								<h2>{{ $job->title }}</h2>
 								<div>
@@ -55,6 +55,12 @@
 							</div>
 
 							<div class="job-info-bottom">
+								@if ( ! is_null($job->agency_id) )
+									<?php $jAgency = $job->agency; ?>
+									@if ($jAgency)
+										<span class="alert alert-success">This job is provided by <a href="#" onclick="return false;" data-html="true" data-toggle="popover" data-placement="right" title="<i class='fa fa-info-circle'></i> Agency Info" data-content="Address: <strong>{{ $jAgency->address }}</strong> <br/> Phone: <strong>{{ $jAgency->phone }}</strong> <br/> Location: <strong>{{ $jAgency->country . ', ' . $jAgency->city }}</strong>">{{ $jAgency->name }}</a></span>
+									@endif
+								@endif
 								<span>Location: {{ $job->city . ', ' . $job->country }}</span>
 								<span>Salary: <i class="fa fa-gbp"></i> {{ number_format($job->salary, 0) . ' (' . $job->salary_type . ')' }}</span>
 								<span>Start Date: {{ $job->start_date }}</span>
@@ -70,7 +76,6 @@
 
 							<div class="btn-group">
 								<a href="{{ route('job.public', ['id' => $_hash->encode($job->id), 'slug' => Str::slug($job->title)]) }}" class="btn btn-warning">See Job Details</a>
-								{{-- <a href="{{ route('contractor.apply', ['id' => $_hash->encode($job->id)]) }}" class="btn btn-primary" target="_blank">Apply</a> --}}
 								<button type="button" class="btn btn-primary" data-init-apply data-job="{{ $_hash->encode($job->id) }}" @if (isset($contractor)) data-init-apply @else onclick="return location.replace('{{ route('front.login') }}');" @endif>Apply</button>
 							</div>
 						</div>
@@ -92,13 +97,13 @@
 						@if ($jobs->count() > 0)
 						<ul class="list-unstyled hidden-xs" role="tablist">
 							@foreach ($jobs as $index => $job)
-							<li role="presentation" @if ($index === 0) {{ 'active' }} @endif><a href="#job-{{ $job->id }}" aria-controls="job-{{ $job->id }}" role="tab" data-toggle="tab">{{ $job->title }}</a></li>
+							<li role="presentation" @if ($index === 0) {{ 'active' }} @endif><a href="#c-{{ $job->id }}" aria-controls="c-{{ $job->id }}" role="tab" data-toggle="tab">{{ $job->title }}</a></li>
 							@endforeach
 						</ul>
 
 						<ul class="list-unstyled hidden-md hidden-lg hidden-sm" role="tablist">
 							@foreach ($jobs as $job)
-							<li><a href="#job-{{ $job->id }}" aria-controls="job-{{ $job->id }}" role="tab" data-toggle="tab">{{ $job->title }}</a></li>
+							<li><a href="#c-{{ $job->id }}" aria-controls="c-{{ $job->id }}" role="tab" data-toggle="tab">{{ $job->title }}</a></li>
 							@endforeach
 						</ul>
 						@else
@@ -108,7 +113,7 @@
 
 					<div class="tab-content job-info col-sm-8 col-xs-12">
 						@foreach ($jobs as $index=>$job)
-						<div role="tabpanel" class="tab-pane @if ($index === 0) {{ 'active' }} @endif" id="job-{{ $job->id }}">
+						<div role="tabpanel" class="tab-pane @if ($index === 0) {{ 'active' }} @endif" id="c-{{ $job->id }}">
 							<div class="job-info-top">
 								<h2>{{ $job->title }}</h2>
 								<div>
@@ -125,6 +130,12 @@
 							</div>
 
 							<div class="job-info-bottom">
+								@if ( ! is_null($job->agency_id) )
+									<?php $jAgency = $job->agency; ?>
+									@if ($jAgency)
+										<span class="alert alert-success">This job is provided by <a href="#" onclick="return false;" data-html="true" data-toggle="popover" data-placement="right" title="<i class='fa fa-info-circle'></i> Agency Info" data-content="Address: <strong>{{ $jAgency->address }}</strong> <br/> Phone: <strong>{{ $jAgency->phone }}</strong> <br/> Location: <strong>{{ $jAgency->country . ', ' . $jAgency->city }}</strong>">{{ $jAgency->name }}</a></span>
+									@endif
+								@endif
 								<span>Location: {{ $job->city . ', ' . $job->country }}</span>
 								<span>Salary: <i class="fa fa-gbp"></i> {{ number_format($job->salary, 0) . ' (' . $job->salary_type . ')' }}</span>
 								<span>Start Date: {{ $job->start_date }}</span>
@@ -161,13 +172,13 @@
 						@if ($jobs)
 						<ul class="list-unstyled hidden-xs" role="tablist">
 							@foreach ($jobs as $index => $job)
-							<li role="presentation" @if ($index === 0) {{ 'active' }} @endif><a href="#job-{{ $job->id }}" aria-controls="job-{{ $job->id }}" role="tab" data-toggle="tab">{{ $job->title }}</a></li>
+							<li role="presentation" @if ($index === 0) {{ 'active' }} @endif><a href="#f-{{ $job->id }}" aria-controls="f-{{ $job->id }}" role="tab" data-toggle="tab">{{ $job->title }}</a></li>
 							@endforeach
 						</ul>
 
 						<ul class="list-unstyled hidden-md hidden-lg hidden-sm" role="tablist">
 							@foreach ($jobs as $job)
-							<li><a href="#job-{{ $job->id }}" aria-controls="job-{{ $job->id }}" role="tab" data-toggle="tab">{{ $job->title }}</a></li>
+							<li><a href="#f-{{ $job->id }}" aria-controls="f-{{ $job->id }}" role="tab" data-toggle="tab">{{ $job->title }}</a></li>
 							@endforeach
 						</ul>
 						@else
@@ -177,7 +188,7 @@
 
 					<div class="tab-content job-info col-sm-8 col-xs-12">
 						@foreach ($jobs as $index=>$job)
-						<div role="tabpanel" class="tab-pane @if ($index === 0) {{ 'active' }} @endif" id="job-{{ $job->id }}">
+						<div role="tabpanel" class="tab-pane @if ($index === 0) {{ 'active' }} @endif" id="f-{{ $job->id }}">
 							<div class="job-info-top">
 								<h2>{{ $job->title }}</h2>
 								<div>
@@ -194,6 +205,12 @@
 							</div>
 
 							<div class="job-info-bottom">
+								@if ( ! is_null($job->agency_id) )
+									<?php $jAgency = $job->agency; ?>
+									@if ($jAgency)
+										<span class="alert alert-success">This job is provided by <a href="#" onclick="return false;" data-html="true" data-toggle="popover" data-placement="right" title="<i class='fa fa-info-circle'></i> Agency Info" data-content="Address: <strong>{{ $jAgency->address }}</strong> <br/> Phone: <strong>{{ $jAgency->phone }}</strong> <br/> Location: <strong>{{ $jAgency->country . ', ' . $jAgency->city }}</strong>">{{ $jAgency->name }}</a></span>
+									@endif
+								@endif
 								<span>Location: {{ $job->city . ', ' . $job->country }}</span>
 								<span>Salary: <i class="fa fa-gbp"></i> {{ number_format($job->salary, 0) . ' (' . $job->salary_type . ')' }}</span>
 								<span>Start Date: {{ $job->start_date }}</span>

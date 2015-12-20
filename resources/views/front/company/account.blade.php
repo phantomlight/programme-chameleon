@@ -41,7 +41,7 @@ Account Settings | Programme Chameleon
 
 						<div class="form-group">
 							<label>Short description of your company</label>
-							<textarea class="form-control" maxlength="1000" name="about"></textarea>
+							<textarea class="form-control" maxlength="1000" name="description"></textarea>
 						</div>
 
 						<?php $socials = json_decode($company->socials); ?>

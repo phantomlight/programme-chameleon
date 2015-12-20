@@ -69,4 +69,16 @@ class Agency {
 		return $this->agencyProvider->removeAffiliate($company);
 	}
 
+	public function addNotification($agency, array $data) {
+		return $this->agencyNotificationProvider->add($agency, $data);
+	}
+
+	public function updateNotification($notification, $agency, array $data) {
+		return $this->agencyNotificationProvider->update($notification, $agency, $data);
+	}
+
+	public function removeNotification($notification, $agency) {
+		return $this->agencyNotificationProvider->remove($notification, $agency);
+	}
+
 }

@@ -105,6 +105,10 @@ class Contractor {
 		return $this->contractorProvider->findById($id);
 	}
 
+	public function findAllByJobAlerts($job, array $industries=array()) {
+		return $this->contractorProvider->findByJobAlerts($job, $industries);
+	}
+
 	public function applyForJob($contractor, $job) {
 		return $this->contractorProvider->applyForJob($contractor, $job);
 	}
@@ -127,6 +131,18 @@ class Contractor {
 
 	public function findTimesheetByJob($contractor, $job) {
 		return $this->contractorTimesheetProvider->findByJob($contractor, $job);
+	}
+
+	public function addNotification($contractor, array $data) {
+		return $this->contractorNotificationProvider->add($contractor, $data);
+	}
+
+	public function updateNotification($notification, $contractor, array $data) {
+		return $this->contractorNotificationProvider->update($notification, $contractor, $data);
+	}
+
+	public function removeNotification($notification, $contractor) {
+		return $this->contractorNotificationProvider->remove($notification, $contractor);
 	}
 	
 }

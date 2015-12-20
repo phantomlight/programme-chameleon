@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Console\Commands\Inspire::class,
+        \App\Console\Commands\Job::class,
+        \App\Console\Commands\Company::class
     ];
 
     /**
@@ -24,7 +25,20 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-                 ->hourly();
+        $schedule->command('job')
+                 ->dailyAt('00:05')
+                 ->withoutOverlapping();
+
+        $schedule->command('company')
+                 ->dailyAt('00:35')
+                 ->withoutOverlapping();
+
+        // Test schedule:run
+        // $schedule->call(function() {
+        //     \Mail::raw('Testing from mydomain', function($message)
+        //     {
+        //         $message->to('forddyce92@gmail.com')->from('alerts@programmechameleon.com');
+        //     });
+        // })->everyMinute();
     }
 }

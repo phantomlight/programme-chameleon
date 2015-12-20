@@ -27,29 +27,3 @@
 		}
 	}
 }
-
-.list-notif {
-	.alert {
-		padding-left: 15px;
-		font-size: 12px;
-	}
-}
-
-.list-group {
-	.list-group-item {
-		padding-left: 25px;
-		color: $primary-text-color;
-
-		* {
-			color: $primary-text-color;
-		}
-
-		label, .btn, button {
-			color: #fff;
-		}
-
-		&.active {
-			color: #fff;
-		}
-	}
-}

@@ -1,5 +1,6 @@
 <?php
 	use App\Utils\Hash;
+	use Illuminate\Support\Str;
 
 	if (\User::check()) {
 		$user = \User::getUser();
@@ -95,7 +96,7 @@
 											<div class="media-body">
 												<h4 class="media-heading">{{ $company->name }}</h4>
 												<div class="btn-group">
-													<a href="#" class="btn btn-xs btn-primary">Details</a>
+													<a href="{{ route('company.profile', ['id'=>$_hash->encode($company->id), 'slug'=>Str::slug($company->name)]) }}" target="_blank" class="btn btn-xs btn-primary">Details</a>
 													<button class="btn btn-xs btn-success" data-id="{{ $_hash->encode($company->id) }}"><i class="fa fa-check"></i> Request Affiliate</button>
 												</div>
 											</div>

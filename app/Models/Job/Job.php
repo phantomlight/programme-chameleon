@@ -54,6 +54,14 @@ class Job {
 		return $this->jobProvider->findAll();
 	}
 
+	public function findJobsByCompany($company, $type=null) {
+		return $this->jobProvider->findByCompany($company, $type);
+	}
+
+	public function findJobsByAgency($agency, $type=null) {
+		return $this->jobProvider->findByAgency($agency, $type);
+	}
+
 	public function findJobByType($type='contract') {
 		return $this->jobProvider->findByType($type);
 	}

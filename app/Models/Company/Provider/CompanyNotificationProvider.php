@@ -25,5 +25,45 @@ class CompanyNotificationProvider implements CompanyNotificationProviderInterfac
 		return $this->createModel();
 	}
 
+	public function add($company, array $data) {
+		$model = $this->getModel();
+		$model->fill($data);
+		$model->save();
+		return $model;
+	}
+
+	public function update($notification, $company, array $data) {
+		if ( ! $model = $this->findById($notification)) {
+			throw new \Exception("Notification not found.", 1);
+			return;
+		}
+
+		if ($model->company_id !== $company->id) {
+			throw new \Exception("Notification does not belong to this company", 1);
+			return;
+		}
+
+		foreach ($data as $k=>$d) {
+			if (isset($model->{$k})) $model->{$k} = $d;
+		}
+
+		$model->save();
+		return $model;
+	}
+
+	public function remove($notification, $company) {
+		if ( ! $model = $this->findById($notification->id)) {
+			throw new \Exception("Notification not found.", 1);
+			return;
+		}
+
+		if ($model->contractor_id !== $company->id) {
+			throw new \Exception("Notification does not belong to this company", 1);
+			return;
+		}
+
+		$model->delete();
+		return;
+	}
 
 }

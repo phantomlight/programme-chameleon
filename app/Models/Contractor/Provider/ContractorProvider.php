@@ -2,6 +2,7 @@
 
 use App\Models\Contractor\Interfaces\ContractorProviderInterface;
 use App\Utils\File\FileUploader;
+use App\Utils\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -38,6 +39,21 @@ class ContractorProvider implements ContractorProviderInterface {
 	public function findById($id) {
 		$model = $this->createModel();
 		return $model->where('id', $id)->first();
+	}
+
+	public function findByJobAlerts($job, $industries) {
+		$model = $this->getModel();
+		$model = $model->jobAlerts()
+							->wherePivot('country', $job->country)
+							->wherePivot('city', $job->city);
+
+		if (count($industries) > 0) {
+			foreach ($industries as $industry) {
+				$model = $model->orWherePivot('industry_id', $industry);
+			}
+		}
+
+		return $model->get();
 	}
 
 	public function updateData($contractor, $data) {
@@ -130,6 +146,11 @@ class ContractorProvider implements ContractorProviderInterface {
 	}
 
 	public function applyForJob($contractor, $job) {
+		if ( ! $company = $job->company) {
+			throw new \Exception("Company for this job not found.", 1);
+			return;
+		}
+
 		if ( $contractor->jobs->contains($job->id) ) {
 			throw new \Exception("You have already applied for this job.", 1);
 			return;
@@ -140,6 +161,36 @@ class ContractorProvider implements ContractorProviderInterface {
 			'created_at'	=>	Carbon::now(),
 			'updated_at'	=>	Carbon::now(),
 		]);
+
+		// TODO: Move to background worker
+
+		$cUser = $contractor->user;
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		$notificationData = [
+			'company_id'	=>	$company->id,
+			'title'				=>	'New Job Application',
+			'alert_from'	=>	$cUser->first_name . ' ' . $cUser->last_name,
+			'has_read'		=>	false,
+			'url'					=>	route('company.job.application') . '?i=' . $_hash->encode($job->id),
+		];
+
+		$notification = \Company::addNotification($company, $notificationData);
+
+		if ( ! is_null($job->agency_id)) {
+			$notificationData = [
+				'agency_id'		=>	$job->agency_id,
+				'title'				=>	'New Job Application',
+				'alert_from'	=>	$cUser->first_name . ' ' . $cUser->last_name,
+				'has_read'		=>	false,
+				'url'					=>	route('agency.job.application') . '?i=' . $_hash->encode($job->id),
+			];
+
+			$notification = \Agency::addNotification($agency, $notificationData);
+		}
+
+		// END TODO
 		
 		return $contractor;
 	}

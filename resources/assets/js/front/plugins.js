@@ -129,7 +129,7 @@ export class Plugins {
 		}
 	}
 	initBootstrap() {
-		$('.panel-tooltip').tooltip();
+		$('.panel-tooltip, [data-toggle="tooltip"]').tooltip();
 		$('[data-toggle="popover"]').popover();
 
 		$('.input-daterange input').each(function () {

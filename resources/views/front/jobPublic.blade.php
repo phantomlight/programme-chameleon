@@ -1,4 +1,6 @@
 <?php
+	use App\Utils\Hash;
+
 	if (\User::check()) {
 		$user = \User::getUser();
 
@@ -15,6 +17,9 @@
 
 	$jobCompany = $job->company;
 	$industries = $job->industries()->get();
+
+	$_hash = new Hash();
+	$_hash = $_hash->getHasher();
 ?>
 	
 @extends('front.app')
@@ -32,7 +37,7 @@
 				<h1 class="job-detail-title">
 					{{ $job->title }}
 				</h1>
-				<button class="btn btn-primary" data-toggle="modal" data-target="#apply-job-modal">Apply</button>
+				<button type="button" class="btn btn-primary" data-init-apply data-job="{{ $_hash->encode($job->id) }}" @if (isset($contractor)) data-init-apply @else onclick="return location.replace('{{ route('front.login') }}');" @endif>Apply</button>
 				<div class="company-job-detail clearfix">
 					@if ($jobCompany)
 						<div class="company-logo">

@@ -42,7 +42,7 @@ class CompanyProvider implements CompanyProviderInterface {
 		if ($active) {
 			$company->is_vip = true;
 			$today = Carbon::now();
-			$company->vip_start = $today;
+			$company->vip_start = Carbon::now();
 			$company->vip_end = $today->addMonths(6);
 		}
 		else {
@@ -52,6 +52,17 @@ class CompanyProvider implements CompanyProviderInterface {
 		}
 
 		$company->save();
+
+		$jobs = $company->jobs()->get();
+		if (count($jobs) > 0) {
+			foreach ($jobs as $job) {
+				if ( ! $job->is_active) {
+					$job->is_active = true;
+					$job->save();
+				}
+			}
+		}
+
 		return $company;
 	}
 
@@ -139,6 +150,12 @@ class CompanyProvider implements CompanyProviderInterface {
 		}
 
 		$company->agencies()->detach($agency->id);
+		return $company;
+	}
+
+	public function removeVip($company) {
+		$company->is_vip = false;
+		$company->save();
 		return $company;
 	}
 

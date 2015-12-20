@@ -359,3 +359,74 @@ if ($('#agencyAffiliateList')[0]) {
 		}
 	});
 }
+
+if ($('#removeVipBtn')[0]) {
+	$('#removeVipBtn').on('click', function (e) {
+		e.preventDefault();
+		if (confirm('Really Remove VIP?')) {
+			if ( ! processing ) {
+				$('#removeVipBtn').disable(true);
+				$('.page-preloader').show();
+				processing = true;
+
+				$.post(window.origin + '/company/remove-vip').done(function (e) {
+					alert(e.message);
+					$('#removeVipBtn').disable(false);
+					$('.page-preloader').hide();
+					processing = false;
+					if (e.type === 'success') location.reload();
+				}).fail(function (xhr, status, e) {
+					alert(xhr.responseText);
+					$('#removeVipBtn').disable(false);
+					$('.page-preloader').hide();
+					processing = false;
+				});
+			}
+		}
+	});
+}
+
+// Notifications
+if ($('#listNotif')[0]) {
+	var $list = $('#listBotif');
+	$list.find('.btn-mark-notif').on('click', function (e) {
+		e.preventDefault();
+
+		if ( ! processing) {
+			var $notifBtn = $(this);
+			var id = $notifBtn.data('id');
+			$list.find('.btn-mark-notif').disable(true);
+			processing = true;
+
+			$.post(window.origin + '/company/update-notif', {
+				id: id,
+				read: true
+			}).done(function (e) {
+				$list.find('.btn-mark-notif').disable(false);
+				processing = false;
+				if (e.type === 'success') {
+					$list.find('li[data-id=' + id + ']').remove();
+				}
+			}).fail(function (xhr, status, e) {
+				$list.find('.btn-mark-notif').disable(false);
+				processing = false;
+			});
+		}
+	});
+
+	$('#removeReadNotifBtn').on('click', function (e) {
+		if ( ! processing ) {
+			$('#removeReadNotifBtn').disable(true);
+			processing = true;
+
+			$.post(window.origin + '/company/remove-notif').done(function (e) {
+				$('#removeReadNotifBtn').disable(false);
+				processing = false;
+				alert(e.message);
+			}).fail(function (xhr, status, e) {
+				$('#removeReadNotifBtn').disable(false);
+				processing = false;
+			});
+		}
+	});
+}

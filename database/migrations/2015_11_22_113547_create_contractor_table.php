@@ -117,6 +117,7 @@ class CreateContractorTable extends Migration
             $table->string('alert_from', 255);
             $table->boolean('has_read')->default(0);
             $table->string('title', 255);
+            $table->string('url', 255)->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
 

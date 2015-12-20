@@ -10,7 +10,7 @@ use App\Utils\Hashing\JCryption;
 class CompanyController extends Controller {
 
 	public function __construct() {
-		$this->middleware('company', ['except' => ['getRegister', 'postRegister']]);
+		$this->middleware('company', ['except' => ['getRegister', 'postRegister', 'getPublicProfilePage']]);
 	}
 
 	public function getIndex() {
@@ -19,6 +19,19 @@ class CompanyController extends Controller {
 
 	public function getAccount() {
 		return view('front.company.account');
+	}
+
+	public function getPublicProfilePage($id, $slug) {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		$company = \Company::findCompanyById($_hash->decode($id));
+
+		if ( ! $company) {
+			return abort(404);
+		}
+		
+		return view('front.company.publicProfile')->with('model', $company);
 	}
 
 	public function getRegister() {
@@ -202,6 +215,76 @@ class CompanyController extends Controller {
 				'message'	=>	$e->getMessage(),
 			]);
 		}
+	}
+
+	public function postRemoveVip() {
+		if ( ! $company = \Company::getCompany()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'You are not in company account.',
+			]);
+		}
+
+		if ( ! $company->is_vip) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'You are not in VIP account',
+			]);
+		}
+
+		try {
+			$company = \Company::removeVip($company);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'VIP status removed',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postUpdateNotif() {
+		if ( ! $company = \Company::getCompany()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not a company account',
+			]);
+		}
+
+		try {
+			$notification = \Company::updateNotification(trim(\Input::get('id')), $company, ['has_read' => 1]);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Notification updated',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postRemoveNotif() {
+		if ( ! $company = \Company::getCompany()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not a company account',
+			]);
+		}
+
+		$company->notifications()->where('has_read', 1)->delete();
+
+		return \Response::json([
+			'type'		=>	'success',
+			'message'	=>	'Notification marked "read" removed successfully',
+		]);
 	}
 
 }

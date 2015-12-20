@@ -36,10 +36,20 @@ Route::get('contractor/{id}/{slug}', [
 	'uses'	=>	'ContractorController@getPublicProfilePage',
 ]);
 
-Route::get('submit-timesheet/{id}', [
-	'as'		=>	'contractor.apply',
-	'uses'	=>	'ContractorController@getSubmitTimesheet',
+Route::get('company/{id}/{slug}', [
+	'as' 		=>	'company.profile',
+	'uses'	=>	'CompanyController@getPublicProfilePage',
 ]);
+
+Route::get('agency/{id}/{slug}', [
+	'as' 		=>	'agency.profile',
+	'uses'	=>	'AgencyController@getPublicProfilePage',
+]);
+
+// Route::get('submit-timesheet/{id}', [
+// 	'as'		=>	'contractor.apply',
+// 	'uses'	=>	'ContractorController@getSubmitTimesheet',
+// ]);
 
 Route::get('job-search', [
 	'as'		=>	'job.search',
@@ -82,6 +92,7 @@ Route::controller('agency', 'AgencyController', [
 	'getIndex'			=>	'agency.index',
 	'getAccount'		=>	'agency.account',
 	'getJobAdd'			=>	'agency.job.add',
+	'getJobApplication'	=>	'agency.job.application',
 	'getJobEdit'		=>	'agency.job.edit',
 	'getJobList'		=>	'agency.job.list',
 	'getCompanyList'	=>	'agency.company.list',

@@ -4,7 +4,15 @@
 
 	if (\User::check()) {
 		$user = \User::getUser();
-		$company = \Company::getCompany();
+		if ($user->hasAccess('contractor')) {
+			$contractor = \Contractor::getContractor();
+		}
+		elseif ($user->hasAccess('company')) {
+			$company = \Company::getCompany();
+		}
+		elseif ($user->hasAccess('agency')) {
+			$agency = \Agency::getAgency();
+		}
 	}
 
 	$_hash = new Hash();
@@ -112,8 +120,12 @@ CV Search | Programme Chameleon
 								@if ($cUser = $contractor->user)
 									<li>
 										<div class="media">
-											<a href="#" class="media-left">
-												<img data-src="holder.js/100x100?random=yes&text=no-image">
+											<a href="{{ route('contractor.profile', ['id'=>$_hash->encode($contractor->id), 'slug'=>$slug]) }}" class="media-left">
+												@if (is_null($contractor->image))
+													<img data-src="holder.js/100x100?random=yes&text=no-image">
+												@else
+													<img src="{{ asset($contractor->image) }}" width="100" />
+												@endif
 											</a>
 											<div class="media-body">
 												<div class="col-sm-4">
