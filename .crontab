@@ -1,1 +1,4 @@
 * * * * * /usr/bin/php5 /home/ford/web/www-job/artisan schedule:run 1>> /dev/null 2>&1
+
+/usr/bin/php
+/home/plat-linnas01/p/programmechameleon.com-1085292732/user/htdocs/new/artisan

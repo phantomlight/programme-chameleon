@@ -74,25 +74,18 @@ class ContractorResumeProvider implements ContractorResumeProviderInterface {
 	}
 
 	public function updateSalary($contractor, $data) {
-		$resume = $contractor->resume;
-		if ( ! $resume) {
-			throw new \Exception("Please upload a CV file first before updating salary data.", 1);
-			return;
-		}
-
-		try {
-			foreach ($data as $k=>$d) {
-				$resume->{$k} = $d;
+		foreach ($data as $k=>$d) {
+			if (isset($contractor->{$k})) {
+				$contractor->{$k} = $d;
 			}
+		}
 
-			$resume->save();
+		if ($contractor->save()) {
 			\Session::forget('_sess_contractor');
-			return $resume;
+			return $contractor;
 		}
-		catch (\Exception $e) {
-			throw new \Exception($e->getMessage(), 1);
-			return;
-		}
+
+		return false;
 	}
 
 }

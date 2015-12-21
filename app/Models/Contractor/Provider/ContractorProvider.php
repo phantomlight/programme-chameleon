@@ -179,15 +179,17 @@ class ContractorProvider implements ContractorProviderInterface {
 		$notification = \Company::addNotification($company, $notificationData);
 
 		if ( ! is_null($job->agency_id)) {
-			$notificationData = [
-				'agency_id'		=>	$job->agency_id,
-				'title'				=>	'New Job Application',
-				'alert_from'	=>	$cUser->first_name . ' ' . $cUser->last_name,
-				'has_read'		=>	false,
-				'url'					=>	route('agency.job.application') . '?i=' . $_hash->encode($job->id),
-			];
+			if ($agency = $job->agency) {
+				$notificationData = [
+					'agency_id'		=>	$job->agency_id,
+					'title'				=>	'New Job Application',
+					'alert_from'	=>	$cUser->first_name . ' ' . $cUser->last_name,
+					'has_read'		=>	false,
+					'url'					=>	route('agency.job.application') . '?i=' . $_hash->encode($job->id),
+				];
 
-			$notification = \Agency::addNotification($agency, $notificationData);
+				$notification = \Agency::addNotification($agency, $notificationData);
+			}
 		}
 
 		// END TODO

@@ -54,7 +54,7 @@
 									<li class="menu-item"><a href="{{ url('contractor/create-job-alert') }}">Create Job Alert</a></li>
 								</ul>
 							</li>
-							<li class="menu-item"><a href="{{ url('contractor/search-job') }}">Job Search</a></li>
+							<li class="menu-item"><a href="{{ url('job-search') }}">Job Search</a></li>
 						</ul>
 					</nav><!-- /#main-menu -->
 				</div><!-- /#menu-wrapper -->

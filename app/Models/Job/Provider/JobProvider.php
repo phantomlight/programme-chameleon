@@ -166,32 +166,45 @@ class JobProvider implements JobProviderInterface {
 		}
 
 		$model = $this->getModel();
-		$model = $model->where('title', 'like', '%' . $data['query'] . '%');
 
-		if ($data['country'] !== 'any') {
-			$model->where('country', $data['country']);
+		if (isset($data['query'])) {
+			$model = $model->where('title', 'like', '%' . $data['query'] . '%');
 		}
 
-		if ($data['job_industry'] !== '' && $data['job_industry'] !== 'any') {
-			$model = $model->whereHas('industries', function ($query) use ($data) {
-				$query->where('industry_id', $data['job_industry']);
-			});
+		if (isset($data['country'])) {
+			if ($data['country'] !== 'any') {
+				$model->where('country', $data['country']);
+			}
 		}
 
-		if ($data['job_type'] !== 'any') {
-			$model = $model->where('type', $data['job_type']);
+		if (isset($data['job_industry'])) {
+			if ($data['job_industry'] !== '' && $data['job_industry'] !== 'any') {
+				$model = $model->whereHas('industries', function ($query) use ($data) {
+					$query->where('industry_id', $data['job_industry']);
+				});
+			}
 		}
 
-		if ($data['experience_min'] !== 'any' && $data['experience_max'] !== 'any') {
-			$model = $model->whereBetween('experience_year', [(int) $data['experience_min'], (int) $data['experience_max']]);
+		if (isset($data['job_type'])) {
+			if ($data['job_type'] !== 'any') {
+				$model = $model->where('type', $data['job_type']);
+			}
 		}
 
-		if ($data['salary_type'] !== 'any') {
-			$model->where('salary_type', $data['salary_type'])
-						->whereBetween('salary', [(int) $data['salary_min'], (int) $data['salary_max']]);
+		if (isset($data['experience_min']) && $data['experience_max']) {
+			if ($data['experience_min'] !== 'any' && $data['experience_max'] !== 'any') {
+				$model = $model->whereBetween('experience_year', [(int) $data['experience_min'], (int) $data['experience_max']]);
+			}
 		}
 
-		return $model->where('status', 'open')->orderBy('created_at', 'desc');
+		if (isset($data['salary_type'])) {
+			if ($data['salary_type'] !== 'any') {
+				$model->where('salary_type', $data['salary_type'])
+							->whereBetween('salary', [(int) $data['salary_min'], (int) $data['salary_max']]);
+			}
+		}
+
+		return $model->where('status', 'open')->where('is_active', true)->orderBy('created_at', 'desc');
 	}
 
 	public function applyToContractor($job, $contractor) {
@@ -203,21 +216,19 @@ class JobProvider implements JobProviderInterface {
 
 			$job->contractors()->sync([$contractor->id => ['status' => 'accept']], false);
 
-			if (count($contractors) > 0) {
-				$_hash = new Hash();
-				$_hash = $_hash->getHasher();
+			$_hash = new Hash();
+			$_hash = $_hash->getHasher();
 
-				$notificationData = [
-					'contractor_id'	=>	$contractor->id,
-					'alert_from'	=>	'System: Programme Chameleon',
-					'has_read'	=>	false,
-					'title'	=>	'Added to ' . $job->title,
-					'description'	=>	'You have been accepted to ' . $job->title,
-					'url'		=>	url('job/' . $_hash->encode($job->id) . '/' . Str::slug($job->title)),
-				];
+			$notificationData = [
+				'contractor_id'	=>	$contractor->id,
+				'alert_from'	=>	'System: Programme Chameleon',
+				'has_read'	=>	false,
+				'title'	=>	'Added to ' . $job->title,
+				'description'	=>	'You have been accepted to ' . $job->title,
+				'url'		=>	url('job/' . $_hash->encode($job->id) . '/' . Str::slug($job->title)),
+			];
 
-				$notification = \Contractor::addNotification($contractor, $notificationData);
-			}
+			$notification = \Contractor::addNotification($contractor, $notificationData);
 			return $job;
 		}
 		catch (\Exception $e) {
