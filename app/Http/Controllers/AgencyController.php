@@ -251,6 +251,13 @@ class AgencyController extends Controller {
 		$_hash = new Hash();
 		$_hash = $_hash->getHasher();
 
+		if (!isset($data['company'])) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'You need to post on behalf at least a company.',
+			]);
+		}
+		
 		if ( ! $company = \Company::findCompanyById($_hash->decode($data['company']))) {
 			return \Response::json([
 				'type'		=>	'danger',
