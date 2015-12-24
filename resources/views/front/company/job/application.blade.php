@@ -60,7 +60,7 @@ $_hash = $_hash->getHasher();
 										<div class="btn-group">
 											<a href="{{ route('contractor.profile', ['id'=>$_hash->encode($contractor->id), 'slug'=>$slug]) }}" class="btn btn-primary" target="_blank">See contractor details</a>
 											@if ($status !== 'accept')
-											<button type="button" data-value="{{ $_hash->encode($contractor->id) }}" data-job="{{ $_hash->encode($job->id) }}" class="btn btn-success btn-give-job" onclick="return false;"><i class="fa fa-check"></i>Give Job</button>
+											<button type="button" data-value="{{ $_hash->encode($contractor->id) }}" data-job="{{ $_hash->encode($job->id) }}" class="btn btn-success btn-give-job" onclick="return false;"><i class="fa fa-check"></i>Award Job</button>
 											@endif
 										</div>
 									</div>

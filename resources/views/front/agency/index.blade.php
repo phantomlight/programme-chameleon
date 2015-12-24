@@ -42,6 +42,7 @@ $_hash = $_hash->getHasher();
 								<div class="btn-group">
 									<a href="{{ route('agency.job.edit') . '?i=' . $_hash->encode($job->id) }}" class="btn btn-warning">Edit</a>
 									<a href="{{ route('agency.job.application') . '?i=' . $_hash->encode($job->id) }}" class="btn btn-success">Applications ({{ $job->contractors()->wherePivot('status', 'request')->count() }})</a>
+									<a href="{{ route('agency.job.detail') . '?i=' . $_hash->encode($job->id) }}" class="btn btn-primary">Timesheets and Expenses</a>
 								</div>
 							</li>
 							@endforeach

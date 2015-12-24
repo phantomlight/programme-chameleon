@@ -95,6 +95,7 @@ Route::controller('agency', 'AgencyController', [
 	'getJobApplication'	=>	'agency.job.application',
 	'getJobEdit'		=>	'agency.job.edit',
 	'getJobList'		=>	'agency.job.list',
+	'getJobDetails'		=>	'agency.job.detail',
 	'getCompanyList'	=>	'agency.company.list',
 ]);
 

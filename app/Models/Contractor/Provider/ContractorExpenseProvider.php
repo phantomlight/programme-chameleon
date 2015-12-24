@@ -48,8 +48,7 @@ class ContractorExpenseProvider implements ContractorExpenseProviderInterface {
 			$location = 'uploads/contractors/' . $contractor->id . '/expense/' . date('m') . '/';
 
 			try {
-				// use resume for type, same as timesheet
-				$uploadedFile = $uploader->upload($file, $location, 'resume');
+				$uploadedFile = $uploader->upload($file, $location, 'expense');
 			}
 			catch (\Exception $e) {
 				throw new \Exception($e->getMessage(), 1);
@@ -65,6 +64,7 @@ class ContractorExpenseProvider implements ContractorExpenseProviderInterface {
 			'title'					=>	$data['title'],
 			'amount'				=>	$data['amount'],
 			'type'					=>	$data['type'],
+			'status'				=>	false,
 			'file'					=>	isset($uploadedFile) ? $uploadedFile : null,
 			'description'		=>	($data['description'] !== '') ? $data['description'] : null,
 		]);

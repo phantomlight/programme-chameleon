@@ -410,6 +410,16 @@ if ($('#submitTimesheetForm')[0]) {
 		'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 	];
 
+	$('select[name=report_time]').on('change', function (e) {
+		console.log($(this).val());
+		if ($(this).val() === 'daily') {
+			$('span.hour-text').text('hour');
+		}
+		else {
+			$('span.hour-text').text('day');
+		}
+	});
+
 	$form.find('input[type=file]').on('change', function () {
 		if (this.files[0].size > 5000000) {
 			$(this).parent().showMessage('File cannot be more than 5Mb.', 'danger');
@@ -477,6 +487,10 @@ if ($('#submitExpenseForm')[0]) {
 		'application/vnd.ms-excel',
 		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 		'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		'application/pdf',
+		'image/jpeg',
+		'image/pjpeg',
+		'image/png'
 	];
 
 	$form.find('input[type=file]').on('change', function () {
@@ -484,7 +498,7 @@ if ($('#submitExpenseForm')[0]) {
 			$(this).parent().showMessage('File cannot be more than 5Mb.', 'danger');
 			file = null;
 		} else if ($.inArray(this.files[0].type, allowed_expense_mime) === -1) {
-			$(this).parent().showMessage('Can only upload word or excel files.', 'danger');
+			$(this).parent().showMessage('Can only upload image, office docs, and jpeg or png.', 'danger');
 			file = null;
 		} else {
 			$(this).parent().showMessage('This file can be uploaded.', 'success');

@@ -34,8 +34,8 @@
 				</div>
 				<div class="col-sm-8">
 					<div class="candidate-button">
+						@if (count($resumes) > 0)
 						<form role="form" onsubmit="return false;">
-							@if ($resumes)
 							<div class="dropdown">
 								<button class="btn btn-primary" type="button" data-toggle="dropdown" aria-haspopup="true" id="resumeDropdownBtn" aria-expanded="false">Download Resume <span class="caret"></span></button>
 								<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="resumeDropdownBtn">
@@ -44,8 +44,8 @@
 								@endforeach
 								</ul>
 							</div>
-							@endif
 						</form>
+						@endif
 					</div>
 				</div>
 			</div>

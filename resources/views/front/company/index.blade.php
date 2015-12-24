@@ -55,7 +55,7 @@ Company 1 | Programme Chameleon
 							<div class="btn-group">
 								<a href="{{ route('company.job.edit') . '?i=' . $_hash->encode($job->id) }}" class="btn btn-warning">Edit</a>
 								<a href="{{ route('company.job.application') . '?i=' . $_hash->encode($job->id) }}" class="btn btn-success">Applications ({{ $job->contractors()->wherePivot('status', 'request')->count() }})</a>
-								<a href="{{ route('company.job.detail') . '?i=' . $_hash->encode($job->id) }}" class="btn btn-primary">Timesheet and Expenses</a>
+								<a href="{{ route('company.job.detail') . '?i=' . $_hash->encode($job->id) }}" class="btn btn-primary">Timesheets and Expenses</a>
 							</div>
 						</li>
 						@endforeach
@@ -70,7 +70,7 @@ Company 1 | Programme Chameleon
 			</div>
 
 			<div class="panel panel-default">
-				<div class="panel-heading">Agency Request</div>
+				<div class="panel-heading">Agency Affiliates</div>
 				<div class="panel-body">
 					<?php $agencies = $company->agencies()->orderBy('created_at', 'desc')->paginate(15); ?>
 					@if (count($agencies) > 0)
@@ -91,7 +91,7 @@ Company 1 | Programme Chameleon
 									<h4>{{ $agency->name }}</h4>
 								</div>
 								<p>Owner: <strong>{{ $agency->owner_name }}</strong></p>
-								<p>Status: <strong>{{ ucwords($agency->pivot->status) }}</strong></p>
+								<p>Status: <label class="label @if ($agency->pivot->status === 'accept') {{'label-success'}} @else {{'label-danger'}} @endif">{{ ucwords($agency->pivot->status) }}</label></p>
 								<p class="text-muted"><i class="fa fa-clock-o"></i> {{ $agency->pivot->created_at->diffForHumans() }}</p>
 								<div class="btn-group">
 									@if ($agency->pivot->status === 'request')

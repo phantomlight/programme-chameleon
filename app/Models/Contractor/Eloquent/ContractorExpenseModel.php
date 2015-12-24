@@ -16,7 +16,7 @@ class ContractorExpenseModel extends Eloquent implements ContractorExpenseModelI
 	}
 
 	public function job() {
-		return $this->belongsTo(static::$jobModel, 'contractor_id');
+		return $this->belongsTo(static::$jobModel, 'job_id');
 	}
 	
 }

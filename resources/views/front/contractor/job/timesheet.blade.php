@@ -78,25 +78,25 @@
 									</label>
 									<p>Date Range</p>
 									<div class="form-group input-group input-daterange">
-										<input type="text" name="timesheet_date_from" class="form-control" />
+										<input type="text" data-date-clear-btn="true" data-date-today-btn="true" data-date-today-highlight="true" name="timesheet_date_from" class="form-control" />
 										<span class="input-group-addon">to</span>
-										<input type="text" name="timesheet_date_to" class="form-control" />
+										<input type="text" data-date-clear-btn="true" data-date-today-btn="true" data-date-today-highlight="true" name="timesheet_date_to" class="form-control" />
 									</div>
 
 									<div class="form-group">
 										<label>Report</label>
 										<select class="form-control" name="report_time">
-											<option value="daily"> Daily </option>
+											<option value="daily" selected="selected"> Daily </option>
 											<option value="weekly"> Weekly </option>
 											<option value="monthly"> Monthly </option> 
 										</select>
 									</div>
 
 									<div class="form-group">
-										<label>Hours of working</label>
+										<label><span class="hour-text">hour</span>(s) of working</label>
 										<div class="input-group">
 											<input type="number" class="form-control" name="num_hours" value="1" min="1" />
-											<span class="input-group-addon">hour(s)</span>
+											<span class="input-group-addon"><span class="hour-text">hour</span>(s)</span>
 										</div>
 									</div>
 								</div>

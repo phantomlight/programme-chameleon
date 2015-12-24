@@ -102,4 +102,12 @@ class Company {
 		return $this->companyNotificationProvider->remove($notification, $company);
 	}
 
+	public function updateTimesheetStatus($id, $company, $status=false) {
+		return $this->companyProvider->updateTimesheet($id, $company, $status);
+	}
+
+	public function updateExpenseStatus($id, $company, $status=false) {
+		return $this->companyProvider->updateExpense($id, $company, $status);
+	}
+
 }

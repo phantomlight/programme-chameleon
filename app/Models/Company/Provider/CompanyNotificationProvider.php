@@ -65,5 +65,5 @@ class CompanyNotificationProvider implements CompanyNotificationProviderInterfac
 		$model->delete();
 		return;
 	}
-
+	
 }

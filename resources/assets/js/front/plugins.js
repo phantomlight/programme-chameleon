@@ -135,7 +135,6 @@ export class Plugins {
 		$('.input-daterange input').each(function () {
 			$(this).datepicker({
 				format: "yyyy-mm-dd",
-				startDate: "+1d"
 			});
 		});
 	}

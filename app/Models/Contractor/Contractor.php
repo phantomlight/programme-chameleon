@@ -105,6 +105,14 @@ class Contractor {
 		return $this->contractorProvider->findById($id);
 	}
 
+	public function findTimesheetById($id) {
+		return $this->contractorTimesheetProvider->findById($id);
+	}
+
+	public function findExpenseById($id) {
+		return $this->contractorExpenseProvider->findById($id);
+	}
+
 	public function findAllByJobAlerts($job, array $industries=array()) {
 		return $this->contractorProvider->findByJobAlerts($job, $industries);
 	}

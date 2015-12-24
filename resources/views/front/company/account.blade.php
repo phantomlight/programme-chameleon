@@ -62,6 +62,11 @@ Account Settings | Programme Chameleon
 						</div>
 
 						<div class="form-group">
+							<label>Linkedin</label>
+							<input type="text" name="socials_linkedin" class="form-control" placeholder="Google+ Account" value="@if(isset($socials->linkedin)){{$socials->linkedin}}@endif">
+						</div>
+
+						<div class="form-group">
 							<label>Website</label>
 							<input type="url" name="socials_url" class="form-control" placeholder="Website" value="@if(isset($socials->google)){{$socials->google}}@endif">
 						</div>

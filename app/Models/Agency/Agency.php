@@ -81,4 +81,12 @@ class Agency {
 		return $this->agencyNotificationProvider->remove($notification, $agency);
 	}
 
+	public function updateTimesheetStatus($id, $agency, $status=false) {
+		return $this->agencyProvider->updateTimesheet($id, $agency, $status);
+	}
+
+	public function updateExpenseStatus($id, $agency, $status=false) {
+		return $this->agencyProvider->updateExpense($id, $agency, $status);
+	}
+
 }

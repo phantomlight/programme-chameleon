@@ -7,14 +7,15 @@ class FileUploader {
 	protected $allowedFileSize = 5000000;
 	protected $allowedFileImage = ['gif','png','jpg'];
 	protected $allowedFileResume = ['doc','docx','xls','xlsx'];
+	protected $allowedFileExpense = ['doc','docx','xls','xlsx', 'jpg', 'jpeg', 'png', 'pdf'];
 
 	public function upload($file, $location, $checkFor='image') {
 		if ( ! is_dir(public_path(). '/' . $location)) {
 			mkdir(public_path() . '/' . $location, 0755, true);
 		}
 
-		try {
-			if ($checkFor === 'image') {
+		switch ($checkFor) {
+			case 'image':
 				if ( ! $this->checkImageFile($file)) return;
 				$info = pathinfo($file['name']);
 				$im = \Image::make($file['tmp_name']);
@@ -35,8 +36,9 @@ class FileUploader {
 				$location .= Carbon::now()->format('Ymd') . '-' . uniqid() . '.' . $info['extension'];
 				$compressed = $this->compress($file['tmp_name'], $location, 80);
 				return $compressed;
-			}
-			elseif ($checkFor === 'resume') {
+				break;
+			
+			case 'resume':
 				if ( ! $this->checkResumeFile($file)) return;
 				$info = pathinfo($file['name']);
 				$location .= Carbon::now()->format('Ymd') . '-' . uniqid() . '.' . $info['extension'];
@@ -45,11 +47,23 @@ class FileUploader {
 					return;
 				}
 				return $location;
-			}
-		}
-		catch (\Exception $e) {
-			throw new \Exception($e->getMessage(), 1);
-			return;
+				break;
+
+			case 'expense':
+				if ( ! $this->checkExpenseFile($file)) return;
+				$info = pathinfo($file['name']);
+				$location .= Carbon::now()->format('Ymd') . '-' . uniqid() . '.' . $info['extension'];
+				if ( ! move_uploaded_file($file['tmp_name'], $location)) {
+					throw new RuntimeException('Failed to upload file.', 1);
+					return;
+				}
+				return $location;
+				break;
+
+			default:
+				throw new \Exception("Check value not recognized", 1);
+				return;
+				break;
 		}
 	}
 
@@ -73,6 +87,23 @@ class FileUploader {
 
 		if ( ! in_array($ext, $this->allowedFileResume)) {
 			throw new \Exception("File is not document. Only .doc or .docx allowed.", 1);
+			return false;
+		}
+
+		return true;
+	}
+
+	public function checkExpenseFile($file) {
+		if ($file['size'] > $this->allowedFileSize) {
+			throw new \Exception("File is too big. Max is 5Mb.", 1);
+			return false;
+		}
+
+		$filename = $file['name'];
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+
+		if ( ! in_array($ext, $this->allowedFileExpense)) {
+			throw new \Exception("Only image, pdf, or office documents allowed.", 1);
 			return false;
 		}
 

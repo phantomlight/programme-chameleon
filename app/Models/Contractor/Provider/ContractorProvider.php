@@ -122,9 +122,11 @@ class ContractorProvider implements ContractorProviderInterface {
 	public function search($data) {
 		$model = $this->getModel();
 
-		$model = $model->whereHas('user', function ($query) use ($data) {
-			$query->where('first_name', 'like', '%' . $data['query'] . '%');
-		});
+		if ($data['query'] !== '') {
+			$model = $model->whereHas('user', function ($query) use ($data) {
+				$query->where('first_name', 'like', '%' . $data['query'] . '%');
+			});
+		}
 
 		if ($data['country'] !== 'any') {
 			$model
@@ -138,8 +140,8 @@ class ContractorProvider implements ContractorProviderInterface {
 
 		if ($data['cv_search_salary'] === 'range') {
 			$model = $model->where('salary_rate', $data['salary_type'])
-					->where('range_salary_min', '>=', $data['salary_min'])
-					->where('range_salary_max', '<=', $data['salary_max']);
+					->where('range_salary_min', '<=', $data['salary_min'])
+					->where('range_salary_max', '>=', $data['salary_max']);
 		}
 
 		return $model->orderBy('created_at', 'desc');
@@ -156,11 +158,11 @@ class ContractorProvider implements ContractorProviderInterface {
 			return;
 		}
 		
-		$contractor->jobs()->attach($job->id, [
+		$contractor->jobs()->sync([$job->id => [
 			'status' => 'request',
 			'created_at'	=>	Carbon::now(),
 			'updated_at'	=>	Carbon::now(),
-		]);
+		]], false);
 
 		// TODO: Move to background worker
 
@@ -193,7 +195,7 @@ class ContractorProvider implements ContractorProviderInterface {
 		}
 
 		// END TODO
-		
+
 		return $contractor;
 	}
 

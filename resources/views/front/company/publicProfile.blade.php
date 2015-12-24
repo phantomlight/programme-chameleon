@@ -57,6 +57,9 @@
 					@if (isset($socials->google))
 						<li class="i-googleplus"><i class="fa fa-google-plus"></i> {{ $socials->google }}</li>
 					@endif
+					@if (isset($socials->linkedin))
+						<li class="i-googleplus"><i class="fa fa-linkedin"></i> {{ $socials->linkedin }}</li>
+					@endif
 				</ul>
 				<ul class="company-head-menu second-menu">
 					<li class="i-bar"><a href="#jobs"><i class="fa fa-list"></i> Our Jobs</a></li>
@@ -91,7 +94,7 @@
 		<div class="container">
 			<h1 class="uppercase page-header">Expertise</h1>
 			<?php $industries = json_decode($model->industry); ?>
-			@if (count($industries) > 0)
+			@if ($industries !== '' && count($industries) > 0)
 			<div class="section-subtitle">This company mainly focus on these industries: </div>
 			<ul class="company_experience_group">
 				@foreach ($industries as $industry)

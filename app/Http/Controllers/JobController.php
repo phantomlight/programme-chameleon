@@ -237,8 +237,6 @@ class JobController extends Controller {
 	}
 
 	public function postGiveJob() {
-		$company = \Company::getCompany();
-
 		$_hash = new Hash();
 		$_hash = $_hash->getHasher();
 
@@ -247,13 +245,6 @@ class JobController extends Controller {
 
 			if ( ! $job) {
 				throw new \Exception("Job not found.", 1);
-				return;
-			}
-
-			$jobBelongsTo = $job->company;
-
-			if ($company->id !== $jobBelongsTo->id) {
-				throw new \Exception("Job does not belong to your company.", 1);
 				return;
 			}
 
@@ -315,7 +306,6 @@ class JobController extends Controller {
 	}
 
 	public function postRemoveJob() {
-		$company = \Company::getCompany();
 		$_hash = new Hash();
 		$_hash = $_hash->getHasher();
 		$job = \Job::findJobById($_hash->decode(trim(\Input::get('job'))));
@@ -324,15 +314,6 @@ class JobController extends Controller {
 			return \Response::json([
 				'type'		=>	'danger',
 				'message'	=>	'Job not found.',
-			]);
-		}
-
-		$jobBelongsTo = $job->company;
-
-		if ($jobBelongsTo->id !== $company->id) {
-			return \Response::json([
-				'type'		=>	'danger',
-				'message'	=>	'You are not the owner of this job.',
 			]);
 		}
 
@@ -417,7 +398,7 @@ class JobController extends Controller {
 
 			return \Response::json([
 				'type'		=>	'success',
-				'message'	=>	'Your application has been submitted.',
+				'message'	=>	'Your timesheet has been submitted.',
 			]);
 		}
 		catch (\Exception $e) {

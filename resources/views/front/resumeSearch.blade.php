@@ -118,6 +118,7 @@ CV Search | Programme Chameleon
 						@if ($contractors->count() > 0)
 							@foreach ($contractors as $contractor)
 								@if ($cUser = $contractor->user)
+									<?php $slug = Str::slug($cUser->first_name . ' ' . $cUser->last_name); ?>
 									<li>
 										<div class="media">
 											<a href="{{ route('contractor.profile', ['id'=>$_hash->encode($contractor->id), 'slug'=>$slug]) }}" class="media-left">
@@ -131,9 +132,7 @@ CV Search | Programme Chameleon
 												<div class="col-sm-4">
 													<h4 class="media-heading"><a href="#">{{ $cUser->first_name . ' ' . $cUser->last_name }}</a></h4>
 													<p>{{ $contractor->occupation }}</p>
-													@if ($resume = $contractor->resume)
-														<p>Rate: {{ number_format($resume->range_salary_min, 0) }} to {{ number_format($resume->range_salary_max, 0) . ' (' . $resume->salary_rate . ')' }}</p>
-													@endif
+													<p>Rate (in <i class="fa fa-gbp"></i>): {{ number_format($contractor->range_salary_min, 0) }} to {{ number_format($contractor->range_salary_max, 0) . ' (' . $contractor->salary_rate . ')' }}</p>
 												</div>
 
 												<div class="col-sm-4">
@@ -143,12 +142,9 @@ CV Search | Programme Chameleon
 												<div class="col-sm-4">
 													<div class="btn-group element-top-10">
 														<?php $slug = Str::slug($cUser->first_name . ' ' . $cUser->last_name); ?>
-														<a href="{{ route('contractor.profile', ['id'=>$_hash->encode($contractor->id), 'slug'=>$slug]) }}" class="btn btn-warning btn-xs">
+														<a href="{{ route('contractor.profile', ['id'=>$_hash->encode($contractor->id), 'slug'=>$slug]) }}" class="btn btn-warning btn-xs" target="_blank">
 															Profile
 														</a>
-														@if (isset($resume))
-															<a href="{{ asset($resume->file) }}" class="btn btn-primary btn-xs" target="_blank" download="">Download CV</a>
-														@endif
 													</div>
 												</div>
 											</div>
@@ -185,9 +181,7 @@ CV Search | Programme Chameleon
 												<div class="col-sm-4">
 													<h4 class="media-heading"><a href="#">{{ $cUser->first_name . ' ' . $cUser->last_name }}</a></h4>
 													<p>{{ $contractor->occupation }}</p>
-													@if ($resume = $contractor->resume)
-														<p>Rate: {{ number_format($resume->range_salary_min, 0) }} to {{ number_format($resume->range_salary_max, 0) . ' (' . $resume->salary_rate . ')' }}</p>
-													@endif
+													<p>Rate (in <i class="fa fa-gbp"></i>): {{ number_format($contractor->range_salary_min, 0) }} to {{ number_format($contractor->range_salary_max, 0) . ' (' . $contractor->salary_rate . ')' }}</p>
 												</div>
 
 												<div class="col-sm-4">
@@ -197,12 +191,9 @@ CV Search | Programme Chameleon
 												<div class="col-sm-4">
 													<div class="btn-group element-top-10">
 														<?php $slug = Str::slug($cUser->first_name . ' ' . $cUser->last_name); ?>
-														<a href="{{ route('contractor.profile', ['id'=>$_hash->encode($contractor->id), 'slug'=>$slug]) }}" class="btn btn-warning btn-xs">
-															Profile
+														<a href="{{ route('contractor.profile', ['id'=>$_hash->encode($contractor->id), 'slug'=>$slug]) }}" class="btn btn-warning btn-xs" target="_blank">
+															Profile/Resumes
 														</a>
-														@if (isset($resume))
-															<a href="{{ asset($resume->file) }}" class="btn btn-primary btn-xs" target="_blank" download="">Download CV</a>
-														@endif
 													</div>
 												</div>
 											</div>

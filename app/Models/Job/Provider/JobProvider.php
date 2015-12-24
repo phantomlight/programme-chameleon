@@ -224,7 +224,7 @@ class JobProvider implements JobProviderInterface {
 				'alert_from'	=>	'System: Programme Chameleon',
 				'has_read'	=>	false,
 				'title'	=>	'Added to ' . $job->title,
-				'description'	=>	'You have been accepted to ' . $job->title,
+				'description'	=>	'You have been awarded the job "' . $job->title . '"',
 				'url'		=>	url('job/' . $_hash->encode($job->id) . '/' . Str::slug($job->title)),
 			];
 

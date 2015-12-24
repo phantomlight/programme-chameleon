@@ -5,7 +5,7 @@
 
 	if (\User::check()) {
 		$user = \User::getUser();
-		$company = \Company::getCompany();
+		$agency = \Agency::getAgency();
 	}
 
 	$_hash = new Hash();
@@ -314,12 +314,6 @@
 						<p class="text-muted">
 							<i class="fa fa-clock-o"></i> Created {{ $job->created_at->diffForHumans() }}
 						</p>
-						@if ( ! $company->is_vip)
-							<?php $week = ['1' => 1, '2' => 4]; ?>
-							<p class="alert alert-danger">
-								You are not subscribed to 6 month contract. Your job will be temporarily removed on site on: <strong>{{ $job->created_at->addWeeks($week[$job->duration])->toDayDateTimeString() }}</strong> if you didn't subscribe or prolong it by then.
-							</p>
-						@endif
 					</div>
 				</div>
 			</div>

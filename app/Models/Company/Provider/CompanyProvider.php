@@ -76,6 +76,7 @@ class CompanyProvider implements CompanyProviderInterface {
 		}
 
 		$data['socials'] = json_encode([
+			'linkedin'	=>	$data['socials_linkedin'],
 			'facebook'	=>	$data['socials_facebook'],
 			'google'		=>	$data['socials_google'],
 			'twitter'		=>	$data['socials_twitter'],
@@ -85,6 +86,7 @@ class CompanyProvider implements CompanyProviderInterface {
 		$data['industry'] = json_encode($data['industry']);
 
 		$skip = [
+			'socials_linkedin',
 			'socials_facebook',
 			'socials_google',
 			'socials_twitter',
@@ -93,10 +95,7 @@ class CompanyProvider implements CompanyProviderInterface {
 		];
 
 		foreach ($data as $k=>$d) {
-			if (in_array($k, $skip)) {
-				continue;
-			}
-			else {
+			if ( ! in_array($k, $skip)) {
 				$company->{$k} = $d;
 			}
 		}
@@ -157,6 +156,188 @@ class CompanyProvider implements CompanyProviderInterface {
 		$company->is_vip = false;
 		$company->save();
 		return $company;
+	}
+
+	public function updateTimesheet($id, $company, $status) {
+		if ( ! $timesheet = \Contractor::findTimesheetById($id)) {
+			throw new \Exception("Timesheet not found", 1);
+			return;
+		}
+
+		$job = $timesheet->job;
+
+		if ($company->id !== $job->company_id) {
+			throw new \Exception("Timesheet does not belong to the company.", 1);
+			return;
+		}
+
+		if ($status) {
+			if ($timesheet->status) { // should never happen
+				throw new \Exception("Timesheet has been accepted by " . $timesheet->accept_by, 1);
+				return;
+			}
+			$timesheet->status = true;
+			$timesheet->accept_by = $company->name;
+			$timesheet->save();
+
+			if ($contractor = $timesheet->contractor) {
+				$notificationData = [
+					'contractor_id'	=>	$contractor->id,
+					'alert_from'	=>	'System: Programme Chameleon',
+					'has_read'	=>	false,
+					'title'	=>	'Your timesheet "' . $timesheet->name . '" for "' . $job->title . '" has been accepted.',
+					'description'	=>	'Accepted by ' . $company->name,
+					'url'		=>	'#',
+				];
+
+				\Contractor::addNotification($contractor, $notificationData);
+			}
+
+			if ( ! is_null($job->agency_id)) {
+				if ($agency = \Agency::findAgencyById($job->agency_id)) {
+					$notificationData = [
+						'agency_id'	=>	$agency->id,
+						'alert_from'	=>	'System: Programme Chameleon',
+						'has_read'	=>	false,
+						'title'	=>	'Timesheet "' . $timesheet->name . '" for "' . $job->title . '" has been accepted.',
+						'description'	=>	'Accepted by ' . $company->name,
+						'url'		=>	'#',
+					];
+
+					\Agency::addNotification($agency, $notificationData);
+				}
+			}
+		}
+		else {
+			if ( ! $timesheet->status) { // should never happen
+				throw new \Exception("Cannot deauthorize timesheet", 1);
+				return;
+			}
+			$timesheet->status = false;
+			$timesheet->accept_by = null;
+			$timesheet->save();
+
+			if ($contractor = $timesheet->contractor) {
+				$notificationData = [
+					'contractor_id'	=>	$contractor->id,
+					'alert_from'	=>	'System: Programme Chameleon',
+					'has_read'	=>	false,
+					'title'	=>	'Your timesheet "' . $timesheet->name . '" for "' . $job->title . '" has been de-authorized.',
+					'description'	=>	'De-authorize by ' . $company->name,
+					'url'		=>	'#',
+				];
+
+				\Contractor::addNotification($contractor, $notificationData);
+			}
+
+			if ( ! is_null($job->agency_id)) {
+				if ($agency = \Agency::findAgencyById($job->agency_id)) {
+					$notificationData = [
+						'agency_id'	=>	$agency->id,
+						'alert_from'	=>	'System: Programme Chameleon',
+						'has_read'	=>	false,
+						'title'	=>	'Timesheet "' . $timesheet->name . '" for "' . $job->title . '" has been de-authorized.',
+						'description'	=>	'De-authorize by ' . $company->name,
+						'url'		=>	'#',
+					];
+
+					\Agency::addNotification($agency, $notificationData);
+				}
+			}
+		}
+
+		return $timesheet;
+	}
+
+	public function updateExpense($id, $company, $status) {
+		if ( ! $expense = \Contractor::findExpenseById($id)) {
+			throw new \Exception("Expense not found", 1);
+			return;
+		}
+
+		$job = $expense->job;
+
+		if ($company->id !== $job->company_id) {
+			throw new \Exception("Expense does not belong to the company.", 1);
+			return;
+		}
+
+		if ($status) {
+			if ($expense->status) { // should never happen
+				throw new \Exception("Expense has been accepted by " . $expense->accept_by, 1);
+				return;
+			}
+			$expense->status = true;
+			$expense->accept_by = $company->name;
+			$expense->save();
+
+			if ($contractor = $expense->contractor) {
+				$notificationData = [
+					'contractor_id'	=>	$contractor->id,
+					'alert_from'	=>	'System: Programme Chameleon',
+					'has_read'	=>	false,
+					'title'	=>	'Your expense "' . $expense->title . '" for "' . $job->title . '" has been accepted.',
+					'description'	=>	'Accepted by ' . $company->name,
+					'url'		=>	'#',
+				];
+
+				\Contractor::addNotification($contractor, $notificationData);
+			}
+
+			if ( ! is_null($job->agency_id)) {
+				if ($agency = \Agency::findAgencyById($job->agency_id)) {
+					$notificationData = [
+						'agency_id'	=>	$agency->id,
+						'alert_from'	=>	'System: Programme Chameleon',
+						'has_read'	=>	false,
+						'title'	=>	'Expense "' . $expense->title . '" for "' . $job->title . '" has been accepted.',
+						'description'	=>	'Accepted by ' . $company->name,
+						'url'		=>	'#',
+					];
+
+					\Agency::addNotification($agency, $notificationData);
+				}
+			}
+		}
+		else {
+			if ( ! $expense->status) { // should never happen
+				throw new \Exception("Cannot deauthorize expense", 1);
+				return;
+			}
+			$expense->status = false;
+			$expense->accept_by = null;
+			$expense->save();
+
+			if ($contractor = $expense->contractor) {
+				$notificationData = [
+					'contractor_id'	=>	$contractor->id,
+					'alert_from'	=>	'System: Programme Chameleon',
+					'has_read'	=>	false,
+					'title'	=>	'Your expense "' . $expense->title . '" for "' . $job->title . '" has been de-authorized.',
+					'description'	=>	'De-authorize by ' . $company->name,
+					'url'		=>	'#',
+				];
+
+				\Contractor::addNotification($contractor, $notificationData);
+			}
+
+			if ( ! is_null($job->agency_id)) {
+				if ($agency = \Agency::findAgencyById($job->agency_id)) {
+					$notificationData = [
+						'agency_id'	=>	$agency->id,
+						'alert_from'	=>	'System: Programme Chameleon',
+						'has_read'	=>	false,
+						'title'	=>	'Expense "' . $expense->title . '" for "' . $job->title . '" has been de-authorized.',
+						'description'	=>	'De-authorize by ' . $company->name,
+						'url'		=>	'#',
+					];
+
+					\Agency::addNotification($agency, $notificationData);
+				}
+			}
+		}
+
+		return $expense;
 	}
 
 }

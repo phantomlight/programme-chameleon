@@ -456,4 +456,131 @@ class AgencyController extends Controller {
 		]);
 	}
 
+	public function postAcceptTimesheet() {
+		if ( ! $agency = \Agency::getAgency()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not an agency account',
+			]);
+		}
+
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$id = $_hash->decode(trim(\Input::get('id')));
+
+		try {
+			$model = \Agency::updateTimesheetStatus($id, $agency, true);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Timesheet accepted, page will reload',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postRemoveTimesheet() {
+		if ( ! $agency = \Agency::getAgency()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not an agency account',
+			]);
+		}
+
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$id = $_hash->decode(trim(\Input::get('id')));
+
+		try {
+			$model = \Agency::updateTimesheetStatus($id, $agency, false);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Timesheet de-authorized, page will reload',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postAcceptExpense() {
+		if ( ! $agency = \Agency::getAgency()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not an agency account',
+			]);
+		}
+
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$id = $_hash->decode(trim(\Input::get('id')));
+
+		try {
+			$model = \Agency::updateExpenseStatus($id, $agency, true);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Expense accepted, page will reload',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postRemoveExpense() {
+		if ( ! $agency = \Agency::getAgency()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not an agency account',
+			]);
+		}
+
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$id = $_hash->decode(trim(\Input::get('id')));
+
+		try {
+			$model = \Agency::updateExpenseStatus($id, $agency, false);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Expense de-authorized, page will reload',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function getJobDetails() {
+		$agency = \Agency::getAgency();
+		
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		$job = \Job::findJobById($_hash->decode(\Input::get('i')));
+
+		if ( ! $job) {
+			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'Job does not exists.']);
+		}
+
+		if ($job->agency_id !== $agency->id) {
+			return redirect()->back()->with('flashMessage', ['class' => 'danger', 'message' => 'You cannot edit this job.']);
+		}
+
+		return view('front.agency.job.detail')->with('job', $job);
+	}
+
 }

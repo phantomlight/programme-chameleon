@@ -262,7 +262,7 @@
 								</ul>
 								@else
 								<div class="alert alert-danger">
-									You haven't upload any resume yet.
+									You have not yet uploaded a CV.
 								</div>
 								@endif
 							</div>

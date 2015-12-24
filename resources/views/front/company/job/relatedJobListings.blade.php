@@ -59,6 +59,7 @@
 									</div>
 
 									<div class="job-info-bottom">
+										<?php $jAgency = $job->agency; ?>
 										@if ($jAgency)
 											<span class="alert alert-success">This job is provided by <a href="#" onclick="return false;" data-html="true" data-toggle="popover" data-placement="right" title="<i class='fa fa-info-circle'></i> Agency Info" data-content="Address: <strong>{{ $jAgency->address }}</strong> <br/> Phone: <strong>{{ $jAgency->phone }}</strong> <br/> Location: <strong>{{ $jAgency->country . ', ' . $jAgency->city }}</strong>">{{ $jAgency->name }}</a></span>
 										@endif

@@ -33,17 +33,21 @@
 								<ul class="list-unstyled sc-list">		
 								@foreach ($jobs as $job)
 									<li>
-										<p><span>{{ $job->title }}</span> accepted on {{ $job->created_at->toDayDateTimeString() }}</p>
-										<div class="btn-group">
-											<a class="btn btn-xs btn-primary" href="{{ route('contractor.job.timesheet') . '?i=' . $_hash->encode($job->id) }}">Timesheets</a>
-											<a class="btn btn-xs btn-info" href="{{ route('contractor.job.expense') . '?i=' . $_hash->encode($job->id) }}">Expenses</a>
-										</div>
+										<p><strong>{{ $job->title }}</strong> <span class="text-muted"><small>applied on {{ $job->created_at->toDayDateTimeString() }}</small></span></p>
+										@if ($job->pivot->status !== 'accept')
+											<div class="alert alert-danger">You haven't been awarded to this job yet.</div>
+										@else
+											<div class="btn-group">
+												<a class="btn btn-xs btn-primary" href="{{ route('contractor.job.timesheet') . '?i=' . $_hash->encode($job->id) }}">Timesheets</a>
+												<a class="btn btn-xs btn-info" href="{{ route('contractor.job.expense') . '?i=' . $_hash->encode($job->id) }}">Expenses</a>
+											</div>
+										@endif
 									</li>
 								@endforeach
 								</ul>
 							@else
 								<div class="alert alert-danger">
-									You haven't been accepted to any job yet.
+									You have not had any responses yet.
 								</div>
 							@endif
 						</div>

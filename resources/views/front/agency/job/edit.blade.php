@@ -52,7 +52,7 @@
 						</div>
 
 						<div class="form-group">
-							<label>Min. Experience (in year)</label>
+							<label>Min. Experience (in years)</label>
 							<input type="number" class="form-control" name="experience_year" required min="0" value="{{ $job->experience_year }}">
 						</div>
 
@@ -156,7 +156,7 @@
 							<input type="text" class="form-control" value="{{ $job->contact_phone }}" required name="contact_phone">
 						</div>
 
-						<h3>Provide a way of how contractors will apply</h3>
+						<h3>Enter application contact detail</h3>
 						<hr>
 
 						<?php $jobApply = json_decode($job->job_apply_details); ?>

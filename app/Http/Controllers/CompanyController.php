@@ -287,4 +287,112 @@ class CompanyController extends Controller {
 		]);
 	}
 
+	public function postAcceptTimesheet() {
+		if ( ! $company = \Company::getCompany()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not a company account',
+			]);
+		}
+
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$id = $_hash->decode(trim(\Input::get('id')));
+
+		try {
+			$model = \Company::updateTimesheetStatus($id, $company, true);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Timesheet accepted, page will reload',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postRemoveTimesheet() {
+		if ( ! $company = \Company::getCompany()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not a company account',
+			]);
+		}
+
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$id = $_hash->decode(trim(\Input::get('id')));
+
+		try {
+			$model = \Company::updateTimesheetStatus($id, $company, false);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Timesheet de-authorized, page will reload',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postAcceptExpense() {
+		if ( ! $company = \Company::getCompany()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not a company account',
+			]);
+		}
+
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$id = $_hash->decode(trim(\Input::get('id')));
+
+		try {
+			$model = \Company::updateExpenseStatus($id, $company, true);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Expense accepted, page will reload',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postRemoveExpense() {
+		if ( ! $company = \Company::getCompany()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not a company account',
+			]);
+		}
+
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+		$id = $_hash->decode(trim(\Input::get('id')));
+
+		try {
+			$model = \Company::updateExpenseStatus($id, $company, false);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Expense de-authorized, page will reload',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
 }

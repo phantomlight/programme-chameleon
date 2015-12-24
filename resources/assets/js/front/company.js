@@ -56,6 +56,9 @@ if ($('#companyPostJobForm')[0]) {
 				$('.page-preloader').hide();
 				$form.showMessage(e.message, e.type);
 				$form.find('[type=submit]').disable(false);
+				if (e.type === 'success') {
+					location.replace(window.origin + '/company');
+				}
 			}).fail(function (xhr, status, e) {
 				processing = false;
 				$('.page-preloader').hide();
@@ -427,6 +430,126 @@ if ($('#listNotif')[0]) {
 				$('#removeReadNotifBtn').disable(false);
 				processing = false;
 			});
+		}
+	});
+}
+
+if ($('.btn-accept-ts')[0]) {
+	$('.btn-accept-ts').on('click', function (e) {
+		if ( ! processing) {
+			if (confirm('Accept this timesheet?')) {
+				var $button = $(this);
+				var id = $button.data('id');
+
+				processing = true;
+				$('.btn-accept-ts').disable(true);
+				$('.page-preloader').show();
+
+				$.post(window.origin + '/company/accept-timesheet', {
+					id: id
+				}).done(function (e) {
+					alert(e.message);
+					if (e.type === 'success') location.reload();
+					processing = false;
+					$('.btn-accept-ts').disable(false);
+					$('.page-preloader').hide();
+				}).fail(function (xhr, status, e) {
+					alert(xhr.responseText);
+					processing = false;
+					$('.btn-accept-ts').disable(false);
+					$('.page-preloader').hide();
+				}); 
+			}
+		}
+	});
+}
+
+if ($('.btn-remove-ts')[0]) {
+	$('.btn-remove-ts').on('click', function (e) {
+		if ( ! processing) {
+			if (confirm('Remove acception this timesheet?')) {
+				var $button = $(this);
+				var id = $button.data('id');
+
+				processing = true;
+				$('.btn-remove-ts').disable(true);
+				$('.page-preloader').show();
+
+				$.post(window.origin + '/company/remove-timesheet', {
+					id: id
+				}).done(function (e) {
+					alert(e.message);
+					if (e.type === 'success') location.reload();
+					processing = false;
+					$('.btn-remove-ts').disable(false);
+					$('.page-preloader').hide();
+				}).fail(function (xhr, status, e) {
+					alert(xhr.responseText);
+					processing = false;
+					$('.btn-remove-ts').disable(false);
+					$('.page-preloader').hide();
+				}); 
+			}
+		}
+	});
+}
+
+if ($('.btn-accept-ex')[0]) {
+	$('.btn-accept-ex').on('click', function (e) {
+		if ( ! processing) {
+			if (confirm('Accept this expense?')) {
+				var $button = $(this);
+				var id = $button.data('id');
+
+				processing = true;
+				$('.btn-accept-ex').disable(true);
+				$('.page-preloader').show();
+
+				$.post(window.origin + '/company/accept-expense', {
+					id: id
+				}).done(function (e) {
+					alert(e.message);
+					if (e.type === 'success') location.reload();
+					processing = false;
+					$('.btn-accept-ex').disable(false);
+					$('.page-preloader').hide();
+				}).fail(function (xhr, status, e) {
+					alert(xhr.responseText);
+					processing = false;
+					$('.btn-accept-ex').disable(false);
+					$('.page-preloader').hide();
+				}); 
+			}
+		}
+	});
+}
+
+if ($('.btn-remove-ex')[0]) {
+	$('.btn-remove-ex').on('click', function (e) {
+		if ( ! processing) {
+			if (confirm('Remove acception this expense?')) {
+				var $button = $(this);
+				var id = $button.data('id');
+
+				processing = true;
+				$('.btn-remove-ex').disable(true);
+				$('.page-preloader').show();
+
+				$.post(window.origin + '/company/remove-expense', {
+					id: id
+				}).done(function (e) {
+					alert(e.message);
+					if (e.type === 'success') location.reload();
+					processing = false;
+					$('.btn-remove-ex').disable(false);
+					$('.page-preloader').hide();
+				}).fail(function (xhr, status, e) {
+					alert(xhr.responseText);
+					processing = false;
+					$('.btn-remove-ex').disable(false);
+					$('.page-preloader').hide();
+				}); 
+			}
 		}
 	});
 }
