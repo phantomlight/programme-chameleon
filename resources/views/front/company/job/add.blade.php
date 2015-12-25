@@ -91,6 +91,7 @@ Post a Job | Programme Chameleon
 								<option value="hourly">Hourly</option>
 								<option value="daily">Daily</option>
 								<option value="monthly">Monthly</option>
+								<option value="annually">Annually</option>
 							</select>
 						</div>
 

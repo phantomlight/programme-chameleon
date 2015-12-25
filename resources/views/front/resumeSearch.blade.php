@@ -22,7 +22,7 @@
 @extends('front.app')
 
 @section('title')
-CV Search | Programme Chameleon
+Contractors List | Programme Chameleon
 @stop
 
 @section('content')
@@ -105,7 +105,7 @@ CV Search | Programme Chameleon
 
 	<div id="cv-result-listing">
 		<div class="container">
-			<h2 class="page-header"> CV Listing </h2>
+			<h2 class="page-header"> Contractors Listing </h2>
 			<div class="cv-list">
 				@if (\Input::has('search'))
 					<?php
@@ -130,7 +130,7 @@ CV Search | Programme Chameleon
 											</a>
 											<div class="media-body">
 												<div class="col-sm-4">
-													<h4 class="media-heading"><a href="#">{{ $cUser->first_name . ' ' . $cUser->last_name }}</a></h4>
+													<h4 class="media-heading"><a href="{{ route('contractor.profile', ['id'=>$_hash->encode($contractor->id), 'slug'=>$slug]) }}">{{ $cUser->first_name . ' ' . $cUser->last_name }}</a></h4>
 													<p>{{ $contractor->occupation }}</p>
 													<p>Rate (in <i class="fa fa-gbp"></i>): {{ number_format($contractor->range_salary_min, 0) }} to {{ number_format($contractor->range_salary_max, 0) . ' (' . $contractor->salary_rate . ')' }}</p>
 												</div>

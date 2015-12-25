@@ -45,12 +45,20 @@ class PaymentController extends Controller {
 
 	public function postProcessPayment() {
 		$index = \Input::get('value');
+		$user = \Input::get('user');
+
+		if ($user !== 'company' || $user !== 'agency') {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'User not recognized',
+			]);
+		}
 
 		if ( ! array_key_exists($index, $this->paymentType)) {
 			return \Response::json([
 				'type'		=>	'danger',
-				'message'	=>	'Payment not recognized!',
-				]);
+				'message'	=>	'Payment not recognized',
+			]);
 		}
 
 		$paymentData = $this->paymentType[$index];
@@ -96,8 +104,14 @@ class PaymentController extends Controller {
 			$transaction->setDescription('Transaction for programmechameleon.com website.');
 
 			$redirectUrls = PayPal::RedirectUrls();
-			$redirectUrls->setReturnUrl(action('PaymentController@getCompanyPaymentDone'));
-			$redirectUrls->setCancelUrl(action('PaymentController@getCompanyPaymentCancel'));
+			if ($user === 'company') {
+				$redirectUrls->setReturnUrl(action('PaymentController@getCompanyPaymentDone'));
+				$redirectUrls->setCancelUrl(action('PaymentController@getCompanyPaymentCancel'));
+			}
+			else if ($user === 'agency') {
+				$redirectUrls->setReturnUrl(action('PaymentController@getAgencyPaymentDone'));
+				$redirectUrls->setCancelUrl(action('PaymentController@getAgencyPaymentCancel'));
+			}
 
 			$payment = PayPal::Payment();
 			$payment->setIntent('sale');
@@ -112,13 +126,13 @@ class PaymentController extends Controller {
 				'type'		=>	'success',
 				'message'	=>	'Paypal init success',
 				'redirect'	=>	$redirectUrl,
-				]);
+			]);
 		}
 		catch (\Exception $e) {
 			return \Response::json([
 				'type'		=> 'danger',
 				'message'	=>	$e->getMessage(),
-				]);
+			]);
 		}
 	}
 
@@ -181,7 +195,69 @@ class PaymentController extends Controller {
 		return redirect($data['redirect'])->with('flashMessage', [
 			'class'		=>	'info',
 			'message'	=>	'You have cancelled your last payment',
+		]);
+	}
+
+	public function getAgencyPaymentDone(Request $request) {
+		if ( ! \Session::has('_temp_payment_sess')) {
+			return redirect(url('agency'))->with('flashMessage', [
+				'class'		=>	'danger',
+				'message'	=>	'Your session has expired, please try again.',
 			]);
+		}
+
+		$data = session('_temp_payment_sess');
+
+		$id = $request->get('paymentId');
+		$token = $request->get('token');
+		$payer_id = $request->get('PayerID');
+		$payment = PayPal::getById($id, $this->paypalApiContext);
+		$paymentExecution = PayPal::PaymentExecution();
+		$paymentExecution->setPayerId($payer_id);
+		$executePayment = $payment->execute($paymentExecution, $this->paypalApiContext);
+
+		$agency = \Agency::getAgency();
+
+		try {
+			switch ($data['type']) {
+				case 'credit':
+				\Agency::updateCredit($agency, $data['xCreditAmount']);
+				break;
+
+				case 'contract':
+				\Agency::updateVIP($agency, true);
+				break;
+
+				default:
+				break;
+			}
+			session(['_sess_agency' => ['model'=> $agency]]);
+			\Session::forget('_temp_payment_sess');
+		}
+		catch (\Exception $e) {
+			// TODO: Need better error handler
+			// re-run try with queue?
+			\Session::forget('_temp_payment_sess');
+
+			return redirect(url('company'))->with('flashMessage', [
+				'class'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+
+		return redirect(url('company'))->with('flashMessage', [
+			'class'		=>	'success',
+			'message'	=>	$data['successMessage'],
+			]);
+	}
+
+	public function getAgencyPaymentCancel(Request $request) {
+		\Session::forget('_temp_payment_sess');
+
+		return redirect($data['redirect'])->with('flashMessage', [
+			'class'		=>	'info',
+			'message'	=>	'You have cancelled your last payment',
+		]);
 	}
 
 }

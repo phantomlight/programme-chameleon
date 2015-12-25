@@ -14,6 +14,10 @@ export class Forms {
 		if ($('#login-form')[0]) {
 			this.initLoginForm();
 		}
+
+		if ($('#forgotPasswordForm')[0]) {
+			this.initForgotPasswordForm();
+		}
 	}
 	initRegisterForm() {
 		var aes;
@@ -75,6 +79,30 @@ export class Forms {
 						$form.find('[type=submit]').disable(false);
 					});
 				}));
+			}
+		});
+	}
+	initForgotPasswordForm(){
+		var $forgotForm = $('#forgotPasswordForm');
+		$forgotForm.on('submit', function (e) {
+			if ($forgotForm.parsley().validate() && ! processing) {
+				processing = true;
+				$forgotForm.find('[type=submit]').disable(true);
+				$('.page-preloader').show();
+
+				$.post(window.origin + '/forgot-password', {
+					data: $forgotForm.serializeForm()
+				}).done(function (e) {
+					$forgotForm.showMessage(e.message, e.type);
+					processing = false;
+					$forgotForm.find('[type=submit]').disable(false);
+					$('.page-preloader').hide();
+				}).fail(function (xhr, status, e) {
+					$forgotForm.showMessage(e.message, e.type);
+					processing = false;
+					$forgotForm.find('[type=submit]').disable(false);
+					$('.page-preloader').hide();
+				});
 			}
 		});
 	}

@@ -9,4 +9,7 @@ return [
 		'notifWeb'		=>	true,
 		'notifEmail'	=>	true,
 	],
+	'agencyCredit'	=>	[
+		'model'				=>	'App\Models\Agency\Eloquent\AgencyCreditModel',
+	],
 ];

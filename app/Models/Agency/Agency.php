@@ -2,21 +2,26 @@
 
 use App\Models\Agency\Interfaces\AgencyProviderInterface;
 use App\Models\Agency\Interfaces\AgencyNotificationProviderInterface;
+use App\Models\Agency\Interfaces\AgencyCreditProviderInterface;
 use App\Models\Agency\Interfaces\AgencyModelInterface;
 use App\Models\Agency\Interfaces\AgencyNotificationModelInterface;
+use App\Models\Agency\Interfaces\AgencyCreditModelInterface;
 
 use App\Models\Agency\Provider\AgencyProvider;
 use App\Models\Agency\Provider\AgencyNotificationProvider;
+use App\Models\Agency\Provider\AgencyCreditProvider;
 
 class Agency {
-	protected $agency, $agencyProvider, $agencyNotificationProvider;
+	protected $agency, $agencyProvider, $agencyNotificationProvider, $agencyCreditProvider;
 
 	public function __construct(
 		AgencyProviderInterface $agencyProvider = null,
-		AgencyNotificationProviderInterface $agencyNotificationProvider = null
+		AgencyNotificationProviderInterface $agencyNotificationProvider = null,
+		AgencyCreditProviderInterface $agencyCreditProvider = null,
 	) {
 		$this->agencyProvider = $agencyProvider ?: new AgencyProvider();
 		$this->agencyNotificationProvider = $agencyNotificationProvider ?: new AgencyNotificationProvider();
+		$this->agencyCreditProvider = $agencyCreditProvider ?: new AgencyCreditProvider();
 	}
 
 	public function __call($method, $parameters) {

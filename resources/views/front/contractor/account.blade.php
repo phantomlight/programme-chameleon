@@ -112,6 +112,7 @@
 									<div class="form-group">
 										<label>Skills</label>
 										<input type="text" data-role="tagsinput" class="form-control" name="skills" value="{{ $contractor->skills }}">
+										<span class="help-block">Please speedster your skills by a comma</span>
 									</div>
 
 									<div class="form-group">
@@ -297,8 +298,8 @@
 										<select class="form-control" name="salary_rate">
 											<option value="hourly" @if ($selected === 'hourly') {{ 'selected="selected"' }} @endif> Hourly </option>
 											<option value="daily" @if ($selected === 'daily') {{ 'selected="selected"' }} @endif> Daily </option>
-											<option value="weekly" @if ($selected === 'weekly') {{ 'selected="selected"' }} @endif> Weekly </option>
 											<option value="monthly" @if ($selected === 'monthly') {{ 'selected="selected"' }} @endif> Monthly </option>
+											<option value="annually" @if ($selected === 'annually') {{ 'selected="selected"' }} @endif> Annually </option>
 										</select>
 									</div>
 

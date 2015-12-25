@@ -160,4 +160,30 @@ class SiteController extends Controller {
 		return view('front.resumeSearch');
 	}
 
+	public function forgotPassword() {
+		$data = \Input::get('data');
+
+		try {
+			$user = \User::findUserByLogin($data['email']);
+
+			if ($user->inGroup('admin')) { // should never happen, just in case
+				return;
+			}
+
+			$code = $user->getResetPasswordCode();
+			// send mail
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Your password reset instruction has been sent to "' . $user->email . '"',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
 }

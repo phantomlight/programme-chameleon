@@ -90,7 +90,8 @@
 							<select class="form-control" name="salary_type" required>
 								<option value="hourly" @if ($job->salary_type === 'hourly') {{ 'seleced="selected"' }} @endif>Hourly</option>
 								<option value="monthly" @if ($job->salary_type === 'monthly') {{ 'seleced="selected"' }} @endif>Monthly</option>
-								<option value="one-time" @if ($job->salary_type === 'one-time') {{ 'seleced="selected"' }} @endif>One Time</option>
+								<option value="daily" @if ($job->salary_type === 'daily') {{ 'seleced="selected"' }} @endif>Daily</option>
+								<option value="annually" @if ($job->salary_type === 'annually') {{ 'seleced="selected"' }} @endif>Annualy</option>
 							</select>
 						</div>
 

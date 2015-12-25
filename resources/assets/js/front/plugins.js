@@ -87,6 +87,7 @@ export class Plugins {
 				$(this).on('click', function (e) {
 					if ( ! paymentProcessing) {
 						var $button = $(this);
+						var user = $button.data('user');
 						e.preventDefault();
 						paymentProcessing = true;
 						$('.page-preloader').show();
@@ -97,14 +98,16 @@ export class Plugins {
 						if (checkout_type == 1) {
 							postData = {
 								type: 'paypal',
-								value: checkout_type
+								value: checkout_type,
+								user: user
 							};
 						}
 						else if (checkout_type == 2) {
 							postData = {
 								type: 'paypal',
 								value: checkout_type,
-								amount: $button.parent().find('input[name=_cred_amt]').val()
+								amount: $button.parent().find('input[name=_cred_amt]').val(),
+								user: user
 							};
 						}
 

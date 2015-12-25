@@ -23,7 +23,7 @@ class CreateContractorTable extends Migration
             $table->string('country', 255)->nullable();
             $table->text('educations')->nullable();
             $table->text('experiences')->nullable();
-            $table->enum('salary_rate', ['hourly', 'daily', 'monthly']);
+            $table->enum('salary_rate', ['hourly', 'daily', 'monthly', 'annually']);
             $table->integer('range_salary_min')->default(0);
             $table->integer('range_salary_max')->default(0);
             $table->text('skills')->nullable();

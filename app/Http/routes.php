@@ -46,11 +46,6 @@ Route::get('agency/{id}/{slug}', [
 	'uses'	=>	'AgencyController@getPublicProfilePage',
 ]);
 
-// Route::get('submit-timesheet/{id}', [
-// 	'as'		=>	'contractor.apply',
-// 	'uses'	=>	'ContractorController@getSubmitTimesheet',
-// ]);
-
 Route::get('job-search', [
 	'as'		=>	'job.search',
 	'uses'	=>	'SiteController@jobSearch',
@@ -60,6 +55,8 @@ Route::get('job/{id}/{slug}', [
 	'as'		=>	'job.public',
 	'uses'	=>	'JobController@getPublicJobPage',
 ]);
+
+Route::post('forgot-password', ['as' => 'post.forgot', 'uses' => 'SiteController@forgotPassword']);
 
 Route::controller('api/payment', 'PaymentController', []);
 

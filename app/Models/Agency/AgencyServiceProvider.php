@@ -4,6 +4,7 @@ use Illuminate\Support\ServiceProvider;
 
 use App\Models\Agency\Provider\AgencyProvider;
 use App\Models\Agency\Provider\AgencyNotificationProvider;
+use App\Models\Agency\Provider\AgencyCreditProvider;
 use App\Models\Agency\Agency;
 
 class AgencyServiceProvider extends ServiceProvider {
@@ -15,6 +16,7 @@ class AgencyServiceProvider extends ServiceProvider {
 	public function register() {
 		$this->registerAgencyProvider();
 		$this->registerAgencyNotificationProvider();
+		$this->registerAgencyCreditProvider();
 		$this->registerAgency();
 	}
 
@@ -32,11 +34,19 @@ class AgencyServiceProvider extends ServiceProvider {
 		});
 	}
 
+	public function registerAgencyCreditProvider() {
+		$this->app['agency.credit'] = $this->app->share(function($app) {
+			$model = $app['config']['agency::agencyCredit.model'];
+			return new AgencyCreditProvider($model);
+		});
+	}
+
 	public function registerAgency() {
 		$this->app['agency'] = $this->app->share(function($app) {
 			return new Agency(
 				$app['agency.model'],
-				$app['agency.notification']
+				$app['agency.notification'],
+				$app['agency.credit']
 			);
 		});
 

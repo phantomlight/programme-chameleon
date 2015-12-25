@@ -60,7 +60,7 @@
 									<li class="menu-item"><a href="{{ route('agency.job.list') }}">Job List</a></li>
 								</ul>
 							</li>
-							<li class="menu-item"><a href="{{ route('resume.search') }}">Resume Search</a></li>
+							<li class="menu-item"><a href="{{ route('resume.search') }}">Contractor List</a></li>
 						</ul>
 					</nav><!-- /#main-menu -->
 				</div><!-- /#menu-wrapper -->

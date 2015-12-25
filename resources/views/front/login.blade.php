@@ -38,7 +38,7 @@ Login | Programme Chameleon
 								</span>
 								<span>Log in</span>
 							</button>
-							<a class="lost-password-link" href="#">Lost password?</a>
+							<a class="lost-password-link" href="#" data-toggle="modal" data-target="#lostPassModal">Lost password?</a>
 						</form>
 					</div><!-- /.login-form-wrapper -->
 				</div><!-- /.col-md-5 -->
@@ -60,4 +60,36 @@ Login | Programme Chameleon
 
 @include('front.include.footer-query')
 @include('front.include.footer')
+
+<div class="modal fade" tabindex="-1" role="dialog" id="lostPassModal" aria-labelledby="lostPassModalLabel">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="lostPassModalLabel">Password Recovery</h4>
+			</div>
+			<div class="modal-body">
+				<p>Please enter the email used in registration. We will send you the instructions to reset on your email.</p>
+				<form role="form" onsubmit="return false;" data-parsley-validate id="forgotPasswordForm">
+					<div class="form-group">
+						<label>Email</label>
+						<input type="email" name="email" class="form-control" placeholder="Your email.." />
+					</div>
+
+					<div class="form-group">
+						<button class="btn btn-primary" type="submit">
+							<span class="btn-prelaoder">
+								<i class="fa fa-spinner fa-spin"></i> Sending email...
+							</span>
+							<span>Send</span>
+						</button>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 @stop

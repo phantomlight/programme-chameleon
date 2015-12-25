@@ -47,7 +47,7 @@
 								</ul>
 							@else
 								<div class="alert alert-danger">
-									You have not had any responses yet.
+									You have not yet had a response to your application.
 								</div>
 							@endif
 						</div>

@@ -1,13 +1,13 @@
 <?php
-	use App\Utils\Hash;
+use App\Utils\Hash;
 
-	if (\User::check()) {
-		$user = \User::getUser();
-		$company = \Company::getCompany();
-	}
+if (\User::check()) {
+	$user = \User::getUser();
+	$company = \Company::getCompany();
+}
 
-	$_hash = new Hash();
-	$_hash = $_hash->getHasher();
+$_hash = new Hash();
+$_hash = $_hash->getHasher();
 ?>
 
 @extends('front.app')
@@ -36,19 +36,17 @@ Company 1 | Programme Chameleon
 						<li>
 							<p><strong>{{ $job->title }}</strong></p>
 							@if ( ! $job->is_active)
-								<div class="alert alert-danger">
-									<p>JOB NOT ACTIVE.</p>
-									<a href="#" class="lighten" onclick="return false;" data-toggle="tooltip" title="<p>This job has exceeded the activation duration (created on: {{ $job->created_at->toDateString() }}), it will not appear on the site, nor contractor can apply for it.</p>
-
-									<p>Click edit to extend the duration, or subscribe to a 6 month contract to re-active this your job.</p>" data-placement="top" data-html="true"><i class="fa fa-question-circle"></i> What does this mean?</a>
-								</div>
+							<div class="alert alert-danger">
+								<p>JOB NOT ACTIVE.</p>
+								<a href="#" class="lighten" onclick="return false;" data-toggle="tooltip" title="<p>This job has exceeded the activation duration (created on: {{ $job->created_at->toDateString() }}), it will not appear on the site, nor contractor can apply for it.</p><p>Click edit to extend the duration, or subscribe to a 6 month contract to re-active this your job.</p>" data-placement="top" data-html="true"><i class="fa fa-question-circle"></i> What does this mean?</a>
+							</div>
 							@endif
 							@if ($job->duration !== '999')
-								<?php
-									if ($job->duration === '1') $endDate = $job->created_at->addDays(7);
-									if ($job->duration === '2') $endDate = $job->created_at->addMonth();
-								?>
-								<p>Ends in: {{ $endDate->toDateString() }}</p>
+							<?php
+							if ($job->duration === '1') $endDate = $job->created_at->addDays(7);
+							if ($job->duration === '2') $endDate = $job->created_at->addMonth();
+							?>
+							<p>Ends in: {{ $endDate->toDateString() }}</p>
 							@endif
 							<p>Status: {!! $job->status === 'open' ? '<label class="label label-success">Open</label>' : '<label class="label label-warning">Taken</label>' !!}</p>
 							<p class="time"><i class="fa fa-clock-o"></i> {{ $job->created_at->toDayDatetimeString() }}</p>
@@ -63,9 +61,9 @@ Company 1 | Programme Chameleon
 					@endif
 				</div>
 				@if (count($jobs) > 0)
-					<div class="panel-footer">
-						{!! $jobs->render() !!}
-					</div>
+				<div class="panel-footer">
+					{!! $jobs->render() !!}
+				</div>
 				@endif
 			</div>
 
@@ -91,7 +89,7 @@ Company 1 | Programme Chameleon
 									<h4>{{ $agency->name }}</h4>
 								</div>
 								<p>Owner: <strong>{{ $agency->owner_name }}</strong></p>
-								<p>Status: <label class="label @if ($agency->pivot->status === 'accept') {{'label-success'}} @else {{'label-danger'}} @endif">{{ ucwords($agency->pivot->status) }}</label></p>
+								<p>Status: <label class="label @if ($agency->pivot->status === 'accept') {{'label-success'}} @else {{'label-danger'}} @endif">{{ ucwords($agency->pivot->status) . 'ed' }}</label></p>
 								<p class="text-muted"><i class="fa fa-clock-o"></i> {{ $agency->pivot->created_at->diffForHumans() }}</p>
 								<div class="btn-group">
 									@if ($agency->pivot->status === 'request')
@@ -160,39 +158,6 @@ Company 1 | Programme Chameleon
 	<div class="clearfix element-top-20 element-bottom-20">&nbsp;</div>
 </div>
 
-<div class="modal fade" id="whatis-contract-modal" tabindex="-1" role="dialog" aria-labelledby="whatisContractLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="whatisContractLabel">What is a 6 months contract?</h4>
-			</div>
-			<div class="modal-body">
-				<h2>Programme Chameleon 6 Month Contract - Company</h2>
-				<p>Companies Full Service</p>
-				<p>Functionality:</p>
-				<ul>
-					<li>Receive electronic timesheets through Programme Chameleon.</li>
-					<li>Submit vacancies on programme chameleon.
-						Search for candidates.</li>
-						<li>Companies have jobs page to show own jobs incorporated into their website.</li>
-						<li>Unlimited Job posting.</li>
-					</ul>
-					<p>Charging:</p>
-					<ul>
-						<li>If hosting (i.e Jobs page on their site).
-							6 Month contract minimum.</li>
-							<li>£1800 for 6 Months – purchased by buying one off credit.</li>
-							<li>Sell set up as free if sign up by March 2016.</li>
-						</ul>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		@include('front.include.footer-query')
-		@include('front.include.footer')
-		@stop
+@include('front.include.footer-query')
+@include('front.include.footer')
+@stop

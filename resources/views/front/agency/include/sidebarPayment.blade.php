@@ -1,6 +1,6 @@
 <?php use Carbon\Carbon; ?>
 
-@if ( ! $company->is_vip)
+@if ( ! $agency->is_vip)
 <div class="panel panel-danger">
 	<div class="panel-heading">Not a VIP</div>
 	<div class="panel-body">
@@ -24,23 +24,23 @@
 	<div class="panel-body">
 		<p>You are subscribed to 6 month contract</p>
 		<?php
-			$vip_since = Carbon::createFromFormat('Y-m-d H:i:s', $company->vip_start);
-			$vip_until = Carbon::createFromFormat('Y-m-d H:i:s', $company->vip_end);
+		$vip_since = Carbon::createFromFormat('Y-m-d H:i:s', $agency->vip_start);
+		$vip_until = Carbon::createFromFormat('Y-m-d H:i:s', $agency->vip_end);
 		?>
 		<p>Since: {{ $vip_since->diffForHumans() }}</p>
 		<p>Until: {{ $vip_until->toDayDateTimeString() }}</p>
 		<!--
 		don't remove this in case is needed again.
 		<button class="btn btn-danger" id="removeVipBtn">Remove VIP</button>
-		-->
-	</div>
+	-->
+</div>
 </div>
 @endif
 
 <div class="panel panel-default clearfix">
 	<div class="panel-heading">Credits</div>
 	<div class="panel-body">
-		<p>You currently have: {{ $company->credit }}</p>
+		<p>You currently have: {{ $agency->credit }}</p>
 		<p>Buy more?</p>
 		<form method="post" role="form" data-parsley-validate onsubmit="return false;">
 			<div class="form-group">

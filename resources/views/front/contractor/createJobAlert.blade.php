@@ -8,7 +8,7 @@
 @extends('front.app')
 
 @section('title')
-	Create Job Alert | Programme Chameleon
+	Creating a Job Alert | Programme Chameleon
 @stop
 
 @section('content')
@@ -16,7 +16,7 @@
 	@include('front.include.header')
 	<div class="common-page-wrapper">
 		<div class="container">
-			<h2 class="page-header lighten">Create Job Alert</h2>
+			<h2 class="page-header lighten">Creating a Job Alert</h2>
 			<div class="row">
 				<div class="col-md-6">
 					<form role="form" data-parsley-validate id="contractorJobAlertForm" class="sc-form" onsubmit="return false;">
@@ -37,13 +37,13 @@
 
 						<div class="form-group">
 							<label>Country</label>
-							<select class="form-control" name="country" id="countrySelector" required>
+							<select class="form-control" @if ( ! is_null($contractor->country)) {{ 'data-value="' . $contractor->country . '"' }} @endif name="country" id="countrySelector" required>
 							</select>
 						</div>
 
 						<div class="form-group">
 							<label>City</label>
-							<select class="form-control" name="city" id="citySelector" required>
+							<select class="form-control" @if ( ! is_null($contractor->country)) {{ 'data-value="' . $contractor->country . '"' }} @endif name="city" id="citySelector" required>
 							</select>
 						</div>
 
@@ -80,7 +80,7 @@
 					<div class="panel panel-info">
 						<div class="panel-heading">What is Job Alert?</div>
 						<div class="panel-body">
-							<p>When a company posted a job that matches the description you provide here, the system will alert you that the job is available.</p>
+							<p>When a company posts a job that matches the description you provide here, the system will alert you that the job is available.</p>
 							<p class="text-muted">You can only create <strong>1</strong> job alert at a time. If you create another you previous alert will be removed.</p>
 						</div>
 					</div>
