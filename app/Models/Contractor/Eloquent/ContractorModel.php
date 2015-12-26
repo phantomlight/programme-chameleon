@@ -56,7 +56,7 @@ class ContractorModel extends Eloquent implements ContractorModelInterface {
 	public function delete() {
 		$this->expenses()->delete();
 		$this->notifications()->delete();
-		$this->resume()->delete();
+		$this->resumes()->delete();
 		$this->timesheets()->delete();
 		$this->jobAlerts()->detach();
 		$this->jobs()->detach();

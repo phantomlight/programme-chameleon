@@ -1,4 +1,4 @@
-<?php if(\User::check()) $user = \User::getUser(); ?>
+<?php if (\User::check()) $user = \User::getUser(); ?>
 	
 @extends('front.app')
 
@@ -78,7 +78,7 @@ Login | Programme Chameleon
 
 					<div class="form-group">
 						<button class="btn btn-primary" type="submit">
-							<span class="btn-prelaoder">
+							<span class="btn-preloader">
 								<i class="fa fa-spinner fa-spin"></i> Sending email...
 							</span>
 							<span>Send</span>

@@ -18,6 +18,14 @@ export class Forms {
 		if ($('#forgotPasswordForm')[0]) {
 			this.initForgotPasswordForm();
 		}
+
+		if ($('#resetPasswordForm')[0]) {
+			this.initResetPasswordForm();
+		}
+
+		if ($('#contactForm')[0]) {
+			this.initContactForm();
+		}
 	}
 	initRegisterForm() {
 		var aes;
@@ -83,6 +91,7 @@ export class Forms {
 		});
 	}
 	initForgotPasswordForm(){
+		var processing = false;
 		var $forgotForm = $('#forgotPasswordForm');
 		$forgotForm.on('submit', function (e) {
 			if ($forgotForm.parsley().validate() && ! processing) {
@@ -101,6 +110,56 @@ export class Forms {
 					$forgotForm.showMessage(e.message, e.type);
 					processing = false;
 					$forgotForm.find('[type=submit]').disable(false);
+					$('.page-preloader').hide();
+				});
+			}
+		});
+	}
+	initResetPasswordForm() {
+		var processing = false;
+		var $resetForm = $('#resetPasswordForm');
+		$resetForm.on('submit', function (e) {
+			if ($resetForm.parsley().validate() && ! processing) {
+				processing = true;
+				$resetForm.find('[type=submit]').disable(true);
+				$('.page-preloader').show();
+
+				$.post(window.origin + '/reset-password', {
+					data: $resetForm.serializeForm()
+				}).done(function (e) {
+					$resetForm.showMessage(e.message, e.type);
+					processing = false;
+					$resetForm.find('[type=submit]').disable(false);
+					$('.page-preloader').hide();
+				}).fail(function (xhr, status, e) {
+					$resetForm.showMessage(e.message, e.type);
+					processing = false;
+					$resetForm.find('[type=submit]').disable(false);
+					$('.page-preloader').hide();
+				});
+			}
+		});
+	}
+	initContactForm() {
+		var processing = false;
+		var $contactForm = $('#contactForm');
+		$contactForm.on('submit', function (e) {
+			if ($contactForm.parsley().validate() && ! processing) {
+				processing = true;
+				$contactForm.find('[type=submit]').disable(true);
+				$('.page-preloader').show();
+
+				$.post(window.origin + '/contact-message', {
+					data: $contactForm.serializeForm()
+				}).done(function (e) {
+					$contactForm.showMessage(e.message, e.type);
+					processing = false;
+					$contactForm.find('[type=submit]').disable(false);
+					$('.page-preloader').hide();
+				}).fail(function (xhr, status, e) {
+					$contactForm.showMessage(e.message, e.type);
+					processing = false;
+					$contactForm.find('[type=submit]').disable(false);
 					$('.page-preloader').hide();
 				});
 			}

@@ -84,7 +84,7 @@ class ContractorController extends Controller {
 
 			return \Response::json([
 				'type'		=>	'success',
-				'message'	=>	'Successfully registered. You can login <a href="' . route('login') . '">here</a>',
+				'message'	=>	'Successfully registered. You can login <a href="' . route('front.login') . '">here</a>',
 			]);
 		}
 		catch (\Exception $e) {

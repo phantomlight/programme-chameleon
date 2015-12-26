@@ -20,8 +20,6 @@ Route::get('api/city', 'SiteController@getCityList');
 Route::post('login', ['as' =>'front.postLogin', 'uses' => 'SiteController@postLogin']);
 
 Route::get('free-resources', function() { return view('front.resources'); } );
-Route::get('company/company-sample', function() { return view('front.company.sample'); });
-Route::get('job/job-sample', function() { return view('front.jobSample'); });
 
 Route::get('gen', 'SiteController@getPublicKey');
 Route::post('handshake', 'SiteController@getHandshakeKey');
@@ -56,7 +54,10 @@ Route::get('job/{id}/{slug}', [
 	'uses'	=>	'JobController@getPublicJobPage',
 ]);
 
-Route::post('forgot-password', ['as' => 'post.forgot', 'uses' => 'SiteController@forgotPassword']);
+Route::post('forgot-password', ['as' => 'password.forgot', 'uses' => 'SiteController@forgotPassword']);
+Route::get('reset-password', ['as' => 'password.reset', 'uses' => 'SiteController@getResetPassword']);
+Route::post('reset-password', ['as' => 'password.postReset', 'uses' => 'SiteController@postResetPassword']);
+Route::post('contact-message', ['as' => 'contact', 'uses' => 'SiteController@postMessage']);
 
 Route::controller('api/payment', 'PaymentController', []);
 

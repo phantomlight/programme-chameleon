@@ -160,22 +160,123 @@ class SiteController extends Controller {
 		return view('front.resumeSearch');
 	}
 
+	public function postMessage(Request $req) {
+		if ($req->cookie('MsgCookie')) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Your 1 hour limit still exists.',
+			]);
+		}
+
+		if ( ! $data = \Input::get('data')) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Data incomplete.',
+			]);
+		}
+
+		if ( ! isset($data['email']) && ! isset($data['name']) && ! isset($data['message'])) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Data incomplete.',
+			]);
+		}
+
+		$mailData = [
+			'layout'	=>	'emails.message',
+			'data'		=>	[
+				'user'	=>	$data,
+			],
+			'subject'	=>	'Message from user',
+			'from_email'	=>	$data['email'],
+			'to_email'	=>	'forddyce92@gmail.com',
+		];
+
+		if (env('APP_ENV') === 'production') {
+			$job = (new EmailJob($mailData))->onQueue('email-queue');
+			$this->dispatch($job);
+		}
+		else { // for devs only
+			\Mail::send($mailData['layout'], $mailData['data'], function ($message) use ($mailData) {
+				$message->from($mailData['from_email'], 'Programme Chameleon Mailing Service');
+				$message->to($mailData['to_email'])->subject($mailData['subject']);
+			});
+		}
+
+		return \Response::json([
+			'type'		=>	'success',
+			'message'	=>	'Your message has been sent, you cannot send another until 1 hour passes',
+		])->withCookie(cookie('MsgCookie', true, 60));
+	}
+
 	public function forgotPassword() {
 		$data = \Input::get('data');
 
 		try {
 			$user = \User::findUserByLogin($data['email']);
 
-			if ($user->inGroup('admin')) { // should never happen, just in case
+			if ($user->hasAccess('admin')) { // should never happen, just in case
 				return;
 			}
 
-			$code = $user->getResetPasswordCode();
-			// send mail
+			$mailData = [
+				'layout'	=>	'emails.resetPassword',
+				'data'		=>	[
+					'user'	=>	$user,
+				],
+				'subject'	=>	'Reset Password Programme Chameleon',
+				'from_email'	=>	'noreply@programmechameleon.com',
+				'to_email'	=>	'forddyce92@gmail.com',
+			];
+
+			if (env('APP_ENV') === 'production') {
+				$job = (new EmailJob($mailData))->onQueue('email-queue');
+				$this->dispatch($job);
+			}
+			else { // for devs only
+				\Mail::send($mailData['layout'], $mailData['data'], function ($message) use ($mailData) {
+					$message->from($mailData['from_email'], 'Programme Chameleon Mailing Service');
+					$message->to($mailData['to_email'])->subject($mailData['subject']);
+				});
+			}
 
 			return \Response::json([
 				'type'		=>	'success',
 				'message'	=>	'Your password reset instruction has been sent to "' . $user->email . '"',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function getResetPassword() {
+		return view('front.resetPassword');
+	}
+
+	public function postResetPassword() {
+		if ( ! $data = \Input::get('data')) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Email and reset code not found.',
+			]);
+		}
+
+		try {
+			$user = \User::findUserByLogin($data['e']);
+			if ($user->hasAccess('admin')) {
+				throw new \Exception("Account not elligible to reset from here.", 1);
+				return;
+			}
+
+			$user->attemptResetPassword($data['c'], $data['password']);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Successfully reset password. You can login <a href="' . route('front.login') . '">here</a>',
 			]);
 		}
 		catch (\Exception $e) {

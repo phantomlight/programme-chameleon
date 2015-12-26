@@ -47,6 +47,8 @@ class CreateContractorTable extends Migration
             $table->enum('type', ['food', 'transport', 'business_operation', 'other']);
             $table->text('description')->nullable();
             $table->decimal('amount', 16, 4);
+            $table->boolean('auth_company')->default(false);
+            $table->boolean('auth_agency')->default(false);
             $table->timestamps();
 
             $table->engine = 'InnoDB';
@@ -104,6 +106,8 @@ class CreateContractorTable extends Migration
             $table->smallInteger('hours')->nullable();
             $table->dateTime('start_date')->default('0000-00-00 00:00:00')->nullable();
             $table->dateTime('end_date')->default('0000-00-00 00:00:00')->nullable();
+            $table->boolean('auth_company')->default(false);
+            $table->boolean('auth_agency')->default(false);
             $table->timestamps();
 
             $table->engine = 'InnoDB';

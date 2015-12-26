@@ -37,13 +37,13 @@
 
 						<div class="form-group">
 							<label>Country</label>
-							<select class="form-control" @if ( ! is_null($contractor->country)) {{ 'data-value="' . $contractor->country . '"' }} @endif name="country" id="countrySelector" required>
+							<select class="form-control" name="country" id="countrySelector" required="required" @if ( ! is_null($contractor->country)) {!! 'data-value="' . $contractor->country . '"' !!} @endif>
 							</select>
 						</div>
 
 						<div class="form-group">
 							<label>City</label>
-							<select class="form-control" @if ( ! is_null($contractor->country)) {{ 'data-value="' . $contractor->country . '"' }} @endif name="city" id="citySelector" required>
+							<select class="form-control" name="city" id="citySelector" required="required" @if ( ! is_null($contractor->city)) {!! 'data-value="' . $contractor->city . '"' !!} @endif>
 							</select>
 						</div>
 

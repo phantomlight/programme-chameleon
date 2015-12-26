@@ -7,16 +7,16 @@
 					<div class="form-group">
 						<div class="row">
 							<div class="col-sm-6">
-								<input type="text" class="form-control" required placeholder="Name..">
+								<input type="text" name="name" class="form-control" required placeholder="Name.." />
 							</div>
 							<div class="col-sm-6">
-								<input type="email" class="form-control" required placeholder="Email..">
+								<input type="email" name="email" class="form-control" required placeholder="Email.." />
 							</div>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<textarea class="form-control" required data-parsley-maxlength="3000" maxlmength="3000">Your Message..</textarea>
+						<textarea class="form-control" name="message" required data-parsley-maxlength="3000" maxlmength="3000">Your Message..</textarea>
 					</div>
 
 					<button class="btn btn-primary btn-block" type="submit">
