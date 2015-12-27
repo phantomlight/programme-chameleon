@@ -17,7 +17,7 @@ class Agency {
 	public function __construct(
 		AgencyProviderInterface $agencyProvider = null,
 		AgencyNotificationProviderInterface $agencyNotificationProvider = null,
-		AgencyCreditProviderInterface $agencyCreditProvider = null,
+		AgencyCreditProviderInterface $agencyCreditProvider = null
 	) {
 		$this->agencyProvider = $agencyProvider ?: new AgencyProvider();
 		$this->agencyNotificationProvider = $agencyNotificationProvider ?: new AgencyNotificationProvider();
@@ -34,6 +34,14 @@ class Agency {
 	public function register($data) {
 		$agency = $this->agencyProvider->create($data);
 		return $this->agency = $agency;
+	}
+
+	public function updateCredit($agency, $value) {
+		return $this->agencyCreditProvider->update($agency, $value);
+	}
+
+	public function updateVIP($agency, $active=false) {
+		return $this->agencyProvider->updateVIP($agency, $active);
 	}
 
 	public function getAgency() {

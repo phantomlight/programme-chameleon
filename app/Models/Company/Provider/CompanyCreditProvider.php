@@ -35,7 +35,7 @@ class CompanyCreditProvider implements CompanyCreditProviderInterface {
 		]);
 
 		if ($model->save()) {
-			if ($value < 0) $company->credit -= $value;
+			if ($value < 0) $company->credit -= abs($value);
 			else $company->credit += $value;
 			$company->save();
 			session(['_sess_company' => ['model' => $company]]);

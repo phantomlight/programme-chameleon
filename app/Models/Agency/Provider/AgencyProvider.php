@@ -2,6 +2,7 @@
 
 use App\Models\Agency\Interfaces\AgencyProviderInterface;
 use App\Utils\File\FileUploader;
+use App\Utils\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -38,6 +39,34 @@ class AgencyProvider implements AgencyProviderInterface {
 	public function findById($id) {
 		$model = $this->getModel();
 		return $model->where('id', $id)->first();
+	}
+
+	public function updateVIP($agency, $active) {
+		if ($active) {
+			$agency->is_vip = true;
+			$today = Carbon::now();
+			$agency->vip_start = Carbon::now();
+			$agency->vip_end = $today->addMonths(6);
+		}
+		else {
+			$agency->is_vip = false;
+			$agency->vip_start = '0000-00-00 00:00:00';
+			$agency->vip_end = '0000-00-00 00:00:00';
+		}
+
+		$agency->save();
+
+		$jobs = $agency->jobs()->get();
+		if (count($jobs) > 0) {
+			foreach ($jobs as $job) {
+				if ( ! $job->is_active) {
+					$job->is_active = true;
+					$job->save();
+				}
+			}
+		}
+
+		return $agency;
 	}
 
 	public function addAffiliate($company) {
@@ -127,12 +156,7 @@ class AgencyProvider implements AgencyProviderInterface {
 		}
 
 		if ($status) {
-			if ($timesheet->status) { // should never happen
-				throw new \Exception("Timesheet has been accepted by " . $timesheet->accept_by, 1);
-				return;
-			}
-			$timesheet->status = true;
-			$timesheet->accept_by = $agency->name;
+			$timesheet->auth_agency = true;
 			$timesheet->save();
 
 			if ($contractor = $timesheet->contractor) {
@@ -150,13 +174,16 @@ class AgencyProvider implements AgencyProviderInterface {
 
 			if ( ! is_null($job->company_id)) {
 				if ($company = \Company::findCompanyById($job->company_id)) {
+					$_hash = new Hash();
+					$_hash = $_hash->getHasher();
+
 					$notificationData = [
 						'company_id'	=>	$company->id,
 						'alert_from'	=>	'System: Programme Chameleon',
 						'has_read'	=>	false,
 						'title'	=>	'Timesheet "' . $timesheet->name . '" for "' . $job->title . '" has been accepted.',
 						'description'	=>	'Accepted by ' . $agency->name,
-						'url'		=>	'#',
+						'url'		=>	route('company.job.detail') . '?i=' . $_hash->encode($job->id),
 					];
 
 					\Company::addNotification($company, $notificationData);
@@ -164,12 +191,7 @@ class AgencyProvider implements AgencyProviderInterface {
 			}
 		}
 		else {
-			if ( ! $timesheet->status) { // should never happen
-				throw new \Exception("Cannot deauthorize timesheet", 1);
-				return;
-			}
-			$timesheet->status = false;
-			$timesheet->accept_by = null;
+			$timesheet->auth_agency = true;
 			$timesheet->save();
 
 			if ($contractor = $timesheet->contractor) {
@@ -187,13 +209,16 @@ class AgencyProvider implements AgencyProviderInterface {
 
 			if ( ! is_null($job->company_id)) {
 				if ($company = \Company::findCompanyById($job->company_id)) {
+					$_hash = new Hash();
+					$_hash = $_hash->getHasher();
+
 					$notificationData = [
 						'company_id'	=>	$company->id,
 						'alert_from'	=>	'System: Programme Chameleon',
 						'has_read'	=>	false,
 						'title'	=>	'Timesheet "' . $timesheet->name . '" for "' . $job->title . '" has been accepted.',
 						'description'	=>	'Accepted by ' . $agency->name,
-						'url'		=>	'#',
+						'url'		=>	route('agency.job.detail') . '?i=' . $_hash->encode($job->id),
 					];
 
 					\Company::addNotification($company, $notificationData);
@@ -218,12 +243,7 @@ class AgencyProvider implements AgencyProviderInterface {
 		}
 
 		if ($status) {
-			if ($expense->status) { // should never happen
-				throw new \Exception("Expense has been accepted by " . $expense->accept_by, 1);
-				return;
-			}
-			$expense->status = true;
-			$expense->accept_by = $agency->name;
+			$expense->auth_agency = true;
 			$expense->save();
 
 			if ($contractor = $expense->contractor) {
@@ -240,6 +260,9 @@ class AgencyProvider implements AgencyProviderInterface {
 			}
 
 			if ( ! is_null($job->company_id)) {
+				$_hash = new Hash();
+				$_hash = $_hash->getHasher();
+
 				if ($company = \Company::findCompanyById($job->company_id)) {
 					$notificationData = [
 						'company_id'	=>	$company->id,
@@ -247,7 +270,7 @@ class AgencyProvider implements AgencyProviderInterface {
 						'has_read'	=>	false,
 						'title'	=>	'Expense "' . $expense->title . '" for "' . $job->title . '" has been accepted.',
 						'description'	=>	'Accepted by ' . $agency->name,
-						'url'		=>	'#',
+						'url'		=>	route('company.job.detail') . '?i=' . $_hash->encode($job->id),
 					];
 
 					\Company::addNotification($company, $notificationData);
@@ -255,12 +278,7 @@ class AgencyProvider implements AgencyProviderInterface {
 			}
 		}
 		else {
-			if ( ! $expense->status) { // should never happen
-				throw new \Exception("Cannot deauthorize expense", 1);
-				return;
-			}
-			$expense->status = false;
-			$expense->accept_by = null;
+			$expense->auth_agency = true;
 			$expense->save();
 
 			if ($contractor = $expense->contractor) {
@@ -278,13 +296,16 @@ class AgencyProvider implements AgencyProviderInterface {
 
 			if ( ! is_null($job->company_id)) {
 				if ($company = \Company::findCompanyById($job->company_id)) {
+					$_hash = new Hash();
+					$_hash = $_hash->getHasher();
+
 					$notificationData = [
 						'company_id'	=>	$company->id,
 						'alert_from'	=>	'System: Programme Chameleon',
 						'has_read'	=>	false,
 						'title'	=>	'Expense "' . $expense->title . '" for "' . $job->title . '" has been de-authorized.',
 						'description'	=>	'De-authorize by ' . $agency->name,
-						'url'		=>	'#',
+						'url'		=>	route('agency.job.detail') . '?i=' . $_hash->encode($job->id),
 					];
 
 					\Company::addNotification($company, $notificationData);

@@ -110,10 +110,13 @@
 													<p>Effective start date: {{ $timesheet->start_date }}</p>
 													<p>Expected finish date: {{ $timesheet->end_date }}</p>
 												@endif
-												@if ( ! $timesheet->status)
+
+												@if ($timesheet->auth_company && ! $timesheet->auth_agency)
 													<button class="btn btn-success btn-accept-ts" type="button" data-id="{{ $_hash->encode($timesheet->id) }}">Accept</button>
-												@else
+												@elseif ($timesheet->auth_agency)
 													<button class="btn btn-danger btn-remove-ts" type="button" data-id="{{ $_hash->encode($timesheet->id) }}">Reject</button>
+												@else
+													<div class="alert alert-danger">Need to be authorised by company first.</div>
 												@endif
 											</div>
 										</div>
@@ -216,10 +219,15 @@
 														<i class="fa fa-download"></i> Download
 													</a>
 												@endif
-												@if ( ! $expense->status)
+
+												<div class="element-top-10">&nbsp;</div>
+												
+												@if ($expense->auth_company && ! $expense->auth_agency)
 													<button class="btn btn-success btn-accept-ex" type="button" data-id="{{ $_hash->encode($expense->id) }}">Accept</button>
-												@else
+												@elseif ($expense->auth_agency)
 													<button class="btn btn-danger btn-remove-ex" type="button" data-id="{{ $_hash->encode($expense->id) }}">Reject</button>
+												@else
+													<div class="alert alert-danger">Needs to be authorised by company first.</div>
 												@endif
 											</div>
 										</div>

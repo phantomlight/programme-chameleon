@@ -35,7 +35,7 @@ class AgencyCreditProvider implements AgencyCreditProviderInterface {
 		]);
 
 		if ($model->save()) {
-			if ($value < 0) $agency->credit -= $value;
+			if ($value < 0) $agency->credit -= abs($value);
 			else $agency->credit += $value;
 			$agency->save();
 			session(['_sess_agency' => ['model' => $agency]]);

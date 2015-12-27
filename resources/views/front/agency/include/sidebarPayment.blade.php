@@ -6,7 +6,7 @@
 	<div class="panel-body">
 		<a href="#" data-toggle="modal" data-target="#whatis-contract-modal">What is a VIP/6-month contract?</a>
 
-		<button class="btn btn-primary element-top-10 element-bottom-10" data-checkout-type="1">
+		<button class="btn btn-primary element-top-10 element-bottom-10" data-user="agency" data-checkout-type="1">
 			<span class="btn-preloader">
 				<i class="fa fa-spinner fa-spin"></i> checking out with paypal, please wait..
 			</span>
@@ -47,7 +47,7 @@
 				<input value="1" placeholder="amount of credits" type="number" name="_cred_amt" min="1" class="form-control" />
 				<span class="help-block">Each credit is <i class="fa fa-gbp"></i>10</span>
 			</div>
-			<button type="submit" class="btn btn-primary" data-checkout-type="2">
+			<button type="submit" class="btn btn-primary" data-user="agency" data-checkout-type="2">
 				<span>Buy Credits</span>
 				<span class="btn-preloader">
 					<i class="fa fa-spinner fa-spin"></i> checking out with paypal, please wait..

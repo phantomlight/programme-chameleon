@@ -47,6 +47,13 @@
 										<li data-id="{{ $_hash->encode($expense->id) }}">
 											<p>{{ $expense->title }}</p>
 											<p class="text-muted"><small><i class="fa fa-clock-o"></i> Submitted {{ $expense->created_at->diffForHumans() }}</small></p>
+											@if ($expense->auth_company && ! $expense->auth_agency)
+												<label class="label label-success">Authorised, but not by agency.</label>
+											@elseif ($expense->auth_company && $expense->auth_agency)
+												<label class="label label-success">Authorised.</label>
+											@else
+												<label class="label label-danger">Not authorised.</label>
+											@endif
 											<div class="btn-group">
 												<button class="btn btn-danger btn-xs" data-remove="{{ route('contractor.job.expense.remove') }}" data-id="{{ $_hash->encode($expense->id) }}">Remove</button>
 											</div>

@@ -1,6 +1,7 @@
 <?php namespace App\Models\Company\Provider;
 
 use Carbon\Carbon;
+use App\Utils\Hash;
 use App\Models\Company\Interfaces\CompanyProviderInterface;
 
 class CompanyProvider implements CompanyProviderInterface {
@@ -172,63 +173,44 @@ class CompanyProvider implements CompanyProviderInterface {
 		}
 
 		if ($status) {
-			if ($timesheet->status) { // should never happen
-				throw new \Exception("Timesheet has been accepted by " . $timesheet->accept_by, 1);
-				return;
-			}
-			$timesheet->status = true;
-			$timesheet->accept_by = $company->name;
+			$timesheet->auth_company = true;
 			$timesheet->save();
 
-			if ($contractor = $timesheet->contractor) {
-				$notificationData = [
-					'contractor_id'	=>	$contractor->id,
-					'alert_from'	=>	'System: Programme Chameleon',
-					'has_read'	=>	false,
-					'title'	=>	'Your timesheet "' . $timesheet->name . '" for "' . $job->title . '" has been accepted.',
-					'description'	=>	'Accepted by ' . $company->name,
-					'url'		=>	'#',
-				];
-
-				\Contractor::addNotification($contractor, $notificationData);
-			}
-
-			if ( ! is_null($job->agency_id)) {
+			if ( ! is_null($job->agency_id) && ! $timesheet->auth_agency) {
+				$_hash = new Hash();
+				$_hash = $_hash->getHasher();
+				
 				if ($agency = \Agency::findAgencyById($job->agency_id)) {
 					$notificationData = [
 						'agency_id'	=>	$agency->id,
 						'alert_from'	=>	'System: Programme Chameleon',
 						'has_read'	=>	false,
-						'title'	=>	'Timesheet "' . $timesheet->name . '" for "' . $job->title . '" has been accepted.',
+						'title'	=>	'Timesheet "' . $timesheet->name . '" for "' . $job->title . '" has been accepted by "' . $company->name . '". Please authorise it.',
 						'description'	=>	'Accepted by ' . $company->name,
-						'url'		=>	'#',
+						'url'		=>	route('agency.job.detail') . '?i=' . $_hash->encode($job->id),
 					];
 
 					\Agency::addNotification($agency, $notificationData);
 				}
 			}
+			else {
+				if ($contractor = $timesheet->contractor) {
+					$notificationData = [
+						'contractor_id'	=>	$contractor->id,
+						'alert_from'	=>	'System: Programme Chameleon',
+						'has_read'	=>	false,
+						'title'	=>	'Your timesheet "' . $timesheet->name . '" for "' . $job->title . '" has been de-authorized.',
+						'description'	=>	'De-authorize by ' . $company->name,
+						'url'		=>	'#',
+					];
+
+					\Contractor::addNotification($contractor, $notificationData);
+				}
+			}
 		}
 		else {
-			if ( ! $timesheet->status) { // should never happen
-				throw new \Exception("Cannot deauthorize timesheet", 1);
-				return;
-			}
-			$timesheet->status = false;
-			$timesheet->accept_by = null;
+			$timesheet->auth_company = false;
 			$timesheet->save();
-
-			if ($contractor = $timesheet->contractor) {
-				$notificationData = [
-					'contractor_id'	=>	$contractor->id,
-					'alert_from'	=>	'System: Programme Chameleon',
-					'has_read'	=>	false,
-					'title'	=>	'Your timesheet "' . $timesheet->name . '" for "' . $job->title . '" has been de-authorized.',
-					'description'	=>	'De-authorize by ' . $company->name,
-					'url'		=>	'#',
-				];
-
-				\Contractor::addNotification($contractor, $notificationData);
-			}
 
 			if ( ! is_null($job->agency_id)) {
 				if ($agency = \Agency::findAgencyById($job->agency_id)) {
@@ -251,7 +233,7 @@ class CompanyProvider implements CompanyProviderInterface {
 
 	public function updateExpense($id, $company, $status) {
 		if ( ! $expense = \Contractor::findExpenseById($id)) {
-			throw new \Exception("Expense not found", 1);
+			throw new \Exception("Expense not found.", 1);
 			return;
 		}
 
@@ -263,49 +245,43 @@ class CompanyProvider implements CompanyProviderInterface {
 		}
 
 		if ($status) {
-			if ($expense->status) { // should never happen
-				throw new \Exception("Expense has been accepted by " . $expense->accept_by, 1);
-				return;
-			}
-			$expense->status = true;
-			$expense->accept_by = $company->name;
+			$expense->auth_company = true;
 			$expense->save();
 
-			if ($contractor = $expense->contractor) {
-				$notificationData = [
-					'contractor_id'	=>	$contractor->id,
-					'alert_from'	=>	'System: Programme Chameleon',
-					'has_read'	=>	false,
-					'title'	=>	'Your expense "' . $expense->title . '" for "' . $job->title . '" has been accepted.',
-					'description'	=>	'Accepted by ' . $company->name,
-					'url'		=>	'#',
-				];
+			if ( ! is_null($job->agency_id) && ! $expense->auth_agency) {
+				$_hash = new Hash();
+				$_hash = $_hash->getHasher();
 
-				\Contractor::addNotification($contractor, $notificationData);
-			}
-
-			if ( ! is_null($job->agency_id)) {
 				if ($agency = \Agency::findAgencyById($job->agency_id)) {
 					$notificationData = [
 						'agency_id'	=>	$agency->id,
 						'alert_from'	=>	'System: Programme Chameleon',
 						'has_read'	=>	false,
-						'title'	=>	'Expense "' . $expense->title . '" for "' . $job->title . '" has been accepted.',
+						'title'	=>	'Expense "' . $expense->title . '" for "' . $job->title . '" has been accepted by "' . $company->name . '". Please authorize it.',
 						'description'	=>	'Accepted by ' . $company->name,
-						'url'		=>	'#',
+						'url'		=>	route('agency.job.detail') . '?i=' . $_hash->encode($job->id),
 					];
 
 					\Agency::addNotification($agency, $notificationData);
 				}
 			}
+			else {
+				if ($contractor = $expense->contractor) {
+					$notificationData = [
+						'contractor_id'	=>	$contractor->id,
+						'alert_from'	=>	'System: Programme Chameleon',
+						'has_read'	=>	false,
+						'title'	=>	'Your expense "' . $expense->title . '" for "' . $job->title . '" has been accepted.',
+						'description'	=>	'Accepted by ' . $company->name,
+						'url'		=>	'#',
+					];
+
+					\Contractor::addNotification($contractor, $notificationData);
+				}
+			}
 		}
 		else {
-			if ( ! $expense->status) { // should never happen
-				throw new \Exception("Cannot deauthorize expense", 1);
-				return;
-			}
-			$expense->status = false;
-			$expense->accept_by = null;
+			$expense->auth_company = false;
 			$expense->save();
 
 			if ($contractor = $expense->contractor) {

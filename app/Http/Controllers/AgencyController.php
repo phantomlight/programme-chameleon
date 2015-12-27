@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use App\Utils\Hash;
+use App\Jobs\EmailJob;
 use App\Utils\Hashing\JCryption;
 
 class AgencyController extends Controller {
@@ -115,6 +116,27 @@ class AgencyController extends Controller {
 			];
 
 			$agency = \Agency::register($aData);
+
+			$mailData = [
+				'layout'	=>	'emails.welcome',
+				'data'		=>	[
+					'user'	=>	$user,
+				],
+				'subject'	=>	'Welcome to Programme Chameleon',
+				'from_email'	=>	'noreply@programmechameleon.com',
+				'to_email'	=>	$user->email,
+			];
+
+			if (env('APP_ENV') === 'production') {
+				$job = (new EmailJob($mailData))->onQueue('email-queue');
+				$this->dispatch($job);
+			}
+			else { // for devs only
+				\Mail::send($mailData['layout'], $mailData['data'], function ($message) use ($mailData) {
+					$message->from($mailData['from_email'], 'Programme Chameleon Mailing Service');
+					$message->to($mailData['to_email'])->subject($mailData['subject']);
+				});
+			}
 
 			return \Response::json([
 				'type'		=>	'success',
@@ -272,6 +294,25 @@ class AgencyController extends Controller {
 			]);
 		}
 
+		if ( ! $agency->is_vip) {
+			$value = [
+				'1'	=>	-1,
+				'2'	=>	-3,
+			];
+
+			$checkValue = abs($value[$data['job_post_duration']]);
+
+			if ($agency->credit < $checkValue) {
+				return \Response::json([
+					'type'		=>	'danger',
+					'message'	=>	'You have ' . $agency->credit . ' credit. You need at least ' . $checkValue . ' credit(s) to post this job.',
+				]);
+			}
+		}
+		else {
+			$data['job_post_duration'] = 999;
+		}
+
 		$status = $company->agencies()
 			->wherePivot('company_id', $company->id)
 			->wherePivot('status', 'accept')
@@ -317,6 +358,11 @@ class AgencyController extends Controller {
 
 		try {
 			$job = \Job::createJob($data);
+
+			if ( ! $agency->is_vip) {
+				\Agency::updateCredit($agency, $value[$data['job_post_duration']]);
+			}
+
 			return \Response::json([
 				'type'		=>	'success',
 				'message'	=>	'Job posted successfully',
@@ -356,6 +402,24 @@ class AgencyController extends Controller {
 				'type'		=>	'danger',
 				'message'	=>	'Not an agency account.',
 			]);
+		}
+
+		if ($data['job_post_duration'] !== '0') {
+			if ( ! $agency->is_vip) {
+				$value = [
+					'1'	=>	-1,
+					'2'	=>	-3,
+				];
+
+				$checkValue = abs($value[$data['job_post_duration']]);
+
+				if ($agency->credit < $checkValue) {
+					return \Response::json([
+						'type'		=>	'warning',
+						'message'	=>	'You have ' . $agency->credit . ' credit. You need at least ' . $checkValue . ' credit(s) to post this job.',
+					]);
+				}
+			}
 		}
 
 		$status = $company->agencies()
@@ -403,9 +467,14 @@ class AgencyController extends Controller {
 
 		try {
 			$job = \Job::updateJob($job, $data);
+
+			if ( ! $agency->is_vip && $data['job_post_duration'] !== '0') {
+				\Agency::updateCredit($agency, $value[$data['job_post_duration']]);
+			}
+
 			return \Response::json([
 				'type'		=>	'success',
-				'message'	=>	'Job posted successfully',
+				'message'	=>	'Job updated successfully.',
 			]);
 		}
 		catch (\Exception $e) {

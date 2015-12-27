@@ -21,7 +21,7 @@ class JobModel extends Eloquent implements JobModelInterface {
 	protected $hidden = [];
 
 	private $allowedJobType = ['permanent', 'contract'];
-	private $allowedSalaryType = ['hourly', 'monthly', 'daily'];
+	private $allowedSalaryType = ['hourly', 'monthly', 'daily', 'annually'];
 
 	public function industries() {
 		return $this->belongsToMany(static::$jobIndustryModel, static::$jobIndustryPivotTable, 'job_id', 'industry_id');

@@ -185,7 +185,7 @@ class SiteController extends Controller {
 		$mailData = [
 			'layout'	=>	'emails.message',
 			'data'		=>	[
-				'user'	=>	$data,
+				'data'	=>	$data,
 			],
 			'subject'	=>	'Message from user',
 			'from_email'	=>	$data['email'],

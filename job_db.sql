@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 24, 2015 at 06:11 PM
+-- Generation Time: Dec 27, 2015 at 06:40 PM
 -- Server version: 5.6.27-0ubuntu1
 -- PHP Version: 5.6.11-1+deb.sury.org~utopic+1
 
@@ -5411,10 +5411,10 @@ CREATE TABLE IF NOT EXISTS `migrations` (
 
 INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2015_09_14_024206_create_user_table', 1),
-('2015_11_22_113547_create_contractor_table', 2),
-('2015_11_23_120301_create_company_table', 2),
-('2015_11_23_122431_create_agency_table', 2),
-('2015_11_23_123140_create_job_table', 2);
+('2015_11_22_113547_create_contractor_table', 1),
+('2015_11_23_120301_create_company_table', 1),
+('2015_11_23_122431_create_agency_table', 1),
+('2015_11_23_123140_create_job_table', 1);
 
 -- --------------------------------------------------------
 
@@ -5434,16 +5434,21 @@ CREATE TABLE IF NOT EXISTS `tb_agency` (
   `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `description` text COLLATE utf8_unicode_ci,
   `industry` text COLLATE utf8_unicode_ci,
+  `vip_start` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `vip_end` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `is_vip` tinyint(1) NOT NULL DEFAULT '0',
+  `credit` int(10) unsigned NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_agency`
 --
 
-INSERT INTO `tb_agency` (`id`, `user_id`, `name`, `owner_name`, `phone`, `address`, `country`, `city`, `image`, `description`, `industry`, `created_at`, `updated_at`) VALUES
-(1, 6, 'Test Agency', 'Test', '123123123', 'test Addr', 'United Kingdom', 'Crawley', 'uploads/agency/1/images/12/20151218-5673f49465704.jpg', NULL, NULL, '2015-12-18 02:32:14', '2015-12-18 04:58:33');
+INSERT INTO `tb_agency` (`id`, `user_id`, `name`, `owner_name`, `phone`, `address`, `country`, `city`, `image`, `description`, `industry`, `vip_start`, `vip_end`, `is_vip`, `credit`, `created_at`, `updated_at`) VALUES
+(3, 11, 'Programme Agency Tester', 'Programme Tester', '123123123', 'Test', 'Afghanistan', 'Herat', NULL, NULL, NULL, '2015-12-27 11:05:57', '2016-06-27 11:05:57', 1, 6, '2015-12-27 03:18:06', '2015-12-27 04:05:57'),
+(4, 12, 'Programme Agency Tester', 'Programme Tester', '123123123', 'Test', 'Afghanistan', 'Herat', NULL, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, '2015-12-27 03:18:32', '2015-12-27 03:18:32');
 
 -- --------------------------------------------------------
 
@@ -5458,6 +5463,37 @@ CREATE TABLE IF NOT EXISTS `tb_agency_company` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tb_agency_company`
+--
+
+INSERT INTO `tb_agency_company` (`agency_id`, `company_id`, `status`, `created_at`, `updated_at`) VALUES
+(3, 2, 'accept', '2015-12-27 03:39:29', '2015-12-27 03:39:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_agency_credit_history`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_agency_credit_history` (
+  `id` int(10) unsigned NOT NULL,
+  `agency_id` int(10) unsigned NOT NULL,
+  `amount` decimal(8,2) NOT NULL,
+  `status` enum('process','done') COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tb_agency_credit_history`
+--
+
+INSERT INTO `tb_agency_credit_history` (`id`, `agency_id`, `amount`, `status`, `created_at`, `updated_at`) VALUES
+(1, 3, 10.00, 'done', '2015-12-27 03:52:06', '2015-12-27 03:52:06'),
+(2, 3, -3.00, 'done', '2015-12-27 04:03:46', '2015-12-27 04:03:46'),
+(3, 3, -1.00, 'done', '2015-12-27 04:05:02', '2015-12-27 04:05:02');
 
 -- --------------------------------------------------------
 
@@ -5475,15 +5511,19 @@ CREATE TABLE IF NOT EXISTS `tb_agency_notification` (
   `description` text COLLATE utf8_unicode_ci,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_agency_notification`
 --
 
 INSERT INTO `tb_agency_notification` (`id`, `agency_id`, `alert_from`, `has_read`, `title`, `url`, `description`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/agency/job-application?i=3gj849eb', NULL, '2015-12-21 02:33:39', '2015-12-21 02:33:39'),
-(2, 1, 'Contractor 2', 0, 'New Job Application', 'http://127.0.0.5/agency/job-application?i=3gj849eb', NULL, '2015-12-23 03:58:55', '2015-12-23 03:58:55');
+(1, 3, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/agency/job-application?i=23j89be7', NULL, '2015-12-27 04:08:58', '2015-12-27 04:08:58'),
+(2, 3, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/agency/job-application?i=23j89be7', NULL, '2015-12-27 04:09:02', '2015-12-27 04:09:02'),
+(3, 3, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/agency/job-application?i=23j89be7', NULL, '2015-12-27 04:11:06', '2015-12-27 04:11:06'),
+(4, 3, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/agency/job-application?i=23j89be7', NULL, '2015-12-27 04:11:09', '2015-12-27 04:11:09'),
+(5, 3, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/agency/job-application?i=23j89be7', NULL, '2015-12-27 04:11:50', '2015-12-27 04:11:50'),
+(6, 3, 'System: Programme Chameleon', 0, 'Timesheet "Timesheet by Contractor 1" for "Permanent Job 2" has been accepted by "Company 2". Please authorise it.', 'http://127.0.0.5/agency/job-details?i=23j89be7', 'Accepted by Company 2', '2015-12-27 04:34:37', '2015-12-27 04:34:37');
 
 -- --------------------------------------------------------
 
@@ -5494,7 +5534,7 @@ INSERT INTO `tb_agency_notification` (`id`, `agency_id`, `alert_from`, `has_read
 CREATE TABLE IF NOT EXISTS `tb_company` (
   `id` int(10) unsigned NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  `credit` int(10) unsigned NOT NULL,
+  `credit` int(10) unsigned NOT NULL DEFAULT '0',
   `is_vip` tinyint(1) NOT NULL DEFAULT '0',
   `address` text COLLATE utf8_unicode_ci,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -5516,8 +5556,8 @@ CREATE TABLE IF NOT EXISTS `tb_company` (
 --
 
 INSERT INTO `tb_company` (`id`, `user_id`, `credit`, `is_vip`, `address`, `name`, `position`, `image`, `phone`, `vip_start`, `vip_end`, `overview`, `description`, `industry`, `socials`, `created_at`, `updated_at`) VALUES
-(1, 3, 11, 1, 'Test', 'Company 1', 'Test', NULL, '123123123', '2016-06-20 11:44:07', '2016-06-20 11:44:07', 'Of friendship on inhabiting diminution discovered as. Did friendly eat breeding building few nor. Object he barton no effect played valley afford. Period so to oppose we little seeing or branch. Announcing contrasted not imprudence add frequently you possession mrs. Period saw his houses square and misery. Hour had held lain give yet. \n\nArrived totally in as between private. Favour of so as on pretty though elinor direct. Reasonable estimating be alteration we themselves entreaties me of reasonably. Direct wished so be expect polite valley. Whose asked stand it sense no spoil to. Prudent you too his conduct feeling limited and. Side he lose paid as hope so face upon be. Goodness did suitable learning put. ', '\nIt as announcing it me stimulated frequently continuing. Least their she you now above going stand forth. He pretty future afraid should genius spirit on. Set property addition building put likewise get. Of will at sell well at as. Too want but tall nay like old. Removing yourself be in answered he. Consider occasion get improved him she eat. Letter by lively oh denote an. \n\nGave read use way make spot how nor. In daughter goodness an likewise oh consider at procured wandered. Songs words wrong by me hills heard timed. Happy eat may doors songs. Be ignorant so of suitable dissuade weddings together. Least whole timed we is. An smallness deficient discourse do newspaper be an eagerness continued. Mr my ready guest ye after short at. ', '["test","Web Designer"]', '{"facebook":"facebook","google":"google","twitter":"twitter","url":"test.com"}', '2015-12-13 02:16:28', '2015-12-20 04:44:07'),
-(2, 7, 11, 0, 'test Addr', 'Company 2', 'Test', NULL, '123123123', '2016-06-19 08:45:22', '2016-06-19 08:45:22', '', '', '""', '{"linkedin":"linkedin","facebook":"facebook","google":"google","twitter":"twitter","url":"test.com"}', '2015-12-19 01:44:02', '2015-12-23 04:32:58');
+(1, 6, 29, 0, 'Test Address', 'Programme Chameleon Tester Company', 'Tester', NULL, '123123123', '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, NULL, '2015-12-27 02:52:58', '2015-12-27 03:44:34'),
+(2, 13, 0, 1, 'Test Address', 'Company 2', 'Tester', NULL, '123123123', '2015-12-27 10:27:29', '2016-06-27 10:27:29', NULL, NULL, NULL, NULL, '2015-12-27 03:20:22', '2015-12-27 03:27:29');
 
 -- --------------------------------------------------------
 
@@ -5532,16 +5572,19 @@ CREATE TABLE IF NOT EXISTS `tb_company_credit_history` (
   `status` enum('process','done') COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_company_credit_history`
 --
 
 INSERT INTO `tb_company_credit_history` (`id`, `company_id`, `amount`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 10.00, 'done', '2015-12-13 03:14:13', '2015-12-13 03:14:13'),
-(2, 1, -1.00, 'done', '2015-12-13 03:21:36', '2015-12-13 03:21:36'),
-(3, 2, -1.00, 'done', '2015-12-20 06:21:52', '2015-12-20 06:21:52');
+(1, 1, 25.00, 'done', '2015-12-27 03:25:39', '2015-12-27 03:25:39'),
+(2, 1, -1.00, 'done', '2015-12-27 03:31:18', '2015-12-27 03:31:18'),
+(3, 1, -3.00, 'done', '2015-12-27 03:38:58', '2015-12-27 03:38:58'),
+(4, 1, -1.00, 'done', '2015-12-27 03:42:54', '2015-12-27 03:42:54'),
+(5, 1, -1.00, 'done', '2015-12-27 03:44:17', '2015-12-27 03:44:17'),
+(6, 1, -1.00, 'done', '2015-12-27 03:44:34', '2015-12-27 03:44:34');
 
 -- --------------------------------------------------------
 
@@ -5559,30 +5602,16 @@ CREATE TABLE IF NOT EXISTS `tb_company_notification` (
   `description` text COLLATE utf8_unicode_ci,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_company_notification`
 --
 
 INSERT INTO `tb_company_notification` (`id`, `company_id`, `alert_from`, `has_read`, `title`, `url`, `description`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=742eb985', NULL, '2015-12-20 06:18:14', '2015-12-20 06:18:14'),
-(2, 2, 'Contractor 2', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=g19eg68b', NULL, '2015-12-20 06:47:12', '2015-12-20 06:47:12'),
-(3, 1, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=3gj849eb', NULL, '2015-12-21 02:31:21', '2015-12-21 02:31:21'),
-(4, 1, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=3gj849eb', NULL, '2015-12-21 02:33:39', '2015-12-21 02:33:39'),
-(5, 1, 'Contractor 2', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=3gj849eb', NULL, '2015-12-23 03:58:54', '2015-12-23 03:58:54'),
-(6, 1, 'System: Programme Chameleon', 0, 'Expense "Expense details by Contractor 2" for "Security" has been de-authorized.', '#', 'De-authorize by Test Agency', '2015-12-24 03:54:43', '2015-12-24 03:54:43'),
-(7, 1, 'System: Programme Chameleon', 0, 'Timesheet "Timesheet by Contractor 2" for "Security" has been accepted.', '#', 'Accepted by Test Agency', '2015-12-24 03:54:48', '2015-12-24 03:54:48'),
-(8, 1, 'System: Programme Chameleon', 0, 'Expense "Expense details by Contractor 2" for "Security" has been accepted.', '#', 'Accepted by Test Agency', '2015-12-24 03:54:52', '2015-12-24 03:54:52'),
-(9, 1, 'Contractor 2', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=742eb985', NULL, '2015-12-24 03:59:11', '2015-12-24 03:59:11'),
-(10, 1, 'Contractor 2', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=742eb985', NULL, '2015-12-24 03:59:14', '2015-12-24 03:59:14'),
-(11, 1, 'Contractor 2', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=742eb985', NULL, '2015-12-24 04:05:59', '2015-12-24 04:05:59'),
-(12, 1, 'Contractor 2', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=742eb985', NULL, '2015-12-24 04:06:01', '2015-12-24 04:06:01'),
-(13, 1, 'Contractor 2', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=742eb985', NULL, '2015-12-24 04:07:54', '2015-12-24 04:07:54'),
-(14, 1, 'Contractor 2', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=742eb985', NULL, '2015-12-24 04:08:25', '2015-12-24 04:08:25'),
-(15, 1, 'Contractor 2', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=742eb985', NULL, '2015-12-24 04:09:30', '2015-12-24 04:09:30'),
-(16, 1, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=742eb985', NULL, '2015-12-24 04:10:21', '2015-12-24 04:10:21'),
-(17, 1, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=742eb985', NULL, '2015-12-24 04:10:28', '2015-12-24 04:10:28');
+(5, 2, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=23j89be7', NULL, '2015-12-27 04:11:50', '2015-12-27 04:11:50'),
+(11, 1, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=3j681g8d', NULL, '2015-12-27 04:18:54', '2015-12-27 04:18:54'),
+(12, 2, 'System: Programme Chameleon', 0, 'Timesheet "Timesheet by Contractor 1" for "Permanent Job 2" has been accepted.', 'http://127.0.0.5/agency/job-details?i=23j89be7', 'Accepted by Programme Agency Tester', '2015-12-27 04:37:10', '2015-12-27 04:37:10');
 
 -- --------------------------------------------------------
 
@@ -5600,25 +5629,26 @@ CREATE TABLE IF NOT EXISTS `tb_contractor` (
   `country` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `educations` text COLLATE utf8_unicode_ci,
   `experiences` text COLLATE utf8_unicode_ci,
+  `salary_rate` enum('hourly','daily','monthly','annually') COLLATE utf8_unicode_ci NOT NULL,
+  `range_salary_min` int(11) NOT NULL DEFAULT '0',
+  `range_salary_max` int(11) NOT NULL DEFAULT '0',
   `skills` text COLLATE utf8_unicode_ci,
   `urls` text COLLATE utf8_unicode_ci,
   `description` text COLLATE utf8_unicode_ci,
   `socials` text COLLATE utf8_unicode_ci,
   `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `salary_rate` enum('daily','monthly','hourly') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'hourly',
-  `range_salary_min` int(11) NOT NULL DEFAULT '0',
-  `range_salary_max` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_contractor`
 --
 
-INSERT INTO `tb_contractor` (`id`, `user_id`, `address`, `occupation`, `phone`, `city`, `country`, `educations`, `experiences`, `skills`, `urls`, `description`, `socials`, `image`, `salary_rate`, `range_salary_min`, `range_salary_max`, `created_at`, `updated_at`) VALUES
-(1, 4, 'Test', 'Has many skills', '123123123', NULL, NULL, NULL, NULL, NULL, NULL, 'And here''s a test to see if Star Wars is real', NULL, NULL, 'hourly', 300, 1000, '2015-12-13 03:25:58', '2015-12-21 02:22:00'),
-(2, 5, 'test Addr', 'Web Designer', '123123123', 'Aberdeen', 'United Kingdom', '[]', '[]', '', '[]', '<p><br></p>', '{"facebook":"facebook","twitter":"twitter","linkedin":"linkedin"}', NULL, 'hourly', 0, 0, '2015-12-17 04:24:43', '2015-12-23 04:37:06');
+INSERT INTO `tb_contractor` (`id`, `user_id`, `address`, `occupation`, `phone`, `city`, `country`, `educations`, `experiences`, `salary_rate`, `range_salary_min`, `range_salary_max`, `skills`, `urls`, `description`, `socials`, `image`, `created_at`, `updated_at`) VALUES
+(1, 3, 'Test Address', 'Has many skills', '123123123', NULL, NULL, NULL, NULL, 'hourly', 0, 0, NULL, NULL, NULL, NULL, NULL, '2015-12-26 05:13:13', '2015-12-26 05:13:13'),
+(3, 5, 'Test Address', 'Web Designer', '123123123', 'Aberdeen', 'United Kingdom', '[]', '[]', 'hourly', 0, 0, '', '[]', '<p><br></p>', '{"facebook":"","twitter":"","linkedin":""}', NULL, '2015-12-26 05:16:27', '2015-12-26 05:47:06'),
+(4, 14, 'Test Address', 'Has many skills', '123123123', NULL, NULL, NULL, NULL, 'hourly', 0, 0, NULL, NULL, NULL, NULL, NULL, '2015-12-27 03:20:47', '2015-12-27 03:20:47');
 
 -- --------------------------------------------------------
 
@@ -5632,15 +5662,7 @@ CREATE TABLE IF NOT EXISTS `tb_contractor_cv` (
   `file` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `tb_contractor_cv`
---
-
-INSERT INTO `tb_contractor_cv` (`id`, `contractor_id`, `file`, `created_at`, `updated_at`) VALUES
-(7, 1, 'uploads/contractors/1/resume/12/20151213-566d5d51bc19e.docx', '2015-12-13 04:58:09', '2015-12-13 04:58:09'),
-(8, 1, 'uploads/contractors/1/resume/12/20151213-566d5d68cb4fa.doc', '2015-12-13 04:58:32', '2015-12-13 04:58:32');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -5656,21 +5678,19 @@ CREATE TABLE IF NOT EXISTS `tb_contractor_expense` (
   `file` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `type` enum('food','transport','business_operation','other') COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci,
-  `status` tinyint(1) NOT NULL DEFAULT '0',
-  `accept_by` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `amount` decimal(16,4) NOT NULL,
+  `auth_company` tinyint(1) NOT NULL DEFAULT '0',
+  `auth_agency` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_contractor_expense`
 --
 
-INSERT INTO `tb_contractor_expense` (`id`, `contractor_id`, `job_id`, `title`, `file`, `type`, `description`, `status`, `accept_by`, `amount`, `created_at`, `updated_at`) VALUES
-(3, 1, 1, 'Expense details by Contractor 1', 'uploads/contractors/1/expense/12/20151217-56729b55d48a7.docx', 'food', 'testet etasdassas', 0, NULL, 100.0000, '2015-12-17 04:24:05', '2015-12-17 04:24:05'),
-(4, 1, 7, 'Expense details by Contractor 1', NULL, 'food', 'Test', 1, 'Company 1', 100.0000, '2015-12-23 03:47:20', '2015-12-24 03:33:32'),
-(5, 2, 4, 'Expense details by Contractor 2', 'uploads/contractors/2/expense/12/20151224-567bcc03b4f5b.pdf', 'other', 'Just a test\nJust a test\nJust a test\nJust a test', 1, 'Test Agency', 100.0000, '2015-12-24 03:42:11', '2015-12-24 03:54:52');
+INSERT INTO `tb_contractor_expense` (`id`, `contractor_id`, `job_id`, `title`, `file`, `type`, `description`, `amount`, `auth_company`, `auth_agency`, `created_at`, `updated_at`) VALUES
+(1, 3, 5, 'Expense details by Contractor 1', 'uploads/contractors/3/expense/12/20151227-567fc9b74d702.png', 'transport', 'test', 100.0000, 0, 0, '2015-12-27 04:21:27', '2015-12-27 04:21:27');
 
 -- --------------------------------------------------------
 
@@ -5681,7 +5701,7 @@ INSERT INTO `tb_contractor_expense` (`id`, `contractor_id`, `job_id`, `title`, `
 CREATE TABLE IF NOT EXISTS `tb_contractor_job` (
   `contractor_id` int(10) unsigned NOT NULL,
   `job_id` int(10) unsigned NOT NULL,
-  `status` enum('request','accept') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'request',
+  `status` enum('request','accept') COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -5691,9 +5711,8 @@ CREATE TABLE IF NOT EXISTS `tb_contractor_job` (
 --
 
 INSERT INTO `tb_contractor_job` (`contractor_id`, `job_id`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'accept', '2015-12-17 06:47:06', '2015-12-17 07:01:25'),
-(2, 7, 'request', '2015-12-24 04:09:30', '2015-12-24 04:09:30'),
-(1, 7, 'request', '2015-12-24 04:10:28', '2015-12-24 04:10:28');
+(3, 5, 'accept', '2015-12-27 04:11:49', '2015-12-27 04:20:00'),
+(3, 1, 'request', '2015-12-27 04:18:54', '2015-12-27 04:18:54');
 
 -- --------------------------------------------------------
 
@@ -5712,13 +5731,6 @@ CREATE TABLE IF NOT EXISTS `tb_contractor_job_alert` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Dumping data for table `tb_contractor_job_alert`
---
-
-INSERT INTO `tb_contractor_job_alert` (`contractor_id`, `industry_id`, `email`, `country`, `city`, `type`, `created_at`, `updated_at`) VALUES
-(1, 2, 'contractor1@email.org', 'United Kingdom', 'Aberdeen', 'any', '2015-12-20 06:07:13', '0000-00-00 00:00:00');
-
 -- --------------------------------------------------------
 
 --
@@ -5735,26 +5747,15 @@ CREATE TABLE IF NOT EXISTS `tb_contractor_notification` (
   `description` text COLLATE utf8_unicode_ci,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_contractor_notification`
 --
 
 INSERT INTO `tb_contractor_notification` (`id`, `contractor_id`, `alert_from`, `has_read`, `title`, `url`, `description`, `created_at`, `updated_at`) VALUES
-(1, 2, 'System: Programme Chameleon', 0, 'A new job matching your job alert found.', 'http://127.0.0.5/job/742eb985/project-manager', NULL, '2015-12-20 06:11:17', '2015-12-20 06:11:17'),
-(2, 1, 'System: Programme Chameleon', 0, 'Added to Security', 'http://127.0.0.5/job/3gj849eb/security', 'You have been accepted to Security', '2015-12-23 02:57:20', '2015-12-23 02:57:20'),
-(3, 1, 'System: Programme Chameleon', 0, 'Removed from Security', NULL, 'You have been removed from Security', '2015-12-23 02:57:25', '2015-12-23 02:57:25'),
-(4, 1, 'System: Programme Chameleon', 0, 'Added to Project Manager', 'http://127.0.0.5/job/742eb985/project-manager', 'You have been accepted to Project Manager', '2015-12-23 03:48:16', '2015-12-23 03:48:16'),
-(5, 2, 'System: Programme Chameleon', 0, 'A new job matching your job alert found.', 'http://127.0.0.5/job/3gbe0381/test', NULL, '2015-12-23 03:54:44', '2015-12-23 03:54:44'),
-(6, 1, 'System: Programme Chameleon', 0, 'Your timesheet "" for "My First Job" has been accepted.', '#', 'Accepted by Company 1', '2015-12-24 03:33:28', '2015-12-24 03:33:28'),
-(7, 1, 'System: Programme Chameleon', 0, 'Your expense "Expense details by Contractor 1" for "My First Job" has been accepted.', '#', 'Accepted by Company 1', '2015-12-24 03:33:32', '2015-12-24 03:33:32'),
-(8, 1, 'System: Programme Chameleon', 0, 'Your timesheet "Timesheet by Contractor 1" for "My First Job" has been de-authorized.', '#', 'De-authorize by Company 1', '2015-12-24 03:35:30', '2015-12-24 03:35:30'),
-(9, 2, 'System: Programme Chameleon', 0, 'Added to Security', 'http://127.0.0.5/job/3gj849eb/security', 'You have been awarded the job "Security"', '2015-12-24 03:40:36', '2015-12-24 03:40:36'),
-(10, 2, 'System: Programme Chameleon', 0, 'Your expense "Expense details by Contractor 2" for "Security" has been accepted.', '#', 'Accepted by Test Agency', '2015-12-24 03:53:50', '2015-12-24 03:53:50'),
-(11, 2, 'System: Programme Chameleon', 0, 'Your expense "Expense details by Contractor 2" for "Security" has been de-authorized.', '#', 'De-authorize by Test Agency', '2015-12-24 03:54:43', '2015-12-24 03:54:43'),
-(12, 2, 'System: Programme Chameleon', 0, 'Your timesheet "Timesheet by Contractor 2" for "Security" has been accepted.', '#', 'Accepted by Test Agency', '2015-12-24 03:54:48', '2015-12-24 03:54:48'),
-(13, 2, 'System: Programme Chameleon', 0, 'Your expense "Expense details by Contractor 2" for "Security" has been accepted.', '#', 'Accepted by Test Agency', '2015-12-24 03:54:52', '2015-12-24 03:54:52');
+(1, 3, 'System: Programme Chameleon', 0, 'Added to Permanent Job 2', 'http://127.0.0.5/job/23j89be7/permanent-job-2', 'You have been awarded the job "Permanent Job 2"', '2015-12-27 04:20:00', '2015-12-27 04:20:00'),
+(2, 3, 'System: Programme Chameleon', 0, 'Your timesheet "Timesheet by Contractor 1" for "Permanent Job 2" has been accepted.', '#', 'Accepted by Programme Agency Tester', '2015-12-27 04:37:10', '2015-12-27 04:37:10');
 
 -- --------------------------------------------------------
 
@@ -5771,22 +5772,20 @@ CREATE TABLE IF NOT EXISTS `tb_contractor_timesheet` (
   `file` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `report` enum('daily','weekly','monthly') COLLATE utf8_unicode_ci DEFAULT NULL,
   `hours` smallint(6) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '0',
-  `accept_by` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `start_date` datetime DEFAULT '0000-00-00 00:00:00',
   `end_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `auth_company` tinyint(1) NOT NULL DEFAULT '0',
+  `auth_agency` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_contractor_timesheet`
 --
 
-INSERT INTO `tb_contractor_timesheet` (`id`, `contractor_id`, `job_id`, `name`, `type`, `file`, `report`, `hours`, `status`, `accept_by`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES
-(2, 1, 1, 'Timesheet by Contractor 1', 'data', NULL, 'daily', 1, 0, '', '2015-12-30 11:23:45', '2015-12-31 11:23:45', '2015-12-16 20:16:13', '2015-12-17 04:23:45'),
-(3, 1, 7, 'Timesheet by Contractor 1', 'data', NULL, 'weekly', 3, 0, NULL, '2015-12-09 10:46:25', '2015-12-26 10:46:25', '2015-12-23 03:46:25', '2015-12-24 03:35:30'),
-(4, 2, 4, 'Timesheet by Contractor 2', 'data', NULL, 'daily', 3, 1, 'Test Agency', '2015-11-30 10:42:27', '2016-01-09 10:42:27', '2015-12-24 03:42:27', '2015-12-24 03:54:48');
+INSERT INTO `tb_contractor_timesheet` (`id`, `contractor_id`, `job_id`, `name`, `type`, `file`, `report`, `hours`, `start_date`, `end_date`, `auth_company`, `auth_agency`, `created_at`, `updated_at`) VALUES
+(1, 3, 5, 'Timesheet by Contractor 1', 'data', NULL, 'weekly', 5, '2015-12-08 11:21:02', '2015-12-31 11:21:02', 1, 1, '2015-12-27 04:21:02', '2015-12-27 04:37:10');
 
 -- --------------------------------------------------------
 
@@ -5799,15 +5798,17 @@ CREATE TABLE IF NOT EXISTS `tb_industry` (
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_industry`
 --
 
 INSERT INTO `tb_industry` (`id`, `title`, `created_at`, `updated_at`) VALUES
-(1, 'test', '2015-12-12 06:28:18', '2015-12-12 06:28:18'),
-(2, 'Web Designer', '2015-12-12 06:36:48', '2015-12-12 06:36:48');
+(1, 'Web Designer', '2015-12-27 03:28:31', '2015-12-27 03:28:31'),
+(2, 'Engineer', '2015-12-27 03:28:45', '2015-12-27 03:28:45'),
+(3, 'Project Development', '2015-12-27 03:28:59', '2015-12-27 03:28:59'),
+(4, 'Marketing', '2015-12-27 03:29:12', '2015-12-27 03:29:12');
 
 -- --------------------------------------------------------
 
@@ -5829,7 +5830,7 @@ CREATE TABLE IF NOT EXISTS `tb_job` (
   `contact_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `contact_phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `salary` decimal(16,4) NOT NULL,
-  `salary_type` enum('hourly','monthly','daily') COLLATE utf8_unicode_ci NOT NULL,
+  `salary_type` enum('hourly','monthly','daily','annually') COLLATE utf8_unicode_ci NOT NULL,
   `visa` tinyint(1) NOT NULL DEFAULT '1',
   `eligible_to_work_in_country` tinyint(1) NOT NULL DEFAULT '1',
   `security_clearance` tinyint(1) NOT NULL DEFAULT '1',
@@ -5839,18 +5840,17 @@ CREATE TABLE IF NOT EXISTS `tb_job` (
   `description` text COLLATE utf8_unicode_ci,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_job`
 --
 
 INSERT INTO `tb_job` (`id`, `company_id`, `agency_id`, `experience_year`, `title`, `start_date`, `city`, `country`, `duration`, `is_active`, `contact_name`, `contact_phone`, `salary`, `salary_type`, `visa`, `eligible_to_work_in_country`, `security_clearance`, `type`, `status`, `job_apply_details`, `description`, `created_at`, `updated_at`) VALUES
-(1, 1, NULL, 1, 'My First Job', 'Immediately', 'Aberdeen', 'United Kingdom', '1', 1, 'Testere', '1231231231', 100.0000, 'daily', 1, 1, 1, 'permanent', 'open', '{"type":"email","application_email":"","direct_email":"recruit@email.org"}', 'Some details of your job here.', '2015-12-13 03:21:35', '2015-12-20 04:44:07'),
-(3, 2, NULL, 10, 'Star Wars Developer', 'A week after being accepted to Job', 'Bradford', 'United Kingdom', '999', 1, 'Testere', '1231231231', 900.0000, 'monthly', 1, 1, 1, 'contract', 'open', '{"type":"email","application_email":"recruit1@email.org","direct_email":"recruit2@email.org"}', 'The earliest known appearance of the phrase is from The Michigan School Moderator, a journal that provided many teachers with education-related news and suggestions for lessons.[1] In an article titled "Interesting Notes" in the March 14, 1885 issue, the phrase is given as a suggestion for writing practice: "The following sentence makes a good copy for practice, as it contains every letter of the alphabet: ''A quick brown fox jumps over the lazy dog.''"[2] Note that the phrase in this case begins with the word "A" rather than "The". Several other early sources also use this variation.\n\nAs the use of typewriters grew in the late 19th century, the phrase began appearing in typing and stenography lesson books as a practice sentence. Early examples of publications which used the phrase include Illustrative Shorthand by Linda Bronson (1888),[3] How to Become Expert in Typewriting: A Complete Instructor Designed Especially for the Remington Typewriter (1890),[4] and Typewriting Instructor and Stenographer''s Hand-book (1892). By the turn of the 20th century, the phrase had become widely known. In the January 10, 1903, issue of Pitman''s Phonetic Journal, it is referred to as "the well known memorized typing line embracing all the letters of the alphabet".[5] Robert Baden-Powell''s book Scouting for Boys (1908) uses the phrase as a practice sentence for signaling.[6]\n\nThe first message sent on the Moscow–Washington hotline was the test phrase "THE QUICK BROWN FOX JUMPED OVER THE LAZY DOG''S BACK 1234567890".[7] Later, during testing, the Russian translators sent a message asking their American counterparts "What does it mean when your people say ''The quick brown fox jumped over the lazy dog?''"[8]\n\nDuring the 20th century, technicians tested typewriters and teleprinters by typing the sentence.[9]', '2015-12-13 01:48:06', '2015-12-20 04:25:14'),
-(4, 1, 1, 5, 'Security', 'Immediately', 'Aberdeen', 'United Kingdom', '999', 1, 'Testerrererererer', '1231231231', 100.0000, 'hourly', 1, 1, 1, 'permanent', 'open', '{"type":"url","url":"test.com"}', 'In the age of computers, this pangram is commonly used to display font samples and for testing computer keyboards. In cryptography, it is commonly used as a test vector for hash and encryption algorithms to verify their implementation, as well as to ensure alphabetic character set compatibility. Microsoft Word has a command to auto-type the sentence, in versions up to Word 2003, using the command =rand(), and in Microsoft Office Word 2007 and later using the command =rand.old().[10]', '2015-12-19 02:16:59', '2015-12-19 02:17:49'),
-(7, 1, NULL, 1, 'Project Manager', 'Immediately', 'Aberdeen', 'United Kingdom', '999', 1, 'Testerrererererer', '1231231231', 1000.0000, 'daily', 1, 1, 1, 'contract', 'open', '{"type":"url","url":"test.com"}', 'Some details of your job here.', '2015-12-20 06:11:17', '2015-12-20 06:11:17'),
-(8, 2, NULL, 0, 'Accounting', 'Immediately', 'Aberdeen', 'United Kingdom', '1', 1, 'Testerrererererer', '1299999', 10.0000, 'hourly', 1, 1, 1, 'permanent', 'open', '{"type":"email","application_email":"recruit@email.org","direct_email":""}', 'Some details of your job here.', '2015-12-20 06:21:51', '2015-12-20 06:21:51');
+(1, 1, NULL, 1, 'Contract Job', 'Immediately', 'Aberdeen', 'United Kingdom', '1', 1, 'Testere', '1231231231', 100.0000, 'daily', 1, 1, 1, 'contract', 'open', '{"type":"email","application_email":"recruit@email.org","direct_email":"recruit2@email.org"}', 'Some details of your job here.', '2015-12-27 03:31:18', '2015-12-27 03:31:18'),
+(2, 1, NULL, 5, 'Permanent Job', 'A week after being accepted to Job', 'Aberdeen', 'United Kingdom', '1', 1, 'Testerrererererer', '1299999', 1000.0000, 'hourly', 1, 1, 1, 'permanent', 'open', '{"type":"url","url":"google.com"}', 'Some details of your job here.', '2015-12-27 03:38:57', '2015-12-27 03:44:33'),
+(4, 2, 3, 5, 'Contract Job 2', 'Immediately', 'Aberdeen', 'United Kingdom', '1', 1, 'Testere', '1231231231', 500.0000, 'hourly', 1, 0, 1, 'contract', 'open', '{"type":"url","url":"google.com"}', 'Some details of your job here.', '2015-12-27 04:03:45', '2015-12-27 04:05:02'),
+(5, 2, 3, 5, 'Permanent Job 2', 'Immediately', 'Aberdeen', 'United Kingdom', '999', 1, 'Testere', '1231231231', 10000.0000, 'annually', 0, 0, 1, 'permanent', 'open', '{"type":"email","application_email":"recruit1@email.org","direct_email":""}', 'Some details of your job here.', '2015-12-27 04:08:14', '2015-12-27 04:08:14');
 
 -- --------------------------------------------------------
 
@@ -5870,15 +5870,11 @@ CREATE TABLE IF NOT EXISTS `tb_job_industry` (
 --
 
 INSERT INTO `tb_job_industry` (`job_id`, `industry_id`, `created_at`, `updated_at`) VALUES
-(1, 1, '2015-12-13 03:21:35', '0000-00-00 00:00:00'),
-(1, 2, '2015-12-13 03:21:36', '0000-00-00 00:00:00'),
-(3, 1, '2015-12-19 01:48:07', '0000-00-00 00:00:00'),
-(3, 2, '2015-12-19 01:48:07', '0000-00-00 00:00:00'),
-(4, 1, '2015-12-19 02:16:59', '0000-00-00 00:00:00'),
-(5, 2, '2015-12-20 06:09:56', '0000-00-00 00:00:00'),
-(6, 2, '2015-12-20 06:10:29', '0000-00-00 00:00:00'),
-(7, 2, '2015-12-20 06:11:17', '0000-00-00 00:00:00'),
-(8, 2, '2015-12-20 06:21:52', '0000-00-00 00:00:00');
+(1, 3, '2015-12-27 03:31:18', '0000-00-00 00:00:00'),
+(2, 2, '2015-12-27 03:38:58', '0000-00-00 00:00:00'),
+(4, 3, '2015-12-27 04:03:46', '0000-00-00 00:00:00'),
+(4, 1, '2015-12-27 04:03:46', '0000-00-00 00:00:00'),
+(5, 2, '2015-12-27 04:08:14', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -5904,20 +5900,21 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
   `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_users`
 --
 
 INSERT INTO `tb_users` (`id`, `email`, `password`, `permissions`, `activated`, `activation_code`, `activated_at`, `last_login`, `persist_code`, `reset_password_code`, `first_name`, `last_name`, `image`, `slug`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'superadmin@email.com', '$2y$10$aK.k3yKg0nuuemtY2YbAp.8Xr2eWcCrSYjl/4Up0lUxMn83efgoKa', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'Fordyce', 'Gozali', NULL, 'fordyce-gozali', NULL, '2015-12-12 05:02:55', '2015-12-12 05:02:55'),
-(2, 'admin@email.com', '$2y$10$2Tzr7owwy5pQdv8xTf0gzecHvfoyMfAKTBh5mqGn2du3iR00O2Mje', NULL, 1, NULL, NULL, '2015-12-12 06:21:52', '$2y$10$YOTkCC7je4POrJa1U4BDAO8uziHL2.tcDKJfz70tR5CULvBALz52.', NULL, 'Admin', '', NULL, 'admin', NULL, '2015-12-12 05:02:55', '2015-12-12 06:21:52'),
-(3, 'company1@email.org', '$2y$10$x4IzjXAmJvqNvSed28wZMOP0m5EKvS.IXaog0YVZLlFKD2/U1LCEe', NULL, 1, NULL, NULL, '2015-12-24 03:59:26', '$2y$10$Y6V8kn9Q5oB1h4dWUy08a.RS1CavC54..DvLWbC3CqHw9p6Je/m2.', NULL, NULL, NULL, NULL, '', NULL, '2015-12-13 02:16:27', '2015-12-24 03:59:26'),
-(4, 'contractor1@email.org', '$2y$10$8I.S0tnd2TNH1nsw/DNRRe6Ah4zZ/Ez16L7WzY39yYph3nAOjELpu', NULL, 1, NULL, NULL, '2015-12-24 04:10:04', '$2y$10$vBCG431YEQBehogy446fxuK.whvb.ckoP989TVh7JOo0b4/bk.Izu', NULL, 'Contractor', '1', NULL, '', NULL, '2015-12-13 03:25:57', '2015-12-24 04:10:04'),
-(5, 'contractor2@email.org', '$2y$10$XRhb3Qa5oeuRY3r45Qviy.bmO7Rfcsgk39iE1XwoF2VnjWk9YTkxe', NULL, 1, NULL, NULL, '2015-12-24 04:05:48', '$2y$10$V7uTruXyN5VdlrcYj0I2geclChRQ5bx8OMtfwMmtYui8RnjgVZDQS', NULL, 'Contractor', '2', NULL, '', NULL, '2015-12-17 04:24:43', '2015-12-24 04:05:48'),
-(6, 'agency1@email.org', '$2y$10$o5xLibOqP36UJ4No20pFwuVTItqKqMp95WGNEsa32os8QO6ZN4HGK', NULL, 1, NULL, NULL, '2015-12-24 03:42:52', '$2y$10$qsBw6sDsonB/bZWu5nGDkuUSULfuMBE3CoZT9y.JhYyrMP7HQ8rKS', NULL, NULL, NULL, NULL, '', NULL, '2015-12-18 02:32:13', '2015-12-24 03:42:52'),
-(7, 'company2@email.org', '$2y$10$jWnrn3Fa.UYgfQmmkZJ0au1gA0HwdbJ3J5imjEIDWaTk/EmZCbbWm', NULL, 1, NULL, NULL, '2015-12-24 03:55:34', '$2y$10$LHGzrGnLyfW9qXbRB7AiA.H5PxWIwCni7OH1XEiMcLBvI2CW.3pnG', NULL, NULL, NULL, NULL, '', NULL, '2015-12-19 01:44:02', '2015-12-24 03:55:34');
+(1, 'superadmin@email.com', '$2y$10$eKIpIOQYg8eXNfbTyNcsEey6Pga6CmV7ASsSpBdwyTQSdje9Z1xIa', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'Fordyce', 'Gozali', NULL, 'fordyce-gozali', NULL, '2015-12-26 03:34:31', '2015-12-26 03:34:31'),
+(2, 'admin@email.com', '$2y$10$UW2j5PSMv3xRJ/hjxUAPZu.i3QrJkprE7g5PWCFjKTpeWzFLEZ.e2', NULL, 1, NULL, NULL, '2015-12-27 03:28:13', '$2y$10$HJAIxvFnFJ12QblbehskmOtaluYh4Ajn/o/iX.nByB27OwxnS4t9i', NULL, 'Admin', '', NULL, 'admin', NULL, '2015-12-26 03:34:32', '2015-12-27 03:28:13'),
+(5, 'contractor1@email.org', '$2y$10$a7g7j6pbLp56k01eQBqn8.IKYLWy3fYjL5EjwwWoEzRtp99w2rCYe', NULL, 1, NULL, NULL, '2015-12-27 04:20:44', '$2y$10$68HcEMYQkTQXfxwmxfv6RuOoZm4faRzAmYxyI/hat9oQ3U/LJEMw6', NULL, 'Contractor', '1', NULL, '', NULL, '2015-12-26 05:16:27', '2015-12-27 04:20:44'),
+(6, 'company1@email.org', '$2y$10$RjjwAuz4NwTOVQBR0oXMTO7G51y/Zv6Z9NynqscZ0sxcuojwGhG8i', NULL, 1, NULL, NULL, '2015-12-27 03:42:11', '$2y$10$cM2Ja776VFpVvUywF/xP/O7Gcn9enuZI4.b9j5FUzAnkx7USQSbOi', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 02:52:57', '2015-12-27 03:42:11'),
+(11, 'agency1@email.org', '$2y$10$FmXCxDiBuxTPp09yMiyou.eUkkc7Qzdnd5GOh8lh0vB9uFKF7hE6.', NULL, 1, NULL, NULL, '2015-12-27 04:35:00', '$2y$10$6x9J5tqVROrF5KaUAZIDEuL1h3kLOak6shP89ViZwhhkj21eFMCI.', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 03:18:06', '2015-12-27 04:35:00'),
+(12, 'agency2@email.org', '$2y$10$/0RWPQeIXMFo5mrr/0RMZuL9XpOXzDJF3dupiiAy6tTFSwqQMKj9m', NULL, 1, NULL, NULL, '2015-12-27 04:08:34', '$2y$10$K2dv/6Pxjwy/7RUd1rueDes4DKlJ4atPgAo13ziCR/UQggbNx44mS', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 03:18:32', '2015-12-27 04:08:34'),
+(13, 'company2@email.org', '$2y$10$yL4EBcV//u0C35H2.Y9W1Ovkw1aJWslTzG8OLyO7LQvuUWnSRXhbS', NULL, 1, NULL, NULL, '2015-12-27 04:39:00', '$2y$10$wjtb6kSkANb18U3m5e/wo.IQ2dBwCLXvKBPBnA57ghF/Tb2K6.2sC', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 03:20:22', '2015-12-27 04:39:00'),
+(14, 'contractor2@email.org', '$2y$10$YOrwUNQsRTkrbGgs8Z1UvehiEM.O/7ebElGIOb2BbHXd3KgLAPvom', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'Contractor', '2', NULL, '', NULL, '2015-12-27 03:20:46', '2015-12-27 03:20:46');
 
 -- --------------------------------------------------------
 
@@ -5938,11 +5935,11 @@ CREATE TABLE IF NOT EXISTS `tb_users_groups` (
 --
 
 INSERT INTO `tb_users_groups` (`id`, `name`, `permissions`, `created_at`, `updated_at`) VALUES
-(1, 'Super User', '{"superuser":1}', '2015-12-12 05:02:54', '2015-12-12 05:02:54'),
-(2, 'Admin', '{"admin":1,"company":1,"contractor":1,"agency":1}', '2015-12-12 05:02:54', '2015-12-12 05:02:54'),
-(3, 'Company', '{"company":1}', '2015-12-12 05:02:54', '2015-12-12 05:02:54'),
-(4, 'Contractor', '{"contractor":1}', '2015-12-12 05:02:55', '2015-12-12 05:02:55'),
-(5, 'Agency', '{"agency":1}', '2015-12-12 05:02:55', '2015-12-12 05:02:55');
+(1, 'Super User', '{"superuser":1}', '2015-12-26 03:34:31', '2015-12-26 03:34:31'),
+(2, 'Admin', '{"admin":1,"company":1,"contractor":1,"agency":1}', '2015-12-26 03:34:31', '2015-12-26 03:34:31'),
+(3, 'Company', '{"company":1}', '2015-12-26 03:34:31', '2015-12-26 03:34:31'),
+(4, 'Contractor', '{"contractor":1}', '2015-12-26 03:34:31', '2015-12-26 03:34:31'),
+(5, 'Agency', '{"agency":1}', '2015-12-26 03:34:31', '2015-12-26 03:34:31');
 
 -- --------------------------------------------------------
 
@@ -5962,11 +5959,13 @@ CREATE TABLE IF NOT EXISTS `tb_users_groups_pivot` (
 INSERT INTO `tb_users_groups_pivot` (`user_id`, `group_id`) VALUES
 (1, 1),
 (2, 2),
-(3, 3),
-(4, 4),
 (5, 4),
-(6, 5),
-(7, 3);
+(6, 3),
+(10, 5),
+(11, 5),
+(12, 5),
+(13, 3),
+(14, 4);
 
 -- --------------------------------------------------------
 
@@ -5992,12 +5991,12 @@ CREATE TABLE IF NOT EXISTS `tb_users_throttle` (
 --
 
 INSERT INTO `tb_users_throttle` (`id`, `user_id`, `ip_address`, `attempts`, `suspended`, `banned`, `banned_by`, `last_attempt_at`, `suspended_at`, `banned_at`) VALUES
-(1, 2, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
-(2, 3, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
-(3, 4, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
-(4, 5, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
-(5, 6, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
-(6, 7, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL);
+(1, 5, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
+(2, 6, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
+(3, 13, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
+(4, 2, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
+(5, 11, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
+(6, 12, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -6037,6 +6036,13 @@ ALTER TABLE `tb_agency`
 ALTER TABLE `tb_agency_company`
   ADD KEY `tb_agency_company_agency_id_company_id_index` (`agency_id`,`company_id`),
   ADD KEY `tb_agency_company_created_at_index` (`created_at`);
+
+--
+-- Indexes for table `tb_agency_credit_history`
+--
+ALTER TABLE `tb_agency_credit_history`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tb_agency_credit_history_agency_id_created_at_index` (`agency_id`,`created_at`);
 
 --
 -- Indexes for table `tb_agency_notification`
@@ -6095,8 +6101,7 @@ ALTER TABLE `tb_contractor_expense`
 --
 ALTER TABLE `tb_contractor_job`
   ADD KEY `tb_contractor_job_contractor_id_job_id_index` (`contractor_id`,`job_id`),
-  ADD KEY `tb_contractor_job_created_at_index` (`created_at`),
-  ADD KEY `index_contractor_status` (`status`);
+  ADD KEY `tb_contractor_job_created_at_index` (`created_at`);
 
 --
 -- Indexes for table `tb_contractor_job_alert`
@@ -6134,8 +6139,7 @@ ALTER TABLE `tb_job`
   ADD PRIMARY KEY (`id`),
   ADD KEY `tb_job_company_id_created_at_index` (`company_id`,`created_at`),
   ADD KEY `tb_job_title_city_country_index` (`title`,`city`,`country`),
-  ADD KEY `tb_job_type_salary_experience_year_index` (`type`,`salary`,`experience_year`),
-  ADD KEY `job_is_active` (`is_active`);
+  ADD KEY `tb_job_type_salary_experience_year_index` (`type`,`salary`,`experience_year`);
 
 --
 -- Indexes for table `tb_job_industry`
@@ -6187,12 +6191,17 @@ ALTER TABLE `City`
 -- AUTO_INCREMENT for table `tb_agency`
 --
 ALTER TABLE `tb_agency`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `tb_agency_credit_history`
+--
+ALTER TABLE `tb_agency_credit_history`
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tb_agency_notification`
 --
 ALTER TABLE `tb_agency_notification`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tb_company`
 --
@@ -6202,52 +6211,52 @@ ALTER TABLE `tb_company`
 -- AUTO_INCREMENT for table `tb_company_credit_history`
 --
 ALTER TABLE `tb_company_credit_history`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tb_company_notification`
 --
 ALTER TABLE `tb_company_notification`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `tb_contractor`
 --
 ALTER TABLE `tb_contractor`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tb_contractor_cv`
 --
 ALTER TABLE `tb_contractor_cv`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tb_contractor_expense`
 --
 ALTER TABLE `tb_contractor_expense`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tb_contractor_notification`
 --
 ALTER TABLE `tb_contractor_notification`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tb_contractor_timesheet`
 --
 ALTER TABLE `tb_contractor_timesheet`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tb_industry`
 --
 ALTER TABLE `tb_industry`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tb_job`
 --
 ALTER TABLE `tb_job`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `tb_users_groups`
 --

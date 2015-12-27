@@ -67,7 +67,8 @@ class ContractorTimesheetProvider implements ContractorTimesheetProviderInterfac
 		$model->fill([
 			'contractor_id'	=>	$contractor->id,
 			'job_id'				=>	$job->id,
-			'status'				=>	false,
+			'auth_company'	=>	false,
+			'auth_agency'		=>	is_null($job->agency_id) ? true : false,
 			'name'					=>	$data['timesheet_name'],
 			'type'					=>	$data['timesheet_type'],
 			'file'					=>	$data['timesheet_type'] === 'file' ? $uploadedFile : null,

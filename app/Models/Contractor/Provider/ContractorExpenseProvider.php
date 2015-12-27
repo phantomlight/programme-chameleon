@@ -61,10 +61,11 @@ class ContractorExpenseProvider implements ContractorExpenseProviderInterface {
 		$model->fill([
 			'contractor_id'	=>	$contractor->id,
 			'job_id'				=>	$job->id,
+			'auth_company'	=>	false,
+			'auth_agency'		=>	is_null($job->agency_id) ? true : false,
 			'title'					=>	$data['title'],
 			'amount'				=>	$data['amount'],
 			'type'					=>	$data['type'],
-			'status'				=>	false,
 			'file'					=>	isset($uploadedFile) ? $uploadedFile : null,
 			'description'		=>	($data['description'] !== '') ? $data['description'] : null,
 		]);

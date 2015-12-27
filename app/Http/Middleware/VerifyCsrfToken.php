@@ -18,7 +18,8 @@ class VerifyCsrfToken extends BaseVerifier
 
     public function handle($request, Closure $next)
     {
-    	if ($request->url() == url('/') . '/mail/receive') {
+        // change to production url
+    	if ($request->url() == 'http://www.programmechameleon.com/new/mail/receive') {
     		return $next($request);
     	}
     	return parent::handle($request, $next);

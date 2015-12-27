@@ -110,11 +110,12 @@
 													<p>Effective start date: {{ $timesheet->start_date }}</p>
 													<p>Expected finish date: {{ $timesheet->end_date }}</p>
 												@endif
-												@if ( ! $timesheet->status)
-													<button class="btn btn-success btn-accept-ts" type="button" data-id="{{ $_hash->encode($timesheet->id) }}">Accept</button>
-												@else
-													<button class="btn btn-danger btn-remove-ts" type="button" data-id="{{ $_hash->encode($timesheet->id) }}">Reject</button>
-												@endif
+												<div class="btn-group">
+													@if ( ! $timesheet->auth_company)
+													<button class="btn btn-xs btn-success btn-accept-ts" type="button" data-id="{{ $_hash->encode($timesheet->id) }}">Accept</button>
+													@endif
+													<button class="btn btn-xs btn-danger btn-remove-ts" type="button" data-id="{{ $_hash->encode($timesheet->id) }}">Reject</button>
+												</div>
 											</div>
 										</div>
 									</li>
@@ -216,11 +217,12 @@
 														<i class="fa fa-download"></i> Download
 													</a>
 												@endif
-												@if ( ! $expense->status)
-													<button class="btn btn-success btn-accept-ex" type="button" data-id="{{ $_hash->encode($expense->id) }}">Accept</button>
-												@else
-													<button class="btn btn-danger btn-remove-ex" type="button" data-id="{{ $_hash->encode($expense->id) }}">Reject</button>
+												<div class="btn-group">
+												@if ( ! $expense->auth_company)
+													<button class="btn btn-success btn-xs btn-accept-ex" type="button" data-id="{{ $_hash->encode($expense->id) }}">Accept</button>
 												@endif
+												<button class="btn btn-danger btn-xs btn-remove-ex" type="button" data-id="{{ $_hash->encode($expense->id) }}">Reject</button>
+												</div>
 											</div>
 										</div>
 									</li>

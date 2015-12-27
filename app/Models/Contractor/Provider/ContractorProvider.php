@@ -153,6 +153,12 @@ class ContractorProvider implements ContractorProviderInterface {
 			return;
 		}
 
+		// not efficient, need to change
+		if ( ! $contractor = $this->findById($contractor->id)) {
+			throw new \Exception("Contractor not found.", 1);
+			return;
+		}
+
 		if ( $contractor->jobs->contains($job->id) ) {
 			throw new \Exception("You have already applied for this job.", 1);
 			return;

@@ -47,7 +47,7 @@ class PaymentController extends Controller {
 		$index = \Input::get('value');
 		$user = \Input::get('user');
 
-		if ($user !== 'company' || $user !== 'agency') {
+		if ($user !== 'company' && $user !== 'agency') {
 			return \Response::json([
 				'type'		=>	'danger',
 				'message'	=>	'User not recognized',
@@ -239,16 +239,16 @@ class PaymentController extends Controller {
 			// re-run try with queue?
 			\Session::forget('_temp_payment_sess');
 
-			return redirect(url('company'))->with('flashMessage', [
+			return redirect(url('agency'))->with('flashMessage', [
 				'class'		=>	'danger',
 				'message'	=>	$e->getMessage(),
 			]);
 		}
 
-		return redirect(url('company'))->with('flashMessage', [
+		return redirect(url('agency'))->with('flashMessage', [
 			'class'		=>	'success',
 			'message'	=>	$data['successMessage'],
-			]);
+		]);
 	}
 
 	public function getAgencyPaymentCancel(Request $request) {

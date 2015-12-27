@@ -27,6 +27,7 @@ class CreateAgencyTable extends Migration
             $table->dateTime('vip_start')->default('0000-00-00 00:00:00');
             $table->dateTime('vip_end')->default('0000-00-00 00:00:00');
             $table->boolean('is_vip')->default(0);
+            $table->unsignedInteger('credit')->default(0);
             $table->timestamps();
 
             $table->engine = 'InnoDB';
@@ -63,6 +64,7 @@ class CreateAgencyTable extends Migration
             $table->boolean('has_read')->default(0);
             $table->string('title', 255);
             $table->string('url', 255)->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
 
             $table->engine = 'InnoDB';

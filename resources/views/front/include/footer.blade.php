@@ -2,8 +2,8 @@
 	<div>
 		<ul id="footer-menu" class="menu">
 			<li class="menu-item"><a href="{{ url('/') }}">Home</a></li>
-			<li class="menu-item"><a href="{{ url('company/job-post') }}">Post A Job</a></li>
-			<li class="menu-item"><a href="{{ url('contractor/account') }}">Upload CV</a></li>
+			<li class="menu-item"><a href="{{ route('company.job.post') }}">Post A Job</a></li>
+			<li class="menu-item"><a href="{{ route('contractor.account') }}">Upload CV</a></li>
 			<li class="menu-item"><a href="#">Blog</a></li>
 		</ul>
 	</div>		

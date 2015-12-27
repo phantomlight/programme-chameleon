@@ -74,7 +74,7 @@ class CreateContractorTable extends Migration
         \Schema::create('tb_contractor_job', function(Blueprint $table) {
             $table->unsignedInteger('contractor_id');
             $table->unsignedInteger('job_id');
-            $table->unsignedInteger('timesheet_id');
+            $table->enum('status', ['request', 'accept']);
             $table->timestamps();
 
             $table->engine = 'InnoDB';

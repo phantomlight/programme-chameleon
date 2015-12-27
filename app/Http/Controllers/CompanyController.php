@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use App\Utils\Hash;
+use App\Jobs\EmailJob;
 use App\Utils\Hashing\JCryption;
 
 class CompanyController extends Controller {
@@ -73,6 +74,27 @@ class CompanyController extends Controller {
 			];
 
 			$company = \Company::register($cData);
+
+			$mailData = [
+				'layout'	=>	'emails.welcome',
+				'data'		=>	[
+					'user'	=>	$user,
+				],
+				'subject'	=>	'Welcome to Programme Chameleon',
+				'from_email'	=>	'noreply@programmechameleon.com',
+				'to_email'	=>	$user->email,
+			];
+
+			if (env('APP_ENV') === 'production') {
+				$job = (new EmailJob($mailData))->onQueue('email-queue');
+				$this->dispatch($job);
+			}
+			else { // for devs only
+				\Mail::send($mailData['layout'], $mailData['data'], function ($message) use ($mailData) {
+					$message->from($mailData['from_email'], 'Programme Chameleon Mailing Service');
+					$message->to($mailData['to_email'])->subject($mailData['subject']);
+				});
+			}
 
 			return \Response::json([
 				'type'		=>	'success',

@@ -48,19 +48,11 @@
 						<nav id="main-menu" class="clearfix collapse navbar-collapse" role="navigation">
 							<ul class="nav-menu">
 								<li class="menu-item">
-									<a href="{{ url('contractor/search-job') }}">Job Search</a>
-								</li>
-								<li class="menu-item has-children">
-									<a href="#">Services</a>
-									<ul class="sub-menu">
-										<li class="menu-item"><a href="{{ url('job/job-sample') }}">Sample Job Detail Page</a></li>
-										<li class="menu-item"><a href="{{ url('contractor/contractor-sample') }}">Sample CV Page</a></li>
-										<li class="menu-item"><a href="{{ url('company/company-sample') }}">Sample Company Page</a></li>
-									</ul>
+									<a href="{{ route('job.search') }}">Job Search</a>
 								</li>
 								<li class="menu-item"><a href="{{ url('free-resources') }}">Resources</a></li>
-								<li class="menu-item"><a href="{{ url('login') }}">Register CV</a></li>
-								<li class="menu-item"><a href="{{ url('login') }}">Submit Vacancy</a></li>
+								<li class="menu-item"><a href="{{ route('front.login') }}">Register CV</a></li>
+								<li class="menu-item"><a href="{{ route('front.login') }}">Submit Vacancy</a></li>
 							</ul>
 						</nav><!-- /#main-menu -->
 					</div><!-- /#menu-wrapper -->

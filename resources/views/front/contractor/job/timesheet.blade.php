@@ -47,6 +47,13 @@
 										<li data-id="{{ $_hash->encode($timesheet->id) }}">
 											<p>{{ $timesheet->name }}</p>
 											<p class="text-muted"><small><i class="fa fa-clock-o"></i> Submitted {{ $timesheet->created_at->diffForHumans() }}</small></p>
+											@if ($timesheet->auth_company && ! $timesheet->auth_agency)
+												<label class="label label-success">Authorised, but not by agency.</label>
+											@elseif ($timesheet->auth_company && $timesheet->auth_agency)
+												<label class="label label-success">Authorised.</label>
+											@else
+												<label class="label label-danger">Not authorised.</label>
+											@endif
 											<div class="btn-group">
 												<button class="btn btn-danger btn-xs" data-remove="{{ route('contractor.job.timesheet.remove') }}" data-id="{{ $_hash->encode($timesheet->id) }}">Remove</button>
 											</div>

@@ -924,7 +924,7 @@ tr.border td {
 							<tbody><tr>
 								<td class="emb-logo-padding-box" style="padding: 0;vertical-align: top;padding-bottom: 24px;padding-top: 24px;text-align: right;width: 280px;letter-spacing: 0.01em;line-height: 17px;font-weight: 400;font-size: 11px;">
 									<div class="spacer" style="font-size: 1px;line-height: 2px;width: 100%;">&nbsp;</div>
-									<div class="title" style='font-family: "Open Sans",sans-serif;color: #b9b9b9;'>Reset Password</div>
+									<div class="title" style='font-family: "Open Sans",sans-serif;color: #b9b9b9;'>Message</div>
 									<div class="webversion" style='font-family: "Open Sans",sans-serif;color: #b9b9b9;'>No Images? <webversion>Click here</webversion></div>
 								</td>
 							</tr>
@@ -962,7 +962,7 @@ tr.border td {
 													<tbody><tr>
 														<td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">
 															
-						<h2 style='font-style: normal;font-weight: 700;Margin-bottom: 0;Margin-top: 0;font-size: 24px;line-height: 32px;font-family: "Open Sans",sans-serif;color: #44a8c7;text-align: center;'><span style="color:#0a0a0a">Forgot your password?</span></h2><p style='font-style: normal;font-weight: 400;Margin-bottom: 0;Margin-top: 16px;font-size: 15px;line-height: 24px;font-family: "Open Sans",sans-serif;color: #60666d;text-align: center;'>No worries! We are here to help you to reset your account's password. Click the button below to get started</p>
+						<h2 style='font-style: normal;font-weight: 700;Margin-bottom: 0;Margin-top: 0;font-size: 24px;line-height: 32px;font-family: "Open Sans",sans-serif;color: #44a8c7;text-align: center;'><span style="color:#0a0a0a">Message From {{ $data['name'] . '(' . $data['email'] . ')' }}</span></h2><p style='font-style: normal;font-weight: 400;Margin-bottom: 0;Margin-top: 16px;font-size: 15px;line-height: 24px;font-family: "Open Sans",sans-serif;color: #60666d;text-align: center;'>{{ $data['message'] }}</p>
 					
 														</td>
 													</tr>
@@ -996,11 +996,6 @@ tr.border td {
 												<table class="contents" style="border-collapse: collapse;border-spacing: 0;table-layout: fixed;width: 100%;">
 													<tbody><tr>
 														<td class="padded" style="padding: 0;vertical-align: top;padding-left: 32px;padding-right: 32px;word-break: break-word;word-wrap: break-word;">
-															
-						<div class="btn btn--center" style="Margin-bottom: 0;Margin-top: 0;text-align: center;">
-							<![if !mso]><a style='border-radius: 3px;display: inline-block;font-size: 14px;font-weight: 700;line-height: 24px;padding: 13px 35px 12px 35px;text-align: center;text-decoration: none !important;transition: opacity 0.2s ease-in;color: #fff;font-family: "Open Sans",sans-serif;background-color: #577f28;' href="{{ route('password.reset', ['c' => $user->getResetPasswordCode(), 'e' => $user->email]) }}">Reset My Password</a><![endif]>
-						<!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="{{ route('password.reset', ['c' => $user->getResetPasswordCode(), 'e' => $user->email]) }}" style="width:204px" arcsize="7%" fillcolor="#577F28" stroke="f"><v:textbox style="mso-fit-shape-to-text:t" inset="0px,12px,0px,11px"><center style="font-size:14px;line-height:24px;color:#FFFFFF;font-family:sans-serif;font-weight:700;mso-line-height-rule:exactly;mso-text-raise:4px">Reset My Password</center></v:textbox></v:roundrect><![endif]--></div>
-					
 														</td>
 													</tr>
 												</tbody></table>
@@ -1057,7 +1052,7 @@ tr.border td {
 City, Country, Postal Code</div>
 									</div>
 									<div class="permission" style='font-family: "Open Sans",sans-serif;'>
-										<div>You are receiving this email because you ask for reset password on {{ Carbon::now()->toDateTimeString() }}</div>
+										<div>Message from customer</div>
 									</div>
 									<!--<div class="campaign" style='font-family: "Open Sans",sans-serif;Margin-bottom: 18px;'>
 										<span>
