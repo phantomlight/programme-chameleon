@@ -1,3 +1,5 @@
+<?php $user = \User::getUser(); ?>
+
 @extends('back.app')
 
 @section('title')

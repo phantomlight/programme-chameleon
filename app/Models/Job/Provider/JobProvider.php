@@ -265,4 +265,17 @@ class JobProvider implements JobProviderInterface {
 		}
 	}
 
+	public function remove($data) {
+		if (is_array($data)) {
+			$model = $this->getModel();
+			if ($model->destroy($data)) return true;
+		}
+		else {
+			$model = $this->findByModel($data);
+			if ($model->delete()) return true;
+		}
+
+		return false;
+	}
+
 }

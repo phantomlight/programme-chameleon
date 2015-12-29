@@ -69,6 +69,23 @@ class AgencyProvider implements AgencyProviderInterface {
 		return $agency;
 	}
 
+	public function getAllAgencies($data) {
+		$model = $this->createModel();
+		if (isset($data['search'])) {
+			$model = $model->where('name', 'like', '%' . $data['search'] . '%');
+		}
+
+		if (isset($data['limit'])) {
+			$model->take($data['limit']);
+		}
+		else {
+			$model->take(100);
+		}
+
+		$model->orderBy('created_at', 'desc');
+		return $model->get();
+	}
+
 	public function addAffiliate($company) {
 		if ( ! $agency = \Agency::getAgency() ) {
 			throw new \Exception("Agency not found.", 1);
@@ -314,6 +331,28 @@ class AgencyProvider implements AgencyProviderInterface {
 		}
 
 		return $expense;
+	}
+
+	public function updateBan($id, $ban) {
+		if ( ! $model = $this->findById($id)) {
+			throw new \Exception("Agency not found", 1);
+			return;
+		}
+
+		if ( ! $user = $model->user) {
+			throw new \Exception("User not found", 1);
+			return;
+		}
+
+		if ((! $throttle = \User::findThrottlerByUserId($user->id)) || ! $user->hasAccess('agency')) {
+			throw new \Exception("User is not agency", 1);
+			return;
+		}
+
+		if ($ban === 'true') $throttle->ban();
+		else $throttle->unban();
+
+		return true;
 	}
 
 }

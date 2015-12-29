@@ -66,6 +66,14 @@ class Company {
 		return $this->companyProvider->getAll($paginate, $ipp);
 	}
 
+	public function getAllCompanies(array $data) {
+		return $this->companyProvider->getAllCompanies($data);
+	}
+
+	public function banCompany($id, $ban) {
+		return $this->companyProvider->updateBan($id, $ban);
+	}
+
 	public function getByQuery($query, $paginate=false, $ipp=15) {
 		return $this->companyProvider->getByQuery($query, $paginate, $ipp);
 	}

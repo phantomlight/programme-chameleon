@@ -47,4 +47,31 @@ class JobIndustryProvider implements JobIndustryProviderInterface {
 		return $model;
 	}
 
+	public function update($id, $data) {
+		if ( ! $model = $this->findById($id)) {
+			throw new \Exception("Industry not found.", 1);
+			return;
+		}
+
+		foreach ($data as $k=>$d) {
+			if (isset($model->{$k})) $model->{$k} = $d;
+		}
+
+		$model->save();
+		return $model;
+	}
+
+	public function remove($data) {
+		if (is_array($data)) {
+			$model = $this->getModel();
+			if ($model->destroy($data)) return true;
+		}
+		else {
+			$model = $this->findByModel($data);
+			if ($model->delete()) return true;
+		}
+
+		return false;
+	}
+
 }

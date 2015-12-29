@@ -541,8 +541,48 @@ class JobController extends Controller {
 		}
 	}
 
-	public function postEditIndustry() {}
+	public function postEditIndustry() {
+		if ( ! $id = \Input::get('i')) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'No input.',
+			]);
+		}
 
-	public function postRemoveIndustry() {}
+		$data = \Input::get('data');
+
+		try {
+			$job = \Job::updateIndustry($id, $data);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Industry updated.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postRemoveIndustry() {
+		$data = \Input::get('i');
+
+		try {
+			\Job::removeIndustry($data);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Industry removed',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
 
 }

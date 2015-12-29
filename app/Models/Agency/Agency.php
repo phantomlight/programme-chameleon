@@ -62,8 +62,16 @@ class Agency {
 		}
 	}
 
+	public function getAllAgencies(array $data) {
+		return $this->agencyProvider->getAllAgencies($data);
+	}
+
 	public function updateData(array $data) {
 		return $this->agencyProvider->update($data);
+	}
+
+	public function banAgency($id, $ban) {
+		return $this->agencyProvider->updateBan($id, $ban);
 	}
 
 	public function updateAvatar($file) {

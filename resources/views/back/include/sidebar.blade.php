@@ -7,7 +7,7 @@
 						<img alt="image" class="img-circle" data-src="holder.js/48x48?random=yes" />
 					</span>
 					<a data-toggle="dropdown" class="dropdown-toggle" href="#">
-						<span class="clear"> <span class="block element-top-xs-10"> <strong class="font-bold">Mr. Sean Horsley</strong>
+						<span class="clear"> <span class="block element-top-xs-10"> <strong class="font-bold">{{ $user->first_name . ' ' . $user->last_name }}</strong>
 						</span> <span class="text-muted text-xs block">Admin of Programme Chameleon <b class="caret"></b></span> </span>
 					</a>
 					<ul class="dropdown-menu animated fadeInRight element-top-xs-10">
@@ -21,25 +21,7 @@
 				</div>
 			</li>
 			<li>
-				<a href="{{ route('admin.index') }}"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
-				<ul class="nav nav-second-level collapse">
-					<li><a href="{{ route('admin.index') }}">Dashboard</a></li>
-					<li>
-						<a href="#">Second Level <span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level collapse">
-							<li><a href="#">If you need a submenu</a></li>
-							<li>
-								<a href="#">Even on a third level<span class="fa arrow"></span></a>
-								<ul class="nav nav-third-level collapse">
-									<li><a href="#">Third level menu 1</a></li>
-									<li><a href="#">Third level menu 2</a></li>
-									<li><a href="#">Third level menu 3</a></li>
-								</ul>
-							</li>
-							<li><a href="#">Let me know</a></li>
-						</ul>
-					</li>
-				</ul>
+				<a href="{{ route('admin.index') }}"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
 			</li>
 			<li>
 				<a href="{{ route('admin.cms') }}"><i class="fa fa-list"></i> <span class="nav-label">CMS</span></a>

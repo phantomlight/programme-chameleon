@@ -96,9 +96,14 @@ class Contractor {
 		return $this->contractorProvider->search($data);
 	}
 
-	public function getAllContractors() {
+	public function getAllContractors($data=null) {
+		if ( !is_null($data) ) return $this->contractorProvider->getAllContractors($data);
 		$model = $this->contractorProvider->getModel();
 		return $model->orderBy('created_at', 'desc');
+	}
+
+	public function banContractor($id, $ban) {
+		return $this->contractorProvider->updateBan($id, $ban);
 	}
 
 	public function findContractorById($id) {

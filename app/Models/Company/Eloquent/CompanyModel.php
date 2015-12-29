@@ -6,6 +6,7 @@ use App\Models\Company\Interfaces\CompanyModelInterface;
 class CompanyModel extends Eloquent implements CompanyModelInterface {
 
 	protected $table = 'tb_company';
+	protected static $userModel = 'App\Models\User\Eloquent\UserModel';
 	protected static $agencyModel = 'App\Models\Agency\Eloquent\AgencyModel';
 	protected static $companyCreditModel = 'App\Models\Company\Eloquent\CompanyCreditModel';
 	protected static $notificationModel = 'App\Models\Company\Eloquent\CompanyNotificationModel';
@@ -15,6 +16,10 @@ class CompanyModel extends Eloquent implements CompanyModelInterface {
 	protected $guarded = [];
 	protected $hidden = [];
 
+	public function user() {
+		return $this->belongsTo(static::$userModel, 'user_id');
+	}
+	
 	public function jobs() {
 		return $this->hasMany(static::$jobModel, 'company_id', 'id');
 	}

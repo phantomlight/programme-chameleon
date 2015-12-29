@@ -1,3 +1,5 @@
+<?php $user = \User::getUser(); ?>
+
 @extends('back.app')
 
 @section('title')
@@ -70,20 +72,20 @@ Agency | Programme Chameleon
 						<div class="ibox-content">
 							<div class="row">
 								<div class="col-sm-12">
-									<table class="footable footable-init toggle-arrow-tiny table table-stripped" data-page-size="10" data-paging="true" id="tableList">
+									<table data-route="{{ route('admin.agency.list') }}" data-user-link="{{ route('admin.agency.ban') }}" class="footable footable-init toggle-arrow-tiny table table-stripped" data-page-size="10" data-paging="true" id="tableList">
 										<thead>
 											<tr>
 												<th data-id="id" data-sort="0" data-sort-ignore="true">
 													<input type="checkbox" class="check-all">
 												</th>
-												<th data-id="company_name" data-sort="1">
-													Agency Name
+												<th data-id="name" data-sort="1">
+													Agency name
 												</th>
-												<th data-id="company_job_count" data-sort="2" data-sort-ignore="true">
-													Contractors under this agency
+												<th data-id="ban" data-sort="2" data-sort-ignore="true">
+													Account status
 												</th>
 												<th data-id="updated_at" data-sort="3" data-hide="all" data-sort-ignore="true">
-													Last Update
+													Last login
 												</th>
 												<th data-sort-ignore="true" data-sort="4" data-id="actions">
 													Action
@@ -91,24 +93,6 @@ Agency | Programme Chameleon
 											</tr>
 										</thead>
 										<tbody>
-											@for ($i=1; $i<20; $i++)
-											<tr>
-												<td><input type="checkbox" value="1"></td>
-												<td>Agency {{ $i }}</td>
-												<td>{{ $i*2 }}</td>
-												<td>15 November 2015, 11:00:00 PM</td>
-												<td>
-													<div class="btn-group">
-														<button class="btn btn-warning btn-xs">
-															<i class="fa fa-eye"></i> View
-														</button>
-														<button class="btn btn-danger btn-xs">
-															<i class="fa fa-times"></i> Ban
-														</button>
-													</div>
-												</td>
-											</tr>
-											@endfor
 										</tbody>
 										<tfoot>
 											<tr>

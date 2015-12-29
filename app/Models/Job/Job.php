@@ -46,6 +46,14 @@ class Job {
 		return $this->jobProvider->update($job, $data);
 	}
 
+	public function updateIndustry($id, $data) {
+		return $this->jobIndustryProvider->update($id, $data);
+	}
+
+	public function removeIndustry($data) {
+		return $this->jobIndustryProvider->remove($data);
+	}
+
 	public function findJobById($id) {
 		return $this->jobProvider->findById($id);
 	}

@@ -72,6 +72,27 @@ class ContractorProvider implements ContractorProviderInterface {
 		}
 	}
 
+	public function getAllContractors($data) {
+		$model = $this->createModel();
+		if (isset($data['search'])) {
+			$model = $model->whereHas('user', function ($query) use ($data) {
+				$query
+					->where('first_name', 'like', '%' . $data['search'] . '%')
+					->orWhere('last_name', 'like', '%' . $data['search'] . '%');
+			});
+		}
+
+		if (isset($data['limit'])) {
+			$model->take($data['limit']);
+		}
+		else {
+			$model->take(100);
+		}
+
+		$model->orderBy('created_at', 'desc');
+		return $model->get();
+	}
+
 	public function updateAvatar($contractor, $file) {
 		if ( ! is_null($contractor->image)) {
 			if (\File::exists(public_path() . '/' . $contractor->image)) {
@@ -203,6 +224,28 @@ class ContractorProvider implements ContractorProviderInterface {
 		// END TODO
 
 		return $contractor;
+	}
+
+	public function updateBan($id, $ban) {
+		if ( ! $model = $this->findById($id)) {
+			throw new \Exception("Contractor not found", 1);
+			return;
+		}
+
+		if ( ! $user = $model->user) {
+			throw new \Exception("User not found", 1);
+			return;
+		}
+
+		if ((! $throttle = \User::findThrottlerByUserId($user->id)) || ! $user->hasAccess('contractor')) {
+			throw new \Exception("User is not contractor", 1);
+			return;
+		}
+
+		if ($ban === 'true') $throttle->ban();
+		else $throttle->unban();
+
+		return true;
 	}
 
 }

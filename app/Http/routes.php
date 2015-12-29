@@ -71,6 +71,12 @@ Route::controller('admin', 'AdminController', [
 	'getAgency'				=>	'admin.agency',
 	'getCompany'			=>	'admin.company',
 	'getResources'		=>	'admin.resources',
+	'getCompanyList'	=>	'admin.company.list',
+	'postCompanyBan'	=>	'admin.company.ban',
+	'getContractorList'	=>	'admin.contractor.list',
+	'postContractorBan'	=>	'admin.contractor.ban',
+	'getAgencyList'	=>	'admin.agency.list',
+	'postAgencyBan'	=>	'admin.agency.ban',
 ]);
 
 Route::controller('company', 'CompanyController', [

@@ -7,6 +7,7 @@ export class Tables {
 				var $this = $(this);
 				var footable = null;
 				var removeLink = $this.attr('data-remove-link');
+				var userLink = $this.attr('data-user-link');
 
 				$this.find('.check-all').click(function (e) {
 					if ($(this).is(':checked')) {
@@ -75,6 +76,9 @@ export class Tables {
 										if (obj.hasOwnProperty('removeLink')) {
 											html += '<a class="btn btn-xs btn-white" data-action="remove" data-id="' + obj['id'] + '">Remove</a>';
 										}
+										if (obj.hasOwnProperty('banLink')) {
+											html += '<a class="btn btn-xs btn-white" data-action="ban" data-id="' + obj['id'] + '">Ban</a>';
+										}
 										html += '</div></td>';
 									}
 									else {
@@ -133,6 +137,14 @@ export class Tables {
 									if (obj.hasOwnProperty('removeLink')) {
 										html += '<a class="btn btn-xs btn-white" data-action="remove" data-id="' + obj['id'] + '">Remove</a>';
 									}
+
+									if (obj.hasOwnProperty('userBanLink')) {
+										html += '<a class="btn btn-xs btn-white" data-action="ban" data-id="' + obj['id'] + '">Ban</a>';
+									}
+									else if (obj.hasOwnProperty('userUnBanLink')) {
+										html += '<a class="btn btn-xs btn-white" data-action="unban" data-id="' + obj['id'] + '">Un-Ban</a>';
+									}
+
 									html += '</div></td>';
 								}
 								else {
@@ -149,6 +161,35 @@ export class Tables {
 								processing = true;
 								$('.page-preloader').show();
 								$.post(removeLink, {i: $(this).attr('data-id')}).done(function (e) {
+									alert(e.message);
+									processing = false;
+									$('.page-preloader').hide();
+									if (e.type === 'success') location.reload();
+								}).fail(function (xhr, status, e) {
+									footable.trigger('footable_redraw');
+									processing = false;
+									$('.page-preloader').hide();
+									alert(xhr.responseText);
+								});
+							}
+						});
+
+						$('[data-action="ban"],[data-action="unban"]').on('click', function (e) {
+							var confirmMsg = 'Ban this user?';
+							var isBan = true;
+
+							if ($(this).data('action') === 'unban') {
+								confirmMsg = 'Un-Ban this user?';
+								isBan = false;
+							}
+							else {
+								confirmMsg = 'Ban this user?';
+								isBan = true;
+							}
+							if (confirm(confirmMsg)) {
+								processing = true;
+								$('.page-preloader').show();
+								$.post(userLink, {i: $(this).attr('data-id'), ban: isBan}).done(function (e) {
 									alert(e.message);
 									processing = false;
 									$('.page-preloader').hide();

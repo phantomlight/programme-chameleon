@@ -15,7 +15,7 @@ module.exports = {
 	},
 	browserify: {
 		debug: true,
-		extensions: ['.js'],
+		extensions: ['.js', '.json', '.es6'],
 		watch: './resources/assets/js/{front,back}/**/*.js',
 		bundleConfigs: [
 		{

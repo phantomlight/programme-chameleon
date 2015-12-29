@@ -226,7 +226,7 @@ class SiteController extends Controller {
 				],
 				'subject'	=>	'Reset Password Programme Chameleon',
 				'from_email'	=>	'noreply@programmechameleon.com',
-				'to_email'	=>	'forddyce92@gmail.com',
+				'to_email'	=>	$user->email,
 			];
 
 			if (env('APP_ENV') === 'production') {
