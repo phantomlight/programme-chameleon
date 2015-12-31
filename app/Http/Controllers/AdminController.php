@@ -25,7 +25,7 @@ class AdminController extends Controller {
 	}
 
 	public function getJob() {
-		return view('back.job');
+		return view('back.job.index');
 	}
 
 	public function getContractor() {
@@ -269,6 +269,68 @@ class AdminController extends Controller {
 			return \Response::json([
 				'type'		=>	'success',
 				'message'	=> 	$ban === 'true' ? 'Agency banned.' : 'Agency unbanned.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function getJobList() {
+		$data = \Input::has('data') ? \Input::get('data') : [];
+		$jsonData = [];
+		$model = \Job::getAllJobs($data);
+		try {
+			if ($model) {
+				foreach ($model as $mData) {
+					if ($mCompany = $mData->company) {
+						$mData->company_name = $mCompany->name;
+					}
+					if ($mAgency = $mData->agency) {
+						$mData->agency_name = $mAgency->name;
+					}
+					else {
+						$mData->agency_name = "<label class='label label-danger'>Not an agency job</label>";
+					}
+
+					if ($mData->is_active) {
+						$mData->is_active = "<label class='label label-success'>Active</label>";
+					}
+					else {
+						$mData->is_active = "<label class='label label-danger'>Not Active</label>";
+					}
+
+					$mData->removeLink = route('admin.job.remove') . '?i=' . $mData->id;	
+					array_push($jsonData, $mData);
+				}
+			}
+			return \Response::json($jsonData);
+		}
+		catch (\Exception $e) {
+			return $e->getMessage();
+		}
+	}
+
+	public function postJobRemove() {
+		if ( ! $id = \Input::get('i')) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'No input.',
+			]);
+		}
+
+		try {
+			if ( ! \Job::removeJobByAdmin($id)) {
+				throw new \Exception("Error Processing Request", 1);
+				return;
+			}
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Job removed.',
 			]);
 		}
 		catch (\Exception $e) {

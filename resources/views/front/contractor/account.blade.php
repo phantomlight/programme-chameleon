@@ -112,7 +112,7 @@
 									<div class="form-group">
 										<label>Skills</label>
 										<input type="text" data-role="tagsinput" class="form-control" name="skills" value="{{ $contractor->skills }}">
-										<span class="help-block">Please speedster your skills by a comma</span>
+										<span class="help-block">Please separate your skills by a comma</span>
 									</div>
 
 									<div class="form-group">

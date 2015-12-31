@@ -77,6 +77,8 @@ Route::controller('admin', 'AdminController', [
 	'postContractorBan'	=>	'admin.contractor.ban',
 	'getAgencyList'	=>	'admin.agency.list',
 	'postAgencyBan'	=>	'admin.agency.ban',
+	'getJobList'			=>	'admin.job.list',
+	'postJobRemove'		=>	'admin.job.remove',
 ]);
 
 Route::controller('company', 'CompanyController', [

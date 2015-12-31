@@ -57,7 +57,6 @@ $_hash = $_hash->getHasher();
 			</div>
 
 			<div class="col-sm-4">
-				@include('front.agency.include.sidebarPayment')
 				<div class="panel panel-info">
 					<div class="panel-heading">
 						<i class="fa fa-bell"></i> Notifications
@@ -91,6 +90,8 @@ $_hash = $_hash->getHasher();
 					</div>
 					@endif
 				</div>
+
+				@include('front.agency.include.sidebarPayment')
 			</div>
 		</div>
 	</div>

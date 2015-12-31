@@ -62,6 +62,10 @@ class Job {
 		return $this->jobProvider->findAll();
 	}
 
+	public function getAllJobs($data) {
+		return $this->jobProvider->getAllJobs($data);
+	}
+
 	public function findJobsByCompany($company, $type=null) {
 		return $this->jobProvider->findByCompany($company, $type);
 	}
@@ -84,6 +88,10 @@ class Job {
 
 	public function removeContractorFromJob($job, $contractor) {
 		return $this->jobProvider->removeContractorFromJob($job, $contractor);
+	}
+
+	public function removeJobByAdmin($id) {
+		return $this->jobProvider->removeByAdmin($id);
 	}
 
 }

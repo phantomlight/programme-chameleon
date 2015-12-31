@@ -25,6 +25,11 @@ class CompanyNotificationProvider implements CompanyNotificationProviderInterfac
 		return $this->createModel();
 	}
 
+	public function findById($id) {
+		$model = $this->getModel();
+		return $model->where('id', $id)->first();
+	}
+
 	public function add($company, array $data) {
 		$model = $this->getModel();
 		$model->fill($data);

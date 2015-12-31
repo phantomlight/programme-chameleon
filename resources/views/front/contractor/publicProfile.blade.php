@@ -40,7 +40,7 @@
 								<button class="btn btn-primary" type="button" data-toggle="dropdown" aria-haspopup="true" id="resumeDropdownBtn" aria-expanded="false">Download Resume <span class="caret"></span></button>
 								<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="resumeDropdownBtn">
 								@foreach ($resumes as $resume)
-									<li><a href="{{ $resume->file }}" target="_blank" download="">{{ $resume->created_at->toDayDateTimeString() }}</a></li>
+									<li><a href="{{ asset($resume->file) }}" target="_blank" download="">{{ $resume->created_at->toDayDateTimeString() }}</a></li>
 								@endforeach
 								</ul>
 							</div>

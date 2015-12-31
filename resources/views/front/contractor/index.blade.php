@@ -35,7 +35,7 @@
 									<li>
 										<p><strong>{{ $job->title }}</strong> <span class="text-muted"><small>applied on {{ $job->created_at->toDayDateTimeString() }}</small></span></p>
 										@if ($job->pivot->status !== 'accept')
-											<div class="alert alert-danger">You haven't been awarded to this job yet.</div>
+											<div class="alert alert-danger">You have not yet had a response to your application.</div>
 										@else
 											<div class="btn-group">
 												<a class="btn btn-xs btn-primary" href="{{ route('contractor.job.timesheet') . '?i=' . $_hash->encode($job->id) }}">Timesheets</a>

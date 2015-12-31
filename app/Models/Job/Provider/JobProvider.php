@@ -278,4 +278,68 @@ class JobProvider implements JobProviderInterface {
 		return false;
 	}
 
+	public function getAllJobs($data) {
+		$model = $this->createModel();
+		if (isset($data['search'])) {
+			$model = $model->where('title', 'like', '%' . $data['search'] . '%');
+		}
+
+		if (isset($data['limit'])) {
+			$model->take($data['limit']);
+		}
+		else {
+			$model->take(100);
+		}
+
+		$model->orderBy('created_at', 'desc');
+		return $model->get();
+	}
+
+	public function removeByAdmin($id) {
+		$user = \User::getUser();
+
+		if ( ! $user->hasAccess('admin')) {
+			throw new \Exception("Not admin.", 1);
+			return;
+		}
+
+		if ( ! $job = $this->findById($id)) {
+			throw new \Exception("Job not found", 1);
+			return;
+		}
+
+		$company = $job->company;
+		if ( ! is_null($job->agency_id)) $agency = $job->agency;
+
+		$tmpJob = $job;
+
+		if ($job->delete()) {
+			$notificationData = [
+				'company_id'	=>	$company->id,
+				'alert_from'	=>	'System: Programme Chameleon',
+				'has_read'	=>	false,
+				'title'	=>	'Your job "' . $tmpJob->title . '" has been removed by admin',
+				'url'		=>	null,
+			];
+
+			$notification = \Company::addNotification($company, $notificationData);
+
+			if (isset($agency)) {
+				$notificationData = [
+					'agency_id'	=>	$agency->id,
+					'alert_from'	=>	'System: Programme Chameleon',
+					'has_read'	=>	false,
+					'title'	=>	'Your job "' . $tmpJob->title . '" has been removed by admin',
+					'url'		=>	null,
+				];
+
+				$notification = \Agency::addNotification($agency, $notificationData);
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
 }

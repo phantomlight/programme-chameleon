@@ -121,14 +121,14 @@ Company 1 | Programme Chameleon
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<i class="fa fa-bell"></i> Notifications
-					<button class="btn btn-danger btn-xs pull-right">Remove read notifications</button>
+					<button class="btn btn-danger btn-xs pull-right" id="removeReadNotifBtn">Remove read notifications</button>
 				</div>
 				<?php $notifications = $company->notifications()->where('has_read', false)->orderBy('created_at', 'desc')->paginate(15); ?>
 				<div class="panel-body @if (count($notifications) > 0) {{ 'no-padding' }} @endif">
 					@if (count($notifications) > 0)
-					<ul class="list-group list-notif">
+					<ul class="list-group" id="listNotif">
 						@foreach ($notifications as $notification)
-						<li class="list-group-item">
+						<li class="list-group-item" data-id="{{ $notification->id }}">
 							<a href="{{ $notification->url }}" target="_blank">
 								<p>@if ( ! $notification->has_read) <label class="label label-danger">Unread</label> @endif {{ $notification->title }}</p>
 								<p class="text-muted">
@@ -136,7 +136,7 @@ Company 1 | Programme Chameleon
 								</p>
 							</a>
 							<div class="btn-group">
-								<button class="btn btn-primary btn-xs">Mark as read</button>
+								<button data-id="{{ $notification->id }}" class="btn btn-primary btn-xs btn-mark-notif">Mark as read</button>
 							</div>
 						</li>
 						@endforeach

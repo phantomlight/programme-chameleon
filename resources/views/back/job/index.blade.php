@@ -1,3 +1,5 @@
+<?php $user = \User::getUser(); ?>
+
 @extends('back.app')
 
 @section('title')
@@ -70,26 +72,26 @@ Job | Programme Chameleon
 						<div class="ibox-content">
 							<div class="row">
 								<div class="col-sm-12">
-									<table class="footable footable-init toggle-arrow-tiny table table-stripped" data-page-size="10" data-paging="true" id="tableList">
+									<table data-route="{{ route('admin.job.list') }}" data-remove-link="{{ route('admin.job.remove') }}" class="footable footable-init toggle-arrow-tiny table table-stripped" data-page-size="10" data-paging="true" id="tableList">
 										<thead>
 											<tr>
 												<th data-id="id" data-sort="0" data-sort-ignore="true">
 													<input type="checkbox" class="check-all">
 												</th>
-												<th data-id="company_name" data-sort="1">
+												<th data-id="title" data-sort="1">
 													Job Title
 												</th>
-												<th data-id="company_job_count" data-sort="2" data-sort-ignore="true">
-													Submitted By
+												<th data-id="company_name" data-sort="2">
+													Company
 												</th>
-												<th data-id="company_job_count" data-sort="3" data-sort-ignore="true">
-													Industry
+												<th data-id="agency_name" data-sort="3">
+													Agency
 												</th>
-												<th data-id="company_job_count" data-sort="4" data-sort-ignore="true">
+												<th data-id="is_active" data-sort="4">
 													Status
 												</th>
-												<th data-id="updated_at" data-sort="5" data-hide="all" data-sort-ignore="true">
-													Created At
+												<th data-id="updated_at" data-sort="5" data-hide="all">
+													Last Activity
 												</th>
 												<th data-sort-ignore="true" data-sort="6" data-id="actions">
 													Action
@@ -97,38 +99,10 @@ Job | Programme Chameleon
 											</tr>
 										</thead>
 										<tbody>
-											@for ($i=1; $i<20; $i++)
-											<tr>
-												<td><input type="checkbox" value="1"></td>
-												<td>Job {{ $i }}</td>
-												<td>Company {{ $i }}</td>
-												@if ($i%2===0)
-												<td>IT</td>
-												@else
-												<td>Engineering</td>
-												@endif
-												@if ($i%2===0)
-												<td><label class="label label-success">Open</label></td>
-												@else
-												<td><label class="label label-danger">Taken</label></td>
-												@endif
-												<td>15 November 2015, 11:00:00 PM</td>
-												<td>
-													<div class="btn-group">
-														<button class="btn btn-warning btn-xs">
-															<i class="fa fa-eye"></i> View
-														</button>
-														<button class="btn btn-danger btn-xs">
-															<i class="fa fa-times"></i> Delete
-														</button>
-													</div>
-												</td>
-											</tr>
-											@endfor
 										</tbody>
 										<tfoot>
 											<tr>
-												<td colspan="5">
+												<td colspan="7">
 													<ul class="pagination pull-right"></ul>
 												</td>
 											</tr>

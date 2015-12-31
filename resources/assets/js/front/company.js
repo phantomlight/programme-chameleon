@@ -391,7 +391,7 @@ if ($('#removeVipBtn')[0]) {
 
 // Notifications
 if ($('#listNotif')[0]) {
-	var $list = $('#listBotif');
+	var $list = $('#listNotif');
 	$list.find('.btn-mark-notif').on('click', function (e) {
 		e.preventDefault();
 
