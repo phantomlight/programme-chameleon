@@ -38,7 +38,7 @@ class FileUploader {
 				return $compressed;
 				break;
 			
-			case 'resume':
+			case 'document':
 				if ( ! $this->checkResumeFile($file)) return;
 				$info = pathinfo($file['name']);
 				$location .= Carbon::now()->format('Ymd') . '-' . uniqid() . '.' . $info['extension'];

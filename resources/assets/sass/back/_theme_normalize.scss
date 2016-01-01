@@ -499,18 +499,22 @@ video {
 	}
 }
 
-.nav.nav-tabs li {
-	background: none;
-	border: none;
+.nav-tabs li {
+	background: none !important;
+	border: none !important;
+
+	&.active {
+		background: #e6e6e6 !important;
+	}
 }
 
 .nav-tabs > li > a {
-	color: #A7B1C2;
-	font-weight: 600;
+	color: #666 !important;
+	font-weight: 600 !important;
 	padding: 10px 20px 10px 25px;
+
 	&:hover, &:focus {
-		background-color: #e6e6e6;
-		color: #676a6c;
+		background: #e6e6e6 !important;
 	}
 }
 

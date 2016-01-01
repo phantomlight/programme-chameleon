@@ -40,8 +40,45 @@ class AdminController extends Controller {
 		return view('back.agency');
 	}
 
-	public function getResources() {
-		return view('back.resources');
+	public function getAccount() {
+		return view('back.account');
+	}
+
+	public function postAccount() {
+		$data = \Input::get('data');
+
+		try {
+			$user = \User::getUser();
+			if ( ! $user->hasAccess('admin')) {
+				throw new \Exception("Not an admin account", 1);
+				return;
+			}
+
+			$user->email = $data['email'];
+
+			if ($data['password'] !== '') {
+				$user->attemptResetPassword($user->getResetPasswordCode(), $data['password']);
+			}
+
+			$user->save();
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Account updated',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function getLogout() {
+		\User::logout();
+		\Session::flush();
+		return redirect('admin/login')->with('flashMessage', ['class' => 'success', 'message' => 'You have logged out.']);
 	}
 
 	public function getJobIndustry() {
@@ -331,6 +368,154 @@ class AdminController extends Controller {
 			return \Response::json([
 				'type'		=>	'success',
 				'message'	=>	'Job removed.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postUpdateService() {
+		$data = \Input::get('data');
+
+		$dbData = [
+			'title'	=>	$data['title'],
+			'description'	=>	\Input::get('description'),
+		];
+
+		try {
+			$model = \Site::updateService(trim(\Input::get('id')), $dbData);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Service data "' . $model->title . '" updated',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postUpdateServiceImage() {
+		$id = \Input::get('id');
+
+		if ( ! isset($_FILES['file'])) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'No image uploaded',
+			]);
+		}
+
+		try {
+			$image = \Site::uploadFile($_FILES['file'], 'image');
+			$dbData = ['file' => $image];
+			$model = \Site::updateService($id, $dbData);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Image updated',
+				'image'		=>	asset($image),
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postAddResource() {
+		$data = json_decode(\Input::get('data'), true);
+		$description = \Input::get('description');
+
+		try {
+			$file = \Site::uploadFile($_FILES['file'], 'document');
+			$dbData = [
+				'title'		=>	$data['title'],
+				'description'	=>	$description,
+				'file'		=>	$file,
+				'key'			=>	'resource.' . $data['key'],
+			];
+			$model = \Site::addResource($dbData);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Resource ' . $model->title . ' added. Reload page to see effect.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postEditResourceFile() {
+		$id = trim(\Input::get('id'));
+
+		try {
+			$file = \Site::uploadFile($_FILES['file'], 'document');
+			$dbData = ['file'	=>	$file];
+			$model = \Site::editResource($id, $dbData);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Resource ' . $model->title . ' updated. Reload page to see effect.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postEditResource() {
+		$id = trim(\Input::get('id'));
+		$data = \Input::get('data');
+		$description = \Input::get('description');
+
+		try {
+			$dbData = [
+				'title'		=>	$data['title'],
+				'description'	=>	$description,
+				'key'			=>	'resource.' . $data['key'],
+			];
+			$model = \Site::editResource($id, $dbData);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Resource ' . $model->title . ' updated. Reload page to see effect.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postRemoveResource() {
+		if ( ! $id = \Input::get('id')) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Resources not found',
+			]);
+		}
+
+		try {
+			\Site::removeResource($id);
+
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Resource removed',
 			]);
 		}
 		catch (\Exception $e) {

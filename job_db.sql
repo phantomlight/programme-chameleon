@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 27, 2015 at 06:40 PM
+-- Generation Time: Jan 01, 2016 at 08:19 PM
 -- Server version: 5.6.27-0ubuntu1
 -- PHP Version: 5.6.11-1+deb.sury.org~utopic+1
 
@@ -5414,7 +5414,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2015_11_22_113547_create_contractor_table', 1),
 ('2015_11_23_120301_create_company_table', 1),
 ('2015_11_23_122431_create_agency_table', 1),
-('2015_11_23_123140_create_job_table', 1);
+('2015_11_23_123140_create_job_table', 1),
+('2016_01_01_073740_create_site_table', 2);
 
 -- --------------------------------------------------------
 
@@ -5511,7 +5512,7 @@ CREATE TABLE IF NOT EXISTS `tb_agency_notification` (
   `description` text COLLATE utf8_unicode_ci,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_agency_notification`
@@ -5523,7 +5524,8 @@ INSERT INTO `tb_agency_notification` (`id`, `agency_id`, `alert_from`, `has_read
 (3, 3, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/agency/job-application?i=23j89be7', NULL, '2015-12-27 04:11:06', '2015-12-27 04:11:06'),
 (4, 3, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/agency/job-application?i=23j89be7', NULL, '2015-12-27 04:11:09', '2015-12-27 04:11:09'),
 (5, 3, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/agency/job-application?i=23j89be7', NULL, '2015-12-27 04:11:50', '2015-12-27 04:11:50'),
-(6, 3, 'System: Programme Chameleon', 0, 'Timesheet "Timesheet by Contractor 1" for "Permanent Job 2" has been accepted by "Company 2". Please authorise it.', 'http://127.0.0.5/agency/job-details?i=23j89be7', 'Accepted by Company 2', '2015-12-27 04:34:37', '2015-12-27 04:34:37');
+(6, 3, 'System: Programme Chameleon', 0, 'Timesheet "Timesheet by Contractor 1" for "Permanent Job 2" has been accepted by "Company 2". Please authorise it.', 'http://127.0.0.5/agency/job-details?i=23j89be7', 'Accepted by Company 2', '2015-12-27 04:34:37', '2015-12-27 04:34:37'),
+(7, 3, 'System: Programme Chameleon', 0, 'Your job "Contract Job 2" has been removed by admin', NULL, NULL, '2015-12-31 03:49:02', '2015-12-31 03:49:02');
 
 -- --------------------------------------------------------
 
@@ -5602,16 +5604,15 @@ CREATE TABLE IF NOT EXISTS `tb_company_notification` (
   `description` text COLLATE utf8_unicode_ci,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_company_notification`
 --
 
 INSERT INTO `tb_company_notification` (`id`, `company_id`, `alert_from`, `has_read`, `title`, `url`, `description`, `created_at`, `updated_at`) VALUES
-(5, 2, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=23j89be7', NULL, '2015-12-27 04:11:50', '2015-12-27 04:11:50'),
 (11, 1, 'Contractor 1', 0, 'New Job Application', 'http://127.0.0.5/company/job-application?i=3j681g8d', NULL, '2015-12-27 04:18:54', '2015-12-27 04:18:54'),
-(12, 2, 'System: Programme Chameleon', 0, 'Timesheet "Timesheet by Contractor 1" for "Permanent Job 2" has been accepted.', 'http://127.0.0.5/agency/job-details?i=23j89be7', 'Accepted by Programme Agency Tester', '2015-12-27 04:37:10', '2015-12-27 04:37:10');
+(13, 2, 'System: Programme Chameleon', 0, 'Your job "Contract Job 2" has been removed by admin', NULL, NULL, '2015-12-31 03:49:01', '2015-12-31 03:49:01');
 
 -- --------------------------------------------------------
 
@@ -5849,7 +5850,6 @@ CREATE TABLE IF NOT EXISTS `tb_job` (
 INSERT INTO `tb_job` (`id`, `company_id`, `agency_id`, `experience_year`, `title`, `start_date`, `city`, `country`, `duration`, `is_active`, `contact_name`, `contact_phone`, `salary`, `salary_type`, `visa`, `eligible_to_work_in_country`, `security_clearance`, `type`, `status`, `job_apply_details`, `description`, `created_at`, `updated_at`) VALUES
 (1, 1, NULL, 1, 'Contract Job', 'Immediately', 'Aberdeen', 'United Kingdom', '1', 1, 'Testere', '1231231231', 100.0000, 'daily', 1, 1, 1, 'contract', 'open', '{"type":"email","application_email":"recruit@email.org","direct_email":"recruit2@email.org"}', 'Some details of your job here.', '2015-12-27 03:31:18', '2015-12-27 03:31:18'),
 (2, 1, NULL, 5, 'Permanent Job', 'A week after being accepted to Job', 'Aberdeen', 'United Kingdom', '1', 1, 'Testerrererererer', '1299999', 1000.0000, 'hourly', 1, 1, 1, 'permanent', 'open', '{"type":"url","url":"google.com"}', 'Some details of your job here.', '2015-12-27 03:38:57', '2015-12-27 03:44:33'),
-(4, 2, 3, 5, 'Contract Job 2', 'Immediately', 'Aberdeen', 'United Kingdom', '1', 1, 'Testere', '1231231231', 500.0000, 'hourly', 1, 0, 1, 'contract', 'open', '{"type":"url","url":"google.com"}', 'Some details of your job here.', '2015-12-27 04:03:45', '2015-12-27 04:05:02'),
 (5, 2, 3, 5, 'Permanent Job 2', 'Immediately', 'Aberdeen', 'United Kingdom', '999', 1, 'Testere', '1231231231', 10000.0000, 'annually', 0, 0, 1, 'permanent', 'open', '{"type":"email","application_email":"recruit1@email.org","direct_email":""}', 'Some details of your job here.', '2015-12-27 04:08:14', '2015-12-27 04:08:14');
 
 -- --------------------------------------------------------
@@ -5872,9 +5872,54 @@ CREATE TABLE IF NOT EXISTS `tb_job_industry` (
 INSERT INTO `tb_job_industry` (`job_id`, `industry_id`, `created_at`, `updated_at`) VALUES
 (1, 3, '2015-12-27 03:31:18', '0000-00-00 00:00:00'),
 (2, 2, '2015-12-27 03:38:58', '0000-00-00 00:00:00'),
-(4, 3, '2015-12-27 04:03:46', '0000-00-00 00:00:00'),
-(4, 1, '2015-12-27 04:03:46', '0000-00-00 00:00:00'),
 (5, 2, '2015-12-27 04:08:14', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_site`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_site` (
+  `id` int(10) unsigned NOT NULL,
+  `key` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `file` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tb_site`
+--
+
+INSERT INTO `tb_site` (`id`, `key`, `title`, `url`, `file`, `description`, `created_at`, `updated_at`) VALUES
+(1, 'service', 'Consulting Update', NULL, 'http://localhost/assets/img/sample/image1.jpg', '<p>Utilise our extensive experience in delivering complex IT and Change Programmes and Projects with reliable, experienced consultants.</p>', '2016-01-01 01:19:31', '2016-01-01 03:12:22'),
+(2, 'service', 'Training', NULL, 'http://localhost/assets/img/sample/image2.jpg', '<p>We offer on-site, focused, accredited Prince 2 and AGILE Ttraining.</p>', '2016-01-01 01:19:31', '2016-01-01 01:19:31'),
+(3, 'service', 'Free Resources', NULL, 'uploads/services/01/20160101-5686516ebd153.jpg', '<p>We offer on-site, focused, accredited Prince 2 and AGILE Ttraining.</p>', '2016-01-01 01:19:31', '2016-01-01 03:14:06'),
+(4, 'service', 'Employers or Job Seekers?', NULL, 'http://localhost/assets/img/sample/image4.jpg', '<p>If you are employers, submit your vancany <a href="http://localhost/company/post-job">here</a></p><p>If you are job seekers, submit your CV <a href="http://localhost/contractor/account">here</a></p>', '2016-01-01 01:19:32', '2016-01-01 01:19:32'),
+(7, 'resource.initiation', 'Mandate', NULL, 'uploads/services/01/20160101-5686778b0d251.doc', '<p>This simple document is used to provide a structured approach to proposing a project with its business case.</p>', '2016-01-01 05:56:43', '2016-01-01 05:56:43'),
+(8, 'resource.initiation', 'Project Definition Report', NULL, 'uploads/services/01/20160101-5686779a4e5cf.doc', '<p>This document is used to provide an outline of the project and to \r\nallow an assessment to be made about whether the project should proceed.</p>', '2016-01-01 05:56:58', '2016-01-01 05:56:58'),
+(9, 'resource.initiation', 'Contract', NULL, 'uploads/services/01/20160101-568677a848a9c.doc', '<p>This document is used to obtain agreement from the Project Sponsor and Budget Holder to start the project.</p>', '2016-01-01 05:57:12', '2016-01-01 05:57:12'),
+(10, 'resource.control', 'Change Request Form', NULL, 'uploads/services/01/20160101-568677c495ecb.doc', '<p>This document, in three parts, is used to propose, assess and approve changes.</p>', '2016-01-01 05:57:40', '2016-01-01 05:57:40'),
+(11, 'resource.control', 'Change Log', NULL, 'uploads/services/01/20160101-568677db985e5.doc', '<p>This document is used to record changes and change actions associated with a project.</p>', '2016-01-01 05:58:03', '2016-01-01 05:58:03'),
+(12, 'resource.control', 'Issues Log', NULL, 'uploads/services/01/20160101-568677e8440b2.doc', '<p>This document is used to record issues and assign an owner, with a plan to resolve them.</p>', '2016-01-01 05:58:16', '2016-01-01 05:58:16'),
+(13, 'resource.control', 'Risk Log', NULL, 'uploads/services/01/20160101-568677f7d2711.doc', '<p>This document is used to record and grade risks, with an associated action plan to minimize them.</p>', '2016-01-01 05:58:31', '2016-01-01 05:58:31'),
+(14, 'resource.control', 'Progress Report', NULL, 'uploads/services/01/20160101-5686780705574.doc', '<p>This document is used to communicate progress on a regular basis to the stakeholders of a project.</p>', '2016-01-01 05:58:47', '2016-01-01 05:58:47'),
+(15, 'resource.control', 'Checkpoint Report', NULL, 'uploads/services/01/20160101-56867811d750a.doc', '<p>This document is used to provide a detailed report of progress to \r\ndate. It lists all completed products, products to be completed during \r\nthe next period, requested changes, issues and a summary budget and \r\ntimescale position.</p>', '2016-01-01 05:58:57', '2016-01-01 05:58:57'),
+(16, 'resource.closure', 'Project Closure Report', NULL, 'uploads/services/01/20160101-56867825c89cf.doc', '<p>This document is used to communicate how well the project has \r\nperformed against its original business case, project plan, budget, \r\ntime-scale and tolerances.</p>', '2016-01-01 05:59:17', '2016-01-01 05:59:17'),
+(17, 'resource.closure', 'Lessons Learned Report', NULL, 'uploads/services/01/20160101-56867834099fb.doc', '<p>This document is used to pass on any lessons learned that can be usefully applied to other projects.</p>', '2016-01-01 05:59:32', '2016-01-01 05:59:32'),
+(18, 'resource.closure', 'Customer Acceptance Form', NULL, 'uploads/services/01/20160101-568678402146e.doc', '<p>This document is used to obtain the customers'' sign-off once the project is finished.</p>', '2016-01-01 05:59:44', '2016-01-01 05:59:44'),
+(19, 'resource.other', 'Project Status Scorecard', NULL, 'uploads/services/01/20160101-56867852430dd.doc', '<p>This document is used to report project status to the project board and other key stakeholders.</p>', '2016-01-01 06:00:02', '2016-01-01 06:00:02'),
+(20, 'resource.other', 'Budget Justification Template', NULL, 'uploads/services/01/20160101-56867861d7d3a.doc', '<p>This document is used to justify a formal request for budget.</p>', '2016-01-01 06:00:17', '2016-01-01 06:00:17'),
+(21, 'resource.other', 'Standards for a Statement of Requirements', NULL, 'uploads/services/01/20160101-5686787053c5d.doc', '<p>This document defines a set of standards that should be used when creating a Statement of Requirements.</p>', '2016-01-01 06:00:32', '2016-01-01 06:00:32'),
+(22, 'resource.other', 'Functional Requirements Specification', NULL, 'uploads/services/01/20160101-5686787e00ec2.doc', '<p>This document is used in IT projects to define the functional requirements of a proposed system.</p>', '2016-01-01 06:00:45', '2016-01-01 06:00:45'),
+(23, 'resource.other', 'Technical Requirements Specification', NULL, 'uploads/services/01/20160101-5686788d51d3c.doc', '<p>This document is used in IT projects to define the technical requirements of a proposed system.</p>', '2016-01-01 06:01:01', '2016-01-01 06:01:01'),
+(24, 'resource.other', 'Stakeholder Management Plan', NULL, 'uploads/services/01/20160101-56867898b6fd8.doc', '<p>This document can be used to identify the project stakeholders, \r\ndefine an approach to communications and provide key project data.</p>', '2016-01-01 06:01:12', '2016-01-01 06:01:12'),
+(25, 'resource.other', 'Work Breakdown Structure (WBS)', NULL, 'uploads/services/01/20160101-568678a32e715.doc', '<p>This simple document is used to record the activities and tasks within a project.</p>', '2016-01-01 06:01:23', '2016-01-01 06:01:23'),
+(26, 'resource.other', 'Funding Proposal', NULL, 'uploads/services/01/20160101-5686793f4e7b0.docx', '<p>This document is used to request funds by providing a compelling case\n for the proposed project, clearly communicating its goals and \nobjectives.</p>', '2016-01-01 06:01:35', '2016-01-01 06:03:59');
 
 -- --------------------------------------------------------
 
@@ -5908,12 +5953,12 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
 
 INSERT INTO `tb_users` (`id`, `email`, `password`, `permissions`, `activated`, `activation_code`, `activated_at`, `last_login`, `persist_code`, `reset_password_code`, `first_name`, `last_name`, `image`, `slug`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'superadmin@email.com', '$2y$10$eKIpIOQYg8eXNfbTyNcsEey6Pga6CmV7ASsSpBdwyTQSdje9Z1xIa', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'Fordyce', 'Gozali', NULL, 'fordyce-gozali', NULL, '2015-12-26 03:34:31', '2015-12-26 03:34:31'),
-(2, 'admin@email.com', '$2y$10$UW2j5PSMv3xRJ/hjxUAPZu.i3QrJkprE7g5PWCFjKTpeWzFLEZ.e2', NULL, 1, NULL, NULL, '2015-12-27 03:28:13', '$2y$10$HJAIxvFnFJ12QblbehskmOtaluYh4Ajn/o/iX.nByB27OwxnS4t9i', NULL, 'Admin', '', NULL, 'admin', NULL, '2015-12-26 03:34:32', '2015-12-27 03:28:13'),
+(2, 'admin@email.com', '$2y$10$4cjXfIvWKiHSvMgw1U0mrOP0pSE7HNosEUjtmsEaJrKputGn7mu5i', NULL, 1, NULL, NULL, '2016-01-01 06:18:59', '$2y$10$qlJymmPeI78BnBB4oZ6veexNnO5L0wzlE0DoapWvhtVrU/P5fV4em', NULL, 'Admin', '', NULL, 'admin', NULL, '2015-12-26 03:34:32', '2016-01-01 06:19:12'),
 (5, 'contractor1@email.org', '$2y$10$a7g7j6pbLp56k01eQBqn8.IKYLWy3fYjL5EjwwWoEzRtp99w2rCYe', NULL, 1, NULL, NULL, '2015-12-27 04:20:44', '$2y$10$68HcEMYQkTQXfxwmxfv6RuOoZm4faRzAmYxyI/hat9oQ3U/LJEMw6', NULL, 'Contractor', '1', NULL, '', NULL, '2015-12-26 05:16:27', '2015-12-27 04:20:44'),
-(6, 'company1@email.org', '$2y$10$RjjwAuz4NwTOVQBR0oXMTO7G51y/Zv6Z9NynqscZ0sxcuojwGhG8i', NULL, 1, NULL, NULL, '2015-12-27 03:42:11', '$2y$10$cM2Ja776VFpVvUywF/xP/O7Gcn9enuZI4.b9j5FUzAnkx7USQSbOi', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 02:52:57', '2015-12-27 03:42:11'),
-(11, 'agency1@email.org', '$2y$10$FmXCxDiBuxTPp09yMiyou.eUkkc7Qzdnd5GOh8lh0vB9uFKF7hE6.', NULL, 1, NULL, NULL, '2015-12-27 04:35:00', '$2y$10$6x9J5tqVROrF5KaUAZIDEuL1h3kLOak6shP89ViZwhhkj21eFMCI.', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 03:18:06', '2015-12-27 04:35:00'),
+(6, 'company1@email.org', '$2y$10$RjjwAuz4NwTOVQBR0oXMTO7G51y/Zv6Z9NynqscZ0sxcuojwGhG8i', NULL, 1, NULL, NULL, '2015-12-31 04:07:50', '$2y$10$KPxQNcnEvvaMfQbN1l7DOeqEqs6UOOOhxIiBhvdLro.m1Fb8ridoq', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 02:52:57', '2015-12-31 04:07:50'),
+(11, 'agency1@email.org', '$2y$10$FmXCxDiBuxTPp09yMiyou.eUkkc7Qzdnd5GOh8lh0vB9uFKF7hE6.', NULL, 1, NULL, NULL, '2015-12-31 04:08:31', '$2y$10$8RvZlRmSTJR0XrlxyRfpVumPPZ4rHtXM7kbje8Al.fGFoFyv3Df3u', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 03:18:06', '2015-12-31 04:08:31'),
 (12, 'agency2@email.org', '$2y$10$/0RWPQeIXMFo5mrr/0RMZuL9XpOXzDJF3dupiiAy6tTFSwqQMKj9m', NULL, 1, NULL, NULL, '2015-12-27 04:08:34', '$2y$10$K2dv/6Pxjwy/7RUd1rueDes4DKlJ4atPgAo13ziCR/UQggbNx44mS', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 03:18:32', '2015-12-27 04:08:34'),
-(13, 'company2@email.org', '$2y$10$yL4EBcV//u0C35H2.Y9W1Ovkw1aJWslTzG8OLyO7LQvuUWnSRXhbS', NULL, 1, NULL, NULL, '2015-12-27 04:39:00', '$2y$10$wjtb6kSkANb18U3m5e/wo.IQ2dBwCLXvKBPBnA57ghF/Tb2K6.2sC', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 03:20:22', '2015-12-27 04:39:00'),
+(13, 'company2@email.org', '$2y$10$yL4EBcV//u0C35H2.Y9W1Ovkw1aJWslTzG8OLyO7LQvuUWnSRXhbS', NULL, 1, NULL, NULL, '2015-12-31 04:09:18', '$2y$10$RPJ20NArgUhF2cAZD/jMMeJwLOalYByPq.YQktgI/isqyj0Jo.co2', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 03:20:22', '2015-12-31 04:09:18'),
 (14, 'contractor2@email.org', '$2y$10$YOrwUNQsRTkrbGgs8Z1UvehiEM.O/7ebElGIOb2BbHXd3KgLAPvom', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'Contractor', '2', NULL, '', NULL, '2015-12-27 03:20:46', '2015-12-27 03:20:46');
 
 -- --------------------------------------------------------
@@ -5984,7 +6029,7 @@ CREATE TABLE IF NOT EXISTS `tb_users_throttle` (
   `last_attempt_at` timestamp NULL DEFAULT NULL,
   `suspended_at` timestamp NULL DEFAULT NULL,
   `banned_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_users_throttle`
@@ -5996,7 +6041,8 @@ INSERT INTO `tb_users_throttle` (`id`, `user_id`, `ip_address`, `attempts`, `sus
 (3, 13, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
 (4, 2, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
 (5, 11, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
-(6, 12, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL);
+(6, 12, '127.0.0.1', 0, 0, 0, NULL, NULL, NULL, NULL),
+(7, 14, NULL, 0, 0, 0, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -6149,6 +6195,14 @@ ALTER TABLE `tb_job_industry`
   ADD KEY `tb_job_industry_created_at_index` (`created_at`);
 
 --
+-- Indexes for table `tb_site`
+--
+ALTER TABLE `tb_site`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tb_site_key_index` (`key`),
+  ADD KEY `tb_site_created_at_index` (`created_at`);
+
+--
 -- Indexes for table `tb_users`
 --
 ALTER TABLE `tb_users`
@@ -6201,7 +6255,7 @@ ALTER TABLE `tb_agency_credit_history`
 -- AUTO_INCREMENT for table `tb_agency_notification`
 --
 ALTER TABLE `tb_agency_notification`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `tb_company`
 --
@@ -6216,7 +6270,7 @@ ALTER TABLE `tb_company_credit_history`
 -- AUTO_INCREMENT for table `tb_company_notification`
 --
 ALTER TABLE `tb_company_notification`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `tb_contractor`
 --
@@ -6253,6 +6307,11 @@ ALTER TABLE `tb_industry`
 ALTER TABLE `tb_job`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
+-- AUTO_INCREMENT for table `tb_site`
+--
+ALTER TABLE `tb_site`
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
+--
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
@@ -6266,7 +6325,7 @@ ALTER TABLE `tb_users_groups`
 -- AUTO_INCREMENT for table `tb_users_throttle`
 --
 ALTER TABLE `tb_users_throttle`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- Constraints for dumped tables
 --

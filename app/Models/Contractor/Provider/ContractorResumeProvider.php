@@ -37,7 +37,7 @@ class ContractorResumeProvider implements ContractorResumeProviderInterface {
 		try {
 			$uploader = new FileUploader;
 			$location = 'uploads/contractors/' . $contractor->id . '/resume/' . date('m') . '/';
-			$uploadedFile = $uploader->upload($file, $location, 'resume');
+			$uploadedFile = $uploader->upload($file, $location, 'document');
 
 			$model = $this->createModel();
 			$model->fill([

@@ -158,6 +158,7 @@ return [
         App\Models\Company\CompanyServiceProvider::class,
         App\Models\Agency\AgencyServiceProvider::class,
         App\Models\Job\JobServiceProvider::class,
+        App\Models\Site\SiteServiceProvider::class,
 
     ],
 
@@ -207,6 +208,7 @@ return [
         'Route'     => Illuminate\Support\Facades\Route::class,
         'Schema'    => Illuminate\Support\Facades\Schema::class,
         'Session'   => Illuminate\Support\Facades\Session::class,
+        'Site'      => App\Facades\Site::class,
         'Storage'   => Illuminate\Support\Facades\Storage::class,
         'User'      => App\Facades\User::class,
         'URL'       => Illuminate\Support\Facades\URL::class,

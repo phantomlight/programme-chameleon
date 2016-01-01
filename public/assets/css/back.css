@@ -910,25 +910,28 @@ video
     -moz-border-top-colors: none;
 }
 
-.nav.nav-tabs li
+.nav-tabs li
 {
-    border: none; 
-    background: none;
+    border: none !important; 
+    background: none !important;
+}
+.nav-tabs li.active
+{
+    background: #e6e6e6 !important;
 }
 
 .nav-tabs > li > a
 {
-    font-weight: 600;
+    font-weight: 600 !important;
 
     padding: 10px 20px 10px 25px; 
 
-    color: #a7b1c2;
+    color: #666 !important;
 }
 .nav-tabs > li > a:hover,
 .nav-tabs > li > a:focus
 {
-    color: #676a6c; 
-    background-color: #e6e6e6;
+    background: #e6e6e6 !important;
 }
 
 .ui-tab .tab-content

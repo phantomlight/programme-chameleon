@@ -11,9 +11,9 @@
 						</span> <span class="text-muted text-xs block">Admin of Programme Chameleon <b class="caret"></b></span> </span>
 					</a>
 					<ul class="dropdown-menu animated fadeInRight element-top-xs-10">
-						<li><a href="#">Settings</a></li>
+						<li><a href="{{ route('admin.account') }}">Settings</a></li>
 						<li class="divider"></li>
-						<li><a href="{{ route('admin.login') }}">Logout</a></li>
+						<li><a href="{{ route('admin.logout') }}">Logout</a></li>
 					</ul>
 				</div>
 				<div class="logo-element">
@@ -41,9 +41,6 @@
 			</li>
 			<li>
 				<a href="{{ route('admin.agency') }}"><i class="fa fa-user-md"></i> <span class="nav-label">Agency</span></a>
-			</li>
-			<li>
-				<a href="{{ route('admin.resources') }}"><i class="fa fa-files-o"></i> <span class="nav-label">Free Resources</span></a>
 			</li>
 			<li>
 				<a href="{{ route('admin.login') }}">
