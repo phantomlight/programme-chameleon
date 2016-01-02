@@ -1,9 +1,12 @@
 <?php namespace App\Models\Agency\Provider;
 
+use App\Jobs\EmailJob;
 use App\Models\Agency\Interfaces\AgencyNotificationProviderInterface;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class AgencyNotificationProvider implements AgencyNotificationProviderInterface {
 
+	use DispatchesJobs;
 	protected $model = 'App\Models\Agency\Eloquent\AgencyNotificationModel';
 
 	public function __construct($model=null) {
@@ -30,6 +33,24 @@ class AgencyNotificationProvider implements AgencyNotificationProviderInterface 
 		$data['agency_id'] = $agency->id;
 		$model->fill($data);
 		$model->save();
+
+		if (env('APP_ENV') === 'production') {
+			if ($user = $agency->user) {
+				$mailData = [
+					'layout'	=>	'emails.notification',
+					'data'		=>	[
+						'description'	=>	isset($data['description']) ? $data['description'] : null,
+						'url'					=>	(isset($data['url']) ? ($data['url'] !== '' || $data['url'] !== '#' ? $data['url'] : null) : null),
+					],
+					'subject'			=>	$data['title'],
+					'from_email'	=>	'noreply@programmechameleon.com',
+					'to_email'		=>	$user->email,
+				];
+				$job = (new EmailJob($mailData))->onQueue('email-queue');
+				$this->dispatch($job);
+			}
+		}
+
 		return $model;
 	}
 

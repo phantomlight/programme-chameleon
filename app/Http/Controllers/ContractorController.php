@@ -371,4 +371,24 @@ class ContractorController extends Controller {
 		]);
 	}
 
+	public function postMarkNotif() {
+		if ( ! $contractor = \Contractor::getContractor()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not a contractor account',
+			]);
+		}
+
+		$contractor->notifications()->where('has_read', 0)->update(['has_read' => 1]);
+
+		return \Response::json([
+			'type'		=>	'success',
+			'message'	=>	'All notifications has been marked as "read"',
+		]);
+	}
+
+	public function getNotif() {
+		return view('front.contractor.allNotif');
+	}
+
 }

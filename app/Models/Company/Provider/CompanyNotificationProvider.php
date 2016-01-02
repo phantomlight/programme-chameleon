@@ -1,9 +1,12 @@
 <?php namespace App\Models\Company\Provider;
 
+use App\Jobs\EmailJob;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use App\Models\Company\Interfaces\CompanyNotificationProviderInterface;
 
 class CompanyNotificationProvider implements CompanyNotificationProviderInterface {
-
+	
+	use DispatchesJobs;
 	protected $model = 'App\Models\Company\Eloquent\CompanyNotificationModel';
 
 	public function __construct($model=null) {
@@ -34,6 +37,24 @@ class CompanyNotificationProvider implements CompanyNotificationProviderInterfac
 		$model = $this->getModel();
 		$model->fill($data);
 		$model->save();
+
+		if (env('APP_ENV') === 'production') {
+			if ($user = $company->user) {
+				$mailData = [
+					'layout'	=>	'emails.notification',
+					'data'		=>	[
+						'description'	=>	isset($data['description']) ? $data['description'] : null,
+						'url'					=>	(isset($data['url']) ? ($data['url'] !== '' || $data['url'] !== '#' ? $data['url'] : null) : null),
+					],
+					'subject'			=>	$data['title'],
+					'from_email'	=>	'noreply@programmechameleon.com',
+					'to_email'		=>	$user->email,
+				];
+				$job = (new EmailJob($mailData))->onQueue('email-queue');
+				$this->dispatch($job);
+			}
+		}
+
 		return $model;
 	}
 

@@ -388,7 +388,7 @@ class AdminController extends Controller {
 
 		try {
 			$model = \Site::updateService(trim(\Input::get('id')), $dbData);
-
+			\Cache::forget('site.services');
 			return \Response::json([
 				'type'		=>	'success',
 				'message'	=>	'Service data "' . $model->title . '" updated',
@@ -417,6 +417,7 @@ class AdminController extends Controller {
 			$dbData = ['file' => $image];
 			$model = \Site::updateService($id, $dbData);
 
+			\Cache::forget('site.services');
 			return \Response::json([
 				'type'		=>	'success',
 				'message'	=>	'Image updated',

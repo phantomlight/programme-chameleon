@@ -525,6 +525,26 @@ class AgencyController extends Controller {
 		]);
 	}
 
+	public function postMarkNotif() {
+		if ( ! $agency = \Agency::getAgency()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not an agency account',
+			]);
+		}
+
+		$agency->notifications()->where('has_read', 0)->update(['has_read' => 1]);
+
+		return \Response::json([
+			'type'		=>	'success',
+			'message'	=>	'All notifications has been marked as "read"',
+		]);
+	}
+
+	public function getNotif() {
+		return view('front.agency.allNotif');
+	}
+
 	public function postAcceptTimesheet() {
 		if ( ! $agency = \Agency::getAgency()) {
 			return \Response::json([

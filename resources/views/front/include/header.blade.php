@@ -61,7 +61,9 @@
 		</div>
 	</header>
 @else
-	@if ($user->hasAccess('contractor'))
+	@if ($user->hasAccess('admin'))
+		@include('front.adminHeader')
+	@elseif ($user->hasAccess('contractor'))
 		@include('front.contractor.header')
 	@elseif ($user->hasAccess('company'))
 		@include('front.company.header')

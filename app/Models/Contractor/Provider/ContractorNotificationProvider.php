@@ -1,9 +1,12 @@
 <?php namespace App\Models\Contractor\Provider;
 
+use App\Jobs\EmailJob;
 use App\Models\Contractor\Interfaces\ContractorNotificationProviderInterface;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class ContractorNotificationProvider implements ContractorNotificationProviderInterface {
 
+	use DispatchesJobs;
 	protected $model = 'App\Models\Contractor\Eloquent\ContractorNotificationModel';
 
 	public function __construct($model=null) {
@@ -34,6 +37,24 @@ class ContractorNotificationProvider implements ContractorNotificationProviderIn
 		$model = $this->getModel();
 		$model->fill($data);
 		$model->save();
+
+		if (env('APP_ENV') === 'production') {
+			if ($user = $contractor->user) {
+				$mailData = [
+					'layout'	=>	'emails.notification',
+					'data'		=>	[
+						'description'	=>	isset($data['description']) ? $data['description'] : null,
+						'url'					=>	(isset($data['url']) ? ($data['url'] !== '' || $data['url'] !== '#' ? $data['url'] : null) : null),
+					],
+					'subject'			=>	$data['title'],
+					'from_email'	=>	'noreply@programmechameleon.com',
+					'to_email'		=>	$user->email,
+				];
+				$job = (new EmailJob($mailData))->onQueue('email-queue');
+				$this->dispatch($job);
+			}
+		}
+
 		return $model;
 	}
 

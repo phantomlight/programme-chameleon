@@ -82,4 +82,40 @@ class SiteProvider implements SiteProviderInterface {
 		return $model->all();
 	}
 
+	public function getAllServices() {
+		$model = $this->getModel();
+
+		if ( ! \Cache::has('site.services')) {
+			$services = \Cache::rememberForever('site.services', function () use ($model) {
+				return $model->where('key','service')->get();
+			});
+
+			return $services;
+		}
+
+		$value = \Cache::get('site.services', function () use ($model) {
+			return $model->where('key','service')->get();
+		});
+
+		return $value;
+	}
+
+	public function getAllResources() {
+		$model = $this->getModel();
+
+		if ( ! \Cache::has('site.resources')) {
+			$resources = \Cache::rememberForever('site.resources', function () use ($model) {
+				return $model->where('key', 'like', 'resource%')->get();
+			});
+
+			return $resources;
+		}
+
+		$value = \Cache::get('site.resources', function () use ($model) {
+			return $model->where('key', 'like', 'resource%')->get();
+		});
+
+		return $value;
+	}
+
 }

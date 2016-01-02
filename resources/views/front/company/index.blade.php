@@ -13,7 +13,7 @@ $_hash = $_hash->getHasher();
 @extends('front.app')
 
 @section('title')
-Company 1 | Programme Chameleon
+{{ $company->name }}| Programme Chameleon
 @stop
 
 @section('content')
@@ -118,13 +118,23 @@ Company 1 | Programme Chameleon
 		</div>
 
 		<div class="col-sm-4">
+			<?php $notifications = $company->notifications()->where('has_read', false)->orderBy('created_at', 'desc'); ?>
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					<i class="fa fa-bell"></i> Notifications
-					<button class="btn btn-danger btn-xs pull-right" id="removeReadNotifBtn">Remove read notifications</button>
+					<label class="label label-danger">{{ $notifications->count() }}</label> <small>New Notifications</small>
+					<div class="dropdown pull-right">
+						<button id="nLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							More <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="nLabel">
+							<li><a href="{{ route('company.allNotif') }}">See All</a></li>
+							<li><a href="#" onclick="return false;" id="markReadBtn"> Mark all as read </a></li>
+							<li><a href="#" onclick="return false;" id="removeReadNotifBtn"> Remove read notifications </a></li>
+						</ul>
+					</div>
 				</div>
-				<?php $notifications = $company->notifications()->where('has_read', false)->orderBy('created_at', 'desc')->paginate(15); ?>
-				<div class="panel-body @if (count($notifications) > 0) {{ 'no-padding' }} @endif">
+				<div class="panel-body">
+					<?php $notifications = $notifications->take(10)->get(); ?>
 					@if (count($notifications) > 0)
 					<ul class="list-group" id="listNotif">
 						@foreach ($notifications as $notification)
@@ -145,11 +155,6 @@ Company 1 | Programme Chameleon
 					<div class="alert alert-danger">No New Notifications</div>
 					@endif
 				</div>
-				@if (count($notifications) > 0)
-				<div class="panel-footer">
-					{!! $notifications->render() !!}
-				</div>
-				@endif
 			</div>
 			@include('front.company.include.sidebarPayment')
 		</div>

@@ -34,56 +34,22 @@ Home | Programme Chameleon
 	<div id="home-menu-listing" class="element-top-30">
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-3">
-					<div class="widget-box">
-						<div class="widget-box-image img-responsive">
-							<img src="{{ asset('assets/img/sample/image1.jpg') }}" data-image-resize alt="Consulting" />
+				<?php $services = \Site::getAllServices(); ?>
+				@if (count($services) > 0)
+					@foreach ($services as $service)
+						<div class="col-sm-3">
+							<div class="widget-box">
+								<div class="widget-box-image img-responsive">
+									<img src="{{ asset($service->file) }}" data-image-resize alt="{{ $service->title }}" />
+								</div>
+								<div class="widget-box-info">
+									<h2>{{ $service->title }}</h2>
+									{!! $service->description !!}
+								</div>
+							</div>
 						</div>
-						<div class="widget-box-info">
-							<h2>Consulting</h2>
-							<p>Utilise our extensive experience in delivering complex IT and Change Programmes and Projects with reliable, experienced consultants.</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-3">
-					<div class="widget-box">
-						<div class="widget-box-image img-responsive">
-							<img src="{{ asset('assets/img/sample/image2.jpg') }}" data-image-resize alt="Training" />
-						</div>
-						<div class="widget-box-info">
-							<h2>Training</h2>
-							<p>We offer on-site, focused, accredited Prince 2 and AGILE Ttraining.</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-3">
-					<div class="widget-box">
-						<div class="widget-box-image img-responsive">
-							<img src="{{ asset('assets/img/sample/image3.jpg') }}" data-image-resize alt="Free Resources" />
-						</div>
-						<div class="widget-box-info">
-							<h2>Free Resources</h2>
-							<p><a href="{{ url('free-resources') }}">Click here</a> to access our free resources, project templates, template plans, project logs, meeting minutes, and much more.</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-3">
-					<div class="widget-box">
-						<div class="widget-box-image img-responsive">
-							<img src="{{ asset('assets/img/sample/image4.jpg') }}" data-image-resize alt="Free Resources" />
-						</div>
-						<div class="widget-box-info">
-							<h2>Employers</h2>
-							<p>Submit your vancany <a href="{{ url('company/post-job') }}">here</a></p>
-
-							<h2>Contractors</h2>
-							<p>Submit your CV <a href="{{ url('contractor/account') }}">here</a></p>
-						</div>
-					</div>
-				</div>
+					@endforeach
+				@endif
 			</div>
 		</div>
 	</div>

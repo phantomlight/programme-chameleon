@@ -229,6 +229,12 @@ class JobProvider implements JobProviderInterface {
 			];
 
 			$notification = \Contractor::addNotification($contractor, $notificationData);
+
+			if ($job->status === 'open') {
+				$job->status = 'taken';
+				$job->save();
+			}
+
 			return $job;
 		}
 		catch (\Exception $e) {
@@ -256,6 +262,11 @@ class JobProvider implements JobProviderInterface {
 			];
 
 			$notification = \Contractor::addNotification($contractor, $notificationData);
+
+			if ($job->status === 'taken' && $job->contractors()->count() <= 0) {
+				$job->status = 'open';
+				$job->save();
+			}
 
 			return $job;
 		}

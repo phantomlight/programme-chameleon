@@ -92,6 +92,7 @@ Route::controller('company', 'CompanyController', [
 	'getJobApplication'	=>	'company.job.application',
 	'getJobDetails'		=>	'company.job.detail',
 	'getAccount'			=>	'company.account',
+	'getNotif'				=>	'company.allNotif',
 ]);
 
 Route::controller('agency', 'AgencyController', [
@@ -105,6 +106,7 @@ Route::controller('agency', 'AgencyController', [
 	'getJobList'		=>	'agency.job.list',
 	'getJobDetails'		=>	'agency.job.detail',
 	'getCompanyList'	=>	'agency.company.list',
+	'getNotif'				=>	'agency.allNotif',
 ]);
 
 Route::controller('contractor', 'ContractorController', [
@@ -115,6 +117,7 @@ Route::controller('contractor', 'ContractorController', [
 	'getCreateJobAlert'	=>	'contractor.jobAlert.create',
 	'getAddTimesheet'		=>	'contractor.job.timesheet',
 	'getAddExpense'			=>	'contractor.job.expense',
+	'getNotif'					=>	'contractor.allNotif',
 ]);
 
 Route::controller('job', 'JobController', [

@@ -44,4 +44,12 @@ class Site {
 		return $this->siteProvider->update($id, $data);
 	}
 
+	public function getAllServices() {
+		return $this->siteProvider->getAllServices();
+	}
+
+	public function getAllResources() {
+		return $this->siteProvider->getAllResources();
+	}
+
 }

@@ -1,3 +1,10 @@
+<div class="alert alert-fixed alert-warning }}">
+	<a href="#" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</a>
+	You are still on admin account, please <a href="{{ route('admin.logout') }}">logout</a> first to prevent any error.
+</div>
+
 <header id="header">
 	<div id="header-bar">
 		<div class="container">
@@ -15,14 +22,10 @@
 			</ul><!-- /.social-media -->
 			<div class="header-login-register clearfix">
 				<div class="avatar">
-					@if ( ! is_null($company->image))
-						<img src="{{ asset($company->image) }}" width="25" height="25" />
-					@else
-						<img data-src="holder.js/25x25" />
-					@endif
-					<a href="{{ route('company.account') }}">Hi, {{ $company->name }} !</a>
+					<img data-src="holder.js/25x25" />
+					<a href="{{ route('agency.account') }}">Hi, {{ $user->first_name . ' ' . $user->last_name }} !</a>
 				</div>
-				<a class="btn btn-header-login btn-xs" href="{{ url('logout') }}">LOGOUT</a>
+				<a class="btn btn-header-login btn-xs" href="{{ route('admin.logout') }}">LOGOUT</a>
 			</div>
 		</div><!-- /.container -->
 	</div><!-- /#header-bar -->
@@ -32,7 +35,7 @@
 			<div class="col-md-3">
 				<div class="logo-wrapper">
 					<a href="{{ url('/') }}" class="header-logo" title="Programme Chameleon">
-						<img src="{{ asset('assets/img/logo.png') }}" alt="Programme Chameleon">
+						<img src="{{ asset('assets/img/logo.png') }}" alt="Programme Chameleon" />
 					</a>
 				</div><!-- /.logo-wrapper -->
 			</div><!-- /.col-md-3 -->
@@ -46,15 +49,8 @@
 					</button>
 					<nav id="main-menu" class="clearfix collapse navbar-collapse" role="navigation">
 						<ul class="nav-menu">
-							<li class="menu-item"><a href="{{ route('company.index') }}">Dashboard</a></li>
+							<li class="menu-item"><a href="{{ route('admin.index') }}">Dashboard</a></li>
 							<li class="menu-item"><a href="{{ url('free-resources') }}">Resources</a></li>
-							<li class="menu-item has-children">
-								<a href="#">My Account</a>
-								<ul class="sub-menu">
-									<li class="menu-item"><a href="{{ url('company/account') }}">Settings</a></li>
-								</ul>
-							</li>
-							<li class="menu-item"><a href="{{ route('company.job.post') }}">Post a Job</li>
 							<li class="menu-item"><a href="{{ route('resume.search') }}">Contractor List</a></li>
 						</ul>
 					</nav><!-- /#main-menu -->

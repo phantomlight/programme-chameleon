@@ -309,6 +309,26 @@ class CompanyController extends Controller {
 		]);
 	}
 
+	public function postMarkNotif() {
+		if ( ! $company = \Company::getCompany()) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Not a company account',
+			]);
+		}
+
+		$company->notifications()->where('has_read', 0)->update(['has_read' => 1]);
+
+		return \Response::json([
+			'type'		=>	'success',
+			'message'	=>	'All notifications has been marked as "read"',
+		]);
+	}
+
+	public function getNotif() {
+		return view('front.company.allNotif');
+	}
+
 	public function postAcceptTimesheet() {
 		if ( ! $company = \Company::getCompany()) {
 			return \Response::json([

@@ -593,4 +593,20 @@ if ($('#listNotif')[0]) {
 			});
 		}
 	});
+
+	$('#markReadBtn').on('click', function (e) {
+		if ( ! processing ) {
+			$('#markReadBtn').disable(true);
+			processing = true;
+
+			$.post(window.origin + '/contractor/mark-notif').done(function (e) {
+				$('#markReadBtn').disable(false);
+				processing = false;
+				alert(e.message);
+			}).fail(function (xhr, status, e) {
+				$('#markReadBtn').disable(false);
+				processing = false;
+			});
+		}
+	});
 }

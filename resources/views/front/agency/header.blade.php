@@ -46,7 +46,8 @@
 					</button>
 					<nav id="main-menu" class="clearfix collapse navbar-collapse" role="navigation">
 						<ul class="nav-menu">
-							<li class="menu-item"><a href="{{ route('agency.index') }}">Home</a></li>
+							<li class="menu-item"><a href="{{ route('agency.index') }}">Dashboard</a></li>
+							<li class="menu-item"><a href="{{ url('free-resources') }}">Resources</a></li>
 							<li class="menu-item has-children">
 								<a href="#">My Account</a>
 								<ul class="sub-menu">
