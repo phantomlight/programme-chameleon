@@ -1,0 +1,16 @@
+{
+	"name": "Programme Chameleon Meeting Bower",
+	"version": "0.0.1",
+	"dependencies": {
+		"bootstrap": "latest",
+		"jquery": "latest",
+		"typeahead.js": "latest",
+		"font-awesome": "latest"
+	},
+	"directory": "components",
+	"main": "server.js",
+	"moduleType": [
+		"node"
+	],
+	"license": "free"
+}
