@@ -8,6 +8,7 @@ var errors	= require('../util/handleErrors');
 var logger	=	require('../util/bundleLogger');
 var config_front 	= require('../config').sass_front;
 var config_back 	= require('../config').sass_back;
+var config_app 		= require('../config').app;
 var AUTOPREFIXER_BROWSERS = [ // https://github.com/ai/autoprefixer
 			'ie >= 10',
 			'ie_mob >= 10',
@@ -49,5 +50,16 @@ gulp.task('sass-back', function() {
 		.pipe(autoPrefixer({browsers: AUTOPREFIXER_BROWSERS}))
 		.pipe(gulp.dest(config_back.dest))
 		.on('end', finished)
+		.pipe(size({title: 'styles'}));
+});
+
+gulp.task('sass-app', function() {
+	return gulp.src(config_app.src + 'scss/app.scss')
+		.pipe(plumber())
+		.pipe(sass())
+		.on('error', errors)
+		.pipe(csscomb())
+		.pipe(autoPrefixer({browsers: AUTOPREFIXER_BROWSERS}))
+		.pipe(gulp.dest(config_app.dest + 'css'))
 		.pipe(size({title: 'styles'}));
 });

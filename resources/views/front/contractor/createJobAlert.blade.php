@@ -78,7 +78,7 @@
 
 				<div class="col-md-6">
 					<div class="panel panel-info">
-						<div class="panel-heading">What is Job Alert?</div>
+						<div class="panel-heading">Creating a Job Alert</div>
 						<div class="panel-body">
 							<p>When a company posts a job that matches the description you provide here, the system will alert you that the job is available.</p>
 							<p class="text-muted">You can only create <strong>1</strong> job alert at a time. If you create another you previous alert will be removed.</p>

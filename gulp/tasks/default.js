@@ -44,3 +44,12 @@ gulp.task('dist', function() {
 		'minify',
 		'images');
 });
+
+gulp.task('dev-app', function() {
+	runSequence(
+		'sass-app',
+		'autoprefixer-app',
+		'images-app',
+		'watch-app'
+	)
+});

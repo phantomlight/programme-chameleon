@@ -43,5 +43,10 @@ module.exports = {
 			dest:  './public/assets/js',
 			outputName: '_app.js'
 		}]
+	},
+	app: {
+		src: './public/app/resources/',
+		dest: './public/app/public/',
+		watch: './public/app/resources/'
 	}
 };

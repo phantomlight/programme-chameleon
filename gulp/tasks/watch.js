@@ -12,3 +12,7 @@ gulp.task('watch-back', function() {
 	gulp.watch(config.sass_back.watch, ['sass-back', 'autoprefixer']);
 	gulp.watch(config.images.src, ['images']);
 });
+
+gulp.task('watch-app', function() {
+	gulp.watch(config.app.watch, ['sass-app', 'autoprefixer-app']);
+});

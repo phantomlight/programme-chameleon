@@ -9,3 +9,12 @@ gulp.task('autoprefixer', function () {
 	}))
 	.pipe(gulp.dest('dist'));
 });
+
+gulp.task('autoprefixer-app', function() {
+	return gulp.src('./public/app/public/app.css')
+	.pipe(autoprefixer({
+		browsers: ['last 2 versions'],
+		cascade: false
+	}))
+	.pipe(gulp.dest('dist'));
+});

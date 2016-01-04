@@ -28,7 +28,7 @@ $_hash = $_hash->getHasher();
 					<?php $jobs = $company->jobs()->orderBy('created_at', 'desc')->paginate(15); ?>
 					@if (count($jobs) <= 0)
 					<div class="alert alert-info">
-						You have no jobs posted. <a href="{{ route('company.job.post') }}">Set one up?</a>
+						You have not yet posted any jobs. <a href="{{ route('company.job.post') }}">Set one up?</a>
 					</div>
 					@else
 					<ul class="list-unstyled list-jobs">

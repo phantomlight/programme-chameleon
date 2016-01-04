@@ -49,7 +49,7 @@ $_hash = $_hash->getHasher();
 						</ul>
 						@else
 						<div class="alert alert-danger">
-							You do not have any jobs yet
+							You have not yet posted any jobs.
 						</div>
 						@endif
 					</div>

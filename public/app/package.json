@@ -1,0 +1,23 @@
+{
+  "name": "meeting-app",
+  "version": "1.0.0",
+  "description": "\"Programme Chameleon Meeting App\"",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fordyce",
+  "license": "free",
+  "dependencies": {
+    "ejs": "~2.3.4",
+    "express": "~4.13.3",
+    "node-uuid": "~1.4.7",
+    "nodemon": "~1.8.1",
+    "npid": "~0.4.0",
+    "socket.io": "~1.3.7",
+    "shrinkwrap": "~0.4.0",
+    "underscore": "~1.8.3",
+    "bower": "~1.7.2"
+  },
+  "devDependencies":{}
+}
