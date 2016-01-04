@@ -1,4 +1,5 @@
 /node_modules
+/public/app/node_modules
 /vendor
 composer.phar
 .DS_Store
