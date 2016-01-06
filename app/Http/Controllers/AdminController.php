@@ -527,4 +527,58 @@ class AdminController extends Controller {
 		}
 	}
 
+	public function postUpdatePrice() {
+		$data = \Input::get('data');
+		if ( ! \Input::has('id') || ! isset($data['value'])) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Data not complete.',
+			]);
+		}
+
+		try {
+			$price = (float) $data['value'];
+			if ( ! is_float($price)) {
+				throw new \Exception("Value is not a number.", 1);
+				return;
+			}
+
+			$model = \Site::updateService(trim(\Input::get('id')), ['description' => $price]);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Price updated.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
+	public function postUpdateCms() {
+		$data = \Input::get('data');
+		if ( ! \Input::has('id') || ! isset($data)) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	'Data not complete.',
+			]);
+		}
+
+		try {
+			$model = \Site::updateService(trim(\Input::get('id')), ['description' => $data]);
+			return \Response::json([
+				'type'		=>	'success',
+				'message'	=>	'Data updated.',
+			]);
+		}
+		catch (\Exception $e) {
+			return \Response::json([
+				'type'		=>	'danger',
+				'message'	=>	$e->getMessage(),
+			]);
+		}
+	}
+
 }

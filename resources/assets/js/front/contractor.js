@@ -126,19 +126,19 @@ if ($('#contractorAccountForm')[0]) {
 	});
 
 	$('#expContainer').on('click', 'button.btn-danger', function (e) {
-		if (confirm('Remove this experience data? Cannot be undo.')) {
+		if (confirm('Remove this experience data? Cannot be undone.')) {
 			$(this).parent().parent().remove();
 		}
 	});
 
 	$('#eduContainer').on('click', 'button.btn-danger', function (e) {
-		if (confirm('Remove this education data? Cannot be undo.')) {
+		if (confirm('Remove this education data? Cannot be undone.')) {
 			$(this).parent().parent().remove();
 		}
 	});
 
 	$('#urlContainer').on('click', 'button.btn-danger', function (e) {
-		if (confirm('Remove this website data? Cannot be undo.')) {
+		if (confirm('Remove this website data? Cannot be undone.')) {
 			$(this).parent().parent().remove();
 		}
 	});

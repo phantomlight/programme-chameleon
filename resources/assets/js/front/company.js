@@ -277,7 +277,7 @@ if ($('#jobStatusChanger')[0]) {
 if ($('#removeJobBtn')[0]) {
 	$('#removeJobBtn').on('click', function (e) {
 		var $button = $('#removeJobBtn');
-		if (confirm('Remove this job? CANNOT BE UNDO.')) {
+		if (confirm('Remove this job? Cannot be undone.')) {
 			var $job = $button.data('job');
 
 			if ( ! processing) {

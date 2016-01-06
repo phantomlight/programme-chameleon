@@ -67,7 +67,7 @@ class JobIndustryProvider implements JobIndustryProviderInterface {
 			if ($model->destroy($data)) return true;
 		}
 		else {
-			$model = $this->findByModel($data);
+			$model = $this->findById($data);
 			if ($model->delete()) return true;
 		}
 

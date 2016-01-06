@@ -43,7 +43,7 @@
 				<a href="{{ route('admin.agency') }}"><i class="fa fa-user-md"></i> <span class="nav-label">Agency</span></a>
 			</li>
 			<li>
-				<a href="{{ route('admin.login') }}">
+				<a href="{{ route('admin.logout') }}">
 					<i class="fa fa-sign-out"></i> <span class="nav-label">Logout</span>
 				</a>
 			</li>

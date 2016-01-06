@@ -28,6 +28,16 @@ CMS | Programme Chameleon
 										Free Resources
 									</a>
 								</li>
+								<li role="presentation">
+									<a href="#prices" aria-controls="free-resources" role="tab" data-toggle="tab">
+										Prices
+									</a>
+								</li>
+								<li role="presentation">
+									<a href="#terms" aria-controls="free-resources" role="tab" data-toggle="tab">
+										Terms &amp; About Us
+									</a>
+								</li>
 							</ul>
 						</div>
 
@@ -175,6 +185,58 @@ CMS | Programme Chameleon
 											</form>
 										</div>
 									</div>	
+								</div>
+
+								<div role="tabpanel" class="tab-pane" id="prices">
+									@if (count($sites) > 0)
+										<ul class="list-group">
+										@foreach ($sites as $site)
+											@if ($site->key === 'price.vip' || $site->key === 'price.credit')
+												<li class="list-group-item">
+													<form class="priceForm" data-id="{{ $site->id }}" role="form" onsubmit="return false;">
+														<div class="form-group">
+															<label>{{ $site->title }}</label>
+															<input type="number" name="value" required value="{{ $site->description }}" class="form-control">
+														</div>
+
+														<button class="btn btn-primary" type="submit">
+															<span class="btn-preloader">
+																<i class="fa fa-spinner fa-spin"></i> updating...
+															</span>
+															<span>Update</span>
+														</button>
+													</form>
+												</li>
+											@endif
+										@endforeach
+										</ul>
+									@endif
+								</div>
+
+								<div role="tabpanel" class="tab-pane" id="terms">
+									@if (count($sites) > 0)
+										<ul class="list-group">
+										@foreach ($sites as $site)
+											@if ($site->key === 'terms' || $site->key === 'about')
+												<li class="list-group-item">
+													<form class="otherCmsForm" data-id="{{ $site->id }}" role="form" onsubmit="return false;">
+														<div class="form-group">
+															<label>{{ $site->title }}</label>
+															<div class="summernote">{!! $site->description !!}</div>
+														</div>
+
+														<button class="btn btn-primary" type="submit">
+															<span class="btn-preloader">
+																<i class="fa fa-spinner fa-spin"></i> updating...
+															</span>
+															<span>Update</span>
+														</button>
+													</form>
+												</li>
+											@endif
+										@endforeach
+										</ul>
+									@endif
 								</div>
 							</div>
 						</div>

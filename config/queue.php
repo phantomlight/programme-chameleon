@@ -60,8 +60,8 @@ return [
         'iron' => [
             'driver'  => 'iron',
             'host'    => 'mq-aws-eu-west-1-1.iron.io',
-            'token'   => 'DFz_F7C5TaNQMLpjvlA9_wAES-8',
-            'project' => '56558d4573d0cd00060001be',
+            'token'   => 'buEg3PJ4IXURfEu0Mh0C',
+            'project' => '568b7df1428876000900015d',
             'queue'   => 'test',
             'encrypt' => true,
         ],

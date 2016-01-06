@@ -33,9 +33,16 @@ class PaymentController extends Controller {
 			config('services.paypal.secret')
 		);
 
+		if (env('APP_ENV') === 'local') {
+			$endPoint = 'https://api.sandbox.paypal.com';
+		}
+		else if (env('APP_ENV') === 'production') {
+			$endPoint = 'https://api.paypal.com';
+		}
+
 		$this->paypalApiContext->setConfig([
 			'mode' => 'sandbox',
-			'service.EndPoint' => 'https://api.sandbox.paypal.com',
+			'service.EndPoint' => $endPoint,
 			'http.ConnectionTimeOut' => 30,
 			'log.LogEnabled' => true,
 			'log.FileName' => storage_path('logs/paypal.log'),

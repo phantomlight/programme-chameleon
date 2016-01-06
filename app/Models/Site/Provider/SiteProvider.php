@@ -43,8 +43,11 @@ class SiteProvider implements SiteProviderInterface {
 		}
 
 		foreach ($data as $k=>$d) {
-			if (isset($model->{$k})) $model->{$k} = $d;
+			if (isset($model->{$k}) || ! is_null($model->{$k})) {
+				$model->{$k} = $d;
+			}
 		}
+
 		$model->save();
 		return $model;
 	}

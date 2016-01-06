@@ -38,6 +38,14 @@ export class Forms {
 		if ($('#listResources')[0]) {
 			this.initResources();
 		}
+
+		if ($('.priceForm')[0]) {
+			this.initPriceForm();
+		}
+
+		if ($('.otherCmsForm')[0]) {
+			this.initOtherCmsForm();
+		}
 	}
 	initAdminLoginForm(form) {
 		var processing = false;
@@ -575,6 +583,64 @@ export class Forms {
 			}
 			else {
 				alert('Another process is still running, please wait.');
+			}
+		});
+	}
+	initPriceForm() {
+		var processing = false;
+		$('.priceForm').on('click', '[type=submit]', function (e) {
+			var $form = $(this).parent();
+			if ( ! processing ) {
+				processing = true;
+				$form.find('[type=submit]').disable(true);
+				$('.page-preloader').show();
+
+				$.post(window.origin + '/admin/update-price', {
+					id: $form.data('id'),
+					data: $form.serializeForm()
+				}).done(function (e) {
+					$form.showMessage(e.message, e.type);
+					processing = false;
+					$form.find('[type=submit]').disable(false);
+					$('.page-preloader').hide();
+				}).fail(function (xhr, status, e) {
+					$form.showMessage(xhr.responseText, 'danger');
+					processing = false;
+					$form.find('[type=submit]').disable(false);
+					$('.page-preloader').hide();
+				});
+			}
+			else {
+				alert('Another process is running, please wait.');
+			}
+		});
+	}
+	initOtherCmsForm() {
+		var processing = false;
+		$('.otherCmsForm').on('click', '[type=submit]', function (e) {
+			var $form = $(this).parent();
+			if ( ! processing ) {
+				processing = true;
+				$form.find('[type=submit]').disable(true);
+				$('.page-preloader').show();
+
+				$.post(window.origin + '/admin/update-cms', {
+					id: $form.data('id'),
+					data: $form.find('.summernote').code()
+				}).done(function (e) {
+					$form.showMessage(e.message, e.type);
+					processing = false;
+					$form.find('[type=submit]').disable(false);
+					$('.page-preloader').hide();
+				}).fail(function (xhr, status, e) {
+					$form.showMessage(xhr.responseText, 'danger');
+					processing = false;
+					$form.find('[type=submit]').disable(false);
+					$('.page-preloader').hide();
+				});
+			}
+			else {
+				alert('Another process is running, please wait.');
 			}
 		});
 	}

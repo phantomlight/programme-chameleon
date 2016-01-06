@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 02, 2016 at 04:14 PM
+-- Generation Time: Jan 06, 2016 at 06:31 PM
 -- Server version: 5.6.27-0ubuntu1
 -- PHP Version: 5.6.11-1+deb.sury.org~utopic+1
 
@@ -5792,8 +5792,7 @@ CREATE TABLE IF NOT EXISTS `tb_industry` (
 INSERT INTO `tb_industry` (`id`, `title`, `created_at`, `updated_at`) VALUES
 (1, 'Web Designer', '2015-12-27 03:28:31', '2015-12-27 03:28:31'),
 (2, 'Engineer', '2015-12-27 03:28:45', '2015-12-27 03:28:45'),
-(3, 'Project Development', '2015-12-27 03:28:59', '2015-12-27 03:28:59'),
-(4, 'Marketing', '2015-12-27 03:29:12', '2015-12-27 03:29:12');
+(3, 'Project Development Update', '2015-12-27 03:28:59', '2016-01-06 04:26:35');
 
 -- --------------------------------------------------------
 
@@ -5873,7 +5872,7 @@ CREATE TABLE IF NOT EXISTS `tb_site` (
   `description` text COLLATE utf8_unicode_ci,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_site`
@@ -5903,7 +5902,11 @@ INSERT INTO `tb_site` (`id`, `key`, `title`, `url`, `file`, `description`, `crea
 (23, 'resource.other', 'Technical Requirements Specification', NULL, 'uploads/services/01/20160101-5686788d51d3c.doc', '<p>This document is used in IT projects to define the technical requirements of a proposed system.</p>', '2016-01-01 06:01:01', '2016-01-01 06:01:01'),
 (24, 'resource.other', 'Stakeholder Management Plan', NULL, 'uploads/services/01/20160101-56867898b6fd8.doc', '<p>This document can be used to identify the project stakeholders, \r\ndefine an approach to communications and provide key project data.</p>', '2016-01-01 06:01:12', '2016-01-01 06:01:12'),
 (25, 'resource.other', 'Work Breakdown Structure (WBS)', NULL, 'uploads/services/01/20160101-568678a32e715.doc', '<p>This simple document is used to record the activities and tasks within a project.</p>', '2016-01-01 06:01:23', '2016-01-01 06:01:23'),
-(26, 'resource.other', 'Funding Proposal', NULL, 'uploads/services/01/20160101-5686793f4e7b0.docx', '<p>This document is used to request funds by providing a compelling case\n for the proposed project, clearly communicating its goals and \nobjectives.</p>', '2016-01-01 06:01:35', '2016-01-01 06:03:59');
+(26, 'resource.other', 'Funding Proposal', NULL, 'uploads/services/01/20160101-5686793f4e7b0.docx', '<p>This document is used to request funds by providing a compelling case\n for the proposed project, clearly communicating its goals and \nobjectives.</p>', '2016-01-01 06:01:35', '2016-01-01 06:03:59'),
+(27, 'terms', 'Terms and Condition Text', NULL, NULL, '<p>Welcome to our website. If you continue to browse and use this \nwebsite, you are agreeing to comply with and be bound by the following \nterms and conditions of use, which together with our privacy policy \ngovern [business name]''s relationship with you in relation to this \nwebsite. If you disagree with any part of these terms and conditions, \nplease do not use our website.</p>\n<p>The term ''[business name]'' or ''us'' or ''we'' refers to the owner of the\n website whose registered office is [address]. Our company registration \nnumber is [company registration number and place of registration]. The \nterm ''you'' refers to the user or viewer of our website.</p>\n<p>The use of this website is subject to the following terms of use:</p>\n<ul><li>The content of the pages of this website is for your general information and use only. It is subject to change without notice.</li><li>This website uses cookies to monitor browsing preferences. If you \ndo allow cookies to be used, the following personal information may be \nstored by us for use by third parties: [insert list of information].</li><li>Neither we nor any third parties provide any warranty or guarantee \nas to the accuracy, timeliness, performance, completeness or suitability\n of the information and materials found or offered on this website for \nany particular purpose. You acknowledge that such information and \nmaterials may contain inaccuracies or errors and we expressly exclude \nliability for any such inaccuracies or errors to the fullest extent \npermitted by law.</li><li>Your use of any information or materials on this website is \nentirely at your own risk, for which we shall not be liable. It shall be\n your own responsibility to ensure that any products, services or \ninformation available through this website meet your specific \nrequirements.</li><li>This website contains material which is owned by or licensed to us.\n This material includes, but is not limited to, the design, layout, \nlook, appearance and graphics. Reproduction is prohibited other than in \naccordance with the copyright notice, which forms part of these terms \nand conditions.</li><li>All trade marks reproduced in this website which are not the \nproperty of, or licensed to, the operator are acknowledged on the \nwebsite.</li><li>Unauthorised use of this website may give rise to a claim for damages and/or be a criminal offence.</li><li>From time to time this website may also include links to other \nwebsites. These links are provided for your convenience to provide \nfurther information. They do not signify that we endorse the website(s).\n We have no responsibility for the content of the linked website(s).</li><li>Your use of this website and any dispute arising out of such use of\n the website is subject to the laws of England, Northern Ireland, \nScotland and Wales.</li></ul>', '2016-01-05 17:00:00', '2016-01-06 04:22:31'),
+(28, 'price.credit', 'Each Credit Price', NULL, NULL, '15', '2016-01-05 17:00:00', '2016-01-06 04:11:59'),
+(29, 'price.vip', 'VIP 6 month price', NULL, NULL, '250', '2016-01-05 17:00:00', '2016-01-05 17:00:00'),
+(30, 'about', 'About Us Text', NULL, NULL, NULL, '2016-01-05 17:00:00', '2016-01-05 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -5937,8 +5940,8 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
 
 INSERT INTO `tb_users` (`id`, `email`, `password`, `permissions`, `activated`, `activation_code`, `activated_at`, `last_login`, `persist_code`, `reset_password_code`, `first_name`, `last_name`, `image`, `slug`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'superadmin@email.com', '$2y$10$eKIpIOQYg8eXNfbTyNcsEey6Pga6CmV7ASsSpBdwyTQSdje9Z1xIa', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'Fordyce', 'Gozali', NULL, 'fordyce-gozali', NULL, '2015-12-26 03:34:31', '2015-12-26 03:34:31'),
-(2, 'admin@email.com', '$2y$10$4cjXfIvWKiHSvMgw1U0mrOP0pSE7HNosEUjtmsEaJrKputGn7mu5i', NULL, 1, NULL, NULL, '2016-01-02 00:56:09', '$2y$10$1wbK9V399e0IcfQaayHMkegxDlU69LfN7BckjhYNeLsaygN84mzRK', NULL, 'Admin', '', NULL, 'admin', NULL, '2015-12-26 03:34:32', '2016-01-02 00:56:09'),
-(5, 'contractor1@email.org', '$2y$10$a7g7j6pbLp56k01eQBqn8.IKYLWy3fYjL5EjwwWoEzRtp99w2rCYe', NULL, 1, NULL, NULL, '2016-01-02 01:01:57', '$2y$10$DDnFqd3XBmI8akLmhc8FTOXvuvovF/dLmSXTt3S5Zxu344ptADs5q', NULL, 'Contractor', '1', NULL, '', NULL, '2015-12-26 05:16:27', '2016-01-02 01:01:57'),
+(2, 'admin@email.com', '$2y$10$4cjXfIvWKiHSvMgw1U0mrOP0pSE7HNosEUjtmsEaJrKputGn7mu5i', NULL, 1, NULL, NULL, '2016-01-06 04:23:38', '$2y$10$l8gULYrEDq4ixbzRgNhbX.9TdIkttkDkYM/QEGwr6fq6l44KTaGQG', NULL, 'Admin', '', NULL, 'admin', NULL, '2015-12-26 03:34:32', '2016-01-06 04:23:38'),
+(5, 'contractor1@email.org', '$2y$10$a7g7j6pbLp56k01eQBqn8.IKYLWy3fYjL5EjwwWoEzRtp99w2rCYe', NULL, 1, NULL, NULL, '2016-01-05 03:44:47', '$2y$10$1txMgDifO97bJ0TL40P65uWtm/EmZvyAJO4Bc5//G16zO3X55uzPa', NULL, 'Contractor', '1', NULL, '', NULL, '2015-12-26 05:16:27', '2016-01-05 03:44:47'),
 (6, 'company1@email.org', '$2y$10$RjjwAuz4NwTOVQBR0oXMTO7G51y/Zv6Z9NynqscZ0sxcuojwGhG8i', NULL, 1, NULL, NULL, '2015-12-31 04:07:50', '$2y$10$KPxQNcnEvvaMfQbN1l7DOeqEqs6UOOOhxIiBhvdLro.m1Fb8ridoq', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 02:52:57', '2015-12-31 04:07:50'),
 (11, 'forddyce92@gmail.com', '$2y$10$FmXCxDiBuxTPp09yMiyou.eUkkc7Qzdnd5GOh8lh0vB9uFKF7hE6.', NULL, 1, NULL, NULL, '2016-01-02 01:39:04', '$2y$10$CpZR91bD11ftZNyyoxN6Ce38.RkqtIptZ2qiIXRKE3c4/rkPn2Nm6', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 03:18:06', '2016-01-02 01:39:04'),
 (12, 'agency2@email.org', '$2y$10$/0RWPQeIXMFo5mrr/0RMZuL9XpOXzDJF3dupiiAy6tTFSwqQMKj9m', NULL, 1, NULL, NULL, '2015-12-27 04:08:34', '$2y$10$K2dv/6Pxjwy/7RUd1rueDes4DKlJ4atPgAo13ziCR/UQggbNx44mS', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 03:18:32', '2015-12-27 04:08:34'),
@@ -6294,7 +6297,7 @@ ALTER TABLE `tb_job`
 -- AUTO_INCREMENT for table `tb_site`
 --
 ALTER TABLE `tb_site`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `tb_users`
 --

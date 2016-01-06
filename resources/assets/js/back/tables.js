@@ -26,7 +26,7 @@ export class Tables {
 					var target = $('#configTableMenu').attr('data-target');
 					var type = $(this).attr('data-value');
 					if (type === 'remove') {
-						if (confirm('Remove checked data? Cannot be undo')) {
+						if (confirm('Remove checked data? Cannot be undone')) {
 							var ids = [];
 							$this.find('input[type=checkbox]:checked').not('.check-all').each(function (e){
 								ids.push($(this).val());
@@ -91,7 +91,7 @@ export class Tables {
 							}
 
 							$('[data-action="remove"]').on('click', function (e) {
-								if (confirm('Remove data? Cannot be undo')) {
+								if (confirm('Remove data? Cannot be undone')) {
 									processing = true;
 									$('.page-preloader').show();
 									$.post(removeLink, {i: $(this).attr('data-id')}).done(function (e) {
@@ -157,7 +157,7 @@ export class Tables {
 						}
 
 						$('[data-action="remove"]').on('click', function (e) {
-							if (confirm('Remove data? Cannot be undo')) {
+							if (confirm('Remove data? Cannot be undone')) {
 								processing = true;
 								$('.page-preloader').show();
 								$.post(removeLink, {i: $(this).attr('data-id')}).done(function (e) {

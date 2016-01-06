@@ -549,7 +549,7 @@ class JobController extends Controller {
 			]);
 		}
 
-		$data = \Input::get('data');
+		$data = json_decode(\Input::get('data'), true);
 
 		try {
 			$job = \Job::updateIndustry($id, $data);
