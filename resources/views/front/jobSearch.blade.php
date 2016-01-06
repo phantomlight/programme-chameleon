@@ -85,6 +85,9 @@ Job Search | Programme Chameleon
 													</span>
 													<span class="job-posted-time">
 														posted {{ $job->created_at->diffForHumans() }}
+														@if ($company = $job->company)
+														by <a href="{{ route('company.profile', ['id' => $_hash->encode($company->id), 'slug' => Str::slug($company->name)]) }}"><u>{{ $company->name }}</u></a>
+														@endif
 													</span>
 												</div>
 											</div>

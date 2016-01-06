@@ -543,6 +543,8 @@ class AdminController extends Controller {
 				return;
 			}
 
+			\Cache::flush();
+
 			$model = \Site::updateService(trim(\Input::get('id')), ['description' => $price]);
 			return \Response::json([
 				'type'		=>	'success',
@@ -568,6 +570,8 @@ class AdminController extends Controller {
 
 		try {
 			$model = \Site::updateService(trim(\Input::get('id')), ['description' => $data]);
+			\Cache::flush();
+
 			return \Response::json([
 				'type'		=>	'success',
 				'message'	=>	'Data updated.',

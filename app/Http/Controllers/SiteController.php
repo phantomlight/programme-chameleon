@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\EmailJob;
 use App\Utils\Hashing\JCryption;
 use App\Utils\Location;
+use App\Utils\Hash;
 use PayPal;
 
 class SiteController extends Controller {
@@ -284,6 +285,56 @@ class SiteController extends Controller {
 				'type'		=>	'danger',
 				'message'	=>	$e->getMessage(),
 			]);
+		}
+	}
+
+	public function getJobListingFrame($id, $type) {
+		$_hash = new Hash();
+		$_hash = $_hash->getHasher();
+
+		switch ($type) {
+			case 'company':
+				if ( ! $company = \Company::findCompanyById($_hash->decode($id))) {
+					return view('frame.job')->with('flashMessage', [
+						'class'		=>	'danger',
+						'message'	=>	'Company not found.',
+					]);
+				}
+
+				if ( ! $jobs = $company->jobs()->get()) {
+					return view('frame.job')->with('flashMessage', [
+						'class'		=>	'danger',
+						'message'	=>	'Jobs not found.',
+					]);
+				}
+
+				return view('frame.job')->with('jobs', $jobs);
+				break;
+
+			case 'agency':
+				if ( ! $agency = \Agency::findAgencyById($_hash->decode($id))) {
+					return view('frame.job')->with('flashMessage', [
+						'class'		=>	'danger',
+						'message'	=>	'Agency not found.',
+					]);
+				}
+
+				if ( ! $jobs = $agency->jobs()->get()) {
+					return view('frame.job')->with('flashMessage', [
+						'class'		=>	'danger',
+						'message'	=>	'Jobs not found.',
+					]);
+				}
+
+				return view('frame.job')->with('jobs', $jobs);
+				break;
+			
+			default:
+				return view('frame.job')->with('flashMessage', [
+					'class'		=>	'danger',
+					'message'	=>	'Type is incorrectly defined.',
+				]);
+				break;
 		}
 	}
 

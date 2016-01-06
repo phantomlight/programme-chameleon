@@ -29,6 +29,9 @@ $_hash = $_hash->getHasher();
 							<a href="{{ route('agency.job.list') }}" class="btn btn-xs btn-info">All My Jobs</a>
 							<a href="{{ route('agency.job.add') }}" class="btn btn-xs btn-primary">Add a New Job</a>
 						</div>
+
+						<p>To share your job listing anywhere on your site, paste the code below:</p>
+						<input type="text" value='<iframe src="{{ route("job.frame", ["id" => $_hash->encode($agency->id), "type" => "agency"]) }}" width="560" height="315" frameborder="0" allowfullscreen></iframe>' class="form-control" />
 					</div>
 					<div class="panel-body">
 						<?php $jobs = $agency->jobs()->orderBy('created_at', 'desc')->take(5)->get(); ?>

@@ -45,7 +45,8 @@
 		<form method="post" role="form" data-parsley-validate onsubmit="return false;">
 			<div class="form-group">
 				<input value="1" placeholder="amount of credits" type="number" name="_cred_amt" min="1" class="form-control" />
-				<span class="help-block">Each credit is <i class="fa fa-gbp"></i>10</span>
+				<?php $price = \Site::getDataByKey('price.credit'); ?>
+				<span class="help-block">Each credit is <i class="fa fa-gbp"></i>{{ $price->description }}</span>
 			</div>
 			<button type="submit" class="btn btn-primary" data-user="agency" data-checkout-type="2">
 				<span>Buy Credits</span>

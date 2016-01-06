@@ -16,7 +16,8 @@
 				<div class="col-md-6 widget-container">
 					<div id="text-2" class="widget widget_text">
 						<h3 class="footer-widget-title">About Us</h3>
-						<div class="textwidget">Programme Chameleon company is a place where people share and build their projects together.</div>
+						<?php $about = \Site::getDataByKey('about'); ?>
+						<div class="textwidget">{!! $about->description !!}</div>
 					</div>
 				</div><!-- /.col-md-3 -->
 
@@ -58,6 +59,6 @@
 	</div><!-- /.container -->
 
 	<div id="footer-text" class="container">
-		2015 © <a href="">Programme Chameleon</a>, All Rights Reserved 
+		2016 &copy; <a href="">Programme Chameleon</a>, All Rights Reserved 
 	</div>		
 </footer>

@@ -10,24 +10,30 @@ class PaymentController extends Controller {
 
 	private $paymentType = [
 	'1'	=>	[
-	'name'		=>	'6 Months Contract',
-	'description'	=>	'A six months contract for company on Programme Chameleon.',
-	'amount'	=>	250,
-	'type'		=>	'contract',
-	'successMessage'	=>	'Your account company contract for 6 months has been renewed',
+		'name'		=>	'6 Months Contract',
+		'description'	=>	'A six months contract for company on Programme Chameleon.',
+		'amount'	=>	250,
+		'type'		=>	'contract',
+		'successMessage'	=>	'Your account company contract for 6 months has been renewed',
 	],
 	'2'	=>	[
-	'name'		=>	' credit(s) on Programme Chameleon',
-	'description'	=>	'Buy company credits to use on programmechameleon.com',
-	'amount'	=>	10,
-	'type'		=>	'credit',
-	'successMessage'	=>	'You have successfully buy ',
-	],
+		'name'		=>	' credit(s) on Programme Chameleon',
+		'description'	=>	'Buy company credits to use on programmechameleon.com',
+		'amount'	=>	10,
+		'type'		=>	'credit',
+		'successMessage'	=>	'You have successfully buy ',
+		],
 	];
 
 	private $paypalApiContext;
 
 	public function __construct() {
+		$data = \Site::getDataByKey('price.vip');
+		$this->paymentType['1']['amount']	=	(float) $data->description;
+
+		$data = \Site::getDataByKey('price.credit');
+		$this->paymentType['2']['amount']	=	(float) $data->description;
+
 		$this->paypalApiContext = PayPal::ApiContext(
 			config('services.paypal.client_id'),
 			config('services.paypal.secret')

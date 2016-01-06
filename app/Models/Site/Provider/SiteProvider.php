@@ -29,6 +29,24 @@ class SiteProvider implements SiteProviderInterface {
 		return $this->createModel();
 	}
 
+	public function getByKey($key) {
+		$model = $this->getModel();
+
+		if ( ! \Cache::has('site.' . $key)) {
+			$value = \Cache::rememberForever('site.' . $key, function () use ($model, $key) {
+				return $model->where('key', $key)->first();
+			});
+
+			return $value;
+		}
+
+		$value = \Cache::get('site.' . $key, function () use ($model, $key) {
+			return $model->where('key', $key)->first();
+		});
+
+		return $value;
+	}
+
 	public function create($data) {
 		$model = $this->getModel();
 		$model->fill($data);

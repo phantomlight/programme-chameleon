@@ -23,8 +23,10 @@ $_hash = $_hash->getHasher();
 		<div class="element-top-30">&nbsp;</div>
 		<div class="col-sm-8">
 			<div class="panel panel-default">
-				<div class="panel-heading">Dashboard</div>
+				<div class="panel-heading">Jobs</div>
 				<div class="panel-body">
+					<p>To share your job listing anywhere on your site, paste the code below:</p>
+					<input type="text" value='<iframe src="{{ route("job.frame", ["id" => $_hash->encode($company->id), "type" => "company"]) }}" width="560" height="315" frameborder="0" allowfullscreen></iframe>' class="form-control" />
 					<?php $jobs = $company->jobs()->orderBy('created_at', 'desc')->paginate(15); ?>
 					@if (count($jobs) <= 0)
 					<div class="alert alert-info">

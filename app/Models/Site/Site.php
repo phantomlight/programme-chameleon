@@ -52,4 +52,8 @@ class Site {
 		return $this->siteProvider->getAllResources();
 	}
 
+	public function getDataByKey($key) {
+		return $this->siteProvider->getByKey($key);
+	}
+
 }

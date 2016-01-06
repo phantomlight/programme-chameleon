@@ -50,6 +50,9 @@
 									</span>
 									<span class="job-posted-time">
 										posted {{ $job->created_at->diffForHumans() }}
+										@if ($company = $job->company)
+										by <a href="{{ route('company.profile', ['id' => $_hash->encode($company->id), 'slug' => Str::slug($company->name)]) }}"><u>{{ $company->name }}</u></a>
+										@endif
 									</span>
 								</div>
 							</div>
@@ -62,7 +65,7 @@
 									@endif
 								@endif
 								<span>Location: {{ $job->city . ', ' . $job->country }}</span>
-								<span>Salary: <i class="fa fa-gbp"></i> {{ number_format($job->salary, 0) . ' (' . $job->salary_type . ')' }}</span>
+								<span>Salary: <i class="fa fa-gbp"></i>{{ number_format($job->salary, 0) . ' (' . $job->salary_type . ')' }}</span>
 								<span>Start Date: {{ $job->start_date }}</span>
 								<span>Contact: {{ $job->contact_name . ' (' . $job->contact_phone . ')' }}</span>
 								<?php $details = json_decode($job->job_apply_details); ?>
@@ -125,6 +128,9 @@
 									</span>
 									<span class="job-posted-time">
 										posted {{ $job->created_at->diffForHumans() }}
+										@if ($company = $job->company)
+										by <a href="{{ route('company.profile', ['id' => $_hash->encode($company->id), 'slug' => Str::slug($company->name)]) }}"><u>{{ $company->name }}</u></a>
+										@endif
 									</span>
 								</div>
 							</div>
@@ -137,7 +143,7 @@
 									@endif
 								@endif
 								<span>Location: {{ $job->city . ', ' . $job->country }}</span>
-								<span>Salary: <i class="fa fa-gbp"></i> {{ number_format($job->salary, 0) . ' (' . $job->salary_type . ')' }}</span>
+								<span>Salary:<i class="fa fa-gbp"></i> {{ number_format($job->salary, 0) . ' (' . $job->salary_type . ')' }}</span>
 								<span>Start Date: {{ $job->start_date }}</span>
 								<span>Contact: {{ $job->contact_name . '(' . $job->contact_phone . ')' }}</span>
 								<?php $details = json_decode($job->job_apply_details); ?>
@@ -200,6 +206,9 @@
 									</span>
 									<span class="job-posted-time">
 										posted {{ $job->created_at->diffForHumans() }}
+										@if ($company = $job->company)
+										by <a href="{{ route('company.profile', ['id' => $_hash->encode($company->id), 'slug' => Str::slug($company->name)]) }}"><u>{{ $company->name }}</u></a>
+										@endif
 									</span>
 								</div>
 							</div>

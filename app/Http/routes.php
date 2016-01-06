@@ -17,6 +17,11 @@ Route::get('login', ['as'=>'front.login', 'uses' => 'SiteController@getLogin']);
 Route::get('logout', ['as'=>'front.logout', 'uses' => 'SiteController@getLogout']);
 Route::get('api/country', 'SiteController@getCountryList');
 Route::get('api/city', 'SiteController@getCityList');
+Route::get('api/job-listing/{id}/{type}', [
+	'as'		=>	'job.frame',
+	'uses' 	=>	'SiteController@getJobListingFrame'
+]);
+
 Route::post('login', ['as' =>'front.postLogin', 'uses' => 'SiteController@postLogin']);
 
 Route::get('free-resources', function() { return view('front.resources'); } );

@@ -44,7 +44,7 @@ Company Register | Programme Chameleon
 							</div>
 							<div class="form-group no-border">
 								<label for="terms">
-									<input type="checkbox" id="terms" name="terms" required> I agree to the <a href="#">terms &amp; conditions</a> to advertised job on this site.
+									<input type="checkbox" id="terms" name="terms" required> I agree to the <a href="#" data-toggle="modal" data-target="#terms-modal">terms &amp; conditions</a> to advertised job on this site.
 								</label>
 							</div>
 							<button type="submit" class="btn">
@@ -62,6 +62,26 @@ Company Register | Programme Chameleon
 					<p><a href="{{ url('login') }}" target="_self" class="btn sc-button medium btn-primary">LOGIN</a></p>
 			</div><!-- /.row -->
 		</div><!-- /.container -->
+	</div>
+</div>
+
+<div class="modal fade" id="terms-modal" tabindex="-1" role="dialog" aria-labelledby="termsLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="termsLabel">Terms of Using Programme Chameleon Website</h4>
+			</div>
+			<div class="modal-body">
+				<?php $terms = \Site::getDataByKey('terms'); ?>
+				@if ($terms)
+					{!! $terms->description !!}
+				@endif
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
 	</div>
 </div>
 
