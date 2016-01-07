@@ -49,20 +49,25 @@ Route::get('agency/{id}/{slug}', [
 	'uses'	=>	'AgencyController@getPublicProfilePage',
 ]);
 
-Route::get('job-search', [
-	'as'		=>	'job.search',
-	'uses'	=>	'SiteController@jobSearch',
-]);
-
 Route::get('job/{id}/{slug}', [
 	'as'		=>	'job.public',
 	'uses'	=>	'JobController@getPublicJobPage',
+]);
+
+Route::get('job-search', [
+	'as'		=>	'job.search',
+	'uses'	=>	'SiteController@jobSearch',
 ]);
 
 Route::post('forgot-password', ['as' => 'password.forgot', 'uses' => 'SiteController@forgotPassword']);
 Route::get('reset-password', ['as' => 'password.reset', 'uses' => 'SiteController@getResetPassword']);
 Route::post('reset-password', ['as' => 'password.postReset', 'uses' => 'SiteController@postResetPassword']);
 Route::post('contact-message', ['as' => 'contact', 'uses' => 'SiteController@postMessage']);
+
+Route::controller('newsletter', 'NewsLetterController', [
+	'getUnsubscribe'	=>	'newsletter.unsubscribe',
+	'getNewsLetter'		=>	'admin.newsletter',
+]);
 
 Route::controller('api/payment', 'PaymentController', []);
 

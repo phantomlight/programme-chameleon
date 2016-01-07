@@ -46,6 +46,10 @@ export class Forms {
 		if ($('.otherCmsForm')[0]) {
 			this.initOtherCmsForm();
 		}
+
+		if ($('#nlForm')[0]) {
+			this.initNewsLetter();
+		}
 	}
 	initAdminLoginForm(form) {
 		var processing = false;
@@ -641,6 +645,33 @@ export class Forms {
 			}
 			else {
 				alert('Another process is running, please wait.');
+			}
+		});
+	}
+	initNewsLetter() {
+		var $nlForm = $('#nlForm');
+		var processing = false;
+
+		$nlForm.find('[type=submit]').on('click', function (e) {
+			if (confirm('Send newsletter?') && ! processing) {
+				var processing = true;
+				$('.page-preloader').show();
+				$nlForm.find('[type=submit]').disable(true);
+
+				$.post(window.origin + '/newsletter/send-mail', {
+					subject: $nlForm.find('input[name=subject]').val(),
+					message: $nlForm.find('.summernote').code(),
+				}).done(function (e) {
+					$nlForm.showMessage(e.message, e.type);
+					var processing = false;
+					$('.page-preloader').hide();
+					$nlForm.find('[type=submit]').disable(false);
+				}).fail(function (xhr, status, e) {
+					$nlForm.showMessage(xhr.responseText, 'danger');
+					var processing = false;
+					$('.page-preloader').hide();
+					$nlForm.find('[type=submit]').disable(false);
+				});
 			}
 		});
 	}

@@ -43,6 +43,9 @@
 				<a href="{{ route('admin.agency') }}"><i class="fa fa-user-md"></i> <span class="nav-label">Agency</span></a>
 			</li>
 			<li>
+				<a href="{{ route('admin.newsletter') }}"><i class="fa fa-newspaper-o"></i> <span class="nav-label">Newsletter</span></a>
+			</li>
+			<li>
 				<a href="{{ route('admin.logout') }}">
 					<i class="fa fa-sign-out"></i> <span class="nav-label">Logout</span>
 				</a>

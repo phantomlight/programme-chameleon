@@ -40,11 +40,16 @@
 					<div id="text-3" class="widget widget_text">
 						<h3 class="footer-widget-title">Signup For Newsletter</h3>
 							<div class="textwidget"><p>Get latest listing on your email</p>
-							<form role="form">
+							<form role="form" id="newsLetterForm" onsubmit="return false;">
 								<div class="form-group">
-									<input class="input-newsletter" type="email" placeholder="Input your email here" class="form-control">
+									<input class="input-newsletter" type="email" placeholder="Input your email here" class="form-control" name="email">
 								</div>
-								<button type="button" class="btn-newsletter">Sign Up</button>
+								<button class="btn-newsletter" type="submit">
+									<span class="btn-preloader">
+										<i class="fa fa-spinner fa-spin"></i> registering...
+									</span>
+									<span>Sign Up</span>
+								</button>
 							</form>
 							<a href="" target="blank"><i class="media-footer footer-twitt"></i></a>
 							<a href="" target="blank"><i class="media-footer footer-fb"></i></a>

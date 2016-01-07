@@ -26,6 +26,10 @@ export class Forms {
 		if ($('#contactForm')[0]) {
 			this.initContactForm();
 		}
+
+		if ($('#newsLetterForm')[0]) {
+			this.initNewsLetterForm();
+		}
 	}
 	initRegisterForm() {
 		var aes;
@@ -162,6 +166,34 @@ export class Forms {
 					$contactForm.find('[type=submit]').disable(false);
 					$('.page-preloader').hide();
 				});
+			}
+		});
+	}
+	initNewsLetterForm() {
+		var processing = false;
+		var $newsLetterForm = $('#newsLetterForm');
+		$newsLetterForm.on('submit', function (e) {
+			if ($newsLetterForm.parsley().validate() && ! processing) {
+				processing = true;
+				$newsLetterForm.find('[type=submit]').disable(true);
+				$('.page-preloader').show();
+
+				$.post(window.origin + '/newsletter/register', {
+					data: $newsLetterForm.serializeForm()
+				}).done(function (e) {
+					$newsLetterForm.showMessage(e.message, e.type);
+					processing = false;
+					$newsLetterForm.find('[type=submit]').disable(false);
+					$('.page-preloader').hide();
+				}).fail(function (xhr, status, e) {
+					$newsLetterForm.showMessage(e.message, e.type);
+					processing = false;
+					$newsLetterForm.find('[type=submit]').disable(false);
+					$('.page-preloader').hide();
+				});
+			}
+			else {
+				console.log(processing);
 			}
 		});
 	}

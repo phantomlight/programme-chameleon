@@ -65,22 +65,6 @@ class SiteController extends Controller {
 		}
 	}
 
-	public function testSendEmail(Request $req) {
-		$data = [
-		'layout'	=>	'emails.test',
-		'data'		=>	[
-		'text'	=>	'This is a test',
-		],
-		'subject'	=>	'Test Email Queue',
-		'from_email'	=>	'noreply@programmechameleon.com',
-		'to_email'	=>	'forddyce92@gmail.com',
-		];
-
-		$job = (new EmailJob($data))->onQueue('email-queue');
-		$this->dispatch($job);
-		return 'test!';
-	}
-
 	public function getLogin() {
 		if (\User::check()) { 
 			return redirect()->back()->with('flashMessage', [
