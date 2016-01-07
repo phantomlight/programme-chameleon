@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 06, 2016 at 06:31 PM
+-- Generation Time: Jan 07, 2016 at 08:15 PM
 -- Server version: 5.6.27-0ubuntu1
 -- PHP Version: 5.6.11-1+deb.sury.org~utopic+1
 
@@ -5415,7 +5415,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2015_11_23_120301_create_company_table', 1),
 ('2015_11_23_122431_create_agency_table', 1),
 ('2015_11_23_123140_create_job_table', 1),
-('2016_01_01_073740_create_site_table', 2);
+('2016_01_01_073740_create_site_table', 2),
+('2016_01_07_095952_create_newsletter_table', 3);
 
 -- --------------------------------------------------------
 
@@ -5640,7 +5641,6 @@ CREATE TABLE IF NOT EXISTS `tb_contractor` (
 --
 
 INSERT INTO `tb_contractor` (`id`, `user_id`, `address`, `occupation`, `phone`, `city`, `country`, `educations`, `experiences`, `salary_rate`, `range_salary_min`, `range_salary_max`, `skills`, `urls`, `description`, `socials`, `image`, `created_at`, `updated_at`) VALUES
-(1, 3, 'Test Address', 'Has many skills', '123123123', NULL, NULL, NULL, NULL, 'hourly', 0, 0, NULL, NULL, NULL, NULL, NULL, '2015-12-26 05:13:13', '2015-12-26 05:13:13'),
 (3, 5, 'Test Address', 'Web Designer', '123123123', 'Aberdeen', 'United Kingdom', '[]', '[]', 'hourly', 0, 0, '', '[]', '<p><br></p>', '{"facebook":"","twitter":"","linkedin":""}', NULL, '2015-12-26 05:16:27', '2015-12-26 05:47:06'),
 (4, 14, 'Test Address', 'Has many skills', '123123123', NULL, NULL, NULL, NULL, 'hourly', 0, 0, NULL, NULL, NULL, NULL, NULL, '2015-12-27 03:20:47', '2015-12-27 03:20:47');
 
@@ -5783,7 +5783,7 @@ CREATE TABLE IF NOT EXISTS `tb_industry` (
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_industry`
@@ -5860,6 +5860,20 @@ INSERT INTO `tb_job_industry` (`job_id`, `industry_id`, `created_at`, `updated_a
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tb_newsletter`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_newsletter` (
+  `id` int(10) unsigned NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tb_site`
 --
 
@@ -5906,7 +5920,7 @@ INSERT INTO `tb_site` (`id`, `key`, `title`, `url`, `file`, `description`, `crea
 (27, 'terms', 'Terms and Condition Text', NULL, NULL, '<p>Welcome to our website. If you continue to browse and use this \nwebsite, you are agreeing to comply with and be bound by the following \nterms and conditions of use, which together with our privacy policy \ngovern [business name]''s relationship with you in relation to this \nwebsite. If you disagree with any part of these terms and conditions, \nplease do not use our website.</p>\n<p>The term ''[business name]'' or ''us'' or ''we'' refers to the owner of the\n website whose registered office is [address]. Our company registration \nnumber is [company registration number and place of registration]. The \nterm ''you'' refers to the user or viewer of our website.</p>\n<p>The use of this website is subject to the following terms of use:</p>\n<ul><li>The content of the pages of this website is for your general information and use only. It is subject to change without notice.</li><li>This website uses cookies to monitor browsing preferences. If you \ndo allow cookies to be used, the following personal information may be \nstored by us for use by third parties: [insert list of information].</li><li>Neither we nor any third parties provide any warranty or guarantee \nas to the accuracy, timeliness, performance, completeness or suitability\n of the information and materials found or offered on this website for \nany particular purpose. You acknowledge that such information and \nmaterials may contain inaccuracies or errors and we expressly exclude \nliability for any such inaccuracies or errors to the fullest extent \npermitted by law.</li><li>Your use of any information or materials on this website is \nentirely at your own risk, for which we shall not be liable. It shall be\n your own responsibility to ensure that any products, services or \ninformation available through this website meet your specific \nrequirements.</li><li>This website contains material which is owned by or licensed to us.\n This material includes, but is not limited to, the design, layout, \nlook, appearance and graphics. Reproduction is prohibited other than in \naccordance with the copyright notice, which forms part of these terms \nand conditions.</li><li>All trade marks reproduced in this website which are not the \nproperty of, or licensed to, the operator are acknowledged on the \nwebsite.</li><li>Unauthorised use of this website may give rise to a claim for damages and/or be a criminal offence.</li><li>From time to time this website may also include links to other \nwebsites. These links are provided for your convenience to provide \nfurther information. They do not signify that we endorse the website(s).\n We have no responsibility for the content of the linked website(s).</li><li>Your use of this website and any dispute arising out of such use of\n the website is subject to the laws of England, Northern Ireland, \nScotland and Wales.</li></ul>', '2016-01-05 17:00:00', '2016-01-06 04:22:31'),
 (28, 'price.credit', 'Each Credit Price', NULL, NULL, '15', '2016-01-05 17:00:00', '2016-01-06 04:11:59'),
 (29, 'price.vip', 'VIP 6 month price', NULL, NULL, '250', '2016-01-05 17:00:00', '2016-01-05 17:00:00'),
-(30, 'about', 'About Us Text', NULL, NULL, NULL, '2016-01-05 17:00:00', '2016-01-05 17:00:00');
+(30, 'about', 'About Us Text', NULL, NULL, '<div class="textwidget">Programme Chameleon company is a place where people share and build their projects together.</div>', '2016-01-05 17:00:00', '2016-01-06 05:44:42');
 
 -- --------------------------------------------------------
 
@@ -5940,12 +5954,12 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
 
 INSERT INTO `tb_users` (`id`, `email`, `password`, `permissions`, `activated`, `activation_code`, `activated_at`, `last_login`, `persist_code`, `reset_password_code`, `first_name`, `last_name`, `image`, `slug`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'superadmin@email.com', '$2y$10$eKIpIOQYg8eXNfbTyNcsEey6Pga6CmV7ASsSpBdwyTQSdje9Z1xIa', NULL, 1, NULL, NULL, NULL, NULL, NULL, 'Fordyce', 'Gozali', NULL, 'fordyce-gozali', NULL, '2015-12-26 03:34:31', '2015-12-26 03:34:31'),
-(2, 'admin@email.com', '$2y$10$4cjXfIvWKiHSvMgw1U0mrOP0pSE7HNosEUjtmsEaJrKputGn7mu5i', NULL, 1, NULL, NULL, '2016-01-06 04:23:38', '$2y$10$l8gULYrEDq4ixbzRgNhbX.9TdIkttkDkYM/QEGwr6fq6l44KTaGQG', NULL, 'Admin', '', NULL, 'admin', NULL, '2015-12-26 03:34:32', '2016-01-06 04:23:38'),
+(2, 'admin@email.com', '$2y$10$4cjXfIvWKiHSvMgw1U0mrOP0pSE7HNosEUjtmsEaJrKputGn7mu5i', NULL, 1, NULL, NULL, '2016-01-07 05:52:16', '$2y$10$4Vgo.lObzlyplaXnQOgnoOQDGVKrVCWSzK.SqXuS9OEeD24AcJuuq', NULL, 'Admin', '', NULL, 'admin', NULL, '2015-12-26 03:34:32', '2016-01-07 05:52:16'),
 (5, 'contractor1@email.org', '$2y$10$a7g7j6pbLp56k01eQBqn8.IKYLWy3fYjL5EjwwWoEzRtp99w2rCYe', NULL, 1, NULL, NULL, '2016-01-05 03:44:47', '$2y$10$1txMgDifO97bJ0TL40P65uWtm/EmZvyAJO4Bc5//G16zO3X55uzPa', NULL, 'Contractor', '1', NULL, '', NULL, '2015-12-26 05:16:27', '2016-01-05 03:44:47'),
-(6, 'company1@email.org', '$2y$10$RjjwAuz4NwTOVQBR0oXMTO7G51y/Zv6Z9NynqscZ0sxcuojwGhG8i', NULL, 1, NULL, NULL, '2015-12-31 04:07:50', '$2y$10$KPxQNcnEvvaMfQbN1l7DOeqEqs6UOOOhxIiBhvdLro.m1Fb8ridoq', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 02:52:57', '2015-12-31 04:07:50'),
-(11, 'forddyce92@gmail.com', '$2y$10$FmXCxDiBuxTPp09yMiyou.eUkkc7Qzdnd5GOh8lh0vB9uFKF7hE6.', NULL, 1, NULL, NULL, '2016-01-02 01:39:04', '$2y$10$CpZR91bD11ftZNyyoxN6Ce38.RkqtIptZ2qiIXRKE3c4/rkPn2Nm6', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 03:18:06', '2016-01-02 01:39:04'),
+(6, 'company1@email.org', '$2y$10$RjjwAuz4NwTOVQBR0oXMTO7G51y/Zv6Z9NynqscZ0sxcuojwGhG8i', NULL, 1, NULL, NULL, '2016-01-06 06:18:19', '$2y$10$ELXrXzVSZ3/RZEl0ulNgZOXABx.GY3UbktjtKgVrqS9A/fOdntz9u', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 02:52:57', '2016-01-06 06:18:19'),
+(11, 'agency1@email.org', '$2y$10$FmXCxDiBuxTPp09yMiyou.eUkkc7Qzdnd5GOh8lh0vB9uFKF7hE6.', NULL, 1, NULL, NULL, '2016-01-06 06:38:25', '$2y$10$8ngWO6HCKNOV//n63nMjlebZj7igzfQK5ZdcDD5I5Y1LjigdoOvO.', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 03:18:06', '2016-01-06 06:38:25'),
 (12, 'agency2@email.org', '$2y$10$/0RWPQeIXMFo5mrr/0RMZuL9XpOXzDJF3dupiiAy6tTFSwqQMKj9m', NULL, 1, NULL, NULL, '2015-12-27 04:08:34', '$2y$10$K2dv/6Pxjwy/7RUd1rueDes4DKlJ4atPgAo13ziCR/UQggbNx44mS', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 03:18:32', '2015-12-27 04:08:34'),
-(13, 'fordweb92@gmail.com', '$2y$10$yL4EBcV//u0C35H2.Y9W1Ovkw1aJWslTzG8OLyO7LQvuUWnSRXhbS', NULL, 1, NULL, NULL, '2016-01-02 01:35:07', '$2y$10$ZlQaiT8qSAWRaOCiNzT86ujVibOWL0pCU7ojDHJlnpnAvLsf68JtK', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 03:20:22', '2016-01-02 01:35:07'),
+(13, 'company2@email.org', '$2y$10$yL4EBcV//u0C35H2.Y9W1Ovkw1aJWslTzG8OLyO7LQvuUWnSRXhbS', NULL, 1, NULL, NULL, '2016-01-02 01:35:07', '$2y$10$ZlQaiT8qSAWRaOCiNzT86ujVibOWL0pCU7ojDHJlnpnAvLsf68JtK', NULL, NULL, NULL, NULL, '', NULL, '2015-12-27 03:20:22', '2016-01-02 01:35:07'),
 (14, 'contractor2@email.org', '$2y$10$YOrwUNQsRTkrbGgs8Z1UvehiEM.O/7ebElGIOb2BbHXd3KgLAPvom', NULL, 1, NULL, NULL, '2016-01-02 01:52:57', '$2y$10$/EYKIpXWlJYTfSK0Sj.C1.EMY.TSBSkugNEf8HdEDZqcQjzYJhsRq', NULL, 'Contractor', '2', NULL, '', NULL, '2015-12-27 03:20:46', '2016-01-02 01:52:57');
 
 -- --------------------------------------------------------
@@ -6182,6 +6196,13 @@ ALTER TABLE `tb_job_industry`
   ADD KEY `tb_job_industry_created_at_index` (`created_at`);
 
 --
+-- Indexes for table `tb_newsletter`
+--
+ALTER TABLE `tb_newsletter`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- Indexes for table `tb_site`
 --
 ALTER TABLE `tb_site`
@@ -6287,12 +6308,17 @@ ALTER TABLE `tb_contractor_timesheet`
 -- AUTO_INCREMENT for table `tb_industry`
 --
 ALTER TABLE `tb_industry`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tb_job`
 --
 ALTER TABLE `tb_job`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `tb_newsletter`
+--
+ALTER TABLE `tb_newsletter`
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tb_site`
 --
