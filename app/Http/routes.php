@@ -13,6 +13,8 @@
 
 Route::get('/', function() { return view('front.index'); });
 
+Route::get('about', function () { return view('front.about'); });
+
 Route::get('login', ['as'=>'front.login', 'uses' => 'SiteController@getLogin']);
 Route::get('logout', ['as'=>'front.logout', 'uses' => 'SiteController@getLogout']);
 Route::get('api/country', 'SiteController@getCountryList');

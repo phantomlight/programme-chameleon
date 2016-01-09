@@ -4,6 +4,7 @@
 			<li class="menu-item"><a href="{{ url('/') }}">Home</a></li>
 			<li class="menu-item"><a href="{{ route('company.job.post') }}">Post A Job</a></li>
 			<li class="menu-item"><a href="{{ route('contractor.account') }}">Upload CV</a></li>
+			<li class="menu-item"><a href="{{ url('about') }}">About Us</a></li>
 			<li class="menu-item"><a href="#">Blog</a></li>
 		</ul>
 	</div>		
@@ -15,9 +16,10 @@
 			<div class="row">
 				<div class="col-md-6 widget-container">
 					<div id="text-2" class="widget widget_text">
-						<h3 class="footer-widget-title">About Us</h3>
-						<?php $about = \Site::getDataByKey('about'); ?>
-						<div class="textwidget">{!! $about->description !!}</div>
+						<h3 class="footer-widget-title">Programme Chameleon</h3>
+						<div class="textwidget">
+							<p>A place where you can share and work on a project together towards the goal, from start until finish.</p>
+						</div>
 					</div>
 				</div><!-- /.col-md-3 -->
 

@@ -9,9 +9,14 @@ var express = require('express')
 , 	Room 		=	require('./room.js')
 , 	_				=	require('underscore')._;
 
+process.env.DEBUG = '*';
+
 app.set('port', 3000);
 app.set('ipaddr', "127.0.0.5");
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
+app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(express.static(__dirname + '/public'));
 app.use('/components', express.static(__dirname + '/components'));
@@ -34,9 +39,9 @@ server.listen(app.get('port'), app.get('ipaddr'), function() {
 	console.log('Express server listening on IP: ' + app.get('ipaddr') + ':' + app.get('port'));
 });
 
-io.set('log level', 1);
-
-var people, rooms, chatHistory = {};
+var people = {};
+var rooms = {};
+var chatHistory = {};
 var sockets = [];
 
 function purge(s, action) {
@@ -65,8 +70,8 @@ function purge(s, action) {
 				delete chatHistory[room.name];
 				sizePeople = _.size(people);
 				sizeRooms = _.size(rooms);
-				io.socket.emit("update-people", {people: people, count: sizePeople});
-				io.socket.emit("roomList", {rooms: rooms, count: sizeRooms});
+				io.sockets.emit("update-people", {people: people, count: sizePeople});
+				io.sockets.emit("roomList", {rooms: rooms, count: sizeRooms});
 				var o = _.findWhere(sockets, {'id': s.id});
 				sockets = _.without(sockets, o);
 			}
@@ -183,7 +188,7 @@ io.sockets.on("connection", function (socket) {
 			people[socket.id] = {
 				"name": name,
 				"owns": ownerRoomID,
-				"inroom": inroom,
+				"inroom": inRoomID,
 				"device": device
 			};
 
@@ -242,25 +247,30 @@ io.sockets.on("connection", function (socket) {
 				var whisperTo = whisperStr[1];
 				var whisperMsg = whisperStr[2];
 				socket.emit("whisper", {name: "You"}, whisperMsg);
-				io.sockets.socket(whisperId).emit("whisper", msTime, people[socket.id], whisperMsg);
+				io.sockets.connected[whisperId].emit("whisper", msTime, people[socket.id], whisperMsg);
 			}
 			else {
 				socket.emit("update", "Cannot find " + whisperTo);
 			}
 		}
 		else {
-			if (io.sockets.manager.roomClients[socket.id]['/' + socket.room] !== undefined) {
-				io.sockets.in(socket.room).emit("chat", msTime, people[socket.id], msg);
-				socket.emit("isTyping", false);
-				if (_.size(chatHistory[socket.room]) > 10) {
-					chatHistory[socket.room].splice(0, 1);
-				}
-				else {
-					chatHistory[socket.room].push(people[socket.id].name + ": " + msg);
-				}
+			if (io.sockets.adapter.rooms[socket.room] === undefined) {
+				socket.emit("update", "Please connect to a room.");
 			}
 			else {
-				socket.emit("update", "Please connect to a room.");
+				if (io.sockets.adapter.rooms[socket.room][socket.id] !== undefined) {
+					io.sockets.in(socket.room).emit("chat", msTime, people[socket.id], msg);
+					socket.emit("isTyping", false);
+					if (_.size(chatHistory[socket.room]) > 10) {
+						chatHistory[socket.room].splice(0, 1);
+					}
+					else {
+						chatHistory[socket.room].push(people[socket.id].name + ": " + msg);
+					}
+				}
+				else {
+					socket.emit("update", "Please connect to a room.");
+				}
 			}
 		}
 	});
@@ -287,7 +297,7 @@ io.sockets.on("connection", function (socket) {
 			socket.room = name;
 			socket.join(socket.room);
 			people[socket.id].owns = id;
-			prople[socket.id].inroom = id;
+			people[socket.id].inroom = id;
 			room.addPerson(socket.id);
 			socket.emit("update", "Welcome to " + room.name + ".");
 			socket.emit("sendRoomID", {id: id});

@@ -16,9 +16,9 @@ gulp.task('images', function() {
 
 
 gulp.task('images-app', function () {
-	return gulp.src(config.app.src + 'images')
+	return gulp.src(config.app.src + 'images/**/*.{png,gif,jpg,jpeg}')
 	.pipe(imagemin()).on('error', errors)
-	.pipe(gulp.dest(config.app.dest))
+	.pipe(gulp.dest(config.app.dest + 'images'))
 	.pipe(size({title: 'images'}))
 	.pipe(browserSync.reload({stream:true}));
 });
