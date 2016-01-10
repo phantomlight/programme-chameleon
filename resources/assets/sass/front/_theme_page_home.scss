@@ -361,7 +361,7 @@
 	
 	.widget-box {
 		background: #fff;
-		min-height: 430px;
+		min-height: 550px;
 
 		@include respond-to(handhelds) {
 			min-height: auto;

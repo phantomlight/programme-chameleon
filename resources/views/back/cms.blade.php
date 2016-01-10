@@ -109,9 +109,9 @@ CMS | Programme Chameleon
 																<div class="form-group">
 																	<label>Type</label>
 																	<select class="form-control" name="key">
-																		<option value="initiation" @if ($resource->key === 'resource.initiation') {{ 'selected="selected"' }} @endif>Initiation</option>
-																		<option value="control" @if ($resource->key === 'resource.control') {{ 'selected="selected"' }} @endif>Control</option>
-																		<option value="closure" @if ($resource->key === 'resource.closure') {{ 'selected="selected"' }} @endif>Closure</option>
+																		<option value="project" @if ($resource->key === 'resource.project') {{ 'selected="selected"' }} @endif>Project Management</option>
+																		<option value="programme" @if ($resource->key === 'resource.programme') {{ 'selected="selected"' }} @endif>Programme Management</option>
+																		<option value="training" @if ($resource->key === 'resource.training') {{ 'selected="selected"' }} @endif>Training Resources</option>d
 																		<option value="other" @if ($resource->key === 'resource.other') {{ 'selected="selected"' }} @endif>Other</option>
 																	</select>
 																</div>
@@ -164,9 +164,9 @@ CMS | Programme Chameleon
 												<div class="form-group">
 													<label>Type</label>
 													<select class="form-control" name="key">
-														<option value="initiation">Initiation</option>
-														<option value="control">Control</option>
-														<option value="closure">Closure</option>
+														<option value="project">Project Management</option>
+														<option value="programme">Programme Management</option>
+														<option value="training">Training Resources</option>
 														<option value="other">Other</option>
 													</select>
 												</div>

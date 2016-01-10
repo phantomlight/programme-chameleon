@@ -445,6 +445,9 @@ class AdminController extends Controller {
 				'key'			=>	'resource.' . $data['key'],
 			];
 			$model = \Site::addResource($dbData);
+
+			if (\Cache::has('site.resources')) \Cache::forget('site.resources');
+			
 			return \Response::json([
 				'type'		=>	'success',
 				'message'	=>	'Resource ' . $model->title . ' added. Reload page to see effect.',
@@ -465,6 +468,9 @@ class AdminController extends Controller {
 			$file = \Site::uploadFile($_FILES['file'], 'document');
 			$dbData = ['file'	=>	$file];
 			$model = \Site::editResource($id, $dbData);
+
+			if (\Cache::has('site.resources')) \Cache::forget('site.resources');
+
 			return \Response::json([
 				'type'		=>	'success',
 				'message'	=>	'Resource ' . $model->title . ' updated. Reload page to see effect.',
@@ -490,6 +496,9 @@ class AdminController extends Controller {
 				'key'			=>	'resource.' . $data['key'],
 			];
 			$model = \Site::editResource($id, $dbData);
+
+			if (\Cache::has('site.resources')) \Cache::forget('site.resources');
+
 			return \Response::json([
 				'type'		=>	'success',
 				'message'	=>	'Resource ' . $model->title . ' updated. Reload page to see effect.',
@@ -543,7 +552,7 @@ class AdminController extends Controller {
 				return;
 			}
 
-			\Cache::flush();
+			if (\Cache::has('site.resources')) \Cache::forget('site.resources');
 
 			$model = \Site::updateService(trim(\Input::get('id')), ['description' => $price]);
 			return \Response::json([
@@ -570,7 +579,7 @@ class AdminController extends Controller {
 
 		try {
 			$model = \Site::updateService(trim(\Input::get('id')), ['description' => $data]);
-			\Cache::flush();
+			if (\Cache::has('site.resources')) \Cache::forget('site.resources');
 
 			return \Response::json([
 				'type'		=>	'success',

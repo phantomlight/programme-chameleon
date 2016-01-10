@@ -1,10 +1,7 @@
-<?php namespace App\Models\site;
+<?php namespace App\Models\Site;
 
 use Illuminate\Support\ServiceProvider;
-
 use App\Models\Site\Provider\SiteProvider;
-use App\Models\Site\Provider\SiteIndustryProvider;
-
 use App\Models\Site\Site;
 
 class siteServiceProvider extends ServiceProvider {

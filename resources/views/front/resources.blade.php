@@ -31,13 +31,13 @@ Free Resources | Programme Chameleon
 			<div class="tab-resources">
 				<ul class="nav nav-tabs" role="tablist">
 					<li role="presentation" class="active">
-						<a href="#res-initiation" aria-controls="res-initiation" role="tab" data-toggle="tab">Project Initiation</a>
+						<a href="#res-project" aria-controls="res-initiation" role="tab" data-toggle="tab">Project Management</a>
 					</li>
 					<li role="presentation">
-						<a href="#res-control" aria-controls="res-control" role="tab" data-toggle="tab">Project Control</a>
+						<a href="#res-programme" aria-controls="res-control" role="tab" data-toggle="tab">Programme Management</a>
 					</li>
 					<li role="presentation">
-						<a href="#res-closure" aria-controls="res-closure" role="tab" data-toggle="tab">Project Closure</a>
+						<a href="#res-training" aria-controls="res-closure" role="tab" data-toggle="tab">Training Resources</a>
 					</li>
 					<li role="presentation">
 						<a href="#res-other" aria-controls="res-other" role="tab" data-toggle="tab">Other</a>
@@ -45,20 +45,16 @@ Free Resources | Programme Chameleon
 				</ul>
 
 				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane active" id="res-initiation">
+					<div role="tabpanel" class="tab-pane active" id="res-project">
 						<div class="element-top-30 element-bottom-10">
-							<p>Initiation is the most important phase of any project as it sets the terms-of-reference within which the project will run. If this is not done well, the project will have a high likelihood of failure.</p>
-
-							<p>The initiation phase is where the business case is declared, the scope of the project decided (what's in and what's out) and stakeholder expectations set.</p>
-
-							<p>Time spent on planning, refining the business case and communicating the expected benefits will help increase the likelihood of success. It is tempting to start working quickly, but a poor initiation phase often leads to failure.</p>
+							<p>Please use these resources to help you run and report on your projects. You will see short description of each resource, and where and when these can be used.</p>
 						</div>
 						<hr>
 
 						<ul class="file-list list-unstyled element-top-10 element-bottom-20">
 							@if (count($resources) > 0)
 								@foreach ($resources as $resource)
-									@if ($resource->key === 'resource.initiation')
+									@if ($resource->key === 'resource.project')
 										<li>
 											<div class="media">
 												<div class="media-left">
@@ -78,9 +74,9 @@ Free Resources | Programme Chameleon
 						</ul>
 					</div>
 
-					<div role="tabpanel" class="tab-pane" id="res-control">
+					<div role="tabpanel" class="tab-pane" id="res-programme">
 						<div class="element-top-30 element-bottom-10">
-							<p>Once a project is running, it is important the project manager keeps control. This is achieved by regular reporting of issues, risks, progress and constant checking of the business case to make sure that the expected benefits will be delivered and are still valid. All proposed changes should be assessed, logged, and appropriate action taken.</p>
+							<p>Please use these resources to help you run and report on your Programmes. You will see description of each resource, and where and when these can be used.</p>
 						</div>
 
 						<hr>
@@ -88,7 +84,7 @@ Free Resources | Programme Chameleon
 						<ul class="file-list list-unstyled element-top-10 element-bottom-20">
 							@if (count($resources) > 0)
 								@foreach ($resources as $resource)
-									@if ($resource->key === 'resource.control')
+									@if ($resource->key === 'resource.programme')
 										<li>
 											<div class="media">
 												<div class="media-left">
@@ -108,9 +104,9 @@ Free Resources | Programme Chameleon
 						</ul>
 					</div>
 
-					<div role="tabpanel" class="tab-pane" id="res-closure">
+					<div role="tabpanel" class="tab-pane" id="res-training">
 						<div class="element-top-30 element-bottom-10">
-							<p>Often neglected, it is important to make sure a project is closed properly. Many projects do not have a clear endpoint because there is no formal sign-off. It is important to get the customers' agreement that the project has ended, and no more work will be carried out. Once closed, the project manager should review the project and record the good and bad points, so that in the future, successes can be repeated, and failures avoided.</p>
+							<p>Please see for links to resources to help you develop as a Programme or Project professional.</p>
 						</div>
 
 						<hr>
@@ -118,7 +114,7 @@ Free Resources | Programme Chameleon
 						<ul class="file-list list-unstyled element-top-10 element-bottom-20">
 							@if (count($resources) > 0)
 								@foreach ($resources as $resource)
-									@if ($resource->key === 'resource.closure')
+									@if ($resource->key === 'resource.training')
 										<li>
 											<div class="media">
 												<div class="media-left">
@@ -140,7 +136,7 @@ Free Resources | Programme Chameleon
 
 					<div role="tabpanel" class="tab-pane" id="res-other">
 						<div class="element-top-30 element-bottom-10">
-							<p>Most managers will find these templates useful in their daily work.</p>
+							<p>Please see for a variety of useful resources.</p>
 						</div>
 
 						<hr>

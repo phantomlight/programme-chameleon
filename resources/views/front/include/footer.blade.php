@@ -18,7 +18,8 @@
 					<div id="text-2" class="widget widget_text">
 						<h3 class="footer-widget-title">Programme Chameleon</h3>
 						<div class="textwidget">
-							<p>A place where you can share and work on a project together towards the goal, from start until finish.</p>
+							<p>Registered VAT Number: 224 9106 24</p>
+							<p>Programme Chameleon is registered in the United Kingdom. Registered company number 09663104</p>
 						</div>
 					</div>
 				</div><!-- /.col-md-3 -->
