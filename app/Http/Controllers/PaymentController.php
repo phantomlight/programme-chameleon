@@ -97,19 +97,27 @@ class PaymentController extends Controller {
 			$payer->setPaymentMethod('paypal');
 
 			$amount = PayPal::Amount();
-			$amount->setCurrency('EUR');
-			$amount->setTotal($total);
+			$amount->setCurrency('GBP');
+			$amount->setTotal($total + (0.2*$total));
 
 			$item = PayPal::Item();
 			$item->setName($paymentData['name'])
 						->setDescription($paymentData['description'])
-						->setCurrency('EUR')
+						->setCurrency('GBP')
 						->setQuantity(isset($xAmount) ? $xAmount : 1)
 						->setTax(0)
 						->setPrice($paymentData['amount']);
 
+			$tax = PayPal::Item();
+			$tax->setName('VAT TAX')
+						->setDescription('20% VAT Tax')
+						->setCurrency('GBP')
+						->setQuantity(1)
+						->setTax(0)
+						->setPrice(0.2*$total);
+
 			$itemList = PayPal::ItemList();
-			$itemList->setItems([$item]);
+			$itemList->setItems([$item, $tax]);
 
 			$transaction = PayPal::Transaction();
 			$transaction->setAmount($amount);

@@ -201,7 +201,10 @@ class SiteController extends Controller {
 			$user = \User::findUserByLogin($data['email']);
 
 			if ($user->hasAccess('admin')) { // should never happen, just in case
-				return;
+				return \Response::json([
+					'type'		=>	'danger',
+					'message'	=>	'You cannot reset this account password',
+				]);
 			}
 
 			$mailData = [

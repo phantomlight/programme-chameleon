@@ -552,9 +552,10 @@ class AdminController extends Controller {
 				return;
 			}
 
-			if (\Cache::has('site.resources')) \Cache::forget('site.resources');
-
 			$model = \Site::updateService(trim(\Input::get('id')), ['description' => $price]);
+
+			if (\Cache::has('site.' . $model->key)) \Cache::forget('site.' . $model->key);
+
 			return \Response::json([
 				'type'		=>	'success',
 				'message'	=>	'Price updated.',

@@ -350,7 +350,12 @@ class CompanyProvider implements CompanyProviderInterface {
 		}
 
 		if ($ban === 'true') $throttle->ban();
-		else $throttle->unban();
+		else {
+			$throttle->unban();
+			if ($throttle->isSuspended()) {
+				$throttle->unsuspend();
+			}
+		}
 
 		return true;
 	}

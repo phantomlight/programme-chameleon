@@ -104,8 +104,14 @@
 								<div class="col-sm-8">
 									<div class="form-group">
 										<label>Occupation</label>
+										<?php $industries = \Job::getAllIndustries(); ?>
 										<select class="form-control" name="occupation">
-											<option value="Web Designer">Web Designer</option>
+											<option value="any">Any</option>
+												@if ($industries->count() > 0)
+													@foreach ($industries as $industry)
+														<option value="{{ $industry->title }}" @if ($contractor->occupation === $industry->title) {{ 'selected="selected"' }} @endif>{{ $industry->title }}</option>
+													@endforeach
+												@endif
 										</select>
 									</div>
 
